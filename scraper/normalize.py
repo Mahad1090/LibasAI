@@ -77,24 +77,85 @@ def _wc_money(minor_value: Any, minor_unit: int) -> float | None:
         return None
 
 
+def _wc_variant_available(v: dict) -> bool:
+    # Field name varies by WooCommerce/Blocks version - check every spelling
+    # we've seen rather than trust one, and default to "available" so a
+    # missing field doesn't silently hide an in-stock variant.
+    if "is_in_stock" in v:
+        return bool(v["is_in_stock"])
+    status = v.get("stock_status") or (v.get("stock_availability") or {}).get("class")
+    if status:
+        return str(status).lower() in ("instock", "in-stock", "in_stock")
+    return True
+
+
+def _wc_options(variant_list: list[dict]) -> list[dict]:
+    """Aggregate every variant's attribute name/value pairs into option
+    definitions, preserving first-seen order and every distinct value seen -
+    not just the last one (dict comprehensions keyed by name alone would
+    silently drop earlier values, e.g. "Size: M" if a later variant is "L")."""
+    order: list[str] = []
+    values_by_name: dict[str, list[str]] = {}
+    for v in variant_list:
+        for a in v.get("attributes") or []:
+            name, value = a.get("name"), a.get("value")
+            if not name:
+                continue
+            if name not in order:
+                order.append(name)
+                values_by_name[name] = []
+            if value and value not in values_by_name[name]:
+                values_by_name[name].append(value)
+    return [{"name": n, "values": values_by_name[n], "position": i + 1} for i, n in enumerate(order)]
+
+
 def normalize_woocommerce(product: dict, brand: dict) -> dict[str, Any]:
     prices = product.get("prices") or {}
     minor_unit = int(prices.get("currency_minor_unit", 2) or 2)
     price = _wc_money(prices.get("price"), minor_unit)
     regular = _wc_money(prices.get("regular_price"), minor_unit) or price
-    lo = price if price is not None else regular
-    hi = regular if regular is not None else price
 
     images = [img["src"] for img in (product.get("images") or []) if img.get("src")]
     variations = product.get("variations") or []
-    # Store API variation objects expose `attributes` (name/value pairs) but
-    # not always their own price/availability at list-fetch time.
-    options = [
-        {"name": a.get("name"), "values": [a.get("value")], "position": i + 1}
-        for i, a in enumerate(
-            {a.get("name"): a for v in variations for a in (v.get("attributes") or [])}.values()
-        )
-    ]
+    # The list endpoint's `variations` only enumerates possible attribute
+    # combinations; `_variations_detail` (fetched per-product from
+    # /products/{id}/variations by woocommerce_source.py) has the real
+    # per-variant sku/price/stock when available.
+    detail = product.get("_variations_detail") or []
+
+    if detail:
+        variant_records = []
+        for v in detail:
+            v_prices = v.get("prices") or prices
+            v_price = _wc_money(v_prices.get("price"), int(v_prices.get("currency_minor_unit", minor_unit) or minor_unit))
+            variant_records.append({
+                "sku": v.get("sku"),
+                "title": " / ".join(a.get("value", "") for a in (v.get("attributes") or [])),
+                "price": v_price if v_price is not None else price,
+                "available": _wc_variant_available(v),
+            })
+        options = _wc_options(detail)
+        variant_prices = [r["price"] for r in variant_records if r["price"] is not None]
+        lo = min(variant_prices) if variant_prices else price
+        hi = max(variant_prices) if variant_prices else (regular or price)
+        in_stock = any(r["available"] for r in variant_records) if variant_records else bool(product.get("is_in_stock", True))
+    else:
+        # No detail could be fetched (or a simple product) - fall back to the
+        # product-level price/stock shared across whatever attributes the
+        # list endpoint exposed.
+        lo = price if price is not None else regular
+        hi = regular if regular is not None else price
+        options = _wc_options(variations)
+        variant_records = [
+            {
+                "sku": v.get("sku"),
+                "title": " / ".join(a.get("value", "") for a in (v.get("attributes") or [])),
+                "price": price,
+                "available": True,
+            }
+            for v in variations
+        ]
+        in_stock = bool(product.get("is_in_stock", True))
 
     return {
         "product_uid": f"{brand['id']}:{product.get('id')}",
@@ -109,18 +170,10 @@ def normalize_woocommerce(product: dict, brand: dict) -> dict[str, Any]:
         "price_min": lo,
         "price_max": hi,
         "currency": prices.get("currency_code") or brand.get("currency", "PKR"),
-        "in_stock": bool(product.get("is_in_stock", True)),
+        "in_stock": in_stock,
         "url": product.get("permalink") or f"{brand['base_url'].rstrip('/')}/?p={product.get('id')}",
         "images": images,
-        "variants": [
-            {
-                "sku": v.get("sku"),
-                "title": " / ".join(a.get("value", "") for a in (v.get("attributes") or [])),
-                "price": price,
-                "available": True,
-            }
-            for v in variations
-        ],
+        "variants": variant_records,
         "attributes": {"options": options, "published_at": None, "shopify_updated_at": None},
         "source": "woocommerce_store_api",
         "scraped_at": datetime.now(timezone.utc).isoformat(),
@@ -131,20 +184,49 @@ def normalize_generic(node: dict, brand: dict) -> dict[str, Any]:
     """Normalize a schema.org Product JSON-LD node (see generic_source.py)."""
     import hashlib
 
-    page_url = node.get("_page_url") or node.get("url") or ""
-    offers = node.get("offers")
-    if isinstance(offers, list):
-        offers = offers[0] if offers else {}
-    offers = offers or {}
-
     def _num(v: Any) -> float | None:
         try:
             return float(v)
         except (TypeError, ValueError):
             return None
 
+    def _first_offer(n: dict) -> dict:
+        o = n.get("offers")
+        if isinstance(o, list):
+            o = o[0] if o else {}
+        return o or {}
+
+    def _offer_in_stock(o: dict, default: bool = True) -> bool:
+        avail = str(o.get("availability") or "").lower()
+        return "outofstock" not in avail if avail else default
+
+    def _attrs(n: dict) -> list[tuple[str, str]]:
+        """Real size/color-ish attributes from a schema.org node: its
+        `additionalProperty` (PropertyValue name/value pairs) plus the rarer
+        direct `color` / `size` scalar fields. Empty if the site's JSON-LD
+        just doesn't carry this - we don't invent it."""
+        out: list[tuple[str, str]] = []
+        props = n.get("additionalProperty")
+        if isinstance(props, dict):
+            props = [props]
+        for p in props or []:
+            if not isinstance(p, dict):
+                continue
+            name = p.get("name") or p.get("propertyID")
+            value = p.get("value")
+            if name and value not in (None, ""):
+                out.append((str(name), str(value)))
+        for key in ("color", "size"):
+            v = n.get(key)
+            for item in (v if isinstance(v, list) else [v] if v else []):
+                out.append((key.capitalize(), str(item)))
+        return out
+
+    page_url = node.get("_page_url") or node.get("url") or ""
+    offers = _first_offer(node)
     price = _num(offers.get("price") or offers.get("lowPrice"))
     high = _num(offers.get("highPrice")) or price
+    in_stock = _offer_in_stock(offers)
 
     images_raw = node.get("image")
     if isinstance(images_raw, str):
@@ -154,11 +236,66 @@ def normalize_generic(node: dict, brand: dict) -> dict[str, Any]:
     else:
         images = []
 
-    availability = str(offers.get("availability") or "").lower()
-    in_stock = "outofstock" not in availability if availability else True
-
     sku = node.get("sku") or node.get("productID") or ""
     uid = sku or hashlib.sha1(page_url.encode("utf-8")).hexdigest()[:16]
+
+    # Real per-variant size/color: only present when a site's JSON-LD spells
+    # out `hasVariant` (one nested Product per SKU) or `additionalProperty`
+    # on the product itself. If neither exists, options/variants stay empty
+    # and to_dart.py's title/keyword fallback takes over downstream - we
+    # never guess a size/color here ourselves.
+    variant_nodes = node.get("hasVariant")
+    variant_nodes = variant_nodes if isinstance(variant_nodes, list) else ([variant_nodes] if isinstance(variant_nodes, dict) else [])
+
+    order: list[str] = []
+    values_by_name: dict[str, list[str]] = {}
+    variant_records: list[dict[str, Any]] = []
+
+    if variant_nodes:
+        for vn in variant_nodes:
+            if not isinstance(vn, dict):
+                continue
+            attrs = _attrs(vn) or _attrs(node)
+            for name, _ in attrs:
+                if name not in order:
+                    order.append(name)
+                    values_by_name[name] = []
+            title_parts = []
+            for name in order:
+                val = next((v for n, v in attrs if n == name), "")
+                title_parts.append(val)
+                if val and val not in values_by_name[name]:
+                    values_by_name[name].append(val)
+            v_offers = _first_offer(vn)
+            v_price = _num(v_offers.get("price"))
+            variant_records.append({
+                "sku": vn.get("sku") or vn.get("productID"),
+                "title": " / ".join(title_parts),
+                "price": v_price if v_price is not None else price,
+                "available": _offer_in_stock(v_offers, default=in_stock),
+            })
+    else:
+        attrs = _attrs(node)
+        if attrs:
+            for name, val in attrs:
+                if name not in order:
+                    order.append(name)
+                    values_by_name[name] = []
+                if val not in values_by_name[name]:
+                    values_by_name[name].append(val)
+            variant_records.append({
+                "sku": sku,
+                "title": " / ".join(values_by_name[n][0] for n in order),
+                "price": price,
+                "available": in_stock,
+            })
+
+    options = [{"name": n, "values": values_by_name[n], "position": i + 1} for i, n in enumerate(order)]
+    variant_prices = [r["price"] for r in variant_records if r["price"] is not None]
+    if variant_prices:
+        price, high = min(variant_prices), max(variant_prices)
+    if variant_records:
+        in_stock = any(r["available"] for r in variant_records)
 
     return {
         "product_uid": f"{brand['id']}:{uid}",
@@ -176,8 +313,8 @@ def normalize_generic(node: dict, brand: dict) -> dict[str, Any]:
         "in_stock": in_stock,
         "url": page_url or brand["base_url"],
         "images": [i for i in images if i],
-        "variants": [],
-        "attributes": {"options": [], "published_at": None, "shopify_updated_at": None},
+        "variants": variant_records,
+        "attributes": {"options": options, "published_at": None, "shopify_updated_at": None},
         "source": "generic_jsonld",
         "scraped_at": datetime.now(timezone.utc).isoformat(),
     }
