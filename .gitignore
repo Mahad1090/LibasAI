@@ -1,3 +1,11 @@
+# Scraper - generated data, not source
+scraper/data/*.jsonl
+scraper/data/*.db
+scraper/data/color_cache.json
+scraper/data/run.log
+scraper/__pycache__/
+admin_app/build/
+
 # Miscellaneous
 *.class
 *.log

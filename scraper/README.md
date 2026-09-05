@@ -12,13 +12,23 @@ far less abusive to the source site. Non-Shopify brands (e.g. Khaadi) need a
 dedicated adapter and are marked `type: custom` / `enabled: false` in
 `brands.yaml`.
 
+Brands are no longer hand-edited in `brands.yaml` - they live in a small
+SQLite registry (`scraper/data/admin.db`) managed through the admin API /
+`admin_app` Flutter panel (see `../admin_app/README.md`), which also knows how
+to auto-detect a brand's platform (Shopify / WooCommerce / a generic
+sitemap+JSON-LD fallback for everything else) from just its URL.
+
 ## Usage
 
 ```bash
 pip install -r requirements.txt
+python migrate_yaml.py            # 0. one-off: import brands.yaml into the DB
 python run.py                     # 1. all enabled brands -> data/products.jsonl
 python to_dart.py --per-brand 16  # 2. sample into lib/data.dart (keeps existing logoUrl)
 python scrape_logos.py            # 3. patch brand logos into lib/data.dart
+
+# or run the admin API + Flutter panel instead of the CLI:
+uvicorn server.app:app --reload --port 8000
 ```
 
 Output is JSONL (one product per line). Load into Postgres later or into
@@ -28,10 +38,15 @@ pandas for the recommendation spike.
 
 | File | Role |
 |---|---|
-| `brands.yaml` | Brand registry (id, base_url, platform type, tier) |
+| `brands.yaml` | **Legacy** - the original static brand registry; superseded by `server/db.py`, kept for reference. `migrate_yaml.py` imports it once. |
+| `server/db.py` | SQLite-backed brand registry + scrape job history |
+| `server/detect.py` | Guesses a brand's platform (Shopify / WooCommerce / generic) from its URL |
+| `server/app.py` | FastAPI admin API - brand CRUD, detect, scrape, publish (used by `../admin_app`) |
 | `shopify_source.py` | Polite paginated fetch of `/products.json` |
-| `normalize.py` | Raw brand data -> unified record (typed cols + JSONB `attributes`) |
-| `run.py` | CLI orchestrator |
+| `woocommerce_source.py` | Polite paginated fetch of the WooCommerce Store API |
+| `generic_source.py` | Sitemap crawl + schema.org JSON-LD extraction, for sites with neither API |
+| `normalize.py` | Raw brand data (any of the three sources) -> unified record (typed cols + JSONB `attributes`) |
+| `run.py` | CLI orchestrator - reads brands from the DB, dispatches to the right adapter |
 | `to_dart.py` | Sample the JSONL into the Flutter app catalog (`lib/data.dart`) |
 | `scrape_logos.py` | Scrape each brand's logo/favicon and patch `logoUrl` into `lib/data.dart` |
 | `colors.py` | Extract dominant garment colours from a product photo (fallback for brands with no Color option) |
