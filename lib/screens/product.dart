@@ -63,7 +63,11 @@ class ProductDetailScreen extends StatelessWidget {
               Stack(
                 children: [
                   AspectRatio(
-                      aspectRatio: 1, child: StripePlaceholder(label: p.imgLabel)),
+                      aspectRatio: 1,
+                      child: StripePlaceholder(
+                          label: p.imgLabel,
+                          imageUrl: p.imageUrl,
+                          decodeWidth: 460)),
                   Positioned(
                     top: kTopInset,
                     left: 16,
@@ -115,38 +119,58 @@ class ProductDetailScreen extends StatelessWidget {
                                 .copyWith(decoration: TextDecoration.lineThrough)),
                       ],
                     ]),
-                    const SizedBox(height: 18),
-                    Text('Color', style: body(12.5, weight: FontWeight.w700)),
-                    const SizedBox(height: 9),
-                    Row(children: [
-                      for (final c in p.colors)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 9),
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Color(c),
-                              shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.border, width: 2),
+                    if (p.colors.isNotEmpty) ...[
+                      const SizedBox(height: 18),
+                      Text('Color', style: body(12.5, weight: FontWeight.w700)),
+                      const SizedBox(height: 9),
+                      Row(children: [
+                        for (final c in p.colors)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 9),
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Color(c),
+                                shape: BoxShape.circle,
+                                border: Border.all(color: AppColors.border, width: 2),
+                              ),
                             ),
                           ),
-                        ),
-                    ]),
+                      ]),
+                    ],
                     const SizedBox(height: 20),
                     Text('Size', style: body(12.5, weight: FontWeight.w700)),
                     const SizedBox(height: 9),
                     Wrap(spacing: 8, runSpacing: 8, children: [
                       for (final s in p.sizes)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(11),
-                            border: Border.all(color: AppColors.border, width: 1.5),
-                          ),
-                          child: Text(s, style: body(12.5, weight: FontWeight.w700)),
-                        ),
+                        Builder(builder: (context) {
+                          final available = p.sizeAvailable(s);
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(11),
+                              color: available ? null : AppColors.sand,
+                              border: Border.all(color: AppColors.border, width: 1.5),
+                            ),
+                            child: Text(s,
+                                style: body(12.5,
+                                        weight: FontWeight.w700,
+                                        color: available
+                                            ? AppColors.ink
+                                            : AppColors.ink.withValues(alpha: 0.35))
+                                    .copyWith(
+                                        decoration: available
+                                            ? null
+                                            : TextDecoration.lineThrough)),
+                          );
+                        }),
                     ]),
+                    if (p.sizes.any((s) => !p.sizeAvailable(s))) ...[
+                      const SizedBox(height: 7),
+                      Text('Struck-through sizes are sold out on the brand site',
+                          style: body(11, color: AppColors.inkSecondary)),
+                    ],
                     const SizedBox(height: 20),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

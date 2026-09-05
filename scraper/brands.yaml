@@ -1,0 +1,100 @@
+# Brand registry for the Product Aggregation Module (Module 6).
+#
+# type: shopify   -> uses the public /products.json endpoint (paginated).
+# type: custom    -> needs a bespoke adapter (not implemented yet).
+#
+# "tier" feeds the CCP fairness work: the recommendation engine must balance
+# relevance against equitable visibility for small/emerging brands, so we need
+# a real head/tail mix here - not just the big textile houses.
+#   established -> large catalog, strong brand recognition, lots of SKUs
+#   emerging    -> smaller designer / independent label, thinner catalog
+
+brands:
+  # ---- established (the "head") --------------------------------------------
+  - id: sana_safinaz
+    name: Sana Safinaz
+    type: shopify
+    base_url: https://sanasafinaz.com
+    tier: established
+    currency: PKR
+
+  - id: gul_ahmed
+    name: Gul Ahmed
+    type: shopify
+    base_url: https://www.gulahmedshop.com
+    tier: established
+    currency: PKR
+
+  - id: sapphire
+    name: Sapphire
+    type: custom          # Shopify store but /products.json is disabled (returns 404)
+    base_url: https://pk.sapphireonline.pk
+    tier: established
+    currency: PKR
+    enabled: false
+
+  - id: beechtree
+    name: Beechtree
+    type: shopify
+    base_url: https://beechtree.pk
+    tier: established
+    currency: PKR
+
+  - id: generation
+    name: Generation
+    type: shopify
+    base_url: https://www.generation.com.pk
+    tier: established
+    currency: PKR
+
+  - id: zellbury
+    name: Zellbury
+    type: shopify
+    base_url: https://www.zellbury.com
+    tier: established
+    currency: PKR
+
+  # ---- emerging / independent (the "tail") -------------------------------
+  - id: vanya
+    name: Vanya
+    type: shopify
+    base_url: https://vanya.pk
+    tier: emerging
+    currency: PKR
+
+  - id: mushq
+    name: Mushq
+    type: shopify
+    base_url: https://mushq.com
+    tier: emerging
+    currency: PKR
+
+  - id: zeen
+    name: Zeen
+    type: shopify
+    base_url: https://www.zeenwoman.com
+    tier: emerging
+    currency: PKR
+
+  - id: zaaviay
+    name: Zaaviay
+    type: shopify
+    base_url: https://zaaviay.com
+    tier: emerging
+    currency: PKR
+
+  - id: suffuse
+    name: Suffuse
+    type: shopify
+    base_url: https://suffuse.pk
+    tier: emerging
+    currency: PKR
+
+  # ---- not on Shopify: needs a dedicated adapter -------------------------
+  - id: khaadi
+    name: Khaadi
+    type: custom
+    base_url: https://www.khaadi.com
+    tier: established
+    currency: PKR
+    enabled: false

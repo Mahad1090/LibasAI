@@ -52,7 +52,7 @@ class RecommendationsScreen extends StatelessWidget {
                     section('Inspired by recent views', null, state.recentProducts),
                   section('Within your budget', null, kProducts.sublist(6, 10)),
                   section('Discover something new', null,
-                      kProducts.where((p) => p.emerging).toList()),
+                      kProducts.where((p) => p.emerging).take(12).toList()),
                 ],
               ),
             ),

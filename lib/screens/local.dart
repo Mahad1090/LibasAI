@@ -36,14 +36,7 @@ class DiscoverLocalScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(children: [
-                          Container(
-                            width: 52,
-                            height: 52,
-                            decoration: BoxDecoration(
-                                color: AppColors.sand, borderRadius: BorderRadius.circular(16)),
-                            alignment: Alignment.center,
-                            child: Text(b.initial, style: heading(20, color: AppColors.accent)),
-                          ),
+                          BrandAvatar(b, size: 52, radius: 16, fontSize: 20),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
@@ -65,7 +58,7 @@ class DiscoverLocalScreen extends StatelessWidget {
                           height: 288,
                           child: HScroller(
                             [
-                              for (final p in kProducts.where((p) => p.brandId == b.id))
+                              for (final p in kProducts.where((p) => p.brandId == b.id).take(12))
                                 ProductCard(p, compact: true)
                             ],
                             padding: EdgeInsets.zero,
@@ -139,15 +132,16 @@ class BrandProfileScreen extends StatelessWidget {
                     Transform.translate(
                       offset: const Offset(0, -30),
                       child: Container(
-                        width: 72,
-                        height: 72,
                         decoration: BoxDecoration(
-                          color: AppColors.accent,
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(24),
                           border: Border.all(color: AppColors.surface, width: 4),
                         ),
-                        alignment: Alignment.center,
-                        child: Text(b.initial, style: heading(26, color: AppColors.surface)),
+                        child: BrandAvatar(b,
+                            size: 72,
+                            radius: 20,
+                            background: AppColors.accent,
+                            foreground: AppColors.surface,
+                            fontSize: 26),
                       ),
                     ),
                     Transform.translate(

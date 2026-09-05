@@ -68,14 +68,100 @@ IconData glyph(String name) {
   }
 }
 
+/// Brand mark: scraped logo on a light tile, falling back to the initial.
+class BrandAvatar extends StatelessWidget {
+  final Brand brand;
+  final double size;
+  final double radius; // 0 or negative => full circle
+  final Color background;
+  final Color foreground;
+  final double fontSize;
+  const BrandAvatar(
+    this.brand, {
+    super.key,
+    this.size = 60,
+    this.radius = -1,
+    this.background = AppColors.sand,
+    this.foreground = AppColors.accent,
+    this.fontSize = 18,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final shape = radius <= 0
+        ? BoxShape.circle
+        : BoxShape.rectangle;
+    final br = radius <= 0 ? null : BorderRadius.circular(radius);
+    final initial = Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: background, shape: shape, borderRadius: br),
+      child: Text(brand.initial, style: heading(fontSize, color: foreground)),
+    );
+    if (brand.logoUrl.isEmpty) return initial;
+    return Container(
+      width: size,
+      height: size,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+          color: Colors.white, shape: shape, borderRadius: br),
+      padding: EdgeInsets.all(size * 0.16),
+      child: Image.network(
+        brand.logoUrl,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.low,
+        gaplessPlayback: true,
+        // decode small - these are tiny on screen
+        cacheWidth: (size * 2.5).round(),
+        errorBuilder: (context, error, stackTrace) => initial,
+      ),
+    );
+  }
+}
+
 class StripePlaceholder extends StatelessWidget {
   final String? label;
   final BorderRadius? radius;
   final bool dark;
-  const StripePlaceholder({super.key, this.label, this.radius, this.dark = false});
+  final String? imageUrl;
+
+  /// Target decode width in logical px; the image is downsampled at decode
+  /// time to ~2x this, which is the single biggest scroll-perf win.
+  final int decodeWidth;
+  const StripePlaceholder(
+      {super.key,
+      this.label,
+      this.radius,
+      this.dark = false,
+      this.imageUrl,
+      this.decodeWidth = 300});
 
   @override
   Widget build(BuildContext context) {
+    if (imageUrl != null && imageUrl!.isNotEmpty) {
+      return RepaintBoundary(
+        child: ClipRRect(
+          borderRadius: radius ?? BorderRadius.zero,
+          child: Image.network(
+            imageUrl!,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+            filterQuality: FilterQuality.low,
+            gaplessPlayback: true,
+            cacheWidth: decodeWidth * 2,
+            loadingBuilder: (context, child, progress) =>
+                progress == null ? child : _stripe(context),
+            errorBuilder: (context, error, stackTrace) => _stripe(context),
+          ),
+        ),
+      );
+    }
+    return _stripe(context);
+  }
+
+  Widget _stripe(BuildContext context) {
     return ClipRRect(
       borderRadius: radius ?? BorderRadius.zero,
       child: CustomPaint(
@@ -145,6 +231,8 @@ class PrimaryButton extends StatelessWidget {
           child: Container(
             height: 54,
             alignment: Alignment.center,
+            constraints: const BoxConstraints(minWidth: 150),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -354,6 +442,7 @@ class ProductCard extends StatelessWidget {
               Positioned.fill(
                 child: StripePlaceholder(
                   label: product.imgLabel,
+                  imageUrl: product.imageUrl,
                   radius: BorderRadius.circular(AppRadius.card),
                 ),
               ),

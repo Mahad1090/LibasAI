@@ -191,7 +191,9 @@ class SearchResultsScreen extends StatelessWidget {
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 14,
                     childAspectRatio: 0.56,
-                    children: [for (final p in kProducts) ProductCard(p)],
+                    // cap the eager (shrink-wrapped) grid - rendering all 160
+                    // cards + images at once is the main source of scroll jank
+                    children: [for (final p in kProducts.take(30)) ProductCard(p)],
                   ),
                 ],
               ),

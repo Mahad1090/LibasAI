@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_scope.dart';
 import 'data.dart';
 import 'theme.dart';
@@ -18,7 +19,16 @@ import 'screens/saved.dart';
 import 'screens/account.dart';
 import 'screens/states.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Pre-warm fonts so text doesn't re-layout mid-navigation.
+  GoogleFonts.config.allowRuntimeFetching = true;
+  try {
+    await GoogleFonts.pendingFonts([
+      GoogleFonts.manrope(),
+      GoogleFonts.playfairDisplay(),
+    ]).timeout(const Duration(seconds: 3));
+  } catch (_) {/* offline / slow - fall back to runtime load */}
   runApp(LibasAIApp(state: AppState()));
 }
 

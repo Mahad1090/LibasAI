@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: 288,
                           child: HScroller([
-                            for (final p in kProducts.where((p) => p.emerging))
+                            for (final p in kProducts.where((p) => p.emerging).take(12))
                               ProductCard(p, compact: true),
                           ]),
                         ),
@@ -134,13 +134,7 @@ class HomeScreen extends StatelessWidget {
                             child: SizedBox(
                               width: 68,
                               child: Column(children: [
-                                Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: const BoxDecoration(color: AppColors.sand, shape: BoxShape.circle),
-                                  alignment: Alignment.center,
-                                  child: Text(b.initial, style: heading(18, color: AppColors.accent)),
-                                ),
+                                BrandAvatar(b, size: 60, fontSize: 18),
                                 const SizedBox(height: 7),
                                 Text(b.name,
                                     textAlign: TextAlign.center,

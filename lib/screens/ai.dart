@@ -485,7 +485,7 @@ class AiResultsScreen extends StatelessWidget {
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 14,
                     childAspectRatio: 0.56,
-                    children: [for (final p in kProducts) ProductCard(p)],
+                    children: [for (final p in kProducts.take(30)) ProductCard(p)],
                   ),
                 ],
               ),

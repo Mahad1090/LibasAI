@@ -9,16 +9,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
-  late final AnimationController _c =
-      AnimationController(vsync: this, duration: const Duration(seconds: 1))..repeat(reverse: true);
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -26,38 +17,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       child: Container(
         color: AppColors.splash,
         alignment: Alignment.center,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            FractionallySizedBox(
-              widthFactor: 0.82,
-              child: Image.asset('assets/libasai-logo.png'),
-            ),
-            Positioned(
-              bottom: 56,
-              child: Row(
-                children: List.generate(3, (i) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 3.5),
-                    child: FadeTransition(
-                      opacity: Tween(begin: 0.3, end: 1.0).animate(
-                        CurvedAnimation(
-                          parent: _c,
-                          curve: Interval(i * 0.15, 1.0, curve: Curves.easeInOut),
-                        ),
-                      ),
-                      child: Container(
-                        width: 6,
-                        height: 6,
-                        decoration: const BoxDecoration(
-                            color: Color(0xFFF7EDDF), shape: BoxShape.circle),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
-          ],
+        child: FractionallySizedBox(
+          widthFactor: 0.82,
+          child: Image.asset('assets/libasai-logo.png'),
         ),
       ),
     );
@@ -119,8 +81,13 @@ class OnboardingScreen extends StatelessWidget {
         ),
         Expanded(
           flex: step == 3 ? 64 : 56,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 28, 24, 30),
+          child: LayoutBuilder(builder: (context, box) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: box.maxHeight),
+                child: IntrinsicHeight(
+                  child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 28, 24, 48),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -175,7 +142,10 @@ class OnboardingScreen extends StatelessWidget {
                           child: Icon(glyph(f.$1), size: 16, color: AppColors.accent),
                         ),
                         const SizedBox(width: 12),
-                        Text(f.$2, style: body(13.5, weight: FontWeight.w600)),
+                        Expanded(
+                          child: Text(f.$2,
+                              style: body(13.5, weight: FontWeight.w600)),
+                        ),
                       ]),
                     ),
                 ],
@@ -213,6 +183,10 @@ class OnboardingScreen extends StatelessWidget {
               ],
             ),
           ),
+                ),
+              ),
+            );
+          }),
         ),
       ],
     );
