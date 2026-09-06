@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Features Suite — LibasAI</title>
+  <meta name="description" content="Discover LibasAI's 4 specialized fashion AI engines: Conversational Search, Visual Image Search, Multi-Brand Compare, and Outfit Builder across 80+ Pakistani labels.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-hub-hero {
+      padding: clamp(56px, 7vw, 96px) clamp(20px, 5vw, 72px) 48px;
+      text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .lb-engines-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+    }
+    @media (max-width: 860px) {
+      .lb-engines-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .lb-engine-card {
+      background: var(--lb-white);
+      border: 1px solid var(--lb-hairline);
+      border-radius: 4px;
+      padding: 36px clamp(24px, 3vw, 36px);
+      box-shadow: 0 16px 40px rgba(25,20,18,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 240ms var(--lb-ease), box-shadow 240ms var(--lb-ease), border-color 200ms ease;
+    }
+    .lb-engine-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 56px rgba(25,20,18,0.12);
+      border-color: var(--lb-burgundy);
+    }
+    .lb-agent-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+    @media (max-width: 900px) {
+      .lb-agent-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .lb-agent-box {
+      background: rgba(247,237,223,0.08);
+      border: 1px solid rgba(247,237,223,0.18);
+      border-radius: 4px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-mark" viewBox="0 0 24 24"><path d="M12 4v16M5 8l14 8M19 8L5 16"/></symbol>
+      <symbol id="lb-i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+      <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="lb-i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="lb-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false">Brands</button>
+          <div class="lb-foryou-wrap">
+            <button type="button" id="lb-foryou-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false">For You</button>
+            <div id="lb-menu-foryou" class="lb-foryou-host" role="group">
+              <a href="/for-you/picks">Personalized Picks</a>
+              <a href="/for-you/recently-viewed">Recently Viewed</a>
+              <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
+              <a href="/for-you/budget">Within Your Budget</a>
+            </div>
+          </div>
+          <a href="/ai-features.html" id="lb-features-trigger" class="lb-nav__trigger is-current">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson); font-weight:700;">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <button type="button" id="lb-search-trigger" class="lb-icon-btn" aria-label="Search">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+          </button>
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/ai/ask" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            Ask LibasAI
+          </a>
+          <button type="button" id="lb-burger-btn" class="lb-burger" aria-label="Open menu">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-menu"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mega menu -->
+      <div class="lb-collapse lb-mega-host">
+        <div class="lb-collapse-inner">
+          <div class="lb-mega-stack">
+            <div id="lb-menu-features" class="lb-mega-panel is-active">
+              <div class="lb-mega-inner lb-mega-inner--features">
+                <div class="lb-features-head">
+                  <div class="lb-mega-eyebrow" style="text-align:center;">AI Features</div>
+                  <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
+                </div>
+                <div class="lb-features-grid">
+                  <a href="/ai/ask" class="lb-feature-card">
+                    <span class="lb-feature-num">01</span>
+                    <strong>Ask LibasAI</strong>
+                    <p>Natural-language fashion search.</p>
+                  </a>
+                  <a href="/ai/image-search" class="lb-feature-card">
+                    <span class="lb-feature-num">02</span>
+                    <strong>Image Search</strong>
+                    <p>Upload a look and find similar pieces.</p>
+                  </a>
+                  <a href="/ai/compare" class="lb-feature-card">
+                    <span class="lb-feature-num">03</span>
+                    <strong>Compare</strong>
+                    <p>Compare products side-by-side.</p>
+                  </a>
+                  <a href="/ai/outfit-builder" class="lb-feature-card">
+                    <span class="lb-feature-num">04</span>
+                    <strong>Outfit Builder</strong>
+                    <p>Create complete looks with AI.</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search overlay -->
+      <div id="lb-search-overlay" class="lb-collapse lb-search-overlay" role="search">
+        <div class="lb-collapse-inner">
+          <div class="lb-search-inner">
+            <h2 class="lb-search-label">Search LibasAI</h2>
+            <form action="/ai/ask" method="GET" class="lb-search-field" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(document.getElementById('lb-search-input').value);">
+              <input id="lb-search-input" type="text" placeholder="Search brands, fabrics, or styles...">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="lb-mobile-nav" class="lb-mobile">
+      <div class="lb-mobile__top">
+        <a href="/" class="lb-logo"><img src="assets/libasai-logo.png" alt=""><span>LibasAI</span></a>
+        <button type="button" id="lb-mobile-close" class="lb-burger"><svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-close"></use></svg></button>
+      </div>
+      <div class="lb-mobile__body">
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="true">AI Features</button>
+          <div class="lb-collapse lb-accordion__panel is-open">
+            <div class="lb-collapse-inner">
+              <a href="/ai/ask">Ask LibasAI</a>
+              <a href="/ai/image-search">Image Search</a>
+              <a href="/ai/compare">Multi-Brand Compare</a>
+              <a href="/ai/outfit-builder">Outfit Builder</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="lb-hub-hero">
+    <div class="lb-breadcrumb" style="justify-content:center;">
+      <a href="/">Home</a><span>/</span><span style="color:var(--lb-burgundy);">AI Features Suite</span>
+    </div>
+    <div class="lb-eyebrow" style="color:var(--lb-rose);">The Intelligence Behind LibasAI</div>
+    <h1 class="lb-h1" style="font-size:clamp(36px,5.2vw,72px);">Four AI Engines.<br>One Seamless Wardrobe.</h1>
+    <p class="lb-body" style="font-size:18px; max-width:640px; margin:16px auto 0;">
+      LibasAI connects you directly to over 80 Pakistani fashion labels with zero checkout friction or markups. Explore our specialized AI tools designed to help you find the exact style, value, and look you want.
+    </p>
+  </div>
+
+  <!-- THE 4 ENGINES SHOWCASE -->
+  <section class="lb-section" style="padding-top:0;">
+    <div class="lb-wrap">
+      <div class="lb-engines-grid">
+
+        <!-- 01: Ask LibasAI -->
+        <div class="lb-engine-card">
+          <div>
+            <span class="lb-feature-num">01</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:28px; font-weight:800; margin:12px 0 10px; color:var(--lb-charcoal);">Ask LibasAI (Conversational)</h2>
+            <p class="lb-body" style="margin-top:0; font-size:15px;">
+              Natural-language fashion search that understands nuances like <em>"rust kurta for an autumn wedding under Rs. 6,000"</em> without clumsy keyword filtering. It extracts fabric, occasion, and pricing parameters automatically.
+            </p>
+            <div style="background:var(--lb-tint); padding:12px 14px; border-radius:3px; margin:18px 0; font-size:13px; color:var(--lb-charcoal);">
+              <strong>Try asking:</strong> "Find a 3-piece unstitched lawn suit under Rs. 5k from Gul Ahmed or Zellbury"
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <a href="/ai/ask" class="lb-cta" style="flex:1; justify-content:center;">Launch AI Chat Assistant →</a>
+          </div>
+        </div>
+
+        <!-- 02: Image Search -->
+        <div class="lb-engine-card">
+          <div>
+            <span class="lb-feature-num">02</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:28px; font-weight:800; margin:12px 0 10px; color:var(--lb-charcoal);">Visual Image Search</h2>
+            <p class="lb-body" style="margin-top:0; font-size:15px;">
+              Drop a screenshot from Instagram, Pinterest, or a family photo. Our computer vision engine identifies the silhouette, fabric texture, and embroidery pattern, searching through live catalog inventory across all brands.
+            </p>
+            <div style="background:var(--lb-tint); padding:12px 14px; border-radius:3px; margin:18px 0; font-size:13px; color:var(--lb-charcoal);">
+              <strong>Key capability:</strong> Matches specific garment regions like neckline embroidery, sleeve cutwork, and print colors.
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <a href="/ai/image-search" class="lb-cta" style="flex:1; justify-content:center;">Open Image Search Studio →</a>
+          </div>
+        </div>
+
+        <!-- 03: Compare -->
+        <div class="lb-engine-card">
+          <div>
+            <span class="lb-feature-num">03</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:28px; font-weight:800; margin:12px 0 10px; color:var(--lb-charcoal);">Multi-Brand Comparison</h2>
+            <p class="lb-body" style="margin-top:0; font-size:15px;">
+              Stop opening 15 browser tabs across different brand websites. Compare similar looks side-by-side with automated breakdowns of fabric quality, stitch type, shipping timelines, and our proprietary AI Value rating.
+            </p>
+            <div style="background:var(--lb-tint); padding:12px 14px; border-radius:3px; margin:18px 0; font-size:13px; color:var(--lb-charcoal);">
+              <strong>AI Verdict:</strong> Highlights which piece gives the best price-to-fabric ratio and lowest return rate.
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <a href="/ai/compare" class="lb-cta" style="flex:1; justify-content:center;">Launch Comparison Matrix →</a>
+          </div>
+        </div>
+
+        <!-- 04: Outfit Builder -->
+        <div class="lb-engine-card">
+          <div>
+            <span class="lb-feature-num">04</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:28px; font-weight:800; margin:12px 0 10px; color:var(--lb-charcoal);">AI Outfit Builder</h2>
+            <p class="lb-body" style="margin-top:0; font-size:15px;">
+              Complete the ensemble effortlessly. Pick any hero kurta or suit, and LibasAI coordinates complementary dupattas, pants, traditional khussas, and artisanal jewelry, with real-time color harmony scoring.
+            </p>
+            <div style="background:var(--lb-tint); padding:12px 14px; border-radius:3px; margin:18px 0; font-size:13px; color:var(--lb-charcoal);">
+              <strong>Smart Styling:</strong> Calculates total outfit budget and provides direct outbound purchase links to each brand.
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <a href="/ai/outfit-builder" class="lb-cta" style="flex:1; justify-content:center;">Build an Outfit Now →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE: 4 COLLABORATIVE AGENTS -->
+  <section class="lb-section lb-section--dark">
+    <div class="lb-wrap">
+      <div class="lb-section__head centered">
+        <div class="lb-eyebrow" style="color:var(--lb-rose);">Multi-Agent Architecture</div>
+        <h2 class="lb-h2" style="color:var(--lb-cream); font-size:clamp(30px,3.4vw,48px);">Four Specialized Agents Working in Concert</h2>
+        <p class="lb-body" style="color:rgba(247,237,223,0.65); max-width:580px; margin:12px auto 0;">
+          Rather than relying on generic LLM prompts, LibasAI deploys four specialized autonomous agents for each shopping task.
+        </p>
+      </div>
+
+      <div class="lb-agent-grid">
+        <div class="lb-agent-box">
+          <div style="width:44px; height:44px; border-radius:50%; background:rgba(247,237,223,0.12); color:var(--lb-cream); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <svg style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8;"><use href="#lb-i-search"></use></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:18px; margin:0 0 6px; color:var(--lb-cream);">Search Agent</h3>
+          <p style="font-size:13px; color:rgba(247,237,223,0.6); margin:0; line-height:1.55;">
+            Parses intent, queries product indexes, and handles Pakistani fashion terminology (pret, lawn, zari, khussa).
+          </p>
+        </div>
+
+        <div class="lb-agent-box">
+          <div style="width:44px; height:44px; border-radius:50%; background:rgba(247,237,223,0.12); color:var(--lb-cream); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <svg style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8;"><use href="#lb-i-user"></use></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:18px; margin:0 0 6px; color:var(--lb-cream);">Recommendation Agent</h3>
+          <p style="font-size:13px; color:rgba(247,237,223,0.6); margin:0; line-height:1.55;">
+            Ranks matches based on your individual budget, brand affinity, and past interaction history.
+          </p>
+        </div>
+
+        <div class="lb-agent-box">
+          <div style="width:44px; height:44px; border-radius:50%; background:rgba(247,237,223,0.12); color:var(--lb-cream); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <svg style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8;"><use href="#lb-i-mark"></use></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:18px; margin:0 0 6px; color:var(--lb-cream);">Comparison Agent</h3>
+          <p style="font-size:13px; color:rgba(247,237,223,0.6); margin:0; line-height:1.55;">
+            Extracts fabric specifications, calculates real discount percentages, and assesses delivery guarantees.
+          </p>
+        </div>
+
+        <div class="lb-agent-box">
+          <div style="width:44px; height:44px; border-radius:50%; background:rgba(247,237,223,0.12); color:var(--lb-cream); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <svg style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8;"><use href="#lb-i-heart"></use></svg>
+          </div>
+          <h3 style="font-family:'Playfair Display',serif; font-size:18px; margin:0 0 6px; color:var(--lb-cream);">Outfit Agent</h3>
+          <p style="font-size:13px; color:rgba(247,237,223,0.6); margin:0; line-height:1.55;">
+            Applies fashion color wheel rules and occasion dress codes to suggest harmonious cross-brand pairings.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find Master Tailors</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027 · Areeba Waqar, Mahad Malik &amp; M. Shayan Asad</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+</body>
+</html>

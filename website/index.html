@@ -1,0 +1,3434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LibasAI — AI-Powered Shopping Assistant for Pakistani Fashion</title>
+  <meta name="description" content="Discover, search, and compare Pakistani fashion across 80+ top labels including Sana Safinaz, Gul Ahmed, Zellbury, Beechtree, and emerging local brands with AI visual search and conversational styling.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-mark" viewBox="0 0 24 24"><path d="M12 4v16M5 8l14 8M19 8L5 16"/></symbol>
+      <symbol id="lb-i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+      <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="lb-i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="lb-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="lb-i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+      <symbol id="lb-i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-sparkles" viewBox="0 0 24 24"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/></symbol>
+      <symbol id="lb-i-sliders" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
+      <symbol id="lb-i-hanger" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8L2.4 16.2A2 2 0 0 0 4 19h16a2 2 0 0 0 1.6-2.8L14.4 6.8c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3z"/><circle cx="12" cy="19" r="1"/></symbol>
+      <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">
+            Discover
+          </button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">
+            Brands
+          </button>
+          <button type="button" id="lb-foryou-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-foryou">
+            For You
+          </button>
+          <a href="/ai-features.html" id="lb-features-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-features">
+            AI Features
+          </a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">
+            Find Tailors
+          </a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson); font-weight:700;">
+            Get Stitched
+          </a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <button type="button" id="lb-search-trigger" class="lb-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lb-search-overlay" aria-label="Search">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+          </button>
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Stitching Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/ai/ask" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            Ask LibasAI
+          </a>
+          <button type="button" id="lb-burger-btn" class="lb-burger" aria-label="Open menu">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-menu"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mega menu -->
+      <div class="lb-collapse lb-mega-host">
+        <div class="lb-collapse-inner">
+          <div class="lb-mega-stack">
+
+            <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
+              <div class="lb-mega-inner">
+                <div>
+                  <h3 class="lb-mega-heading">Discover</h3>
+                  <div class="lb-mega-links">
+                    <a href="/discover/new-arrivals">New Arrivals</a>
+                    <a href="/discover/trending">Trending</a>
+                    <a href="/for-you">For You</a>
+                    <a href="/discover/eid">Eid Collection</a>
+                    <a href="/discover/wedding">Wedding Edit</a>
+                    <a href="/discover/formal">Formal Wear</a>
+                    <a href="/discover/casual">Casual Pret</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-subhead">Shop by category</div>
+                  <div class="lb-mega-categories">
+                    <a href="/shop/women">Women</a>
+                    <a href="/shop/men">Men</a>
+                    <a href="/shop/pret">Pret</a>
+                    <a href="/shop/unstitched">Unstitched</a>
+                    <a href="/shop/kurta">Kurta</a>
+                    <a href="/shop/shalwar-kameez">Shalwar Kameez</a>
+                    <a href="/shop/lawn">Lawn</a>
+                    <a href="/shop/accessories">Accessories</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-visual"><image-slot id="menu-discover-visual" shape="rect" placeholder="Editorial: contemporary Pakistani outfit, warm studio light" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot></div>
+                  <div class="lb-mega-feature-card">
+                    <strong>Ask LibasAI to find your look</strong>
+                    <a href="/ai/ask">Start AI Search →</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-brands" class="lb-mega-panel" role="group" aria-label="Brands">
+              <div class="lb-mega-inner">
+                <div>
+                  <h3 class="lb-mega-heading">Brands</h3>
+                  <div class="lb-mega-links">
+                    <a href="/brands">All Brands (80+)</a>
+                    <a href="/brands/popular">Popular Brands</a>
+                    <a href="/brands/emerging">Emerging Brands</a>
+                    <a href="/brands/local">Discover Local</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-subhead">Featured Pakistani labels</div>
+                  <div class="lb-brand-list">
+                    <a href="/brands" class="lb-brand-row"><span>Sana Safinaz</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands" class="lb-brand-row"><span>Gul Ahmed</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands" class="lb-brand-row"><span>Zellbury</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands" class="lb-brand-row"><span>Beechtree</span><span class="lb-brand-row__arrow">→</span></a>
+                  </div>
+                </div>
+                <div class="lb-spotlight">
+                  <h4>Discover Local</h4>
+                  <p>Meet emerging Pakistani labels worth discovering.</p>
+                  <a href="/brands/local">Explore Local Brands →</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-foryou" class="lb-mega-panel" role="group" aria-label="For You">
+              <div class="lb-mega-inner">
+                <div>
+                  <div class="lb-mega-eyebrow">Personalized AI</div>
+                  <h3 class="lb-mega-heading">Curated For You</h3>
+                  <div class="lb-mega-links">
+                    <a href="/for-you/picks">Personalized Picks</a>
+                    <a href="/for-you/recently-viewed">Recently Viewed</a>
+                    <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
+                    <a href="/for-you/budget">Within Your Budget</a>
+                    <a href="/for-you" style="color:var(--lb-burgundy); font-weight:800; margin-top:6px;">Your Style Feed &rarr;</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-subhead">Explore by your preferences</div>
+                  <div class="lb-brand-list">
+                    <a href="/for-you/picks" class="lb-brand-row"><span>Lawn &amp; Summer Pret</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/for-you/picks" class="lb-brand-row"><span>Festive &amp; Formal Edit</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/for-you/budget" class="lb-brand-row"><span>Under PKR 12,000</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/get-stitched.html" class="lb-brand-row"><span>Bespoke Tailoring Picks</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-visual">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Curated For You" style="width:100%; height:100%; object-fit:cover; display:block;">
+                  </div>
+                  <div class="lb-mega-feature-card">
+                    <strong>Trained on your taste &amp; fit</strong>
+                    <a href="/for-you">Open Your Style Radar &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="AI Features">
+              <div class="lb-mega-inner lb-mega-inner--features">
+                <div class="lb-features-head">
+                  <div class="lb-mega-eyebrow" style="text-align:center;">AI Features</div>
+                  <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
+                </div>
+                <div class="lb-features-grid">
+                  <a href="/ai/ask" class="lb-feature-card">
+                    <span class="lb-feature-num">01</span>
+                    <strong>Ask LibasAI</strong>
+                    <p>Natural-language conversational fashion search.</p>
+                  </a>
+                  <a href="/ai/image-search" class="lb-feature-card">
+                    <span class="lb-feature-num">02</span>
+                    <strong>Image Search</strong>
+                    <p>Upload a look photo and find visually similar pieces.</p>
+                  </a>
+                  <a href="/ai/compare" class="lb-feature-card">
+                    <span class="lb-feature-num">03</span>
+                    <strong>Compare</strong>
+                    <p>Compare cuts, fabrics, and prices across brands.</p>
+                  </a>
+                  <a href="/ai/outfit-builder" class="lb-feature-card">
+                    <span class="lb-feature-num">04</span>
+                    <strong>Outfit Builder</strong>
+                    <p>Coordinate complete looks with AI color harmony.</p>
+                  </a>
+                </div>
+                <a href="/ai" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">
+                  <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+                  Explore All AI Features →
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Search overlay -->
+      <div id="lb-search-overlay" class="lb-collapse lb-search-overlay" role="search" aria-label="Site search">
+        <div class="lb-collapse-inner">
+          <div class="lb-search-inner">
+            <h2 class="lb-search-label">What are you looking for?</h2>
+            <form action="/ai/ask" method="GET" class="lb-search-field" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(document.getElementById('lb-search-input').value);">
+              <svg class="lb-icon" style="width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+              <input id="lb-search-input" type="text" placeholder="Try: rust embroidered kurta under Rs. 6,000" aria-label="Search LibasAI">
+              <a href="/ai/image-search" class="lb-icon-btn" aria-label="Search by image">
+                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg>
+              </a>
+              <button type="submit" class="lb-icon-btn" aria-label="Search">
+                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+              </button>
+            </form>
+            <div class="lb-search-cols">
+              <div class="lb-search-col">
+                <h4>Recent Searches</h4>
+                <a href="/ai/ask?q=rust+kurta+wedding">Rust kurta for wedding</a>
+                <a href="/ai/ask?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
+                <a href="/ai/ask?q=formal+shalwar+kameez">Formal shalwar kameez</a>
+              </div>
+              <div class="lb-search-col">
+                <h4>Trending Searches</h4>
+                <a href="/ai/ask?q=eid+collection+2026">Eid collection 2026</a>
+                <a href="/ai/ask?q=embroidered+kurta">Embroidered lawn kurta</a>
+                <a href="/ai/ask?q=velvet+shawl+formal">Velvet formal shawl</a>
+              </div>
+              <div class="lb-search-col">
+                <h4>Suggested Categories</h4>
+                <div class="lb-search-chips">
+                  <a href="/shop/kurta" class="lb-search-chip">Kurta</a>
+                  <a href="/shop/lawn" class="lb-search-chip">Lawn</a>
+                  <a href="/discover/wedding" class="lb-search-chip">Wedding</a>
+                  <a href="/discover/formal" class="lb-search-chip">Formal</a>
+                  <a href="/shop/unstitched" class="lb-search-chip">Unstitched</a>
+                  <a href="/shop/accessories" class="lb-search-chip">Accessories</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="lb-mobile__top">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+        <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
+          <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-close"></use></svg>
+        </button>
+      </div>
+      <div class="lb-mobile__body">
+        <div class="lb-mobile__icons">
+          <a href="/ai/ask">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+            Search
+          </a>
+          <a href="/wishlist">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+            Wishlist
+          </a>
+          <a href="/account">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+            Profile
+          </a>
+        </div>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Discover
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/discover/new-arrivals">New Arrivals</a>
+              <a href="/discover/trending">Trending</a>
+              <a href="/for-you">For You</a>
+              <a href="/discover/eid">Eid</a>
+              <a href="/discover/wedding">Wedding</a>
+              <a href="/discover/formal">Formal</a>
+              <a href="/discover/casual">Casual</a>
+              <a href="/shop/women">Women</a>
+              <a href="/shop/men">Men</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Brands
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/brands">All Brands</a>
+              <a href="/brands/popular">Popular Brands</a>
+              <a href="/brands/emerging">Emerging Brands</a>
+              <a href="/brands/local">Discover Local</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="/for-you" class="lb-mobile__simple">For You</a>
+
+        <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
+          AI Features Suite
+          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
+        </a>
+      </div>
+      <div class="lb-mobile__footer">
+        <a href="/ai/ask" class="lb-cta lb-cta--wide">
+          <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          Ask LibasAI
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="lb-section">
+    <div class="lb-wrap lb-hero__grid">
+      <div class="lb-reveal is-visible">
+        <div class="lb-eyebrow">An AI-Powered Shopping Assistant</div>
+        <h1 class="lb-h1" style="font-size:clamp(42px,5.8vw,88px);">Tell us what you want.<br><span style="font-style:italic;">LibasAI</span> finds the look.</h1>
+        <p class="lb-body" style="max-width:440px; font-size:17px;">Across dozens of Pakistani labels at once. Describe an outfit, drop a photo, or compare prices, and let the assistant do the browsing.</p>
+
+        <form action="/ai/ask" method="GET" class="lb-search-hero" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(this.querySelector('input').value);">
+          <svg style="width:20px;height:20px;flex-shrink:0;fill:none;stroke:var(--lb-burgundy);stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          <input type="text" placeholder="Find me a black embroidered kurta under Rs. 8,000" aria-label="Ask LibasAI">
+          <div class="lb-search-hero__actions">
+            <a href="/ai/ask" aria-label="Search by voice" style="width:44px;height:44px;border:none;background:none;border-radius:50%;color:var(--lb-charcoal);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-mic"></use></svg></a>
+            <a href="/ai/image-search" aria-label="Search by image" style="width:44px;height:44px;border:none;background:none;border-radius:50%;color:var(--lb-charcoal);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg></a>
+            <button type="submit" class="lb-search-hero__send" aria-label="Send"><svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-arrow-right"></use></svg></button>
+          </div>
+        </form>
+
+        <div class="lb-chip-rail" role="list" aria-label="Quick prompts">
+          <a class="lb-chip" role="listitem" href="/ai/ask?q=eid-look-under-12k">Eid look under Rs. 12k</a>
+          <a class="lb-chip" role="listitem" href="/ai/compare">Compare black kurtas</a>
+          <a class="lb-chip" role="listitem" href="/ai/outfit-builder">Style this for a wedding</a>
+          <a class="lb-chip" role="listitem" href="/ai/image-search">Find this from a photo</a>
+        </div>
+      </div>
+
+      <div class="lb-hero__collage lb-reveal is-visible">
+        <div class="lb-hero__img lb-hero__img--a">
+          <image-slot id="hero-a" shape="rect" placeholder="Pakistani fashion editorial: model in contemporary shalwar kameez, warm studio light" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot>
+        </div>
+        <div class="lb-hero__img lb-hero__img--b">
+          <image-slot id="hero-b" shape="rect" placeholder="Editorial detail shot: embroidery and fabric texture" src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441"></image-slot>
+        </div>
+        <div class="lb-hero__tag">80+ brands &middot; 12K+ pieces &middot; 4.8 Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- HIGH-END FASHION EDITORIAL SPREAD: LIBASAI MULTI-AGENT INTELLIGENCE     -->
+  <!-- ======================================================================= -->
+  <style id="lb-editorial-styles">
+    /* Core Editorial Spread Styles */
+    .lb-ed-spread {
+      background: #F7EDDF;
+      color: #191412;
+      position: relative;
+      overflow: hidden;
+      padding: clamp(64px, 7vw, 110px) 0 clamp(80px, 8vw, 130px);
+      border-top: none;
+      border-bottom: 1px solid rgba(25, 20, 18, 0.12);
+    }
+
+    /* Editorial Section Intro */
+    .lb-ed-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr);
+      gap: clamp(32px, 5vw, 72px);
+      align-items: center;
+      margin-bottom: clamp(48px, 6vw, 72px);
+    }
+    @media (max-width: 900px) {
+      .lb-ed-intro {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lb-ed-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #840E34;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .lb-ed-label::before {
+      content: '';
+      width: 24px;
+      height: 1.5px;
+      background: #840E34;
+      display: inline-block;
+    }
+
+    .lb-ed-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(38px, 5.2vw, 76px);
+      line-height: 0.96;
+      font-weight: 800;
+      color: #191412;
+      letter-spacing: -0.025em;
+      margin: 0 0 24px;
+    }
+    .lb-ed-title em {
+      font-style: italic;
+      color: #840E34;
+      font-weight: 600;
+      display: block;
+    }
+
+    .lb-ed-lead {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(15.5px, 1.6vw, 18px);
+      line-height: 1.65;
+      color: rgba(25, 20, 18, 0.72);
+      max-width: 520px;
+      margin: 0 0 24px;
+    }
+    .lb-ed-meta-tag {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(25, 20, 18, 0.5);
+      border-top: 1px solid rgba(25, 20, 18, 0.12);
+      padding-top: 14px;
+      display: inline-block;
+    }
+
+    /* Intro Collage on Opposite Side */
+    .lb-ed-intro-visual {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .lb-ed-hero-img-wrap {
+      position: relative;
+      width: min(100%, 420px);
+      aspect-ratio: 3/4;
+      box-shadow: 0 30px 60px rgba(25, 20, 18, 0.16);
+      background: #EFE3D0;
+    }
+    .lb-ed-hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .lb-ed-hero-patch {
+      position: absolute;
+      bottom: -24px;
+      left: -28px;
+      width: 160px;
+      aspect-ratio: 1;
+      border: 6px solid #F7EDDF;
+      box-shadow: 0 16px 36px rgba(25, 20, 18, 0.14);
+      overflow: hidden;
+      background: #EFE3D0;
+    }
+    .lb-ed-hero-patch img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .lb-ed-seal {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #840E34;
+      color: #F7EDDF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Manrope', sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.15;
+      box-shadow: 0 10px 24px rgba(132, 14, 52, 0.3);
+      padding: 8px;
+      transform: rotate(8deg);
+      border: 2px dashed rgba(247, 237, 223, 0.4);
+    }
+
+    /* EDITORIAL PROGRESS RAIL */
+    .lb-ed-rail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(25, 20, 18, 0.14);
+      border-bottom: 1px solid rgba(25, 20, 18, 0.14);
+      padding: 12px 0;
+      margin: 40px 0 64px;
+      position: sticky;
+      top: 80px;
+      z-index: 25;
+      background: rgba(247, 237, 223, 0.94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    @media (max-width: 680px) {
+      .lb-ed-rail {
+        overflow-x: auto;
+        justify-content: flex-start;
+        gap: 24px;
+        padding: 10px 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .lb-ed-rail::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+    }
+    .lb-ed-rail__btn {
+      background: none;
+      border: none;
+      padding: 6px 12px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(25, 20, 18, 0.5);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      position: relative;
+      transition: color 180ms ease;
+      white-space: nowrap;
+    }
+    .lb-ed-rail__btn strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      color: #840E34;
+      font-weight: 800;
+    }
+    .lb-ed-rail__btn.is-active {
+      color: #191412;
+    }
+    .lb-ed-rail__btn.is-active::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -13px;
+      height: 2px;
+      background: #840E34;
+    }
+
+    /* MOMENT 01: SEARCH AGENT (Tall Vertical Editorial Panel) */
+    .lb-ed-search-panel {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1.25fr) minmax(0, 1.15fr);
+      gap: clamp(24px, 4vw, 56px);
+      background: #FFFFFF;
+      border: 1px solid rgba(25, 20, 18, 0.1);
+      padding: clamp(32px, 4vw, 56px);
+      margin-bottom: 72px;
+      position: relative;
+      box-shadow: 0 16px 44px rgba(25, 20, 18, 0.05);
+    }
+    @media (max-width: 900px) {
+      .lb-ed-search-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+    .lb-ed-search-spine {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(25, 20, 18, 0.1);
+      padding-right: 16px;
+    }
+    @media (max-width: 900px) {
+      .lb-ed-search-spine {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid rgba(25, 20, 18, 0.1);
+        padding: 0 0 16px 0;
+        align-items: baseline;
+      }
+    }
+    .lb-ed-spine-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(56px, 6vw, 92px);
+      font-weight: 800;
+      color: #840E34;
+      line-height: 0.85;
+    }
+    .lb-ed-spine-text {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(25, 20, 18, 0.4);
+      margin-bottom: 12px;
+    }
+    @media (max-width: 900px) {
+      .lb-ed-spine-text {
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+    }
+
+    .lb-ed-search-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    .lb-ed-search-caption-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin-bottom: 16px;
+    }
+    .lb-ed-search-query-quote {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(24px, 3.2vw, 42px);
+      font-style: italic;
+      line-height: 1.15;
+      color: #191412;
+      margin: 0 0 24px;
+      border-left: 3px solid #840E34;
+      padding-left: 20px;
+    }
+    .lb-ed-search-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: rgba(25, 20, 18, 0.7);
+      margin-bottom: 28px;
+    }
+
+    /* Floating visual tags connected with animated SVG lines */
+    .lb-ed-query-connector {
+      width: 100%;
+      height: 20px;
+      margin: -10px 0 16px;
+      overflow: visible;
+    }
+    .lb-ed-animated-stroke {
+      animation: lbDashLine 18s linear infinite;
+    }
+    @keyframes lbDashLine {
+      to { stroke-dashoffset: -200; }
+    }
+    .lb-ed-tags-floating {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .lb-ed-tag-float {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      background: #F7EDDF;
+      color: #840E34;
+      border: 1px solid rgba(132, 14, 52, 0.25);
+      position: relative;
+      box-shadow: 0 4px 10px rgba(25, 20, 18, 0.05);
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .lb-ed-tag-float:hover {
+      background: #840E34;
+      color: #F7EDDF;
+      transform: translateY(-2px);
+    }
+
+    .lb-ed-action-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .lb-ed-btn {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: #840E34;
+      color: #F7EDDF;
+      padding: 12px 22px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 180ms ease, transform 180ms ease;
+      text-decoration: none;
+    }
+    .lb-ed-btn:hover {
+      background: #5E1727;
+      transform: translateY(-2px);
+    }
+    .lb-ed-btn--outline {
+      background: transparent;
+      color: #191412;
+      border: 1px solid rgba(25, 20, 18, 0.25);
+    }
+    .lb-ed-btn--outline:hover {
+      background: rgba(25, 20, 18, 0.05);
+      color: #191412;
+      transform: translateY(-2px);
+    }
+
+    .lb-ed-search-visual {
+      position: relative;
+    }
+    .lb-ed-search-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 20px 48px rgba(25, 20, 18, 0.12);
+    }
+    .lb-ed-search-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: #840E34;
+      color: #F7EDDF;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(132, 14, 52, 0.3);
+    }
+
+    /* MOMENT 02: RECOMMENDATION AGENT (Horizontal Editorial Spread) */
+    .lb-ed-rec-spread {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: clamp(32px, 5vw, 68px);
+      align-items: center;
+      background: #F3E7D6;
+      border: 1px solid rgba(25, 20, 18, 0.14);
+      padding: clamp(36px, 5vw, 64px);
+      margin-bottom: 72px;
+      position: relative;
+    }
+    @media (max-width: 900px) {
+      .lb-ed-rec-spread {
+        grid-template-columns: 1fr;
+      }
+    }
+    .lb-ed-rec-collage {
+      position: relative;
+      height: clamp(360px, 40vw, 480px);
+    }
+    .lb-ed-rec-img-main {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 68%;
+      height: 84%;
+      object-fit: cover;
+      box-shadow: 0 24px 50px rgba(25, 20, 18, 0.16);
+    }
+    .lb-ed-rec-img-sub {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 52%;
+      height: 64%;
+      object-fit: cover;
+      border: 6px solid #F3E7D6;
+      box-shadow: 0 20px 40px rgba(25, 20, 18, 0.18);
+    }
+    .lb-ed-rec-pin {
+      position: absolute;
+      background: #FFFFFF;
+      color: #191412;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid rgba(25, 20, 18, 0.15);
+      box-shadow: 0 4px 12px rgba(25, 20, 18, 0.08);
+      z-index: 5;
+    }
+    .lb-ed-rec-callout {
+      position: absolute;
+      bottom: 18px;
+      left: 8px;
+      max-width: 320px;
+      background: #840E34;
+      color: #F7EDDF;
+      padding: 12px 16px;
+      font-size: 11.5px;
+      line-height: 1.45;
+      box-shadow: 0 12px 28px rgba(132, 14, 52, 0.28);
+      z-index: 6;
+    }
+    .lb-ed-rec-callout strong {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #C98F82;
+      margin-bottom: 4px;
+    }
+
+    .lb-ed-rec-info {
+      padding-left: clamp(0px, 2vw, 24px);
+    }
+    .lb-ed-rec-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 5vw, 84px);
+      font-weight: 800;
+      color: #840E34;
+      line-height: 0.85;
+      margin-bottom: 8px;
+    }
+    .lb-ed-rec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 800;
+      color: #191412;
+      margin: 0 0 14px;
+      line-height: 1.05;
+    }
+    .lb-ed-rec-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: #840E34;
+      margin: 0 0 18px;
+      line-height: 1.4;
+    }
+    .lb-ed-rec-body {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: rgba(25, 20, 18, 0.75);
+      margin-bottom: 24px;
+    }
+
+    /* Expandable taste calibration panel */
+    .lb-ed-taste-expander {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 360ms var(--lb-ease);
+      background: #FFFFFF;
+      border-left: 3px solid #840E34;
+      padding: 0 20px;
+      margin-bottom: 20px;
+    }
+    .lb-ed-taste-expander.is-expanded {
+      max-height: 240px;
+      padding: 16px 20px;
+    }
+    .lb-ed-taste-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .lb-ed-taste-progress {
+      height: 4px;
+      background: rgba(25, 20, 18, 0.1);
+      margin-bottom: 12px;
+    }
+    .lb-ed-taste-fill {
+      height: 100%;
+      background: #840E34;
+    }
+
+    /* MOMENT 03: COMPARISON AGENT (Fashion Editorial Comparison Strip) */
+    .lb-ed-compare-strip {
+      background: #FFFFFF;
+      border: 1px solid rgba(132, 14, 52, 0.16);
+      padding: clamp(28px, 3.2vw, 38px) clamp(24px, 3.5vw, 42px);
+      margin: 0 auto clamp(60px, 7vw, 92px);
+      max-width: 1120px;
+      position: relative;
+      box-shadow: 0 10px 32px rgba(132, 14, 52, 0.05);
+    }
+    .lb-ed-compare-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(25, 20, 18, 0.08);
+      padding-bottom: 14px;
+    }
+    .lb-ed-compare-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #840E34;
+      margin-right: 10px;
+    }
+    .lb-ed-compare-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 2.2vw, 26px);
+      font-weight: 800;
+      color: #191412;
+      margin: 0;
+      display: inline-block;
+    }
+
+    .lb-ed-compare-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(14px, 2.2vw, 24px);
+      position: relative;
+    }
+    @media (max-width: 860px) {
+      .lb-ed-compare-cols {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+    .lb-ed-cmp-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 142px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      background: #FFFDF9;
+      border: 1px solid rgba(25, 20, 18, 0.08);
+      padding: 14px 16px;
+    }
+    @media (max-width: 580px) {
+      .lb-ed-cmp-item {
+        grid-template-columns: 105px minmax(0, 1fr);
+        gap: 12px;
+        padding: 10px;
+      }
+    }
+    .lb-ed-cmp-item--highlight {
+      border: 1.5px solid #840E34;
+      background: #FFFDF9;
+      box-shadow: 0 6px 20px rgba(132, 14, 52, 0.08);
+    }
+    .lb-ed-cmp-img {
+      width: 100%;
+      height: 195px;
+      object-fit: cover;
+      display: block;
+      background: #F7EDDF;
+      box-shadow: 0 3px 10px rgba(25, 20, 18, 0.06);
+    }
+    .lb-ed-cmp-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+    .lb-ed-cmp-brand {
+      font-family: 'Manrope', sans-serif;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin-bottom: 3px;
+    }
+    .lb-ed-cmp-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #191412;
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+    .lb-ed-cmp-specs {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .lb-ed-cmp-specs li {
+      font-size: 12px;
+      color: rgba(25, 20, 18, 0.74);
+      padding: 4.5px 0;
+      border-top: 1px solid rgba(25, 20, 18, 0.07);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .lb-ed-cmp-specs li span {
+      font-weight: 700;
+      color: #191412;
+    }
+
+    /* Big VS Typography */
+    .lb-ed-vs-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .lb-ed-vs-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 2.8vw, 34px);
+      font-style: italic;
+      font-weight: 800;
+      color: #840E34;
+      line-height: 1;
+    }
+    .lb-ed-vs-line {
+      width: 1px;
+      height: 56px;
+      background: rgba(132, 14, 52, 0.25);
+      margin: 8px auto;
+    }
+    @media (max-width: 860px) {
+      .lb-ed-vs-line {
+        display: none;
+      }
+    }
+
+    /* Stamp for Best Match */
+    .lb-ed-stamp-best {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      background: #840E34;
+      color: #F7EDDF;
+      font-family: 'Manrope', sans-serif;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      transform: rotate(3deg);
+      box-shadow: 0 4px 10px rgba(132, 14, 52, 0.2);
+      z-index: 4;
+    }
+
+    /* MOMENT 04: OUTFIT AGENT (Stylist Atelier Moodboard Composition) */
+    .lb-ed-outfit-canvas {
+      background: #F3E7D6;
+      border: 1px solid rgba(25, 20, 18, 0.15);
+      padding: clamp(36px, 5vw, 64px);
+      margin-bottom: 72px;
+      position: relative;
+    }
+    .lb-ed-outfit-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .lb-ed-outfit-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #840E34;
+      margin-right: 12px;
+    }
+    .lb-ed-outfit-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800;
+      color: #191412;
+      margin: 0;
+      display: inline-block;
+    }
+
+    .lb-ed-moodboard {
+      position: relative;
+      min-height: clamp(420px, 46vw, 560px);
+      margin-bottom: 24px;
+    }
+    .lb-ed-mb-piece {
+      position: absolute;
+      background: #FFFFFF;
+      padding: 8px 8px 18px 8px;
+      box-shadow: 0 16px 36px rgba(25, 20, 18, 0.12);
+      transition: transform 240ms ease, box-shadow 240ms ease;
+      cursor: pointer;
+    }
+    .lb-ed-mb-piece:hover {
+      transform: translateY(-6px) scale(1.02) !important;
+      box-shadow: 0 24px 50px rgba(25, 20, 18, 0.2);
+      z-index: 20 !important;
+    }
+    .lb-ed-mb-piece img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .lb-ed-mb-caption {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #191412;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Specific piece placements */
+    .lb-ed-mb-piece--main {
+      left: 8%;
+      top: 4%;
+      width: 36%;
+      aspect-ratio: 3/4;
+      transform: rotate(-2deg);
+      z-index: 3;
+    }
+    .lb-ed-mb-piece--waistcoat {
+      right: 14%;
+      top: 6%;
+      width: 28%;
+      aspect-ratio: 3/4;
+      transform: rotate(3deg);
+      z-index: 2;
+    }
+    .lb-ed-mb-piece--shoes {
+      left: 32%;
+      bottom: 6%;
+      width: 24%;
+      aspect-ratio: 1;
+      transform: rotate(-5deg);
+      z-index: 4;
+    }
+    .lb-ed-mb-piece--accessory {
+      right: 16%;
+      bottom: 8%;
+      width: 22%;
+      aspect-ratio: 1;
+      transform: rotate(6deg);
+      z-index: 5;
+    }
+    @media (max-width: 680px) {
+      .lb-ed-mb-piece--main { width: 48%; left: 2%; }
+      .lb-ed-mb-piece--waistcoat { width: 44%; right: 2%; }
+      .lb-ed-mb-piece--shoes { width: 38%; left: 8%; bottom: 2%; }
+      .lb-ed-mb-piece--accessory { width: 36%; right: 8%; bottom: 4%; }
+    }
+
+    /* Thin connecting arrows across moodboard */
+    .lb-ed-mb-arrows {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Editorial Handwritten Annotations on Moodboard */
+    .lb-ed-annotation {
+      position: absolute;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: #840E34;
+      background: rgba(247, 237, 223, 0.95);
+      padding: 3px 12px;
+      border: 1px dashed rgba(132, 14, 52, 0.4);
+      pointer-events: none;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(25, 20, 18, 0.04);
+    }
+
+
+    /* SIDE DRAWER FOR AGENT 01 */
+    .lb-ed-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(132, 14, 52, 0.35);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 280ms ease;
+    }
+    .lb-ed-drawer-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lb-ed-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(90vw, 440px);
+      background: #F7EDDF;
+      color: #191412;
+      z-index: 101;
+      box-shadow: -20px 0 60px rgba(132, 14, 52, 0.2);
+      transform: translateX(100%);
+      transition: transform 320ms var(--lb-ease);
+      padding: clamp(28px, 4vw, 40px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .lb-ed-drawer.is-open {
+      transform: translateX(0);
+    }
+    .lb-ed-drawer-close {
+      background: none;
+      border: none;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #840E34;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-end;
+    }
+
+    /* ATELIER OVERLAY FOR AGENT 04 */
+    .lb-ed-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(132, 14, 52, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 102;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease;
+    }
+    .lb-ed-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lb-ed-overlay-card {
+      background: #F7EDDF;
+      max-width: 820px;
+      width: 100%;
+      padding: clamp(24px, 4vw, 44px);
+      position: relative;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+  </style>
+
+  <!-- EDITORIAL SPREAD CONTAINER -->
+  <section class="lb-ed-spread" id="libasai-intelligence">
+    <!-- Continuous Fluid Wave Edge Transition -->
+    <div style="position:absolute; top:0; left:0; right:0; line-height:0; pointer-events:none; z-index:2;" aria-hidden="true">
+      <svg viewBox="0 0 1440 30" preserveAspectRatio="none" style="display:block; width:100%; height:clamp(14px, 1.4vw, 22px);">
+        <!-- Brand burgundy wave contour -->
+        <path fill="#840E34" opacity="0.85" d="M 0,0 L 0,18 C 30,18 30,27 60,27 C 90,27 90,12 120,12 C 150,12 150,26 180,26 C 210,26 210,13 240,13 C 270,13 270,28 300,28 C 330,28 330,11 360,11 C 390,11 390,26 420,26 C 450,26 450,13 480,13 C 510,13 510,28 540,28 C 570,28 570,12 600,12 C 630,12 630,26 660,26 C 690,26 690,14 720,14 C 750,14 750,28 780,28 C 810,28 810,11 840,11 C 870,11 870,27 900,27 C 930,27 930,12 960,12 C 990,12 990,28 1020,28 C 1050,28 1050,13 1080,13 C 1110,13 1110,26 1140,26 C 1170,26 1170,12 1200,12 C 1230,12 1230,28 1260,28 C 1290,28 1290,11 1320,11 C 1350,11 1350,27 1380,27 C 1410,27 1410,18 1440,18 L 1440,0 Z"></path>
+        <!-- Primary cream fluid wave -->
+        <path fill="#F7EDDF" opacity="1" d="M 0,0 L 0,14 C 30,14 30,22 60,22 C 90,22 90,8 120,8 C 150,8 150,21 180,21 C 210,21 210,9 240,9 C 270,9 270,23 300,23 C 330,23 330,7 360,7 C 390,7 390,22 420,22 C 450,22 450,9 480,9 C 510,9 510,24 540,24 C 570,24 570,8 600,8 C 630,8 630,21 660,21 C 690,21 690,10 720,10 C 750,10 750,23 780,23 C 810,23 810,7 840,7 C 870,7 870,22 900,22 C 930,22 930,8 960,8 C 990,8 990,24 1020,24 C 1050,24 1050,9 1080,9 C 1110,9 1110,21 1140,21 C 1170,21 1170,8 1200,8 C 1230,8 1230,23 1260,23 C 1290,23 1290,7 1320,7 C 1350,7 1350,22 1380,22 C 1410,22 1410,14 1440,14 L 1440,0 Z"></path>
+      </svg>
+    </div>
+    <div class="lb-wrap">
+
+      <!-- DRAMATIC INTRO SPREAD -->
+      <div class="lb-ed-intro">
+        <div>
+          <div class="lb-ed-label">LIBASAI INTELLIGENCE</div>
+          <h2 class="lb-ed-title">
+            Four minds.<br>
+            <em>One better answer.</em>
+          </h2>
+          <p class="lb-ed-lead">
+            LibasAI coordinates specialized AI agents to search, recommend, compare and style fashion in real time.
+          </p>
+          <div class="lb-ed-meta-tag">
+            Couture Architecture &middot; FAST-NUCES Final Year Project 2026&ndash;2027
+          </div>
+        </div>
+
+        <!-- Overlapping Editorial Fashion Cutout Collage -->
+        <div class="lb-ed-intro-visual">
+          <div class="lb-ed-hero-img-wrap">
+            <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="Pakistani High Fashion Editorial">
+            <div class="lb-ed-seal">
+              Four<br>Agents<br>Active
+            </div>
+            <div class="lb-ed-hero-patch">
+              <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Embroidery Detail Crop">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANIMATED EDITORIAL PROGRESS RAIL -->
+      <nav class="lb-ed-rail" aria-label="Fashion intelligence agents navigation">
+        <button type="button" class="lb-ed-rail__btn is-active" data-chapter="01" onclick="scrollToAgent('agent-01-search')">
+          <strong>01</strong> &mdash; Search
+        </button>
+        <button type="button" class="lb-ed-rail__btn" data-chapter="02" onclick="scrollToAgent('agent-02-recommend')">
+          <strong>02</strong> &mdash; Recommend
+        </button>
+        <button type="button" class="lb-ed-rail__btn" data-chapter="03" onclick="scrollToAgent('agent-03-compare')">
+          <strong>03</strong> &mdash; Compare
+        </button>
+        <button type="button" class="lb-ed-rail__btn" data-chapter="04" onclick="scrollToAgent('agent-04-outfit')">
+          <strong>04</strong> &mdash; Style
+        </button>
+      </nav>
+
+      <!-- =================================================================== -->
+      <!-- MOMENT 01: SEARCH AGENT (Tall Vertical Editorial Panel)              -->
+      <!-- =================================================================== -->
+      <div class="lb-ed-search-panel" id="agent-01-search">
+        <div class="lb-ed-search-spine">
+          <div class="lb-ed-spine-num">01</div>
+          <div class="lb-ed-spine-text">SEARCH</div>
+        </div>
+
+        <div class="lb-ed-search-center">
+          <div class="lb-ed-search-caption-label">Natural Query Decomposition &middot; Fig. 01</div>
+          <blockquote class="lb-ed-search-query-quote">
+            &ldquo;Black embroidered kurta under Rs. 8,000&rdquo;
+          </blockquote>
+
+          <!-- Thin animated line connecting query to extracted constraints -->
+          <div class="lb-ed-query-connector">
+            <svg viewBox="0 0 420 30" preserveAspectRatio="none" style="width:100%; height:20px; overflow:visible;">
+              <path d="M 10 6 C 140 28, 260 -4, 410 16" fill="none" stroke="#840E34" stroke-width="1.5" stroke-dasharray="4 4" class="lb-ed-animated-stroke" />
+            </svg>
+          </div>
+
+          <!-- Visual tags floating around query -->
+          <div class="lb-ed-tags-floating">
+            <span class="lb-ed-tag-float">BLACK</span>
+            <span class="lb-ed-tag-float">EMBROIDERED</span>
+            <span class="lb-ed-tag-float">KURTA</span>
+            <span class="lb-ed-tag-float">UNDER 8K</span>
+          </div>
+
+          <p class="lb-ed-search-desc">
+            Decodes conversational syntax into precise fashion constraints&mdash;extracting silhouettes, tilla thread density, and price ceilings in under 280ms across 12,000+ catalog SKUs.
+          </p>
+
+          <div class="lb-ed-action-row">
+            <button type="button" class="lb-ed-btn" onclick="openSearchDrawer()">
+              Inspect Query Breakdown &rarr;
+            </button>
+            <a href="/ai/ask?q=black+embroidered+kurta+under+8000" class="lb-ed-btn lb-ed-btn--outline">
+              Run Live Search
+            </a>
+          </div>
+        </div>
+
+        <div class="lb-ed-search-visual">
+          <img class="lb-ed-search-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Black embroidered kurta look">
+          <div class="lb-ed-search-badge">142 Matches Across 18 Brands</div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- MOMENT 02: RECOMMENDATION AGENT (Horizontal Editorial Spread)        -->
+      <!-- =================================================================== -->
+      <div class="lb-ed-rec-spread" id="agent-02-recommend">
+        <div class="lb-ed-rec-collage">
+          <img class="lb-ed-rec-img-main" src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt="Zeen Raw Silk Suit">
+          <img class="lb-ed-rec-img-sub" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt="Mushq Naturally Me Silk">
+
+          <!-- Tiny Preference Annotations Pinned Around Products -->
+          <span class="lb-ed-rec-pin" style="top:8%; left:6%;">Formal</span>
+          <span class="lb-ed-rec-pin" style="top:22%; right:10%;">Maroon</span>
+          <span class="lb-ed-rec-pin" style="bottom:26%; left:12%;">Wedding</span>
+          <span class="lb-ed-rec-pin" style="bottom:6%; right:14%;">Rs. 10k&ndash;15k</span>
+
+          <!-- Highlighted Recommendation Annotation -->
+          <div class="lb-ed-rec-callout">
+            <strong>Recommended because&hellip;</strong>
+            Optimal 60g raw silk weight for evening festive dinners with zero synthetic stiffness &middot; High aesthetic cohesion with your saved wardrobe.
+          </div>
+        </div>
+
+        <div class="lb-ed-rec-info">
+          <div class="lb-ed-rec-num">02</div>
+          <h3 class="lb-ed-rec-title">Recommendation</h3>
+          <p class="lb-ed-rec-quote">&ldquo;Ranks what fits your taste, not just what is popular.&rdquo;</p>
+          <p class="lb-ed-rec-body">
+            Unlike commercial ad-boosted search, LibasAI evaluates personal silhouette embeddings while applying a bounded fair exposure model to highlight rising Pakistani craft labels.
+          </p>
+
+          <!-- Inline Expandable Taste Calibration Spread -->
+          <div id="lb-taste-expander" class="lb-ed-taste-expander">
+            <div class="lb-ed-taste-bar">
+              <span>Taste Alignment</span>
+              <span style="color:#840E34;">94% Fit</span>
+            </div>
+            <div class="lb-ed-taste-progress"><div class="lb-ed-taste-fill" style="width: 94%;"></div></div>
+
+            <div class="lb-ed-taste-bar">
+              <span>Fabric Breathability (Lawn/Silk)</span>
+              <span style="color:#840E34;">88% Match</span>
+            </div>
+            <div class="lb-ed-taste-progress"><div class="lb-ed-taste-fill" style="width: 88%;"></div></div>
+
+            <div class="lb-ed-taste-bar">
+              <span>Fair Exposure Boost for Local Ateliers</span>
+              <span style="color:#840E34;">+24% Equity</span>
+            </div>
+            <div class="lb-ed-taste-progress"><div class="lb-ed-taste-fill" style="width: 76%;"></div></div>
+          </div>
+
+          <button type="button" class="lb-ed-btn" onclick="toggleTasteExpander(this)">
+            Expand Taste Calibration &darr;
+          </button>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- MOMENT 03: COMPARISON AGENT (Fashion Editorial Comparison Strip)     -->
+      <!-- =================================================================== -->
+      <div class="lb-ed-compare-strip" id="agent-03-compare">
+        <div class="lb-ed-compare-head">
+          <div>
+            <span class="lb-ed-compare-num">03</span>
+            <h3 class="lb-ed-compare-title">Cross-Brand Comparison Strip</h3>
+            <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:14px; color:#840E34; margin-top:3px;">
+              Side-by-side spec &amp; value intelligence
+            </div>
+          </div>
+          <a href="/compare.html" class="lb-ed-btn lb-ed-btn--outline" style="padding:8px 18px; font-size:11px;">
+            Full Compare Page &rarr;
+          </a>
+        </div>
+
+        <div class="lb-ed-compare-cols">
+          <!-- Item A -->
+          <div class="lb-ed-cmp-item">
+            <img class="lb-ed-cmp-img" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="Sana Safinaz Festive Kurta">
+            <div class="lb-ed-cmp-info">
+              <div class="lb-ed-cmp-brand">Sana Safinaz</div>
+              <h4 class="lb-ed-cmp-name">Embroidered Lawn 2PC</h4>
+              <ul class="lb-ed-cmp-specs">
+                <li><span>Price</span> Rs. 10,299</li>
+                <li><span>Fabric</span> Premium Chiffon Lawn</li>
+                <li><span>Size</span> XS &middot; S &middot; M &middot; L</li>
+                <li><span>Availability</span> In Stock (3&ndash;5 Days)</li>
+                <li><span>AI Match</span> 88% Match</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Editorial VS Divider -->
+          <div class="lb-ed-vs-wrap">
+            <div class="lb-ed-vs-text">VS</div>
+            <div class="lb-ed-vs-line"></div>
+          </div>
+
+          <!-- Item B (Best Match) -->
+          <div class="lb-ed-cmp-item lb-ed-cmp-item--highlight">
+            <div class="lb-ed-stamp-best">BEST VALUE MATCH</div>
+            <img class="lb-ed-cmp-img" src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="Zellbury Embroidered Suit">
+            <div class="lb-ed-cmp-info">
+              <div class="lb-ed-cmp-brand">Zellbury</div>
+              <h4 class="lb-ed-cmp-name">Embroidered 3PC Suite</h4>
+              <ul class="lb-ed-cmp-specs">
+                <li><span>Price</span> <strong style="color:#840E34;">Rs. 4,490</strong> (Save Rs. 5,809)</li>
+                <li><span>Fabric</span> 100% Fine Combed Lawn</li>
+                <li><span>Size</span> S &middot; M &middot; L &middot; XL</li>
+                <li><span>Availability</span> In Stock (2&ndash;4 Days)</li>
+                <li><span>AI Verdict</span> <strong style="color:#840E34;">94% Best Value</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Comparison Takeaway Strip -->
+        <div style="margin-top:18px; padding-top:14px; border-top:1px solid rgba(25,20,18,0.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px; color:rgba(25,20,18,0.7);">
+          <span><strong>AI Analysis:</strong> Zellbury delivers identical lawn weave density and matching embroidery coverage at 56% lower cost.</span>
+          <span style="font-family:'Manrope',sans-serif; font-size:10.5px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#840E34;">Verified Attribute Parity</span>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- MOMENT 04: OUTFIT AGENT (Styling-Board Composition)                  -->
+      <!-- =================================================================== -->
+      <div class="lb-ed-outfit-canvas" id="agent-04-outfit">
+        <div class="lb-ed-outfit-top">
+          <div>
+            <div class="lb-ed-outfit-num">04</div>
+            <h3 class="lb-ed-outfit-title">Outfit</h3>
+            <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:17px; color:#840E34; margin:4px 0 0;">
+              Stylist Atelier Moodboard
+            </p>
+          </div>
+          <button type="button" class="lb-ed-btn" onclick="openOutfitOverlay()">
+            Open Full Styling-Board Overlay &rarr;
+          </button>
+        </div>
+
+        <!-- Visual Pinboard Moodboard Canvas with Layered Cutouts -->
+        <div class="lb-ed-moodboard">
+          <!-- Thin Arrows Connecting Pieces (SVG) -->
+          <svg class="lb-ed-mb-arrows" viewBox="0 0 800 500" preserveAspectRatio="none">
+            <defs>
+              <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <polygon points="0 0, 6 3, 0 6" fill="#840E34" opacity="0.6"/>
+              </marker>
+            </defs>
+            <!-- Kurta to Waistcoat -->
+            <path d="M 280 160 C 340 130, 420 120, 480 140" fill="none" stroke="#840E34" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" marker-end="url(#arrowhead)"/>
+            <!-- Kurta to Shoes -->
+            <path d="M 240 300 C 260 360, 280 400, 320 420" fill="none" stroke="#840E34" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" marker-end="url(#arrowhead)"/>
+            <!-- Waistcoat to Accessory -->
+            <path d="M 540 260 C 560 320, 580 370, 600 390" fill="none" stroke="#840E34" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6" marker-end="url(#arrowhead)"/>
+          </svg>
+
+          <!-- 1. Main Garment -->
+          <div class="lb-ed-mb-piece lb-ed-mb-piece--main" onclick="openOutfitOverlay()">
+            <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Main Garment: Kurta">
+            <div class="lb-ed-mb-caption">Main Garment &middot; Rs. 5,490</div>
+          </div>
+
+          <!-- 2. Waistcoat Layer -->
+          <div class="lb-ed-mb-piece lb-ed-mb-piece--waistcoat" onclick="openOutfitOverlay()">
+            <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Waistcoat Layer">
+            <div class="lb-ed-mb-caption">Waistcoat &middot; Rs. 3,890</div>
+          </div>
+
+          <!-- 3. Shoes -->
+          <div class="lb-ed-mb-piece lb-ed-mb-piece--shoes" onclick="openOutfitOverlay()">
+            <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt="Shoes: Khussa">
+            <div class="lb-ed-mb-caption">Shoes &middot; Rs. 3,200</div>
+          </div>
+
+          <!-- 4. Accessory -->
+          <div class="lb-ed-mb-piece lb-ed-mb-piece--accessory" onclick="openOutfitOverlay()">
+            <img src="assets/jewellery.jpg" alt="Accessory: Jewellery">
+            <div class="lb-ed-mb-caption">Accessory &middot; Rs. 1,800</div>
+          </div>
+
+          <!-- Handwritten-Style Editorial Annotations -->
+          <div class="lb-ed-annotation" style="top:8%; left:6%; transform:rotate(-4deg);">&ldquo;wedding&rdquo;</div>
+          <div class="lb-ed-annotation" style="top:4%; right:14%; transform:rotate(5deg);">&ldquo;balanced&rdquo;</div>
+          <div class="lb-ed-annotation" style="bottom:22%; left:12%; transform:rotate(-3deg);">&ldquo;formal&rdquo;</div>
+          <div class="lb-ed-annotation" style="bottom:6%; right:10%; transform:rotate(2deg);">&ldquo;under budget&rdquo;</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SIDE DRAWER FOR AGENT 01 (SEARCH DECOMPOSITION) -->
+  <div id="lb-search-drawer-backdrop" class="lb-ed-drawer-backdrop" onclick="closeSearchDrawer()"></div>
+  <aside id="lb-search-drawer" class="lb-ed-drawer" aria-label="Agent 01 Search Details">
+    <div>
+      <button type="button" class="lb-ed-drawer-close" onclick="closeSearchDrawer()">Close &times;</button>
+      <div style="margin-top:28px;">
+        <span class="lb-ed-label">Agent 01 &middot; Deep Inspection</span>
+        <h3 style="font-family:'Playfair Display',serif; font-size:28px; margin:6px 0 16px;">Semantic Parser</h3>
+        <p style="font-size:14px; line-height:1.6; color:rgba(25,20,18,0.72); margin-bottom:24px;">
+          The Search Agent performs token extraction to identify fabric weave, embellishment method, cut geometry, and budget limits.
+        </p>
+
+        <div style="background:#FFF; padding:20px; border:1px solid rgba(25,20,18,0.1); margin-bottom:20px;">
+          <h4 style="font-family:'Playfair Display',serif; font-size:16px; margin:0 0 12px;">Active Query Tokens</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #F7EDDF; padding-bottom:6px;">
+              <span style="color:rgba(25,20,18,0.5);">Color Family</span>
+              <strong>Black / Noir (#101010)</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #F7EDDF; padding-bottom:6px;">
+              <span style="color:rgba(25,20,18,0.5);">Embroidery Type</span>
+              <strong>Resham &amp; Zari Threadwork</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #F7EDDF; padding-bottom:6px;">
+              <span style="color:rgba(25,20,18,0.5);">Silhouette</span>
+              <strong>Straight Pakistani Kurta</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span style="color:rgba(25,20,18,0.5);">Price Ceiling</span>
+              <strong>&le; Rs. 8,000 PKR</strong>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:13px; color:rgba(25,20,18,0.65); line-height:1.55;">
+          Matches indexed across Sana Safinaz, Zellbury, Gul Ahmed, Beechtree, and 14 local independent ateliers.
+        </div>
+      </div>
+    </div>
+
+    <a href="/ai/ask?q=black+embroidered+kurta+under+8000" class="lb-ed-btn" style="width:100%; justify-content:center; box-sizing:border-box; margin-top:24px;">
+      Launch Natural Search &rarr;
+    </a>
+  </aside>
+
+  <!-- ATELIER OVERLAY FOR AGENT 04 (OUTFIT MOODBOARD) -->
+  <div id="lb-outfit-overlay" class="lb-ed-overlay" onclick="closeOutfitOverlay(event)">
+    <div class="lb-ed-overlay-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <div>
+          <span class="lb-ed-label" style="margin-bottom:4px;">Agent 04 &middot; Lookbook Studio</span>
+          <h3 style="font-family:'Playfair Display',serif; font-size:26px; margin:0;">Ensemble Piece Breakdown</h3>
+        </div>
+        <button type="button" class="lb-ed-drawer-close" onclick="forceCloseOutfitOverlay()">Close &times;</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:18px; margin-bottom:28px;">
+        <div style="background:#FFF; padding:12px; border:1px solid rgba(25,20,18,0.1);">
+          <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:100%; aspect-ratio:3/4; object-fit:cover;" alt="Kurta">
+          <strong style="display:block; margin-top:8px; font-size:13px;">Hero Embroidered Kurta</strong>
+          <span style="font-size:12px; color:#840E34; font-weight:700;">Rs. 5,490</span>
+        </div>
+        <div style="background:#FFF; padding:12px; border:1px solid rgba(25,20,18,0.1);">
+          <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" style="width:100%; aspect-ratio:3/4; object-fit:cover;" alt="Dupatta">
+          <strong style="display:block; margin-top:8px; font-size:13px;">Jacquard Silk Dupatta</strong>
+          <span style="font-size:12px; color:#840E34; font-weight:700;">Rs. 3,890</span>
+        </div>
+        <div style="background:#FFF; padding:12px; border:1px solid rgba(25,20,18,0.1);">
+          <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" style="width:100%; aspect-ratio:3/4; object-fit:cover;" alt="Khussa">
+          <strong style="display:block; margin-top:8px; font-size:13px;">Handcrafted Tilla Khussa</strong>
+          <span style="font-size:12px; color:#840E34; font-weight:700;">Rs. 3,200</span>
+        </div>
+        <div style="background:#FFF; padding:12px; border:1px solid rgba(25,20,18,0.1);">
+          <img src="assets/jewellery.jpg" style="width:100%; aspect-ratio:3/4; object-fit:cover;" alt="Jewellery">
+          <strong style="display:block; margin-top:8px; font-size:13px;">Kundan Jhumka Accents</strong>
+          <span style="font-size:12px; color:#840E34; font-weight:700;">Rs. 1,800</span>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; border-top:1px solid rgba(25,20,18,0.12); padding-top:18px;">
+        <div>
+          <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:rgba(25,20,18,0.5);">Total Ensemble Cost</span>
+          <div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:800; color:#840E34;">Rs. 14,380</div>
+        </div>
+        <a href="/outfit-builder.html" class="lb-ed-btn">
+          Open In Interactive Outfit Studio &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT FOR EDITORIAL SPREAD INTERACTIONS -->
+  <script id="lb-editorial-interactions">
+    // Smooth scroll to agent moment
+    function scrollToAgent(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        var offset = el.getBoundingClientRect().top + window.pageYOffset - 140;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
+    }
+
+    // Agent 01 Search Side Drawer
+    function openSearchDrawer() {
+      var d = document.getElementById('lb-search-drawer');
+      var b = document.getElementById('lb-search-drawer-backdrop');
+      if (d) d.classList.add('is-open');
+      if (b) b.classList.add('is-open');
+    }
+    function closeSearchDrawer() {
+      var d = document.getElementById('lb-search-drawer');
+      var b = document.getElementById('lb-search-drawer-backdrop');
+      if (d) d.classList.remove('is-open');
+      if (b) b.classList.remove('is-open');
+    }
+
+    // Agent 02 Taste Calibration Toggle
+    function toggleTasteExpander(btn) {
+      var exp = document.getElementById('lb-taste-expander');
+      if (!exp) return;
+      var isOpen = exp.classList.toggle('is-expanded');
+      if (btn) {
+        btn.innerHTML = isOpen ? 'Collapse Calibration Matrix &uarr;' : 'Expand Calibration Matrix &darr;';
+      }
+    }
+
+    // Agent 04 Outfit Atelier Overlay
+    function openOutfitOverlay() {
+      var ov = document.getElementById('lb-outfit-overlay');
+      if (ov) ov.classList.add('is-open');
+    }
+    function closeOutfitOverlay(e) {
+      if (e && e.target && e.target.id === 'lb-outfit-overlay') {
+        forceCloseOutfitOverlay();
+      }
+    }
+    function forceCloseOutfitOverlay() {
+      var ov = document.getElementById('lb-outfit-overlay');
+      if (ov) ov.classList.remove('is-open');
+    }
+
+
+    // Close drawers on escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeSearchDrawer();
+        forceCloseOutfitOverlay();
+      }
+    });
+
+    // Intersection observer for progress rail highlights
+    (function() {
+      var railBtns = document.querySelectorAll('.lb-ed-rail__btn');
+      var targets = ['agent-01-search', 'agent-02-recommend', 'agent-03-compare', 'agent-04-outfit'];
+      if (!window.IntersectionObserver) return;
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var id = entry.target.id;
+            railBtns.forEach(function(btn) {
+              var ch = btn.getAttribute('data-chapter');
+              if (
+                (id === 'agent-01-search' && ch === '01') ||
+                (id === 'agent-02-recommend' && ch === '02') ||
+                (id === 'agent-03-compare' && ch === '03') ||
+                (id === 'agent-04-outfit' && ch === '04')
+              ) {
+                btn.classList.add('is-active');
+              } else {
+                btn.classList.remove('is-active');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+
+      targets.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    })();
+  </script>
+
+
+  <!-- FOR YOU SECTION -->
+  <section class="lb-section">
+    <div class="lb-wrap">
+      <div class="lb-section__head lb-reveal is-visible">
+        <div class="lb-eyebrow">YOUR STYLE RADAR &middot; CURATED FOR YOU</div>
+        <h2 class="lb-h2">We’ve been quietly taking notes on your taste.</h2>
+      </div>
+      <div class="lb-rail lb-reveal is-visible">
+        <div class="lb-rail-card">
+          <a href="https://beechtree.pk/products/bt1260001lp2510aa-sea-green" target="_blank" rel="noopener" class="lb-rail-card__link">
+            <div class="lb-rail-card__img">
+              <image-slot id="foryou-1" shape="rect" placeholder="Rust embroidered kurta, editorial" src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441"></image-slot>
+            </div>
+            <div class="lb-rail-card__meta">
+              <span class="lb-rail-card__brand">Beechtree</span>
+              <span class="lb-rail-card__name">Embroidered Raw Silk Suit</span>
+              <span class="lb-rail-card__price">Rs. 10,194</span>
+            </div>
+          </a>
+          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
+        </div>
+        <div class="lb-rail-card">
+          <a href="https://www.gulahmedshop.com/products/3pc-lawn-printed-suit-iustksd-2207" target="_blank" rel="noopener" class="lb-rail-card__link">
+            <div class="lb-rail-card__img">
+              <image-slot id="foryou-2" shape="rect" placeholder="Formal shalwar kameez, editorial" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960"></image-slot>
+            </div>
+            <div class="lb-rail-card__meta">
+              <span class="lb-rail-card__brand">Gul Ahmed</span>
+              <span class="lb-rail-card__name">3PC Lawn Printed Suit</span>
+              <span class="lb-rail-card__price">Rs. 4,893</span>
+            </div>
+          </a>
+          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
+        </div>
+        <div class="lb-rail-card">
+          <a href="https://www.zellbury.com/products/shirt-shalwar-dupatta-wus26e34112" target="_blank" rel="noopener" class="lb-rail-card__link">
+            <div class="lb-rail-card__img">
+              <image-slot id="foryou-3" shape="rect" placeholder="Lawn unstitched set, editorial" src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804"></image-slot>
+            </div>
+            <div class="lb-rail-card__meta">
+              <span class="lb-rail-card__brand">Zellbury</span>
+              <span class="lb-rail-card__name">Embroidered Shirt Shalwar Dupatta</span>
+              <span class="lb-rail-card__price">Rs. 4,490</span>
+            </div>
+          </a>
+          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
+        </div>
+        <div class="lb-rail-card">
+          <a href="https://mushq.com/products/naturally-me" target="_blank" rel="noopener" class="lb-rail-card__link">
+            <div class="lb-rail-card__img">
+              <image-slot id="foryou-4" shape="rect" placeholder="Bridal lehenga, editorial" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379"></image-slot>
+            </div>
+            <div class="lb-rail-card__meta">
+              <span class="lb-rail-card__brand">Mushq</span>
+              <span class="lb-rail-card__name">Naturally Me Festive Suit</span>
+              <span class="lb-rail-card__price">Rs. 10,950</span>
+            </div>
+          </a>
+          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
+        </div>
+        <div class="lb-rail-card">
+          <a href="https://www.zeenwoman.com/products/printed-embroidered-raw-silk-stitched-shirt-dupatta-suit-wld26291-purple" target="_blank" rel="noopener" class="lb-rail-card__link">
+            <div class="lb-rail-card__img">
+              <image-slot id="foryou-5" shape="rect" placeholder="Casual kurta set, editorial" src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802"></image-slot>
+            </div>
+            <div class="lb-rail-card__meta">
+              <span class="lb-rail-card__brand">Zeen</span>
+              <span class="lb-rail-card__name">Raw Silk Shirt Dupatta Suit</span>
+              <span class="lb-rail-card__price">Rs. 10,490</span>
+            </div>
+          </a>
+          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP BY OCCASION -->
+  <section class="lb-section lb-section--paper">
+    <div class="lb-wrap">
+      <div class="lb-section__head lb-reveal is-visible">
+        <div class="lb-eyebrow">Shop by Occasion</div>
+        <h2 class="lb-h2">Dressed for the moment</h2>
+      </div>
+      <div class="lb-occasion-grid lb-reveal is-visible">
+        <a href="/discover/wedding" class="lb-occasion-tile lb-occasion-tile--lg">
+          <image-slot id="occ-wedding" shape="rect" placeholder="Wedding edit, bridal editorial" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670"></image-slot>
+          <span class="lb-occasion-tile__label">Wedding Edit</span>
+        </a>
+        <a href="/discover/eid" class="lb-occasion-tile">
+          <image-slot id="occ-eid" shape="rect" placeholder="Eid edit, festive editorial" src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730"></image-slot>
+          <span class="lb-occasion-tile__label">Eid Collection</span>
+        </a>
+        <a href="/discover/formal" class="lb-occasion-tile">
+          <image-slot id="occ-formal" shape="rect" placeholder="Formal edit, tailored editorial" src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907"></image-slot>
+          <span class="lb-occasion-tile__label">Formal Pret</span>
+        </a>
+        <a href="/discover/casual" class="lb-occasion-tile">
+          <image-slot id="occ-casual" shape="rect" placeholder="Casual edit, everyday editorial" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485"></image-slot>
+          <span class="lb-occasion-tile__label">Casual Daywear</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BESPOKE TAILORING EDITORIAL CANVAS (ONE SINGLE SECTION) -->
+  <style>
+    /* LIBASAI BESPOKE TAILORING EDITORIAL CANVAS */
+    .lb-bespoke-editorial {
+      background: #F4EBE0;
+      background-image: 
+        radial-gradient(circle at 88% 18%, rgba(201, 143, 130, 0.18) 0%, transparent 55%),
+        radial-gradient(circle at 12% 82%, rgba(132, 14, 52, 0.07) 0%, transparent 45%),
+        linear-gradient(176deg, #FAF5ED 0%, #F3E7D6 100%);
+      border-top: 1px solid rgba(132, 14, 52, 0.12);
+      border-bottom: 1px solid rgba(132, 14, 52, 0.14);
+      position: relative;
+      overflow: hidden;
+      padding: clamp(68px, 8vw, 112px) 0;
+    }
+
+    .lb-bespoke-watermark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.06;
+      z-index: 1;
+    }
+
+    .lb-bespoke-canvas {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.15fr 0.9fr 1.25fr;
+      gap: clamp(32px, 4vw, 56px);
+      align-items: start;
+    }
+
+    .lb-bespoke-vertical-accent {
+      position: absolute;
+      left: -32px;
+      top: 20px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Manrope', sans-serif;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(132, 14, 52, 0.45);
+      white-space: nowrap;
+    }
+
+    /* LEFT: INTRO */
+    .lb-bespoke-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      padding-right: 12px;
+    }
+
+    .lb-bespoke-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin-bottom: 22px;
+    }
+
+    .lb-bespoke-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: #840E34;
+    }
+
+    .lb-bespoke-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px, 3.8vw, 52px);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: #191412;
+      margin: 0 0 24px;
+    }
+
+    .lb-bespoke-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: #840E34;
+    }
+
+    .lb-bespoke-copy {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15.5px;
+      line-height: 1.7;
+      color: rgba(25, 20, 18, 0.76);
+      margin: 0 0 34px;
+      max-width: 380px;
+    }
+
+    .lb-bespoke-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .lb-bespoke-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #840E34;
+      color: #F7EDDF;
+      padding: 15px 28px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #840E34;
+      transition: background 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .lb-bespoke-cta-primary svg {
+      width: 15px;
+      height: 15px;
+      transition: transform 220ms ease;
+    }
+
+    .lb-bespoke-cta-primary:hover {
+      background: #6a0b2a;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(132, 14, 52, 0.18);
+    }
+
+    .lb-bespoke-cta-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    .lb-bespoke-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #191412;
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+      margin-top: 4px;
+    }
+
+    .lb-bespoke-cta-secondary::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 100%;
+      height: 1px;
+      background: #840E34;
+      transform: scaleX(0.4);
+      transform-origin: left;
+      transition: transform 240ms ease;
+    }
+
+    .lb-bespoke-cta-secondary:hover::after {
+      transform: scaleX(1);
+    }
+
+    .lb-bespoke-cta-secondary svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 200ms ease;
+    }
+
+    .lb-bespoke-cta-secondary:hover svg {
+      transform: translateX(3px);
+    }
+
+    .lb-bespoke-footnote {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(132, 14, 52, 0.14);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: rgba(25, 20, 18, 0.62);
+      letter-spacing: 0.03em;
+    }
+
+    .lb-bespoke-footnote svg {
+      width: 13px;
+      height: 13px;
+      color: #840E34;
+      flex-shrink: 0;
+    }
+
+    /* CENTER: FLOW */
+    .lb-bespoke-flow {
+      position: relative;
+      padding-left: 28px;
+      padding-top: 6px;
+    }
+
+    .lb-bespoke-flow::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 18px;
+      bottom: 30px;
+      width: 1px;
+      background: linear-gradient(180deg, #840E34 0%, rgba(132, 14, 52, 0.5) 75%, rgba(132, 14, 52, 0.15) 100%);
+    }
+
+    .lb-flow-step {
+      position: relative;
+      padding-bottom: 32px;
+      margin-bottom: 28px;
+      border-bottom: 1px dashed rgba(132, 14, 52, 0.14);
+      transition: transform 200ms ease;
+    }
+
+    .lb-flow-step:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .lb-flow-step::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 13px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #FAF5ED;
+      border: 2px solid #840E34;
+      transition: transform 220ms ease, background 220ms ease;
+    }
+
+    .lb-flow-step:hover::before {
+      transform: scale(1.35);
+      background: #840E34;
+    }
+
+    .lb-flow-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .lb-flow-num {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(34px, 3.2vw, 44px);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1;
+      color: #840E34;
+      opacity: 0.9;
+    }
+
+    .lb-flow-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #191412;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lb-flow-title svg {
+      width: 14px;
+      height: 14px;
+      color: #840E34;
+    }
+
+    .lb-flow-text {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(25, 20, 18, 0.72);
+      margin: 0;
+      max-width: 290px;
+    }
+
+    /* RIGHT: TAILOR SHOWCASE */
+    .lb-bespoke-showcase {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(132, 14, 52, 0.12);
+      padding: clamp(24px, 3vw, 36px);
+      transition: border-color 240ms ease, background 240ms ease;
+    }
+
+    .lb-bespoke-showcase:hover {
+      background: rgba(255, 255, 255, 0.65);
+      border-color: rgba(132, 14, 52, 0.24);
+    }
+
+    .lb-showcase-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lb-showcase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #2E7D32;
+      background: rgba(46, 125, 50, 0.08);
+      padding: 3px 8px;
+      border: 1px solid rgba(46, 125, 50, 0.2);
+    }
+
+    .lb-showcase-badge::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2E7D32;
+    }
+
+    /* PRIMARY FEATURED TAILOR */
+    .lb-tailor-primary {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform 220ms ease;
+    }
+
+    .lb-tailor-primary-body {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .lb-tailor-portrait-frame {
+      width: 92px;
+      height: 108px;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, #F9F2E7 0%, #ECDDCB 100%);
+      border: 1px solid rgba(132, 14, 52, 0.22);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+    }
+
+    .lb-tailor-portrait-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 320ms ease;
+    }
+
+    .lb-tailor-primary:hover .lb-tailor-portrait-frame,
+    .lb-tailor-secondary:hover .lb-tailor-portrait-frame {
+      transform: scale(1.02);
+      border-color: #840E34;
+      box-shadow: 0 4px 14px rgba(132, 14, 52, 0.12);
+    }
+
+    .lb-tailor-primary:hover .lb-tailor-portrait-img,
+    .lb-tailor-secondary:hover .lb-tailor-portrait-img {
+      transform: scale(1.05);
+    }
+
+    .lb-tailor-placeholder-svg {
+      width: 50px;
+      height: 50px;
+      color: #840E34;
+    }
+
+    .lb-portrait-tag {
+      font-family: 'Manrope', sans-serif;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin-top: 4px;
+      opacity: 0.85;
+    }
+
+    .lb-tailor-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lb-tailor-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(19px, 2vw, 22px);
+      font-weight: 700;
+      color: #191412;
+      margin: 0 0 5px;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      transition: color 200ms ease;
+    }
+
+    .lb-tailor-primary:hover .lb-tailor-name {
+      color: #840E34;
+    }
+
+    .lb-tailor-meta {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      color: rgba(25, 20, 18, 0.65);
+      margin-bottom: 6px;
+    }
+
+    .lb-tailor-specialty {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #191412;
+      margin-bottom: 12px;
+    }
+
+    .lb-tailor-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .lb-tailor-price {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #840E34;
+      letter-spacing: 0.02em;
+    }
+
+    .lb-tailor-price span {
+      font-weight: 500;
+      font-size: 11px;
+      color: rgba(25, 20, 18, 0.55);
+      margin-right: 3px;
+    }
+
+    .lb-tailor-view {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #191412;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .lb-tailor-view::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: #840E34;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 220ms ease;
+    }
+
+    .lb-tailor-primary:hover .lb-tailor-view::after,
+    .lb-tailor-secondary:hover .lb-tailor-view::after {
+      transform: scaleX(1);
+    }
+
+    .lb-tailor-view svg {
+      width: 13px;
+      height: 13px;
+      transition: transform 200ms ease;
+    }
+
+    .lb-tailor-primary:hover .lb-tailor-view svg,
+    .lb-tailor-secondary:hover .lb-tailor-view svg {
+      transform: translateX(3px);
+    }
+
+    /* THIN DIVIDER */
+    .lb-showcase-divider {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(132, 14, 52, 0.2) 0%, rgba(132, 14, 52, 0.05) 100%);
+      margin: 22px 0 20px;
+    }
+
+    /* SECONDARY TAILOR PREVIEW */
+    .lb-tailor-secondary {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 200ms ease;
+    }
+
+    .lb-tailor-portrait-frame.lb-frame-sm {
+      width: 62px;
+      height: 72px;
+    }
+
+    .lb-tailor-portrait-frame.lb-frame-sm .lb-tailor-placeholder-svg {
+      width: 34px;
+      height: 34px;
+    }
+
+    .lb-tailor-secondary-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lb-sec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .lb-sec-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #191412;
+      margin: 0;
+      transition: color 200ms ease;
+    }
+
+    .lb-tailor-secondary:hover .lb-sec-name {
+      color: #840E34;
+    }
+
+    .lb-sec-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #B85C38;
+      background: rgba(184, 92, 56, 0.08);
+      padding: 2px 7px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(184, 92, 56, 0.18);
+    }
+
+    .lb-sec-meta {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11.5px;
+      color: rgba(25, 20, 18, 0.65);
+      margin: 3px 0 6px;
+    }
+
+    .lb-sec-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 1040px) {
+      .lb-bespoke-canvas {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .lb-bespoke-vertical-accent {
+        display: none;
+      }
+      .lb-bespoke-copy {
+        max-width: 100%;
+      }
+      .lb-bespoke-flow::before {
+        left: 6px;
+      }
+    }
+  </style>
+
+  <section id="lb-bespoke-editorial" class="lb-bespoke-editorial" aria-label="Bespoke Pakistani Tailoring">
+    <!-- Subtle tailoring illustration / measuring tape watermark -->
+    <svg class="lb-bespoke-watermark" viewBox="0 0 1400 800" fill="none" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M 50 120 L 1350 120" stroke="#840E34" stroke-width="1" stroke-dasharray="8 12"/>
+      <path d="M 50 480 L 1350 480" stroke="#840E34" stroke-width="1" stroke-dasharray="6 14"/>
+      <path d="M 120 50 L 120 750" stroke="#840E34" stroke-width="0.8" stroke-dasharray="4 16"/>
+      <path d="M 680 50 L 680 750" stroke="#840E34" stroke-width="0.8" stroke-dasharray="4 16"/>
+      <circle cx="280" cy="560" r="140" stroke="#C98F82" stroke-width="1" stroke-dasharray="10 16"/>
+      <circle cx="1080" cy="240" r="180" stroke="#C98F82" stroke-width="1" stroke-dasharray="12 20"/>
+    </svg>
+
+    <div class="lb-wrap">
+      <div class="lb-bespoke-canvas">
+        
+        <!-- LEFT SIDE: EDITORIAL INTRO & MAIN CTAS -->
+        <div class="lb-bespoke-intro lb-reveal is-visible">
+          <div class="lb-bespoke-vertical-accent">ATELIER &middot; PUNJAB &amp; SINDH</div>
+          
+          <div class="lb-bespoke-label">BESPOKE TAILORING &middot; LIBASAI</div>
+          
+          <h2 class="lb-bespoke-heading">
+            From discovery<br>
+            <em>to the final stitch.</em>
+          </h2>
+          
+          <p class="lb-bespoke-copy">
+            Choose your design, find the right tailor, save your measurements and get your look stitched.
+          </p>
+          
+          <div class="lb-bespoke-cta-group">
+            <a href="/get-stitched.html" class="lb-bespoke-cta-primary">
+              <span>GET YOUR SUIT STITCHED</span>
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            
+            <a href="/tailors.html" class="lb-bespoke-cta-secondary">
+              <span>FIND A TAILOR</span>
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="lb-bespoke-footnote">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Vetted Pakistani Master Cutters &middot; Fit Guarantee &middot; Doorstep Delivery</span>
+          </div>
+        </div>
+
+        <!-- CENTER: FLOW AREA (01 CHOOSE - 02 MATCH - 03 STITCH) -->
+        <div class="lb-bespoke-flow lb-reveal is-visible">
+          
+          <div class="lb-flow-step">
+            <div class="lb-flow-header">
+              <span class="lb-flow-num">01</span>
+              <span class="lb-flow-title">CHOOSE</span>
+            </div>
+            <p class="lb-flow-text">
+              Start from a LibasAI look, uploaded image or your own design.
+            </p>
+          </div>
+
+          <div class="lb-flow-step">
+            <div class="lb-flow-header">
+              <span class="lb-flow-num">02</span>
+              <span class="lb-flow-title">MATCH</span>
+            </div>
+            <p class="lb-flow-text">
+              Find a tailor by city, specialty, budget and availability.
+            </p>
+          </div>
+
+          <div class="lb-flow-step">
+            <div class="lb-flow-header">
+              <span class="lb-flow-num">03</span>
+              <span class="lb-flow-title">STITCH</span>
+            </div>
+            <p class="lb-flow-text">
+              Send measurements and tailoring instructions.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- RIGHT SIDE: FEATURED TAILOR EDITORIAL FOCAL POINT -->
+        <div class="lb-bespoke-showcase lb-reveal is-visible">
+          
+          <div class="lb-showcase-label">
+            <span>FEATURED MASTER CUTTER</span>
+            <span class="lb-showcase-badge">AVAILABLE NOW</span>
+          </div>
+
+          <!-- PRIMARY FEATURED TAILOR -->
+          <a href="/tailor-profile.html?id=rafiq" class="lb-tailor-primary" title="View Master Rafiq Profile">
+            <div class="lb-tailor-primary-body">
+              <!-- Tailor Mock Profile Picture -->
+              <div class="lb-tailor-portrait-frame">
+                <img src="assets/tailor-shears.jpg" alt="Master Rafiq &amp; Sons Atelier" class="lb-tailor-portrait-img">
+              </div>
+
+              <div class="lb-tailor-details">
+                <h3 class="lb-tailor-name">MASTER RAFIQ &amp; SONS</h3>
+                <div class="lb-tailor-meta">Gulberg III, Lahore &middot; 24 Years Experience</div>
+                <div class="lb-tailor-specialty">Men’s Eastern Formalwear &middot; Sherwanis</div>
+                
+                <div class="lb-tailor-foot">
+                  <div class="lb-tailor-price"><span>From</span> PKR 2,400</div>
+                  <span class="lb-tailor-view">
+                    VIEW PROFILE
+                    <svg viewBox="0 0 20 20" fill="none">
+                      <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- THIN DIVIDER -->
+          <div class="lb-showcase-divider"></div>
+
+          <!-- SECONDARY TAILOR PREVIEW -->
+          <a href="/tailor-profile.html?id=noor" class="lb-tailor-secondary" title="View Noor Bridal Studio Profile">
+            <!-- Compact Tailor Mock Profile Picture -->
+            <div class="lb-tailor-portrait-frame lb-frame-sm">
+              <img src="assets/tailor-sewing.jpg" alt="Noor Bridal Studio Workshop" class="lb-tailor-portrait-img">
+            </div>
+
+            <div class="lb-tailor-secondary-details">
+              <div class="lb-sec-head">
+                <h4 class="lb-sec-name">NOOR BRIDAL STUDIO</h4>
+                <span class="lb-sec-badge">EXPRESS</span>
+              </div>
+              <div class="lb-sec-meta">Clifton Block 4, Karachi &middot; 16 Years Experience</div>
+              <div class="lb-sec-foot">
+                <div class="lb-tailor-price"><span>From</span> PKR 6,500</div>
+                <span class="lb-tailor-view">
+                  VIEW PROFILE
+                  <svg viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCOVER LOCAL / EXPLORE BRANDS — LUXURY FASHION EDITORIAL SPREAD -->
+  <style>
+    /* LIBASAI DISCOVER LOCAL — LUXURY EDITORIAL SPREAD */
+    .lb-brand-editorial {
+      background: #F7EDDF;
+      color: #191412;
+      padding: clamp(72px, 8vw, 116px) 0;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(25, 20, 18, 0.08);
+      border-bottom: 1px solid rgba(25, 20, 18, 0.08);
+    }
+
+    .lb-brand-ed-watermark {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.04;
+      z-index: 1;
+    }
+
+    .lb-brand-ed-canvas {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.12fr 1fr;
+      gap: clamp(36px, 5.5vw, 76px);
+      align-items: center;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* LEFT: LAYERED CAMPAIGN VISUAL */
+    .lb-brand-ed-visual-host {
+      position: relative;
+      padding: 10px 0;
+    }
+
+    .lb-brand-ed-vert-label {
+      position: absolute;
+      left: -32px;
+      top: 36px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Manrope', sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(25, 20, 18, 0.18);
+      white-space: nowrap;
+    }
+
+    .lb-brand-ed-main-frame {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      max-height: 580px;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 24px 56px rgba(132, 14, 52, 0.18);
+      border: 1px solid rgba(132, 14, 52, 0.12);
+      background: #F3E7D6;
+    }
+
+    .lb-brand-main-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 500ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      pointer-events: none;
+    }
+
+    .lb-brand-main-img.is-active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .lb-brand-ed-sec-frame {
+      position: absolute;
+      right: -24px;
+      bottom: 60px;
+      width: clamp(140px, 15vw, 190px);
+      aspect-ratio: 3 / 4;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 2px solid #F7EDDF;
+      box-shadow: 0 16px 36px rgba(132, 14, 52, 0.22);
+      background: #F3E7D6;
+      z-index: 3;
+    }
+
+    .lb-brand-sec-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 450ms ease, transform 600ms ease;
+    }
+
+    .lb-brand-sec-img.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .lb-brand-ed-annotation {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(132, 14, 52, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(247, 237, 223, 0.18);
+      border-left: 3px solid #C98F82;
+      padding: 16px 20px;
+      border-radius: 2px;
+      z-index: 4;
+      transition: background 220ms ease;
+    }
+
+    .lb-ed-anno-eyebrow {
+      font-family: 'Manrope', sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #C98F82;
+      margin-bottom: 4px;
+    }
+
+    .lb-ed-anno-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #F7EDDF;
+      margin: 0 0 3px;
+      letter-spacing: 0.02em;
+    }
+
+    .lb-ed-anno-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: rgba(247, 237, 223, 0.76);
+      margin: 0 0 10px;
+    }
+
+    .lb-ed-anno-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #F7EDDF;
+      text-decoration: none;
+      transition: color 180ms ease, gap 180ms ease;
+    }
+
+    .lb-ed-anno-cta:hover {
+      color: #C98F82;
+      gap: 10px;
+    }
+
+    .lb-ed-anno-cta svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* RIGHT: TYPOGRAPHY & BRAND ENTRIES */
+    .lb-brand-ed-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .lb-brand-ed-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #C98F82;
+      margin-bottom: 18px;
+    }
+
+    .lb-brand-ed-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: #C98F82;
+    }
+
+    .lb-brand-ed-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(34px, 3.8vw, 50px);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #191412;
+      margin: 0 0 20px;
+    }
+
+    .lb-brand-ed-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: #840E34;
+    }
+
+    .lb-brand-ed-lead {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(25, 20, 18, 0.55);
+      margin: 0 0 32px;
+      max-width: 440px;
+    }
+
+    .lb-brand-ed-entries {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 36px;
+    }
+
+    .lb-brand-entry-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 6px;
+      border-bottom: 1px solid rgba(25, 20, 18, 0.10);
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      color: #191412;
+      transition: background 200ms ease;
+    }
+
+    .lb-brand-entry-item:hover {
+      color: #191412;
+    }
+
+    .lb-brand-entry-item:first-child {
+      border-top: 1px solid rgba(25, 20, 18, 0.10);
+    }
+
+    .lb-brand-entry-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 1.5px;
+      background: #C98F82;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 260ms ease;
+    }
+
+    .lb-brand-entry-item.is-active::after,
+    .lb-brand-entry-item:hover::after {
+      transform: scaleX(1);
+    }
+
+    .lb-brand-entry-num {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 24px;
+      font-style: italic;
+      color: #C98F82;
+      opacity: 0.75;
+      line-height: 1;
+      width: 32px;
+      flex-shrink: 0;
+      transition: opacity 200ms ease, color 200ms ease;
+    }
+
+    .lb-brand-entry-item.is-active .lb-brand-entry-num,
+    .lb-brand-entry-item:hover .lb-brand-entry-num {
+      opacity: 1;
+      color: #840E34;
+    }
+
+    .lb-brand-entry-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lb-brand-entry-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .lb-brand-entry-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(19px, 2.2vw, 23px);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #191412;
+      transition: color 200ms ease, transform 220ms ease;
+      display: inline-block;
+    }
+
+    .lb-brand-entry-item.is-active .lb-brand-entry-name,
+    .lb-brand-entry-item:hover .lb-brand-entry-name {
+      color: #840E34;
+      transform: translateX(4px);
+    }
+
+    .lb-brand-entry-tag {
+      font-family: 'Manrope', sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #F7EDDF;
+      background: #840E34;
+      border: none;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .lb-brand-entry-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12.5px;
+      color: rgba(25, 20, 18, 0.50);
+      margin-top: 4px;
+    }
+
+    .lb-brand-entry-arr {
+      width: 16px;
+      height: 16px;
+      color: #C98F82;
+      opacity: 0.35;
+      margin-left: auto;
+      transition: transform 220ms ease, opacity 220ms ease, color 220ms ease;
+    }
+
+    .lb-brand-entry-item.is-active .lb-brand-entry-arr,
+    .lb-brand-entry-item:hover .lb-brand-entry-arr {
+      transform: translateX(4px);
+      opacity: 1;
+      color: #191412;
+    }
+
+    .lb-brand-ed-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .lb-brand-ed-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #840E34;
+      color: #F7EDDF;
+      padding: 14px 28px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid #840E34;
+      transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+    }
+
+    .lb-brand-ed-cta-primary:hover {
+      background: #5E0A26;
+      color: #F7EDDF;
+      transform: translateY(-1px);
+    }
+
+    .lb-brand-ed-cta-primary svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 200ms ease;
+    }
+
+    .lb-brand-ed-cta-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    .lb-brand-ed-cta-sec {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #191412;
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .lb-brand-ed-cta-sec::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 100%;
+      height: 1px;
+      background: #C98F82;
+      transform: scaleX(0.4);
+      transform-origin: left;
+      transition: transform 220ms ease;
+    }
+
+    .lb-brand-ed-cta-sec:hover::after {
+      transform: scaleX(1);
+    }
+
+    .lb-brand-ed-cta-sec svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 200ms ease;
+    }
+
+    .lb-brand-ed-cta-sec:hover {
+      color: #5E0A26;
+    }
+
+    .lb-brand-ed-cta-sec:hover svg {
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 980px) {
+      .lb-brand-ed-canvas {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .lb-brand-ed-vert-label {
+        display: none;
+      }
+      .lb-brand-ed-sec-frame {
+        right: 12px;
+        bottom: 24px;
+        width: 120px;
+      }
+      .lb-brand-ed-annotation {
+        left: 14px;
+        bottom: 14px;
+        right: 14px;
+        padding: 14px 16px;
+      }
+    }
+  </style>
+
+  <section id="lb-brand-editorial" class="lb-brand-editorial" aria-label="Discover Local Pakistani Brands">
+    <!-- Subtle editorial background watermark -->
+    <svg class="lb-brand-ed-watermark" viewBox="0 0 1400 800" fill="none" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M 60 140 L 1340 140" stroke="#840E34" stroke-width="1" stroke-dasharray="6 14"/>
+      <path d="M 60 660 L 1340 660" stroke="#840E34" stroke-width="1" stroke-dasharray="6 14"/>
+      <circle cx="680" cy="400" r="300" stroke="#C98F82" stroke-width="0.8" stroke-dasharray="8 16"/>
+    </svg>
+
+    <div class="lb-wrap">
+      <div class="lb-brand-ed-canvas">
+        
+        <!-- LEFT: LAYERED CAMPAIGN VISUAL & ANNOTATION -->
+        <div class="lb-brand-ed-visual-host lb-reveal is-visible">
+          <div class="lb-brand-ed-vert-label">DISCOVER &middot; LOCAL &middot; BRANDS</div>
+
+          <!-- Main Dramatic Lookbook Frame with Crossfade Stack -->
+          <div class="lb-brand-ed-main-frame">
+            <!-- VANYA Campaign Image -->
+            <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" 
+                 alt="Vanya Campaign Lookbook" 
+                 class="lb-brand-main-img is-active" 
+                 data-brand="vanya">
+
+            <!-- ZEEN Campaign Image -->
+            <img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" 
+                 alt="Zeen Campaign Lookbook" 
+                 class="lb-brand-main-img" 
+                 data-brand="zeen">
+
+            <!-- SUFFUSE Campaign Image -->
+            <img src="https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770" 
+                 alt="Suffuse Campaign Lookbook" 
+                 class="lb-brand-main-img" 
+                 data-brand="suffuse">
+
+            <!-- Integrated Editorial Annotation Overlay -->
+            <div class="lb-brand-ed-annotation">
+              <div class="lb-ed-anno-eyebrow">FEATURED LABEL</div>
+              <div id="lb-active-brand-title" class="lb-ed-anno-title">VANYA</div>
+              <p id="lb-active-brand-desc" class="lb-ed-anno-desc">Contemporary bridal and occasion wear with modern feminine silhouettes.</p>
+              <a id="lb-active-brand-link" href="https://vanya.pk" target="_blank" rel="noopener" class="lb-ed-anno-cta">
+                <span>EXPLORE BRAND</span>
+                <svg viewBox="0 0 20 20" fill="none">
+                  <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Secondary Layered Overlapping Frame -->
+          <div class="lb-brand-ed-sec-frame">
+            <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_c39e4f96-614a-4ade-8bbb-f6a489862134.jpg?v=1764583137" 
+                 alt="Vanya Detail" 
+                 class="lb-brand-sec-img is-active" 
+                 data-brand="vanya">
+            <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" 
+                 alt="Zeen Detail" 
+                 class="lb-brand-sec-img" 
+                 data-brand="zeen">
+            <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" 
+                 alt="Suffuse Detail" 
+                 class="lb-brand-sec-img" 
+                 data-brand="suffuse">
+          </div>
+        </div>
+
+        <!-- RIGHT: TYPOGRAPHY & INTERACTIVE BRAND ENTRIES -->
+        <div class="lb-brand-ed-content lb-reveal is-visible">
+          <div class="lb-brand-ed-eyebrow">DISCOVER LOCAL &middot; CURATED LABELS</div>
+          
+          <h2 class="lb-brand-ed-title">
+            Discover the names<br>
+            <em>you haven’t found yet.</em>
+          </h2>
+          
+          <p class="lb-brand-ed-lead">
+            Explore emerging Pakistani labels, local favorites, and new brands alongside the names you already know.
+          </p>
+
+          <!-- Interactive Brand Feature Entries -->
+          <div class="lb-brand-ed-entries" role="region" aria-label="Curated Brands List">
+            
+            <!-- Brand 01: VANYA -->
+            <div class="lb-brand-entry-item is-active" data-brand="vanya" tabindex="0" role="button" aria-label="Feature Vanya">
+              <span class="lb-brand-entry-num">01</span>
+              <div class="lb-brand-entry-main">
+                <div class="lb-brand-entry-head">
+                  <span class="lb-brand-entry-name">VANYA</span>
+                  <span class="lb-brand-entry-tag">Emerging Brand</span>
+                </div>
+                <div class="lb-brand-entry-sub">Bridal &middot; Formal Pret</div>
+              </div>
+              <svg class="lb-brand-entry-arr" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Brand 02: ZEEN -->
+            <div class="lb-brand-entry-item" data-brand="zeen" tabindex="0" role="button" aria-label="Feature Zeen">
+              <span class="lb-brand-entry-num">02</span>
+              <div class="lb-brand-entry-main">
+                <div class="lb-brand-entry-head">
+                  <span class="lb-brand-entry-name">ZEEN</span>
+                  <span class="lb-brand-entry-tag">Local Favorite</span>
+                </div>
+                <div class="lb-brand-entry-sub">Pret &middot; Eastern Wear</div>
+              </div>
+              <svg class="lb-brand-entry-arr" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Brand 03: SUFFUSE -->
+            <div class="lb-brand-entry-item" data-brand="suffuse" tabindex="0" role="button" aria-label="Feature Suffuse">
+              <span class="lb-brand-entry-num">03</span>
+              <div class="lb-brand-entry-main">
+                <div class="lb-brand-entry-head">
+                  <span class="lb-brand-entry-name">SUFFUSE</span>
+                  <span class="lb-brand-entry-tag">New to LibasAI</span>
+                </div>
+                <div class="lb-brand-entry-sub">Contemporary &middot; Festive Couture</div>
+              </div>
+              <svg class="lb-brand-entry-arr" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <!-- CTAs -->
+          <div class="lb-brand-ed-actions">
+            <a href="/brands" class="lb-brand-ed-cta-primary">
+              <span>EXPLORE ALL BRANDS</span>
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="/brands/local" class="lb-brand-ed-cta-sec">
+              <span>DISCOVER EMERGING LABELS</span>
+              <svg viewBox="0 0 20 20" fill="none">
+                <path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Brand Script -->
+  <script>
+    (function() {
+      var entries = document.querySelectorAll('.lb-brand-entry-item');
+      var mainImgs = document.querySelectorAll('.lb-brand-main-img');
+      var secImgs = document.querySelectorAll('.lb-brand-sec-img');
+      var titleEl = document.getElementById('lb-active-brand-title');
+      var descEl = document.getElementById('lb-active-brand-desc');
+      var linkEl = document.getElementById('lb-active-brand-link');
+
+      var brandDetails = {
+        vanya: {
+          title: "VANYA",
+          desc: "Contemporary bridal and occasion wear with modern feminine silhouettes.",
+          url: "https://vanya.pk"
+        },
+        zeen: {
+          title: "ZEEN",
+          desc: "Refined wardrobe staples, breathable lawns, and timeless Eastern silhouettes.",
+          url: "https://www.zeenwoman.com"
+        },
+        suffuse: {
+          title: "SUFFUSE",
+          desc: "Sana Yasir's couture signature, delicate handcrafted organzas, and festive pret.",
+          url: "https://suffuse.pk"
+        }
+      };
+
+      function setBrand(brandKey) {
+        var data = brandDetails[brandKey];
+        if (!data) return;
+
+        entries.forEach(function(el) {
+          el.classList.toggle('is-active', el.getAttribute('data-brand') === brandKey);
+        });
+
+        mainImgs.forEach(function(img) {
+          img.classList.toggle('is-active', img.getAttribute('data-brand') === brandKey);
+        });
+
+        secImgs.forEach(function(img) {
+          img.classList.toggle('is-active', img.getAttribute('data-brand') === brandKey);
+        });
+
+        if (titleEl) titleEl.textContent = data.title;
+        if (descEl) descEl.textContent = data.desc;
+        if (linkEl) linkEl.href = data.url;
+      }
+
+      entries.forEach(function(item) {
+        var b = item.getAttribute('data-brand');
+        item.addEventListener('mouseenter', function() { setBrand(b); });
+        item.addEventListener('click', function() { setBrand(b); });
+        item.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setBrand(b);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- BRANDS MARQUEE -->
+  <section class="lb-section">
+    <div class="lb-wrap">
+      <div class="lb-section__head centered lb-reveal is-visible">
+        <div class="lb-eyebrow">Brands</div>
+        <h2 class="lb-h2" style="font-size:clamp(22px,2.2vw,28px);">80+ Pakistani labels, one place</h2>
+      </div>
+      <div class="lb-brand-marquee lb-reveal is-visible">
+        <div class="lb-brand-marquee__track">
+          <span>Sana Safinaz</span><span>Gul Ahmed</span><span>Beechtree</span><span>Generation</span><span>Zellbury</span><span>Vanya</span><span>Mushq</span><span>Zeen</span><span>Zaaviay</span><span>Suffuse</span>
+          <span>Sana Safinaz</span><span>Gul Ahmed</span><span>Beechtree</span><span>Generation</span><span>Zellbury</span><span>Vanya</span><span>Mushq</span><span>Zeen</span><span>Zaaviay</span><span>Suffuse</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="lb-section lb-final-cta">
+    <svg class="lb-final-cta__art" viewBox="0 0 400 400" aria-hidden="true" fill="none" stroke="#F7EDDF" stroke-width="1"><path d="M120 40c-40 20-60 60-40 110 15 38 55 55 55 95 0 30-25 45-55 40M280 40c40 20 60 60 40 110-15 38-55 55-55 95 0 30 25 45 55 40M200 20v360M140 90c30-10 90-10 120 0M140 310c30 10 90 10 120 0"/></svg>
+    <div class="lb-wrap lb-reveal is-visible" style="text-align:center; position:relative; z-index:1;">
+      <h2 class="lb-h1" style="color:var(--lb-cream); font-size:clamp(24px,2.8vw,36px);">Your next favourite outfit is one search away.</h2>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:18px;">
+        <a href="/ai/ask" class="lb-cta" style="background:var(--lb-cream); color:var(--lb-burgundy);">Ask LibasAI →</a>
+        <a href="/ai" class="lb-cta" style="background:transparent; border:1.5px solid rgba(247,237,223,0.4); color:var(--lb-cream);">Explore All AI Features</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find Master Tailors</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027 · Areeba Waqar, Mahad Malik &amp; M. Shayan Asad</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+</body>
+</html>

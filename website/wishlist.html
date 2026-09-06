@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved Looks & Wishlist — LibasAI</title>
+  <meta name="description" content="Your saved Pakistani fashion looks, unstitched fabric wishlists, and bookmarked master tailors on LibasAI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-wish-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .lb-wish-card {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+    .lb-wish-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(25,20,18,0.08);
+    }
+    .lb-wish-media {
+      position: relative;
+      height: 320px;
+      background: var(--lb-paper);
+    }
+    .lb-wish-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .lb-wish-info {
+      padding: 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .lb-wish-brand {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--lb-mauve);
+      margin-bottom: 4px;
+    }
+    .lb-wish-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--lb-charcoal);
+      margin: 0 0 6px;
+      line-height: 1.3;
+    }
+    .lb-wish-price {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--lb-burgundy);
+      margin-bottom: 14px;
+    }
+    .lb-wish-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <a href="/index.html" class="lb-nav__link">Home</a>
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">Brands</button>
+          <a href="/ai-features.html" class="lb-nav__link">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson);">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist" style="color:var(--lb-burgundy);">
+            <svg class="lb-icon" style="fill:currentColor;stroke:currentColor;stroke-width:1.7;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/get-stitched.html" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;"><use href="#lb-i-scissors"></use></svg>
+            Book Stitching
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="lb-section" style="padding-top:48px;">
+    <div class="lb-wrap">
+      
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:28px;">
+        <div>
+          <div class="lb-eyebrow">Your Curated Wardrobe</div>
+          <h1 class="lb-h1" style="font-size:clamp(30px, 4vw, 48px);">Saved Looks & Wishlist</h1>
+          <p class="lb-body" style="font-size:15px; margin-top:8px;">
+            Save pieces discovered across 80+ Pakistani brands. Send directly to verified tailors for bespoke stitching with one click.
+          </p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <a href="/outfit-builder.html" class="lb-cta lb-cta--ghost">Create New Outfit +</a>
+          <a href="/get-stitched.html" class="lb-cta">Get A Look Stitched →</a>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div style="display:flex; gap:10px; border-bottom:1px solid var(--lb-hairline); padding-bottom:14px; margin-bottom:32px;">
+        <button class="lb-cta" style="padding:8px 18px; font-size:12.5px;">Saved Outfits & Fabrics (4)</button>
+        <a href="/tailors.html" class="lb-cta lb-cta--ghost" style="padding:8px 18px; font-size:12.5px;">Bookmarked Tailors (2)</a>
+      </div>
+
+      <!-- WISHLIST CARDS -->
+      <div class="lb-wish-grid">
+        
+        <!-- Item 1 -->
+        <div class="lb-wish-card">
+          <div class="lb-wish-media">
+            <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Olive Raw Silk Kurta">
+            <span class="lb-tag" style="position:absolute; top:12px; left:12px; background:#FFF;">Unstitched 3-Piece</span>
+          </div>
+          <div class="lb-wish-info">
+            <div>
+              <div class="lb-wish-brand">Sana Safinaz</div>
+              <h3 class="lb-wish-title">Olive Raw Silk Embroidered Kurta</h3>
+              <div class="lb-wish-price">PKR 6,450</div>
+            </div>
+            <div class="lb-wish-actions">
+              <a href="/get-stitched.html?design=outfit&title=Sana+Safinaz+Olive+Raw+Silk+Kurta&img=https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" class="lb-cta" style="justify-content:center; padding:10px 14px; font-size:11.5px;">
+                <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+                Get This Look Stitched
+              </a>
+              <a href="/compare.html" class="lb-cta lb-cta--ghost" style="justify-content:center; padding:8px 14px; font-size:11.5px;">
+                Compare Fabric Prices
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="lb-wish-card">
+          <div class="lb-wish-media">
+            <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="Organza Festive Ensemble">
+            <span class="lb-tag" style="position:absolute; top:12px; left:12px; background:#FFF;">Luxury Pret</span>
+          </div>
+          <div class="lb-wish-info">
+            <div>
+              <div class="lb-wish-brand">Vanya (Local Emerging)</div>
+              <h3 class="lb-wish-title">Tissue Organza Embroidered Peshwas</h3>
+              <div class="lb-wish-price">PKR 14,800</div>
+            </div>
+            <div class="lb-wish-actions">
+              <a href="/get-stitched.html?design=outfit&tailor=noor&title=Vanya+Organza+Peshwas&img=https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" class="lb-cta" style="justify-content:center; padding:10px 14px; font-size:11.5px;">
+                <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+                Get This Look Stitched
+              </a>
+              <a href="/outfit-builder.html" class="lb-cta lb-cta--ghost" style="justify-content:center; padding:8px 14px; font-size:11.5px;">
+                Style in Outfit Studio
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="lb-wish-card">
+          <div class="lb-wish-media">
+            <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Zellbury Printed Lawn">
+            <span class="lb-tag" style="position:absolute; top:12px; left:12px; background:#FFF;">3-Piece Lawn</span>
+          </div>
+          <div class="lb-wish-info">
+            <div>
+              <div class="lb-wish-brand">Zellbury</div>
+              <h3 class="lb-wish-title">Printed Lawn 3-Piece with Voile Dupatta</h3>
+              <div class="lb-wish-price">PKR 3,290</div>
+            </div>
+            <div class="lb-wish-actions">
+              <a href="/get-stitched.html?design=outfit&tailor=gulberg&title=Zellbury+Printed+Lawn&img=https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" class="lb-cta" style="justify-content:center; padding:10px 14px; font-size:11.5px;">
+                <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+                ⚡ 48h Express Stitching
+              </a>
+              <a href="/compare.html" class="lb-cta lb-cta--ghost" style="justify-content:center; padding:8px 14px; font-size:11.5px;">
+                Compare Lawn Quality
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="lb-wish-card">
+          <div class="lb-wish-media">
+            <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="Velvet Formal">
+            <span class="lb-tag" style="position:absolute; top:12px; left:12px; background:#FFF;">Formal Velvet</span>
+          </div>
+          <div class="lb-wish-info">
+            <div>
+              <div class="lb-wish-brand">Gul Ahmed</div>
+              <h3 class="lb-wish-title">Deep Burgundy Velvet Gala Formal</h3>
+              <div class="lb-wish-price">PKR 12,500</div>
+            </div>
+            <div class="lb-wish-actions">
+              <a href="/get-stitched.html?design=outfit&tailor=rafiq&title=Gul+Ahmed+Velvet+Formal&img=https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" class="lb-cta" style="justify-content:center; padding:10px 14px; font-size:11.5px;">
+                <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+                Get This Look Stitched
+              </a>
+              <a href="/image-search.html" class="lb-cta lb-cta--ghost" style="justify-content:center; padding:8px 14px; font-size:11.5px;">
+                Find Similar Pieces
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find a Tailor</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+</body>
+</html>

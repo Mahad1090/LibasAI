@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Master Tailor Profile — LibasAI Bespoke Studio</title>
+  <meta name="description" content="Detailed tailor profile, craftsmanship portfolio, stitching services, rate card, and custom order booking on LibasAI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-profile-banner {
+      background: linear-gradient(135deg, #2E0B16 0%, #5E0A26 55%, #840E34 100%);
+      color: var(--lb-cream);
+      padding: clamp(50px, 6vw, 84px) clamp(20px, 5vw, 72px) clamp(40px, 5vw, 60px);
+      position: relative;
+    }
+    .lb-profile-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .lb-profile-avatar-lg {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--lb-rose);
+      object-fit: cover;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      background: var(--lb-paper);
+    }
+    .lb-rate-card-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      background: #FFF;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--lb-hairline);
+    }
+    .lb-rate-card-table th {
+      background: var(--lb-paper);
+      text-align: left;
+      padding: 12px 18px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--lb-charcoal);
+      border-bottom: 1px solid rgba(25,20,18,0.08);
+    }
+    .lb-rate-card-table td {
+      padding: 14px 18px;
+      font-size: 13.5px;
+      border-bottom: 1px solid rgba(25,20,18,0.06);
+      color: var(--lb-charcoal);
+    }
+    .lb-rate-card-table tr:last-child td {
+      border-bottom: none;
+    }
+    .lb-portfolio-mosaic {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .lb-portfolio-card {
+      background: #FFF;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--lb-hairline);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+    .lb-portfolio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(25,20,18,0.08);
+    }
+    .lb-portfolio-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+    .lb-portfolio-meta {
+      padding: 14px 18px;
+    }
+    .lb-portfolio-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--lb-charcoal);
+      margin: 0 0 4px;
+    }
+    .lb-portfolio-desc {
+      font-size: 12.5px;
+      color: rgba(25,20,18,0.65);
+      margin: 0;
+    }
+    .lb-sticky-book-bar {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(25,20,18,0.06);
+      position: sticky;
+      top: 90px;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="lb-i-map" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="lb-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+      <symbol id="lb-i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+      <symbol id="lb-i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <a href="/index.html" class="lb-nav__link">Home</a>
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">Brands</button>
+          <a href="/ai-features.html" class="lb-nav__link">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson);">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <a href="/tailors.html" class="lb-btn-profile" style="padding:6px 12px; margin-right:8px;">← Back to Tailors</a>
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/get-stitched.html" id="top-book-btn" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;"><use href="#lb-i-scissors"></use></svg>
+            Request Stitching
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE BANNER -->
+  <section class="lb-profile-banner">
+    <div class="lb-wrap">
+      <div class="lb-profile-head">
+        <img id="tailor-avatar" class="lb-profile-avatar-lg" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80" alt="Tailor Avatar">
+        <div style="flex:1; min-width:300px;">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+            <span class="lb-tag" style="border-color:var(--lb-rose); color:var(--lb-cream); background:rgba(201,143,130,0.18);">
+              <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.5;display:inline-block;vertical-align:middle;margin-right:3px;"><use href="#lb-i-check"></use></svg>
+              LibasAI Verified Master Atelier
+            </span>
+            <span id="avail-pill" style="font-size:12px; font-weight:700; color:#A7F3D0; display:inline-flex; align-items:center; gap:5px;">
+              ● Available for Stitching
+            </span>
+          </div>
+          <h1 id="tailor-name" class="lb-h1" style="color:var(--lb-cream); font-size:clamp(30px, 4vw, 48px); margin:0 0 10px;">
+            Master Rafiq & Sons Bespoke Atelier
+          </h1>
+          <div style="display:flex; gap:20px; flex-wrap:wrap; font-size:14px; color:rgba(247,237,223,0.85);">
+            <span style="display:flex; align-items:center; gap:6px;">
+              <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
+              <span id="tailor-loc">Gulberg III & Old Anarkali, Lahore</span>
+            </span>
+            <span style="display:flex; align-items:center; gap:6px;">
+              <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
+              <span id="tailor-exp">24 Years Master Cutting Lineage</span>
+            </span>
+            <span style="display:flex; align-items:center; gap:6px; color:#FCD34D; font-weight:700;">
+              ★ <span id="tailor-rating">4.95</span> (342 Verified Jobs)
+            </span>
+          </div>
+          <p id="tailor-bio" style="font-size:15px; color:rgba(247,237,223,0.8); line-height:1.6; max-width:760px; margin-top:14px;">
+            Founded in 2002, Master Rafiq's workshop specializes in precision unstitched fabric conversion, traditional band gala kameez, bespoke tailored waistcoats, and delicate lawn interlock finishing. Every garment undergoes hand-pressed collar blocking and rigorous measurement inspection.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN PROFILE CONTENT -->
+  <section class="lb-section" style="padding-top:48px;">
+    <div class="lb-wrap">
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:40px; align-items:start;">
+        
+        <!-- LEFT COLUMN -->
+        <div>
+          <!-- Craft Specialties -->
+          <div style="background:#FFF; border:1px solid var(--lb-hairline); border-radius:6px; padding:28px; margin-bottom:32px;">
+            <div class="lb-eyebrow">Craftsmanship & Specialties</div>
+            <h2 class="lb-h2" style="font-size:24px; margin-bottom:16px;">Core Stitching Expertise</h2>
+            <div id="tailor-specialties" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
+              <span class="lb-tag" style="background:var(--lb-paper); border:none; padding:6px 12px; font-size:12px;">Men's Shalwar Kameez</span>
+              <span class="lb-tag" style="background:var(--lb-paper); border:none; padding:6px 12px; font-size:12px;">Women's 3-Piece Lawn & Chiffon</span>
+              <span class="lb-tag" style="background:var(--lb-paper); border:none; padding:6px 12px; font-size:12px;">Raw Silk & Jamawar Waistcoats</span>
+              <span class="lb-tag" style="background:var(--lb-paper); border:none; padding:6px 12px; font-size:12px;">Sherwani Band Collars</span>
+              <span class="lb-tag" style="background:var(--lb-paper); border:none; padding:6px 12px; font-size:12px;">Pico, Overlock & Lace Embellishment</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-top:20px; border-top:1px solid rgba(25,20,18,0.08); padding-top:20px;">
+              <div>
+                <strong style="display:block; font-size:13px; color:var(--lb-mauve); text-transform:uppercase;">Measurement Guarantee</strong>
+                <p style="font-size:13.5px; color:rgba(25,20,18,0.7); margin:4px 0 0;">Free alteration within 7 days if fitting deviates by >0.5 inches.</p>
+              </div>
+              <div>
+                <strong style="display:block; font-size:13px; color:var(--lb-mauve); text-transform:uppercase;">Pickup & Delivery</strong>
+                <p style="font-size:13.5px; color:rgba(25,20,18,0.7); margin:4px 0 0;">Fabric courier pickup available in Lahore, Karachi & Rawalpindi.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rate Card / Price List -->
+          <div style="background:#FFF; border:1px solid var(--lb-hairline); border-radius:6px; padding:28px; margin-bottom:32px;">
+            <div class="lb-eyebrow">Transparent Pricing</div>
+            <h2 class="lb-h2" style="font-size:24px;">Standard Stitching Rate Card</h2>
+            <p class="lb-body" style="font-size:14px; margin-top:6px;">Rates include basic thread matching, overlock, and custom fitting to your supplied measurements.</p>
+
+            <table class="lb-rate-card-table">
+              <thead>
+                <tr>
+                  <th>Garment / Service</th>
+                  <th>Description & Inclusions</th>
+                  <th>Turnaround</th>
+                  <th>Est. Charges</th>
+                </tr>
+              </thead>
+              <tbody id="rate-table-body">
+                <tr>
+                  <td><strong>Men's Plain Shalwar Kameez</strong></td>
+                  <td>Sherwani/Classic collar, single front pocket, side pockets, hem piping</td>
+                  <td>3–4 Days</td>
+                  <td><strong style="color:var(--lb-burgundy);">PKR 2,400</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Women's 3-Piece Lawn / Cotton Suit</strong></td>
+                  <td>Shirt styling, trouser/shalwar cut, dupatta pico finish & lace attachment</td>
+                  <td>3–5 Days</td>
+                  <td><strong style="color:var(--lb-burgundy);">PKR 2,800</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Bespoke Waistcoat / Prince Coat</strong></td>
+                  <td>Canvas fused chest, welt pockets, imported buttons, inner satin lining</td>
+                  <td>4–5 Days</td>
+                  <td><strong style="color:var(--lb-burgundy);">PKR 3,600</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Formal Silk / Velvet Embellished Suit</strong></td>
+                  <td>Full inner crepe lining, delicate motif alignment, neckline cut-work</td>
+                  <td>5–7 Days</td>
+                  <td><strong style="color:var(--lb-burgundy);">PKR 4,800</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>⚡ 48-Hour Express Rush Addon</strong></td>
+                  <td>Priority cutter assignment, 48-hour dispatch guarantee</td>
+                  <td>48 Hours</td>
+                  <td><strong style="color:var(--lb-burgundy);">+PKR 800</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Portfolio Gallery -->
+          <div style="background:#FFF; border:1px solid var(--lb-hairline); border-radius:6px; padding:28px;">
+            <div class="lb-eyebrow">Portfolio & Finished Garments</div>
+            <h2 class="lb-h2" style="font-size:24px;">Recent Stitched Client Commissions</h2>
+            <div id="portfolio-mosaic" class="lb-portfolio-mosaic">
+              <div class="lb-portfolio-card">
+                <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Men's Kurta">
+                <div class="lb-portfolio-meta">
+                  <div class="lb-portfolio-title">Olive Raw Silk Men's Kurta</div>
+                  <div class="lb-portfolio-desc">Stitched with stiff band collar & hidden horn buttons</div>
+                </div>
+              </div>
+              <div class="lb-portfolio-card">
+                <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="Women's Suit">
+                <div class="lb-portfolio-meta">
+                  <div class="lb-portfolio-title">Festive Organza Embroidered 3-Piece</div>
+                  <div class="lb-portfolio-desc">Featuring custom flared daman and organza sleeve borders</div>
+                </div>
+              </div>
+              <div class="lb-portfolio-card">
+                <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Printed Lawn">
+                <div class="lb-portfolio-meta">
+                  <div class="lb-portfolio-title">Summer Lawn Pret Suit</div>
+                  <div class="lb-portfolio-desc">Precision pattern matching along front placket and trouser cuffs</div>
+                </div>
+              </div>
+              <div class="lb-portfolio-card">
+                <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="Velvet Formal">
+                <div class="lb-portfolio-meta">
+                  <div class="lb-portfolio-title">Burgundy Velvet Winter Formal</div>
+                  <div class="lb-portfolio-desc">Heavy gold tilla border integration and soft silk lining</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: STICKY BOOKING CARD -->
+        <div>
+          <div class="lb-sticky-book-bar">
+            <span class="lb-tag" style="color:var(--lb-burgundy); border-color:var(--lb-burgundy); margin-bottom:12px;">Direct Booking</span>
+            <h3 class="lb-h2" style="font-size:22px; margin:0 0 10px;">Book With This Tailor</h3>
+            <p style="font-size:13px; color:rgba(25,20,18,0.65); line-height:1.5; margin:0 0 18px;">
+              Choose whether you have unstitched fabric from a LibasAI product, an inspiration photo, or your own cloth.
+            </p>
+
+            <div style="background:var(--lb-paper); border-radius:4px; padding:14px; margin-bottom:18px;">
+              <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;">
+                <span>Starting Rate:</span>
+                <strong id="card-start-price" style="color:var(--lb-burgundy);">PKR 2,400</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;">
+                <span>Typical Completion:</span>
+                <strong id="card-time">3 – 5 Days</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:13px;">
+                <span>Current Status:</span>
+                <strong style="color:#2E7D32;">● Accepting Orders</strong>
+              </div>
+            </div>
+
+            <a id="request-stitch-btn" href="/get-stitched.html?tailor=rafiq" class="lb-cta lb-cta--wide" style="display:flex; text-align:center; justify-content:center;">
+              <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+              Start Stitching Request →
+            </a>
+
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px; font-size:12.5px; color:rgba(25,20,18,0.7);">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg style="width:16px;height:16px;fill:none;stroke:#2E7D32;stroke-width:2;"><use href="#lb-i-check"></use></svg>
+                <span>Measurements saved to your LibasAI profile</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg style="width:16px;height:16px;fill:none;stroke:#2E7D32;stroke-width:2;"><use href="#lb-i-shield"></use></svg>
+                <span>Protected by LibasAI Fit Guarantee</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg style="width:16px;height:16px;fill:none;stroke:var(--lb-burgundy);stroke-width:2;"><use href="#lb-i-clock"></use></svg>
+                <span>Live order status tracking online</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find a Tailor</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+  <script>
+    var tailorsData = {
+      rafiq: {
+        name: "Master Rafiq & Sons Bespoke Atelier",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+        loc: "Gulberg III & Old Anarkali, Lahore",
+        exp: "24 Years Master Cutting Lineage",
+        rating: "4.95",
+        jobs: "342",
+        startPrice: "PKR 2,400",
+        time: "3 – 5 Days",
+        bio: "Founded in 2002, Master Rafiq's workshop specializes in precision unstitched fabric conversion, traditional band gala kameez, bespoke tailored waistcoats, and delicate lawn interlock finishing. Every garment undergoes hand-pressed collar blocking and rigorous measurement inspection."
+      },
+      noor: {
+        name: "Noor Bridal & Couture Studio",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
+        loc: "Clifton Block 4 & Tariq Road, Karachi",
+        exp: "16 Years Luxury Pret & Bridal Couture",
+        rating: "4.98",
+        jobs: "520",
+        startPrice: "PKR 6,500",
+        time: "7 – 10 Days",
+        bio: "Specializing in delicate bridal craftsmanship, pure chiffon & organza peshwas, intricate hand-embroidered borders, cancan underskirts, and contemporary Pakistani luxury evening wear."
+      },
+      aslam: {
+        name: "Ustaad Aslam Master Cutter",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+        loc: "F-10 Markaz & Blue Area, Islamabad",
+        exp: "28 Years Men's Formal Suiting & Sherwanis",
+        rating: "4.90",
+        jobs: "410",
+        startPrice: "PKR 3,500",
+        time: "4 – 6 Days",
+        bio: "Master cutter with extensive experience tailoring for diplomatic and executive clientele in Islamabad. Renowned for crisp collar fusing, balanced shoulder drop, and bespoke Prince coats."
+      },
+      gulberg: {
+        name: "Gulberg Express Stitching",
+        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+        loc: "MM Alam Road, Gulberg II, Lahore",
+        exp: "14 Years Fast Pret & Designer Lawn",
+        rating: "4.88",
+        jobs: "670",
+        startPrice: "PKR 2,100",
+        time: "48 – 72 Hours",
+        bio: "Designed for modern convenience. Turn your unstitched fabric into a ready-to-wear silhouette within 48 to 72 hours with doorstep courier dispatch."
+      },
+      saddar: {
+        name: "Saddar Craftsmanship Guild",
+        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+        loc: "Bank Road, Saddar Cantt, Rawalpindi",
+        exp: "35 Years Authentic Boski & Karandi",
+        rating: "4.82",
+        jobs: "295",
+        startPrice: "PKR 1,800",
+        time: "4 – 5 Days",
+        bio: "Heritage tailors preserving classic Pakistani tailoring traditions. Specialists in Chinese Boski, winter wool khaddar, and hand-embroidered button loops."
+      },
+      alzahra: {
+        name: "Al-Zahra Pret Lab",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+        loc: "D-Ground, Peoples Colony, Faisalabad",
+        exp: "11 Years Industrial Finishing & Pret",
+        rating: "4.79",
+        jobs: "210",
+        startPrice: "PKR 1,600",
+        time: "3 – 4 Days",
+        bio: "High-precision stitching straight from Faisalabad's textile heartland. Exceptional quality control, durable chain-stitching, and prompt delivery."
+      }
+    };
+
+    var params = new URLSearchParams(window.location.search);
+    var tailorId = params.get('id') || 'rafiq';
+    var t = tailorsData[tailorId] || tailorsData['rafiq'];
+
+    document.getElementById('tailor-name').innerText = t.name;
+    document.getElementById('tailor-avatar').src = t.avatar;
+    document.getElementById('tailor-loc').innerText = t.loc;
+    document.getElementById('tailor-exp').innerText = t.exp;
+    document.getElementById('tailor-rating').innerText = t.rating;
+    document.getElementById('tailor-bio').innerText = t.bio;
+    document.getElementById('card-start-price').innerText = t.startPrice;
+    document.getElementById('card-time').innerText = t.time;
+    document.getElementById('request-stitch-btn').href = '/get-stitched.html?tailor=' + tailorId;
+    document.getElementById('top-book-btn').href = '/get-stitched.html?tailor=' + tailorId;
+  </script>
+</body>
+</html>

@@ -63,3 +63,9 @@ key.properties
 
 # Claude Code scratch (not part of the app)
 .github/modernize/
+
+# Design canvas tooling artifacts (auto-generated, not authored source)
+website/.thumbnail
+website/_ds/
+
+.claude

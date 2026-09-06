@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get Your Suit Stitched — LibasAI Bespoke Studio</title>
+  <meta name="description" content="Step-by-step bespoke stitching request. Select design, pick verified master tailor, configure measurements and styling details, and submit order.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-wizard-wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: clamp(32px, 5vw, 64px) 20px 80px;
+    }
+    .lb-stepper {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 44px;
+    }
+    .lb-stepper::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      right: 30px;
+      height: 2px;
+      background: rgba(25,20,18,0.12);
+      z-index: 1;
+    }
+    .lb-stepper-progress {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      height: 2px;
+      background: var(--lb-burgundy);
+      z-index: 2;
+      transition: width 300ms var(--lb-ease);
+      width: 0%;
+    }
+    .lb-step-node {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      cursor: pointer;
+      flex: 1;
+    }
+    .lb-step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFF;
+      border: 2px solid rgba(25,20,18,0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: rgba(25,20,18,0.6);
+      transition: all 250ms ease;
+      margin-bottom: 8px;
+    }
+    .lb-step-node.is-active .lb-step-circle {
+      background: var(--lb-burgundy);
+      border-color: var(--lb-burgundy);
+      color: var(--lb-cream);
+      box-shadow: 0 0 0 5px rgba(132,14,52,0.15);
+    }
+    .lb-step-node.is-done .lb-step-circle {
+      background: #2E7D32;
+      border-color: #2E7D32;
+      color: #FFF;
+    }
+    .lb-step-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: rgba(25,20,18,0.6);
+    }
+    .lb-step-node.is-active .lb-step-label {
+      color: var(--lb-burgundy);
+    }
+    .lb-step-panel {
+      display: none;
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: clamp(24px, 4vw, 44px);
+      box-shadow: 0 10px 30px rgba(25,20,18,0.04);
+      animation: fadeIn 280ms ease;
+    }
+    .lb-step-panel.is-active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .lb-source-card {
+      border: 2px solid rgba(25,20,18,0.12);
+      border-radius: 6px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 200ms ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: #FFF;
+    }
+    .lb-source-card:hover, .lb-source-card.is-selected {
+      border-color: var(--lb-burgundy);
+      background: #FAF3EC;
+      box-shadow: 0 6px 18px rgba(132,14,52,0.08);
+    }
+    .lb-form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .lb-form-grid-2 { grid-template-columns: 1fr; }
+      .lb-step-label { display: none; }
+    }
+    .lb-tailor-pick-card {
+      border: 1.5px solid rgba(25,20,18,0.12);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      cursor: pointer;
+      transition: all 200ms ease;
+      background: #FFF;
+    }
+    .lb-tailor-pick-card:hover, .lb-tailor-pick-card.is-selected {
+      border-color: var(--lb-burgundy);
+      background: #FAF3EC;
+    }
+    .lb-tailor-pick-card input[type="radio"] {
+      accent-color: var(--lb-burgundy);
+      width: 18px;
+      height: 18px;
+    }
+    .lb-meas-input-group {
+      background: var(--lb-paper);
+      padding: 12px 16px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .lb-meas-input-group label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--lb-charcoal);
+    }
+    .lb-meas-input-group input {
+      width: 90px;
+      padding: 8px 12px;
+      border: 1px solid rgba(25,20,18,0.2);
+      border-radius: 4px;
+      text-align: right;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .lb-wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--lb-hairline);
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="lb-i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+      <symbol id="lb-i-sparkles" viewBox="0 0 24 24"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <a href="/index.html" class="lb-nav__link">Home</a>
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">Brands</button>
+          <a href="/ai-features.html" class="lb-nav__link">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link is-current" style="color:var(--lb-crimson); font-weight:700;">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <a href="/my-requests.html" class="lb-cta lb-cta--ghost" style="padding:8px 14px; font-size:11.5px;">
+            My Stitching Requests
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lb-wizard-wrap">
+    
+    <!-- HEADER -->
+    <div style="text-align:center; max-width:640px; margin:0 auto 36px;">
+      <div class="lb-eyebrow" style="display:inline-flex; align-items:center; gap:6px;">
+        <svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
+        LibasAI Bespoke Concierge
+      </div>
+      <h1 class="lb-h1" style="font-size:clamp(30px, 3.8vw, 44px);">Get Your Suit Stitched</h1>
+      <p class="lb-body" style="font-size:15px; margin-top:8px;">
+        Configure custom tailoring for unstitched Pakistani suits or inspiration looks. Our master tailors cut, stitch, and deliver to your exact measurements.
+      </p>
+    </div>
+
+    <!-- STEPPER PROGRESS BAR -->
+    <div class="lb-stepper">
+      <div id="stepper-progress" class="lb-stepper-progress"></div>
+      
+      <div class="lb-step-node is-active" id="node-1" onclick="goToStep(1)">
+        <div class="lb-step-circle">1</div>
+        <span class="lb-step-label">Design</span>
+      </div>
+      <div class="lb-step-node" id="node-2" onclick="goToStep(2)">
+        <div class="lb-step-circle">2</div>
+        <span class="lb-step-label">Tailor</span>
+      </div>
+      <div class="lb-step-node" id="node-3" onclick="goToStep(3)">
+        <div class="lb-step-circle">3</div>
+        <span class="lb-step-label">Measurements</span>
+      </div>
+      <div class="lb-step-node" id="node-4" onclick="goToStep(4)">
+        <div class="lb-step-circle">4</div>
+        <span class="lb-step-label">Instructions</span>
+      </div>
+      <div class="lb-step-node" id="node-5" onclick="goToStep(5)">
+        <div class="lb-step-circle">5</div>
+        <span class="lb-step-label">Deadline</span>
+      </div>
+      <div class="lb-step-node" id="node-6" onclick="goToStep(6)">
+        <div class="lb-step-circle">6</div>
+        <span class="lb-step-label">Review</span>
+      </div>
+    </div>
+
+    <!-- ================= STEP 1: CHOOSE DESIGN ================= -->
+    <div class="lb-step-panel is-active" id="step-1">
+      <div class="lb-eyebrow">Step 1 of 6</div>
+      <h2 class="lb-h2" style="font-size:24px; margin-bottom:10px;">Where are you starting from?</h2>
+      <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">
+        Choose whether you are stitching a LibasAI product look, an AI outfit combination, an inspiration photo, or your own unstitched cloth.
+      </p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:16px; margin-bottom:28px;">
+        <div class="lb-source-card is-selected" id="src-catalog" onclick="selectDesignSource('catalog')">
+          <div style="font-size:28px; margin-bottom:10px;">👗</div>
+          <strong style="font-size:14px;">LibasAI Product / Look</strong>
+          <span style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:4px;">Lawn, Silk, or Formal Pret</span>
+        </div>
+        <div class="lb-source-card" id="src-outfit" onclick="selectDesignSource('outfit')">
+          <div style="font-size:28px; margin-bottom:10px;">✨</div>
+          <strong style="font-size:14px;">AI Outfit Builder Look</strong>
+          <span style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:4px;">Multi-brand ensemble</span>
+        </div>
+        <div class="lb-source-card" id="src-upload" onclick="selectDesignSource('upload')">
+          <div style="font-size:28px; margin-bottom:10px;">📷</div>
+          <strong style="font-size:14px;">Upload Inspiration Photo</strong>
+          <span style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:4px;">Pinterest, Instagram or sketch</span>
+        </div>
+        <div class="lb-source-card" id="src-fabric" onclick="selectDesignSource('fabric')">
+          <div style="font-size:28px; margin-bottom:10px;">🧵</div>
+          <strong style="font-size:14px;">Own Fabric / Plain Cloth</strong>
+          <span style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:4px;">Fabric pickup from home</span>
+        </div>
+      </div>
+
+      <!-- DESIGN DETAIL PREVIEW BOX -->
+      <div id="design-preview-box" style="background:var(--lb-paper); border-radius:6px; padding:20px; display:flex; gap:20px; align-items:center;">
+        <img id="design-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:88px; height:88px; object-fit:cover; border-radius:4px; border:1px solid rgba(25,20,18,0.15);" alt="Design preview">
+        <div style="flex:1;">
+          <strong id="design-title" style="font-size:16px; color:var(--lb-charcoal); display:block; margin-bottom:4px;">
+            Olive Raw Silk Traditional Kurta
+          </strong>
+          <span id="design-subtitle" style="font-size:13px; color:rgba(25,20,18,0.65);">
+            Sourced from Sana Safinaz / LibasAI Aggregated Catalog
+          </span>
+          <div style="margin-top:8px;">
+            <span class="lb-tag" style="background:#FFF; border-color:var(--lb-mauve);">Unstitched 3-Piece Fabric</span>
+          </div>
+        </div>
+        <div id="upload-action-btn" style="display:none;">
+          <input type="file" id="photo-upload-input" accept="image/*" style="display:none;" onchange="handlePhotoUpload(this)">
+          <button type="button" class="lb-cta lb-cta--ghost" onclick="document.getElementById('photo-upload-input').click()">
+            Upload Custom Photo
+          </button>
+        </div>
+      </div>
+
+      <div class="lb-wizard-nav">
+        <span></span>
+        <button type="button" class="lb-cta" onclick="goToStep(2)">Continue to Choose Tailor →</button>
+      </div>
+    </div>
+
+    <!-- ================= STEP 2: CHOOSE TAILOR ================= -->
+    <div class="lb-step-panel" id="step-2">
+      <div class="lb-eyebrow">Step 2 of 6</div>
+      <h2 class="lb-h2" style="font-size:24px; margin-bottom:10px;">Select Your Master Tailor</h2>
+      <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">
+        Choose from verified ateliers across Pakistan or select based on speed and specialty.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:14px;" id="tailor-pick-list">
+        
+        <label class="lb-tailor-pick-card is-selected" onclick="selectTailorRadio('rafiq', this)">
+          <input type="radio" name="chosen_tailor" value="rafiq" checked>
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <div style="flex:1;">
+            <strong style="font-size:15px; color:var(--lb-charcoal);">Master Rafiq & Sons Bespoke Atelier</strong>
+            <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">Gulberg III & Old Anarkali, Lahore · 24 Yrs Exp · ★ 4.95</div>
+            <div style="font-size:12px; color:var(--lb-burgundy); font-weight:700; margin-top:4px;">From PKR 2,400 · Avg: 3-5 Days (Express available)</div>
+          </div>
+          <span class="lb-tag">Recommended</span>
+        </label>
+
+        <label class="lb-tailor-pick-card" onclick="selectTailorRadio('noor', this)">
+          <input type="radio" name="chosen_tailor" value="noor">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <div style="flex:1;">
+            <strong style="font-size:15px; color:var(--lb-charcoal);">Noor Bridal & Couture Studio</strong>
+            <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">Clifton & Tariq Road, Karachi · 16 Yrs Exp · ★ 4.98</div>
+            <div style="font-size:12px; color:var(--lb-burgundy); font-weight:700; margin-top:4px;">From PKR 6,500 · Avg: 7-10 Days (Luxury / Bridal)</div>
+          </div>
+          <span class="lb-tag" style="border-color:var(--lb-rose);">Bridal Specialist</span>
+        </label>
+
+        <label class="lb-tailor-pick-card" onclick="selectTailorRadio('aslam', this)">
+          <input type="radio" name="chosen_tailor" value="aslam">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <div style="flex:1;">
+            <strong style="font-size:15px; color:var(--lb-charcoal);">Ustaad Aslam Master Cutter</strong>
+            <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">F-10 Markaz & Blue Area, Islamabad · 28 Yrs Exp · ★ 4.90</div>
+            <div style="font-size:12px; color:var(--lb-burgundy); font-weight:700; margin-top:4px;">From PKR 3,500 · Avg: 4-6 Days (Men's Formal)</div>
+          </div>
+          <span class="lb-tag">Men's Bespoke</span>
+        </label>
+
+        <label class="lb-tailor-pick-card" onclick="selectTailorRadio('gulberg', this)">
+          <input type="radio" name="chosen_tailor" value="gulberg">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <div style="flex:1;">
+            <strong style="font-size:15px; color:var(--lb-charcoal);">Gulberg Express Stitching</strong>
+            <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">MM Alam Road, Lahore · 14 Yrs Exp · ★ 4.88</div>
+            <div style="font-size:12px; color:var(--lb-burgundy); font-weight:700; margin-top:4px;">From PKR 2,100 · 48-72 Hours Rush Delivery</div>
+          </div>
+          <span class="lb-tag" style="background:#2E7D32; color:#FFF; border:none;">⚡ 48h Express</span>
+        </label>
+      </div>
+
+      <div class="lb-wizard-nav">
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(1)">← Back to Design</button>
+        <button type="button" class="lb-cta" onclick="goToStep(3)">Continue to Measurements →</button>
+      </div>
+    </div>
+
+    <!-- ================= STEP 3: MEASUREMENTS ================= -->
+    <div class="lb-step-panel" id="step-3">
+      <div class="lb-eyebrow">Step 3 of 6</div>
+      <h2 class="lb-h2" style="font-size:24px; margin-bottom:10px;">Bespoke Measurement Profile</h2>
+      <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:20px;">
+        Provide your body dimensions in inches. You can save this profile to reuse for future stitching with zero re-entry.
+      </p>
+
+      <!-- PROFILE SELECTOR -->
+      <div style="background:var(--lb-paper); border-radius:6px; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+        <div>
+          <label style="font-size:11.5px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); display:block; margin-bottom:4px;">Saved Profiles</label>
+          <select id="saved-profile-select" class="lb-select" style="min-width:240px;" onchange="loadSelectedProfile()">
+            <option value="profile-1">My Default Fit (Regular Kurta)</option>
+            <option value="profile-2">Slim Formal Kameez</option>
+            <option value="new">+ Enter New Measurements</option>
+          </select>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="lb-tag" style="background:#FFF;">Units: Inches (in)</span>
+        </div>
+      </div>
+
+      <!-- MEASUREMENT INPUTS -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:24px;">
+        <div class="lb-meas-input-group">
+          <label>Shoulder (Teera)</label>
+          <input type="number" step="0.5" id="m-shoulder" value="18.5">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Chest (Chhaati)</label>
+          <input type="number" step="0.5" id="m-chest" value="41.0">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Waist (Kamar)</label>
+          <input type="number" step="0.5" id="m-waist" value="36.0">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Hips (Gheera/Seat)</label>
+          <input type="number" step="0.5" id="m-hips" value="43.0">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Neck (Gala Collar)</label>
+          <input type="number" step="0.5" id="m-neck" value="16.0">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Sleeve Length (Baazu)</label>
+          <input type="number" step="0.5" id="m-sleeve" value="24.5">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Shirt/Kurta Length</label>
+          <input type="number" step="0.5" id="m-shirt-len" value="41.5">
+        </div>
+        <div class="lb-meas-input-group">
+          <label>Trouser / Shalwar Length</label>
+          <input type="number" step="0.5" id="m-trouser-len" value="39.0">
+        </div>
+      </div>
+
+      <!-- FITTING PREFERENCE & SAVE CHECKBOX -->
+      <div class="lb-form-grid-2" style="margin-top:20px;">
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Fitting Preference</label>
+          <select id="m-fit-pref" class="lb-select">
+            <option value="Regular Fit">Regular Fit (Traditional comfort & drape)</option>
+            <option value="Slim Fit">Slim Fit (Structured waist & armholes)</option>
+            <option value="Relaxed / Loose Fit">Relaxed / Loose Fit (Traditional breezy cut)</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Profile Nickname</label>
+          <input type="text" id="m-profile-name" class="lb-input" value="Standard Bespoke Kameez">
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <label style="display:inline-flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
+          <input type="checkbox" id="save-profile-cb" checked style="accent-color:var(--lb-burgundy);">
+          <strong>Save this measurement profile to my LibasAI account for 1-click future orders</strong>
+        </label>
+      </div>
+
+      <div class="lb-wizard-nav">
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(2)">← Back to Tailors</button>
+        <button type="button" class="lb-cta" onclick="goToStep(4)">Continue to Stitching Details →</button>
+      </div>
+    </div>
+
+    <!-- ================= STEP 4: STITCHING INSTRUCTIONS ================= -->
+    <div class="lb-step-panel" id="step-4">
+      <div class="lb-eyebrow">Step 4 of 6</div>
+      <h2 class="lb-h2" style="font-size:24px; margin-bottom:10px;">Design & Stitching Specifications</h2>
+      <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">
+        Specify cutting preferences, collar styles, cuffs, pocket configurations, and any special stitching instructions.
+      </p>
+
+      <div class="lb-form-grid-2" style="margin-bottom:20px;">
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Garment Type</label>
+          <select id="inst-garment" class="lb-select">
+            <option value="Men's Shalwar Kameez">Men's Shalwar Kameez</option>
+            <option value="Men's Kurta with Pajama">Men's Kurta with Pajama</option>
+            <option value="Women's 3-Piece Suit (Lawn/Silk)">Women's 3-Piece Suit (Lawn/Silk)</option>
+            <option value="Bespoke Waistcoat / Prince Coat">Bespoke Waistcoat / Prince Coat</option>
+            <option value="Formal Bridal / Luxury Pret">Formal Bridal / Luxury Pret</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Collar / Neckline Style</label>
+          <select id="inst-collar" class="lb-select">
+            <option value="Sherwani Band Collar (Stiff/Ban)">Sherwani Band Collar (Stiff Ban)</option>
+            <option value="Soft Band Collar">Soft Band Collar</option>
+            <option value="Classic Shirt Spread Collar">Classic Shirt Spread Collar</option>
+            <option value="Round Gala with Button Slit">Round Gala with Button Slit</option>
+            <option value="V-Notch Contemporary Neckline">V-Notch Contemporary Neckline</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Sleeve & Cuff Style</label>
+          <select id="inst-sleeve" class="lb-select">
+            <option value="Straight Hem (Traditional Open)">Straight Hem (Traditional Open)</option>
+            <option value="Button Cuffs (1.5 inch shirt cuff)">Button Cuffs (1.5" shirt cuff)</option>
+            <option value="French Cuffs with Cufflink Slits">French Cuffs with Cufflink Slits</option>
+            <option value="Bell Sleeve with Lace Edge">Bell Sleeve with Lace Edge</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Buttons & Placket</label>
+          <select id="inst-buttons" class="lb-select">
+            <option value="Concealed Placket (Gum Taaveez)">Concealed Placket (Gum Taaveez)</option>
+            <option value="Natural Horn Buttons">Natural Horn Buttons</option>
+            <option value="Covered Fabric Buttons (Potli)">Covered Fabric Buttons (Potli)</option>
+            <option value="Antique Brass / Metal Studs">Antique Brass / Metal Studs</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Daman & Hem Finish</label>
+          <select id="inst-daman" class="lb-select">
+            <option value="Round Daman (Gool Ghera)">Round Daman (Gool Ghera)</option>
+            <option value="Square Straight Daman (Chakor)">Square Straight Daman (Chakor)</option>
+            <option value="High-Low Contemporary Cut">High-Low Contemporary Cut</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Pockets Configuration</label>
+          <select id="inst-pockets" class="lb-select">
+            <option value="1 Front Chest Pocket + 2 Side Welt Pockets">1 Front Chest + 2 Side Welt Pockets</option>
+            <option value="2 Side Inseam Pockets Only">2 Side Inseam Pockets Only</option>
+            <option value="Front Pocket + Hidden Mobile Zipper Pocket">Front Pocket + Hidden Mobile Pocket</option>
+            <option value="No Pockets (Clean Formal)">No Pockets (Clean Formal)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Special Embroidery / Cutting Instructions</label>
+        <textarea id="inst-notes" class="lb-input" style="height:90px; resize:vertical;" placeholder="e.g. Please attach the included embroidered organza patch 2 inches above sleeve hem. Use matching sage green thread and add lightweight lawn inner lining."></textarea>
+      </div>
+
+      <div class="lb-wizard-nav">
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(3)">← Back to Measurements</button>
+        <button type="button" class="lb-cta" onclick="goToStep(5)">Continue to Required Date →</button>
+      </div>
+    </div>
+
+    <!-- ================= STEP 5: REQUIRED DATE ================= -->
+    <div class="lb-step-panel" id="step-5">
+      <div class="lb-eyebrow">Step 5 of 6</div>
+      <h2 class="lb-h2" style="font-size:24px; margin-bottom:10px;">When do you need the outfit?</h2>
+      <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">
+        Select your required delivery date. Our system checks the master tailor's active workload and confirms deadline feasibility.
+      </p>
+
+      <div style="max-width:440px; margin-bottom:24px;">
+        <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Target Delivery Date</label>
+        <input type="date" id="req-date-input" class="lb-input" onchange="checkFeasibility()">
+      </div>
+
+      <!-- FEASIBILITY ALERT BANNER -->
+      <div id="feasibility-banner" style="background:#ECFDF5; border:1px solid #10B981; border-radius:6px; padding:18px 22px; display:flex; gap:16px; align-items:center;">
+        <div style="font-size:26px;">⏱️</div>
+        <div>
+          <strong id="feasibility-title" style="font-size:15px; color:#065F46; display:block;">Deadline Feasible: Standard Turnaround Guaranteed</strong>
+          <span id="feasibility-desc" style="font-size:13px; color:#047857; margin-top:3px; display:block;">
+            Master Rafiq can comfortably cut, stitch, hand press, and courier your outfit 2 days ahead of your required date.
+          </span>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; background:var(--lb-paper); border-radius:6px; padding:18px 20px;">
+        <strong style="font-size:13px; text-transform:uppercase; color:var(--lb-mauve); display:block; margin-bottom:6px;">Fabric Handover Option</strong>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:13.5px;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="radio" name="fabric_handover" value="pickup" checked style="accent-color:var(--lb-burgundy);">
+            <span>LibasAI Courier Fabric Pickup from my address (Free)</span>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="radio" name="fabric_handover" value="dropoff" style="accent-color:var(--lb-burgundy);">
+            <span>I will drop fabric directly at the tailor's workshop</span>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="radio" name="fabric_handover" value="brand" style="accent-color:var(--lb-burgundy);">
+            <span>Fabric ordered via LibasAI brand redirect (Direct workshop delivery)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="lb-wizard-nav">
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(4)">← Back to Details</button>
+        <button type="button" class="lb-cta" onclick="prepareReviewAndGo()">Review Stitching Request →</button>
+      </div>
+    </div>
+
+    <!-- ================= STEP 6: SUMMARY & SUBMIT ================= -->
+    <div class="lb-step-panel" id="step-6">
+      <div class="lb-eyebrow">Step 6 of 6 · Final Confirmation</div>
+      <h2 class="lb-h2" style="font-size:24px; margin-bottom:10px;">Stitching Request Summary</h2>
+      <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">
+        Review your tailor selection, custom measurements, and styling specifications before sending your request.
+      </p>
+
+      <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:24px; margin-bottom:28px;">
+        
+        <!-- LEFT: SPEC DETAILS -->
+        <div style="background:#FAF6F0; border-radius:6px; padding:22px; border:1px solid var(--lb-hairline);">
+          
+          <div style="display:flex; gap:16px; align-items:center; padding-bottom:18px; border-bottom:1px solid rgba(25,20,18,0.08);">
+            <img id="rev-design-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:70px; height:70px; object-fit:cover; border-radius:4px;" alt="">
+            <div>
+              <span class="lb-tag" style="background:#FFF;">Design / Look</span>
+              <strong id="rev-design-title" style="font-size:15px; display:block; margin:4px 0 2px;">Olive Raw Silk Traditional Kurta</strong>
+              <span id="rev-garment-type" style="font-size:12.5px; color:rgba(25,20,18,0.65);">Men's Shalwar Kameez · Regular Fit</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; padding:18px 0; border-bottom:1px solid rgba(25,20,18,0.08); font-size:13px;">
+            <div>
+              <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase;">Selected Tailor</span>
+              <strong id="rev-tailor-name">Master Rafiq & Sons</strong>
+            </div>
+            <div>
+              <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase;">Required By</span>
+              <strong id="rev-req-date">15 September 2026</strong>
+            </div>
+            <div>
+              <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase;">Collar / Neckline</span>
+              <strong id="rev-collar">Sherwani Band Collar</strong>
+            </div>
+            <div>
+              <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase;">Sleeves / Cuffs</span>
+              <strong id="rev-sleeve">Straight Hem</strong>
+            </div>
+            <div>
+              <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase;">Buttons & Placket</span>
+              <strong id="rev-buttons">Concealed Placket</strong>
+            </div>
+            <div>
+              <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase;">Daman / Hem</span>
+              <strong id="rev-daman">Round Daman</strong>
+            </div>
+          </div>
+
+          <!-- MEASUREMENTS CHIP GRID -->
+          <div style="padding-top:16px;">
+            <span style="color:rgba(25,20,18,0.55); display:block; font-size:11px; text-transform:uppercase; margin-bottom:8px;">Custom Measurements (Inches)</span>
+            <div id="rev-meas-grid" style="display:flex; flex-wrap:wrap; gap:8px;">
+              <!-- filled by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: PRICING & CTA -->
+        <div style="background:#FFF; border-radius:6px; padding:22px; border:1px solid var(--lb-hairline); display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div class="lb-eyebrow">Estimated Charges</div>
+            <div style="display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:10px;">
+              <span>Base Bespoke Stitching:</span>
+              <strong id="price-base">PKR 2,400</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:10px;">
+              <span>Finishing & Overlock:</span>
+              <span style="color:#2E7D32; font-weight:700;">Included</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:10px;">
+              <span>Doorstep Courier Delivery:</span>
+              <span id="price-delivery">PKR 250</span>
+            </div>
+            <div id="rush-price-row" style="display:none; justify-content:space-between; font-size:13.5px; margin-bottom:10px; color:#E65100;">
+              <span>⚡ 48h Express Surcharge:</span>
+              <strong>+PKR 800</strong>
+            </div>
+
+            <div style="border-top:1.5px dashed rgba(25,20,18,0.15); padding-top:14px; margin-top:14px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:15px; font-weight:800; color:var(--lb-charcoal);">Total Estimate:</span>
+              <span id="price-total" style="font-family:'Playfair Display',serif; font-size:24px; font-weight:800; color:var(--lb-burgundy);">
+                PKR 2,650
+              </span>
+            </div>
+            <p style="font-size:11.5px; color:rgba(25,20,18,0.55); margin-top:8px; line-height:1.4;">
+              Pay only after tailor accepts the request and verifies fabric suitability.
+            </p>
+          </div>
+
+          <div style="margin-top:28px;">
+            <button type="button" class="lb-cta lb-cta--wide" style="display:flex; text-align:center; justify-content:center; gap:8px;" onclick="submitStitchingRequest()">
+              <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+              Send Stitching Request →
+            </button>
+            <div style="text-align:center; margin-top:10px; font-size:11.5px; color:rgba(25,20,18,0.6);">
+              🔒 Protected by LibasAI Fit Guarantee
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lb-wizard-nav">
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(5)">← Back to Date</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find a Tailor</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+  <script>
+    var currentStep = 1;
+    var maxStep = 6;
+    var tailorDataMap = {
+      rafiq: { name: "Master Rafiq & Sons Bespoke Atelier", rate: 2400, days: 3 },
+      noor: { name: "Noor Bridal & Couture Studio", rate: 6500, days: 7 },
+      aslam: { name: "Ustaad Aslam Master Cutter", rate: 3500, days: 4 },
+      gulberg: { name: "Gulberg Express Stitching", rate: 2100, days: 2 }
+    };
+
+    var selectedTailorKey = 'rafiq';
+    var selectedDesignSource = 'catalog';
+    var uploadedImageSrc = '';
+
+    // Init from URL params
+    window.addEventListener('DOMContentLoaded', function() {
+      var params = new URLSearchParams(window.location.search);
+      var tailorParam = params.get('tailor');
+      if (tailorParam && tailorDataMap[tailorParam]) {
+        selectedTailorKey = tailorParam;
+        var r = document.querySelector('input[name="chosen_tailor"][value="' + tailorParam + '"]');
+        if (r) {
+          r.checked = true;
+          selectTailorRadio(tailorParam, r.closest('.lb-tailor-pick-card'));
+        }
+      }
+
+      var designParam = params.get('design');
+      if (designParam === 'outfit') {
+        selectDesignSource('outfit');
+      } else if (designParam === 'upload' || designParam === 'photo') {
+        selectDesignSource('upload');
+      } else if (designParam === 'fabric') {
+        selectDesignSource('fabric');
+      }
+
+      var titleParam = params.get('title');
+      if (titleParam) {
+        document.getElementById('design-title').innerText = titleParam;
+      }
+      var imgParam = params.get('img');
+      if (imgParam) {
+        document.getElementById('design-img').src = imgParam;
+      }
+
+      // Default date to today + 7 days
+      var d = new Date();
+      d.setDate(d.getDate() + 7);
+      var yyyy = d.getFullYear();
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      var dateInp = document.getElementById('req-date-input');
+      if (dateInp) {
+        dateInp.value = yyyy + '-' + mm + '-' + dd;
+        checkFeasibility();
+      }
+    });
+
+    function goToStep(step) {
+      if (step < 1 || step > maxStep) return;
+      currentStep = step;
+
+      // Update stepper visuals
+      for (var i = 1; i <= maxStep; i++) {
+        var node = document.getElementById('node-' + i);
+        var panel = document.getElementById('step-' + i);
+        if (node) {
+          node.classList.toggle('is-active', i === currentStep);
+          node.classList.toggle('is-done', i < currentStep);
+        }
+        if (panel) {
+          panel.classList.toggle('is-active', i === currentStep);
+        }
+      }
+
+      var pct = ((currentStep - 1) / (maxStep - 1)) * 100;
+      document.getElementById('stepper-progress').style.width = pct + '%';
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    function selectDesignSource(source) {
+      selectedDesignSource = source;
+      ['catalog', 'outfit', 'upload', 'fabric'].forEach(function(s) {
+        var el = document.getElementById('src-' + s);
+        if (el) el.classList.toggle('is-selected', s === source);
+      });
+
+      var titleEl = document.getElementById('design-title');
+      var subEl = document.getElementById('design-subtitle');
+      var imgEl = document.getElementById('design-img');
+      var uploadBtn = document.getElementById('upload-action-btn');
+
+      if (source === 'catalog') {
+        titleEl.innerText = "Olive Raw Silk Traditional Kurta";
+        subEl.innerText = "LibasAI Aggregated Brand Collection";
+        imgEl.src = "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102";
+        uploadBtn.style.display = 'none';
+      } else if (source === 'outfit') {
+        titleEl.innerText = "Festive AI Coordinated Ensemble (Kurta + Dupatta)";
+        subEl.innerText = "Styled by LibasAI Multi-Agent Outfit Coordinator";
+        imgEl.src = "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219";
+        uploadBtn.style.display = 'none';
+      } else if (source === 'upload') {
+        titleEl.innerText = "Custom Inspiration Photo / Sketch";
+        subEl.innerText = "Upload your reference image for bespoke cutting";
+        uploadBtn.style.display = 'block';
+        if (!uploadedImageSrc) {
+          imgEl.src = "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765";
+        }
+      } else if (source === 'fabric') {
+        titleEl.innerText = "Own Fabric / Unstitched Cloth";
+        subEl.innerText = "Courier will pick up fabric directly from your doorstep";
+        imgEl.src = "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440";
+        uploadBtn.style.display = 'none';
+      }
+    }
+
+    function handlePhotoUpload(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          uploadedImageSrc = e.target.result;
+          document.getElementById('design-img').src = uploadedImageSrc;
+          document.getElementById('design-title').innerText = "Uploaded Look (" + input.files[0].name + ")";
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function selectTailorRadio(tailorKey, cardEl) {
+      selectedTailorKey = tailorKey;
+      document.querySelectorAll('.lb-tailor-pick-card').forEach(function(c) { c.classList.remove('is-selected'); });
+      if (cardEl) cardEl.classList.add('is-selected');
+      var r = cardEl.querySelector('input[type="radio"]');
+      if (r) r.checked = true;
+      checkFeasibility();
+    }
+
+    function loadSelectedProfile() {
+      var val = document.getElementById('saved-profile-select').value;
+      if (val === 'profile-1') {
+        document.getElementById('m-shoulder').value = 18.5;
+        document.getElementById('m-chest').value = 41.0;
+        document.getElementById('m-waist').value = 36.0;
+        document.getElementById('m-hips').value = 43.0;
+        document.getElementById('m-neck').value = 16.0;
+        document.getElementById('m-sleeve').value = 24.5;
+        document.getElementById('m-shirt-len').value = 41.5;
+        document.getElementById('m-trouser-len').value = 39.0;
+        document.getElementById('m-fit-pref').value = "Regular Fit";
+        document.getElementById('m-profile-name').value = "Standard Bespoke Kameez";
+      } else if (val === 'profile-2') {
+        document.getElementById('m-shoulder').value = 18.0;
+        document.getElementById('m-chest').value = 39.5;
+        document.getElementById('m-waist').value = 34.0;
+        document.getElementById('m-hips').value = 41.0;
+        document.getElementById('m-neck').value = 15.5;
+        document.getElementById('m-sleeve').value = 25.0;
+        document.getElementById('m-shirt-len').value = 40.0;
+        document.getElementById('m-trouser-len').value = 38.5;
+        document.getElementById('m-fit-pref').value = "Slim Fit";
+        document.getElementById('m-profile-name').value = "Slim Formal Kameez";
+      }
+    }
+
+    function checkFeasibility() {
+      var dateVal = document.getElementById('req-date-input').value;
+      if (!dateVal) return;
+      var targetDate = new Date(dateVal);
+      var now = new Date();
+      var diffDays = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
+
+      var tailor = tailorDataMap[selectedTailorKey] || tailorDataMap['rafiq'];
+      var banner = document.getElementById('feasibility-banner');
+      var title = document.getElementById('feasibility-title');
+      var desc = document.getElementById('feasibility-desc');
+      var rushRow = document.getElementById('rush-price-row');
+
+      if (diffDays >= tailor.days + 2) {
+        banner.style.background = "#ECFDF5";
+        banner.style.borderColor = "#10B981";
+        title.style.color = "#065F46";
+        desc.style.color = "#047857";
+        title.innerText = "Standard Feasible: On-Time Delivery Confirmed";
+        desc.innerText = tailor.name + " can comfortably cut, stitch, hand press, and courier your outfit within " + tailor.days + " days.";
+        if (rushRow) rushRow.style.display = 'none';
+      } else if (diffDays >= 2) {
+        banner.style.background = "#FFFBEB";
+        banner.style.borderColor = "#F59E0B";
+        title.style.color = "#92400E";
+        desc.style.color = "#B45309";
+        title.innerText = "⚡ Rush Stitching Feasible (Express Surcharge Applies)";
+        desc.innerText = "Tailor will prioritize your order with 48h express cutting. A +PKR 800 rush fee has been added.";
+        if (rushRow) rushRow.style.display = 'flex';
+      } else {
+        banner.style.background = "#FEF2F2";
+        banner.style.borderColor = "#EF4444";
+        title.style.color = "#991B1B";
+        desc.style.color = "#B91C1C";
+        title.innerText = "⚠️ Delivery Date Too Short";
+        desc.innerText = "Master cutting and tailoring requires a minimum of 48 hours. Please select a date at least 2 days out.";
+        if (rushRow) rushRow.style.display = 'flex';
+      }
+    }
+
+    function prepareReviewAndGo() {
+      var tailor = tailorDataMap[selectedTailorKey] || tailorDataMap['rafiq'];
+      document.getElementById('rev-tailor-name').innerText = tailor.name;
+      document.getElementById('rev-design-img').src = document.getElementById('design-img').src;
+      document.getElementById('rev-design-title').innerText = document.getElementById('design-title').innerText;
+      
+      var garment = document.getElementById('inst-garment').value;
+      var fit = document.getElementById('m-fit-pref').value;
+      document.getElementById('rev-garment-type').innerText = garment + " · " + fit;
+
+      document.getElementById('rev-req-date').innerText = document.getElementById('req-date-input').value;
+      document.getElementById('rev-collar').innerText = document.getElementById('inst-collar').value;
+      document.getElementById('rev-sleeve').innerText = document.getElementById('inst-sleeve').value;
+      document.getElementById('rev-buttons').innerText = document.getElementById('inst-buttons').value;
+      document.getElementById('rev-daman').innerText = document.getElementById('inst-daman').value;
+
+      // Price calculation
+      var base = tailor.rate;
+      var delivery = 250;
+      var isRush = (document.getElementById('rush-price-row').style.display === 'flex');
+      var rushFee = isRush ? 800 : 0;
+      var total = base + delivery + rushFee;
+
+      document.getElementById('price-base').innerText = "PKR " + base.toLocaleString();
+      document.getElementById('price-total').innerText = "PKR " + total.toLocaleString();
+
+      // Measurements chip
+      var measGrid = document.getElementById('rev-meas-grid');
+      measGrid.innerHTML = [
+        ['Shoulder', document.getElementById('m-shoulder').value],
+        ['Chest', document.getElementById('m-chest').value],
+        ['Waist', document.getElementById('m-waist').value],
+        ['Hips', document.getElementById('m-hips').value],
+        ['Neck', document.getElementById('m-neck').value],
+        ['Sleeve', document.getElementById('m-sleeve').value],
+        ['Shirt Len', document.getElementById('m-shirt-len').value],
+        ['Trouser Len', document.getElementById('m-trouser-len').value]
+      ].map(function(item) {
+        return '<span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">' + item[0] + ': ' + item[1] + '"</span>';
+      }).join('');
+
+      goToStep(6);
+    }
+
+    function submitStitchingRequest() {
+      var reqId = 'REQ-' + Math.floor(1000 + Math.random() * 9000);
+      var tailor = tailorDataMap[selectedTailorKey] || tailorDataMap['rafiq'];
+
+      var requestObj = {
+        id: reqId,
+        dateSubmitted: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        status: 'Pending', // Pending, Accepted, In Progress, Ready, Completed
+        tailorKey: selectedTailorKey,
+        tailorName: tailor.name,
+        designTitle: document.getElementById('design-title').innerText,
+        designImg: document.getElementById('design-img').src,
+        garment: document.getElementById('inst-garment').value,
+        fit: document.getElementById('m-fit-pref').value,
+        collar: document.getElementById('inst-collar').value,
+        sleeve: document.getElementById('inst-sleeve').value,
+        buttons: document.getElementById('inst-buttons').value,
+        daman: document.getElementById('inst-daman').value,
+        pockets: document.getElementById('inst-pockets').value,
+        notes: document.getElementById('inst-notes').value || 'No additional instructions',
+        requiredDate: document.getElementById('req-date-input').value,
+        estimatedPrice: document.getElementById('price-total').innerText,
+        measurements: {
+          shoulder: document.getElementById('m-shoulder').value,
+          chest: document.getElementById('m-chest').value,
+          waist: document.getElementById('m-waist').value,
+          hips: document.getElementById('m-hips').value,
+          neck: document.getElementById('m-neck').value,
+          sleeve: document.getElementById('m-sleeve').value,
+          shirtLength: document.getElementById('m-shirt-len').value,
+          trouserLength: document.getElementById('m-trouser-len').value
+        }
+      };
+
+      try {
+        var existing = JSON.parse(localStorage.getItem('libasai_stitching_requests') || '[]');
+        existing.unshift(requestObj);
+        localStorage.setItem('libasai_stitching_requests', JSON.stringify(existing));
+
+        // Save profile if checked
+        if (document.getElementById('save-profile-cb').checked) {
+          localStorage.setItem('libasai_last_profile', JSON.stringify({
+            name: document.getElementById('m-profile-name').value,
+            measurements: requestObj.measurements,
+            fit: requestObj.fit
+          }));
+        }
+      } catch (e) {
+        console.error("Storage error", e);
+      }
+
+      // Redirect to requests page with success query
+      window.location.href = '/my-requests.html?new=1&id=' + reqId;
+    }
+  </script>
+</body>
+</html>

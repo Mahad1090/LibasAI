@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Outfit Builder — LibasAI</title>
+  <meta name="description" content="Build complete, coordinated Pakistani fashion looks with AI. Pair kurtas with matching dupattas, khussas, pants, and jewellery across 80+ top Pakistani labels.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    /* Dedicated Outfit Builder Studio Styles */
+    .lb-ob-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: clamp(32px, 4vw, 64px);
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .lb-ob-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .lb-ob-canvas {
+      position: relative;
+      background: var(--lb-white);
+      border: 1px solid var(--lb-hairline);
+      border-radius: 4px;
+      padding: clamp(24px, 3vw, 40px);
+      box-shadow: 0 20px 50px rgba(25,20,18,0.08);
+      min-height: 520px;
+    }
+    .lb-ob-collage {
+      position: relative;
+      height: 480px;
+      width: 100%;
+    }
+    .lb-ob-card {
+      position: absolute;
+      background: var(--lb-white);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(25,20,18,0.14);
+      transition: transform 260ms var(--lb-ease), box-shadow 260ms var(--lb-ease);
+      cursor: pointer;
+    }
+    .lb-ob-card:hover {
+      transform: translateY(-6px) scale(1.02) !important;
+      box-shadow: 0 24px 48px rgba(25,20,18,0.22);
+      z-index: 20 !important;
+    }
+    .lb-ob-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .lb-ob-card-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(25,20,18,0.88) 100%);
+      color: var(--lb-cream);
+      padding: 16px 10px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .lb-ob-card--kurta {
+      top: 4%;
+      left: 6%;
+      width: 44%;
+      height: 66%;
+      z-index: 5;
+      transform: rotate(-2deg);
+    }
+    .lb-ob-card--dupatta {
+      top: 2%;
+      right: 6%;
+      width: 36%;
+      height: 48%;
+      z-index: 4;
+      transform: rotate(3deg);
+    }
+    .lb-ob-card--bottom {
+      bottom: 4%;
+      left: 32%;
+      width: 28%;
+      height: 40%;
+      z-index: 6;
+      transform: rotate(-4deg);
+    }
+    .lb-ob-card--shoes {
+      bottom: 6%;
+      right: 8%;
+      width: 25%;
+      height: 32%;
+      z-index: 7;
+      transform: rotate(5deg);
+    }
+    .lb-ob-card--jewel {
+      top: 40%;
+      right: 28%;
+      width: 22%;
+      height: 28%;
+      z-index: 8;
+      transform: rotate(-3deg);
+    }
+
+    /* Right Panel List */
+    .lb-ob-inspector {
+      background: var(--lb-white);
+      border: 1px solid var(--lb-hairline);
+      border-radius: 4px;
+      padding: 32px 28px;
+      box-shadow: 0 16px 40px rgba(25,20,18,0.06);
+    }
+    .lb-item-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--lb-hairline);
+    }
+    .lb-item-row:last-child {
+      border-bottom: none;
+    }
+    .lb-item-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--lb-tint);
+    }
+    .lb-item-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .lb-item-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .lb-item-brand {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lb-mauve);
+    }
+    .lb-item-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--lb-charcoal);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lb-item-price {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--lb-burgundy);
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-mark" viewBox="0 0 24 24"><path d="M12 4v16M5 8l14 8M19 8L5 16"/></symbol>
+      <symbol id="lb-i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+      <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="lb-i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="lb-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="lb-i-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false">Brands</button>
+          <div class="lb-foryou-wrap">
+            <button type="button" id="lb-foryou-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false">For You</button>
+            <div id="lb-menu-foryou" class="lb-foryou-host" role="group">
+              <a href="/for-you/picks">Personalized Picks</a>
+              <a href="/for-you/recently-viewed">Recently Viewed</a>
+              <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
+              <a href="/for-you/budget">Within Your Budget</a>
+            </div>
+          </div>
+          <button type="button" id="lb-features-trigger" class="lb-nav__trigger is-current" aria-haspopup="true" aria-expanded="false">AI Features</button>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson); font-weight:700;">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <button type="button" id="lb-search-trigger" class="lb-icon-btn" aria-label="Search">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+          </button>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/ai/ask" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            Ask LibasAI
+          </a>
+          <button type="button" id="lb-burger-btn" class="lb-burger" aria-label="Open menu">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-menu"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mega menu -->
+      <div class="lb-collapse lb-mega-host">
+        <div class="lb-collapse-inner">
+          <div class="lb-mega-stack">
+            <div id="lb-menu-features" class="lb-mega-panel is-active">
+              <div class="lb-mega-inner lb-mega-inner--features">
+                <div class="lb-features-head">
+                  <div class="lb-mega-eyebrow" style="text-align:center;">AI Features</div>
+                  <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
+                </div>
+                <div class="lb-features-grid">
+                  <a href="/ai/ask" class="lb-feature-card">
+                    <span class="lb-feature-num">01</span>
+                    <strong>Ask LibasAI</strong>
+                    <p>Natural-language fashion search.</p>
+                  </a>
+                  <a href="/ai/image-search" class="lb-feature-card">
+                    <span class="lb-feature-num">02</span>
+                    <strong>Image Search</strong>
+                    <p>Upload a look and find similar pieces.</p>
+                  </a>
+                  <a href="/ai/compare" class="lb-feature-card">
+                    <span class="lb-feature-num">03</span>
+                    <strong>Compare</strong>
+                    <p>Compare products side-by-side.</p>
+                  </a>
+                  <a href="/ai/outfit-builder" class="lb-feature-card" style="border-top-color:var(--lb-burgundy);">
+                    <span class="lb-feature-num" style="color:var(--lb-burgundy);">04</span>
+                    <strong style="color:var(--lb-burgundy);">Outfit Builder</strong>
+                    <p>Create complete looks with AI.</p>
+                  </a>
+                </div>
+                <a href="/ai-features.html" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">All AI Features Overview &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search overlay -->
+      <div id="lb-search-overlay" class="lb-collapse lb-search-overlay" role="search">
+        <div class="lb-collapse-inner">
+          <div class="lb-search-inner">
+            <h2 class="lb-search-label">Search LibasAI</h2>
+            <form action="/ai/ask" method="GET" class="lb-search-field" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(document.getElementById('lb-search-input').value);">
+              <input id="lb-search-input" type="text" placeholder="Search brands, fabrics, or styles...">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="lb-mobile-nav" class="lb-mobile">
+      <div class="lb-mobile__top">
+        <a href="/" class="lb-logo"><img src="assets/libasai-logo.png" alt=""><span>LibasAI</span></a>
+        <button type="button" id="lb-mobile-close" class="lb-burger"><svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-close"></use></svg></button>
+      </div>
+      <div class="lb-mobile__body">
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="true">AI Features</button>
+          <div class="lb-collapse lb-accordion__panel is-open">
+            <div class="lb-collapse-inner">
+              <a href="/ai/ask">Ask LibasAI</a>
+              <a href="/ai/image-search">Image Search</a>
+              <a href="/ai/compare">Compare</a>
+              <a href="/ai/outfit-builder" style="color:var(--lb-burgundy); font-weight:700;">Outfit Builder</a>
+              <a href="/ai-features.html">All AI Features</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="lb-page-head" style="padding: clamp(40px, 5vw, 64px) clamp(20px, 5vw, 72px) 0;">
+    <div class="lb-wrap">
+      <div class="lb-breadcrumb" style="display:flex; gap:8px; align-items:center; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:16px;">
+        <a href="/" style="color:rgba(25,20,18,0.5);">Home</a><span>/</span><a href="/ai-features.html" style="color:rgba(25,20,18,0.5);">AI Features</a><span>/</span><span style="color:var(--lb-burgundy);">AI Outfit Builder</span>
+      </div>
+      <div class="lb-listing-head" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div class="lb-eyebrow" style="color:var(--lb-rose); margin-bottom:6px;">Cross-Brand Ensemble Coordination</div>
+          <h1 class="lb-h1" style="font-size:clamp(30px,3.8vw,52px);">Complete the look.</h1>
+        </div>
+        <div class="lb-listing-count">
+          <span class="lb-tag">Multi-Brand Styling Engine</span>
+        </div>
+      </div>
+      <p class="lb-body" style="max-width:680px; margin-top:12px;">
+        Pick a piece you love, and LibasAI pairs it with contrasting dupattas, matching trousers, handcrafted khussas, and artisanal jewellery from labels you wouldn't have thought to cross-shop.
+      </p>
+
+      <!-- Occasion Presets -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:28px;">
+        <button type="button" class="lb-chip is-active" onclick="switchOutfit(0, this)">Eid Festive Morning Look</button>
+        <button type="button" class="lb-chip" onclick="switchOutfit(1, this)">Wedding Mehndi Celebration</button>
+        <button type="button" class="lb-chip" onclick="switchOutfit(2, this)">Formal Dinner / Evening Soirée</button>
+        <button type="button" class="lb-chip" onclick="switchOutfit(3, this)">Casual Smart Daywear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN OUTFIT BUILDER STUDIO -->
+  <section class="lb-section" style="padding-top:28px;">
+    <div class="lb-wrap lb-ob-grid">
+
+      <!-- LEFT: VISUAL MOODBOARD COLLAGE -->
+      <div>
+        <div class="lb-ob-canvas">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="lb-tag" style="border-color:var(--lb-burgundy);">Active Look Canvas</span>
+              <span style="font-size:12px; color:rgba(25,20,18,0.5);" id="canvas-preset-name">Eid Festive Morning</span>
+            </div>
+            <button type="button" class="lb-icon-btn" style="width:34px; height:34px;" title="Restyle outfit" onclick="shuffleCurrentOutfit()">
+              <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-refresh"></use></svg>
+            </button>
+          </div>
+
+          <!-- The Floating Collage -->
+          <div class="lb-ob-collage">
+            <!-- 1. Hero Kurta -->
+            <div class="lb-ob-card lb-ob-card--kurta" title="Hero Kurta" onclick="highlightItem('kurta')">
+              <img id="ob-img-kurta" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Hero Kurta">
+              <div class="lb-ob-card-label">Hero Piece · Kurta</div>
+            </div>
+
+            <!-- 2. Dupatta -->
+            <div class="lb-ob-card lb-ob-card--dupatta" title="Matching Dupatta" onclick="highlightItem('dupatta')">
+              <img id="ob-img-dupatta" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Dupatta">
+              <div class="lb-ob-card-label">Coordinated Dupatta</div>
+            </div>
+
+            <!-- 3. Bottoms -->
+            <div class="lb-ob-card lb-ob-card--bottom" title="Bottoms" onclick="highlightItem('bottom')">
+              <img id="ob-img-bottom" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" alt="Bottoms">
+              <div class="lb-ob-card-label">Tailored Bottoms</div>
+            </div>
+
+            <!-- 4. Footwear -->
+            <div class="lb-ob-card lb-ob-card--shoes" title="Footwear" onclick="highlightItem('shoes')">
+              <img id="ob-img-shoes" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt="Shoes">
+              <div class="lb-ob-card-label">Traditional Footwear</div>
+            </div>
+
+            <!-- 5. Jewellery -->
+            <div class="lb-ob-card lb-ob-card--jewel" title="Jewellery" onclick="highlightItem('jewel')">
+              <img id="ob-img-jewel" src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" alt="Jewellery">
+              <div class="lb-ob-card-label">Jewellery & Accents</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: ENSEMBLE BREAKDOWN & METRICS -->
+      <div>
+        <div class="lb-ob-inspector">
+          <!-- Color Harmony Meter -->
+          <div style="margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--lb-hairline);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lb-mauve);">AI Color Harmony Index</span>
+              <strong style="font-size:15px; color:#1A7A38;" id="harmony-score">97% Harmonious</strong>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <div style="flex:1; height:8px; border-radius:999px; background:linear-gradient(90deg, #840E34 0%, #C98F82 35%, #D4AF37 70%, #F7EDDF 100%);"></div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:10px;" id="swatch-palette">
+              <span style="width:20px; height:20px; border-radius:50%; background:#840E34; border:1px solid rgba(0,0,0,0.1);" title="Burgundy Crimson"></span>
+              <span style="width:20px; height:20px; border-radius:50%; background:#C98F82; border:1px solid rgba(0,0,0,0.1);" title="Dusty Rose"></span>
+              <span style="width:20px; height:20px; border-radius:50%; background:#D4AF37; border:1px solid rgba(0,0,0,0.1);" title="Tilla Gold"></span>
+              <span style="width:20px; height:20px; border-radius:50%; background:#F7EDDF; border:1px solid rgba(0,0,0,0.1);" title="Cream Base"></span>
+            </div>
+          </div>
+
+          <!-- Total Cost Calculation -->
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:20px;">
+            <div>
+              <span style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--lb-mauve); display:block;">Total Ensemble Cost</span>
+              <span style="font-family:'Playfair Display',serif; font-size:32px; font-weight:800; color:var(--lb-burgundy);" id="total-price">Rs. 14,830</span>
+            </div>
+            <span style="font-size:12px; font-weight:650; color:rgba(25,20,18,0.5);">5 Pieces Across 4 Labels</span>
+          </div>
+
+          <!-- Itemized list -->
+          <div class="lb-item-rows" id="item-rows">
+            <!-- Kurta -->
+            <div class="lb-item-row" id="row-kurta">
+              <div class="lb-item-thumb"><img id="thumb-kurta" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt=""></div>
+              <div class="lb-item-meta">
+                <span class="lb-item-brand" id="brand-kurta">Zellbury</span>
+                <div class="lb-item-title" id="title-kurta">Rust Embroidered Cotton Kurta</div>
+                <div class="lb-item-price" id="price-kurta">Rs. 4,490</div>
+              </div>
+              <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+            </div>
+
+            <!-- Dupatta -->
+            <div class="lb-item-row" id="row-dupatta">
+              <div class="lb-item-thumb"><img id="thumb-dupatta" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt=""></div>
+              <div class="lb-item-meta">
+                <span class="lb-item-brand" id="brand-dupatta">Gul Ahmed</span>
+                <div class="lb-item-title" id="title-dupatta">Digital Printed Organza Dupatta</div>
+                <div class="lb-item-price" id="price-dupatta">Rs. 2,450</div>
+              </div>
+              <a href="https://www.gulahmedshop.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+            </div>
+
+            <!-- Bottoms -->
+            <div class="lb-item-row" id="row-bottom">
+              <div class="lb-item-thumb"><img id="thumb-bottom" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" alt=""></div>
+              <div class="lb-item-meta">
+                <span class="lb-item-brand" id="brand-bottom">Sana Safinaz</span>
+                <div class="lb-item-title" id="title-bottom">Embroidered Raw Silk Skinny Shalwar</div>
+                <div class="lb-item-price" id="price-bottom">Rs. 2,480</div>
+              </div>
+              <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+            </div>
+
+            <!-- Footwear -->
+            <div class="lb-item-row" id="row-shoes">
+              <div class="lb-item-thumb"><img id="thumb-shoes" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""></div>
+              <div class="lb-item-meta">
+                <span class="lb-item-brand" id="brand-shoes">Sana Safinaz</span>
+                <div class="lb-item-title" id="title-shoes">Handcrafted Gold Tilla Khussa</div>
+                <div class="lb-item-price" id="price-shoes">Rs. 2,950</div>
+              </div>
+              <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+            </div>
+
+            <!-- Jewellery -->
+            <div class="lb-item-row" id="row-jewel">
+              <div class="lb-item-thumb"><img id="thumb-jewel" src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" alt=""></div>
+              <div class="lb-item-meta">
+                <span class="lb-item-brand" id="brand-jewel">Local Artisan Label</span>
+                <div class="lb-item-title" id="title-jewel">Filigree Kundan Chandbali Jhumkas</div>
+                <div class="lb-item-price" id="price-jewel">Rs. 2,460</div>
+              </div>
+              <a href="/brands/local" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Discover &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:28px;">
+            <a href="/ai/ask?q=Restyle+this+Eid+outfit+with+different+color+shoes+and+dupatta" class="lb-cta" style="justify-content:center;">Ask AI Stylist to Restyle &rarr;</a>
+            <button type="button" class="lb-cta lb-cta--ghost" style="justify-content:center;" onclick="alert('Ensemble saved to your LibasAI Wishlist!');">Save Complete Look to Wishlist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Discover</h4>
+        <a href="/discover/new-arrivals">New Arrivals</a>
+        <a href="/discover/wedding">Wedding Edit</a>
+        <a href="/discover/formal">Formal Wear</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai/ask">Ask LibasAI</a>
+        <a href="/ai/image-search">Visual Image Search</a>
+        <a href="/ai/compare">Multi-Brand Compare</a>
+        <a href="/ai/outfit-builder">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/brands">Brands Directory</a>
+        <a href="/brands/local">Discover Local</a>
+        <a href="/about">About LibasAI</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+  <script>
+    var outfitPresets = [
+      {
+        name: "Eid Festive Morning Look",
+        score: "97% Harmonious",
+        total: "Rs. 14,830",
+        kurta: { brand: "Zellbury", title: "Rust Embroidered Cotton Kurta", price: "Rs. 4,490", img: "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" },
+        dupatta: { brand: "Gul Ahmed", title: "Digital Printed Organza Dupatta", price: "Rs. 2,450", img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" },
+        bottom: { brand: "Sana Safinaz", title: "Embroidered Raw Silk Skinny Shalwar", price: "Rs. 2,480", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" },
+        shoes: { brand: "Sana Safinaz", title: "Handcrafted Gold Tilla Khussa", price: "Rs. 2,950", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
+        jewel: { brand: "Local Artisan", title: "Filigree Kundan Chandbali Jhumkas", price: "Rs. 2,460", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+      },
+      {
+        name: "Wedding Mehndi Celebration",
+        score: "95% Harmonious",
+        total: "Rs. 18,940",
+        kurta: { brand: "Beechtree", title: "Sea Green Embroidered Raw Silk", price: "Rs. 10,194", img: "https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" },
+        dupatta: { brand: "Mushq", title: "Embellished Net Dupatta in Pink", price: "Rs. 3,850", img: "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" },
+        bottom: { brand: "Zellbury", title: "Flared Silk Gharara Pants", price: "Rs. 2,196", img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" },
+        shoes: { brand: "Sana Safinaz", title: "Emerald Green Embellished Kolhapuri", price: "Rs. 1,800", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
+        jewel: { brand: "Zeen", title: "Antique Gold Floral Matha Patti", price: "Rs. 900", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+      },
+      {
+        name: "Formal Evening Soirée",
+        score: "98% Harmonious",
+        total: "Rs. 22,400",
+        kurta: { brand: "Sana Safinaz", title: "Embroidered Lawn Festive 2PC", price: "Rs. 10,299", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" },
+        dupatta: { brand: "Gul Ahmed", title: "Jacquard Metallic Chiffon Wrap", price: "Rs. 4,200", img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" },
+        bottom: { brand: "Zeen", title: "Straight Raw Silk Trousers", price: "Rs. 3,200", img: "https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" },
+        shoes: { brand: "Beechtree", title: "Velvet Block Heels", price: "Rs. 2,900", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
+        jewel: { brand: "Suffuse", title: "Crystal Choker & Studs Set", price: "Rs. 1,801", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+      },
+      {
+        name: "Casual Smart Daywear",
+        score: "94% Harmonious",
+        total: "Rs. 8,620",
+        kurta: { brand: "Sana Safinaz", title: "Stitched Lawn Short Kurta", price: "Rs. 2,480", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" },
+        dupatta: { brand: "Gul Ahmed", title: "Crinkle Chiffon Printed Scarf", price: "Rs. 1,450", img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" },
+        bottom: { brand: "Zellbury", title: "White Cotton Cigarette Pants", price: "Rs. 1,690", img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" },
+        shoes: { brand: "Zellbury", title: "Daily Comfort Leather Slides", price: "Rs. 1,800", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
+        jewel: { brand: "Local Artisan", title: "Handcrafted Threadwork Tassel Earrings", price: "Rs. 1,200", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+      }
+    ];
+
+    function switchOutfit(idx, btn) {
+      document.querySelectorAll('.lb-chip').forEach(function(c) { c.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var p = outfitPresets[idx];
+      document.getElementById('canvas-preset-name').textContent = p.name;
+      document.getElementById('harmony-score').textContent = p.score;
+      document.getElementById('total-price').textContent = p.total;
+
+      ['kurta', 'dupatta', 'bottom', 'shoes', 'jewel'].forEach(function(k) {
+        var item = p[k];
+        document.getElementById('ob-img-' + k).src = item.img;
+        document.getElementById('thumb-' + k).src = item.img;
+        document.getElementById('brand-' + k).textContent = item.brand;
+        document.getElementById('title-' + k).textContent = item.title;
+        document.getElementById('price-' + k).textContent = item.price;
+      });
+    }
+
+    function highlightItem(key) {
+      var row = document.getElementById('row-' + key);
+      if (row) {
+        row.style.background = 'rgba(132,14,52,0.08)';
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function() { row.style.background = ''; }, 1200);
+      }
+    }
+
+    function shuffleCurrentOutfit() {
+      var randomIdx = Math.floor(Math.random() * outfitPresets.length);
+      var chips = document.querySelectorAll('.lb-chip');
+      if (chips[randomIdx]) switchOutfit(randomIdx, chips[randomIdx]);
+    }
+  </script>
+</body>
+</html>

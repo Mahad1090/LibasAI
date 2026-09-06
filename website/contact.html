@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact & Partner Inquiries — LibasAI</title>
+  <meta name="description" content="Get in touch with the LibasAI team. Brand partnerships, tailor onboarding, shopper assistance, and academic collaboration.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      margin-top: 36px;
+    }
+    @media (max-width: 860px) {
+      .lb-contact-grid { grid-template-columns: 1fr; }
+    }
+    .lb-contact-form-card {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 36px;
+      box-shadow: 0 6px 24px rgba(25,20,18,0.04);
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <a href="/index.html" class="lb-nav__link">Home</a>
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">Brands</button>
+          <a href="/ai-features.html" class="lb-nav__link">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson);">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/get-stitched.html" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;"><use href="#lb-i-scissors"></use></svg>
+            Book Stitching
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="lb-section" style="padding-top:48px;">
+    <div class="lb-wrap">
+      
+      <div>
+        <div class="lb-eyebrow">Get In Touch</div>
+        <h1 class="lb-h1" style="font-size:clamp(30px, 4vw, 48px);">Contact & Inquiries</h1>
+        <p class="lb-body" style="font-size:16px; margin-top:8px;">
+          Whether you're an apparel brand looking to integrate, a master tailor wanting to join our artisan network, or a shopper with feedback, we’d love to hear from you.
+        </p>
+      </div>
+
+      <div class="lb-contact-grid">
+        
+        <!-- FORM -->
+        <div class="lb-contact-form-card">
+          <div id="contact-success" style="display:none; background:#ECFDF5; border:1px solid #10B981; border-radius:4px; padding:16px 20px; margin-bottom:20px; color:#065F46;">
+            <strong>Thank you! Your message has been received.</strong>
+            <p style="margin:4px 0 0; font-size:13px;">A LibasAI team member will get back to you within 24 business hours.</p>
+          </div>
+
+          <form id="contact-form" onsubmit="handleContactSubmit(event)">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Your Name</label>
+                <input type="text" class="lb-input" required placeholder="e.g. Ayesha Khan">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Email Address</label>
+                <input type="email" class="lb-input" required placeholder="ayesha@example.com">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Phone / WhatsApp</label>
+                <input type="tel" class="lb-input" placeholder="+92 300 1234567">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Inquiry Type</label>
+                <select class="lb-select">
+                  <option>Brand Catalog Integration</option>
+                  <option>Join Verified Tailor Network</option>
+                  <option>Customer Support & Fit Guarantee</option>
+                  <option>Academic / FYP Collaboration</option>
+                  <option>Press & Media</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-bottom:20px;">
+              <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Message</label>
+              <textarea class="lb-input" style="height:120px; resize:vertical;" required placeholder="How can our team help you today?"></textarea>
+            </div>
+
+            <button type="submit" class="lb-cta lb-cta--wide">Send Message to LibasAI Team →</button>
+          </form>
+        </div>
+
+        <!-- CONTACT DETAILS -->
+        <div>
+          <div style="background:var(--lb-paper); padding:32px; border-radius:6px; border:1px solid rgba(25,20,18,0.08); margin-bottom:24px;">
+            <div class="lb-eyebrow">Academic Base & Labs</div>
+            <h3 class="lb-h2" style="font-size:20px; margin-bottom:12px;">FAST-NUCES Islamabad</h3>
+            <p style="font-size:13.5px; line-height:1.6; color:rgba(25,20,18,0.75); margin:0 0 16px;">
+              Department of Computer Science<br>
+              A.K. Brohi Road, H-11/4, Islamabad, Pakistan
+            </p>
+            <div style="font-size:13px; color:var(--lb-charcoal);">
+              <div><strong>Email:</strong> team@libasai.com.pk</div>
+
+            </div>
+          </div>
+
+          <div style="background:#FFF; padding:28px; border-radius:6px; border:1px solid var(--lb-hairline);">
+            <div class="lb-eyebrow">Frequently Asked</div>
+            <h4 style="font-size:15px; margin:0 0 4px;">Is LibasAI an online retailer?</h4>
+            <p style="font-size:13px; color:rgba(25,20,18,0.65); line-height:1.5; margin:0 0 14px;">
+              No. LibasAI is an intelligent search, recommendation, and discovery assistant. When you wish to purchase an outfit, we direct you to the official Pakistani brand store.
+            </p>
+
+            <h4 style="font-size:15px; margin:0 0 4px;">How does custom stitching work?</h4>
+            <p style="font-size:13px; color:rgba(25,20,18,0.65); line-height:1.5; margin:0;">
+              You can pair any unstitched look with a verified master tailor, enter your measurements once, and receive bespoke tailored attire at your doorstep with our Fit Guarantee.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find a Tailor</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+  <script>
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('contact-success').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

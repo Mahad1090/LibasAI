@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Account & Measurement Profiles — LibasAI</title>
+  <meta name="description" content="Manage your personal LibasAI profile, saved bespoke measurement cards, saved Pakistani brand preferences, and stitching history.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-acc-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 36px;
+      margin-top: 36px;
+    }
+    @media (max-width: 860px) {
+      .lb-acc-layout { grid-template-columns: 1fr; }
+    }
+    .lb-acc-card {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 28px;
+      box-shadow: 0 4px 14px rgba(25,20,18,0.03);
+      margin-bottom: 24px;
+    }
+    .lb-meas-card-item {
+      background: var(--lb-paper);
+      border-radius: 6px;
+      padding: 18px 22px;
+      border: 1px solid rgba(25,20,18,0.08);
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .lb-meas-val-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <a href="/index.html" class="lb-nav__link">Home</a>
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">Brands</button>
+          <a href="/ai-features.html" class="lb-nav__link">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson);">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile" style="color:var(--lb-burgundy);">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/get-stitched.html" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;"><use href="#lb-i-scissors"></use></svg>
+            Book Stitching
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="lb-section" style="padding-top:48px;">
+    <div class="lb-wrap">
+      
+      <div>
+        <div class="lb-eyebrow">Personal Bespoke Profile</div>
+        <h1 class="lb-h1" style="font-size:clamp(30px, 4vw, 48px);">Account & Measurements</h1>
+        <p class="lb-body" style="font-size:15px; margin-top:8px;">
+          Manage your saved measurement cards for 1-click tailor bookings, address preferences, and personalized AI shopping filters.
+        </p>
+      </div>
+
+      <div class="lb-acc-layout">
+        
+        <!-- SIDEBAR -->
+        <div>
+          <div class="lb-acc-card" style="text-align:center;">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=160&auto=format&fit=crop&q=80" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid var(--lb-rose); margin-bottom:12px;" alt="">
+            <h3 class="lb-h2" style="font-size:18px; margin:0 0 4px;">Zeeshan Ahmed</h3>
+            <span style="font-size:12.5px; color:rgba(25,20,18,0.6);">Lahore, Pakistan · Verified Member</span>
+            <div style="margin-top:14px;">
+              <span class="lb-tag" style="background:var(--lb-paper);">Bespoke Pass Active</span>
+            </div>
+          </div>
+
+          <div class="lb-acc-card" style="padding:16px;">
+            <a href="/my-requests.html" class="lb-cta lb-cta--ghost" style="width:100%; justify-content:flex-start; margin-bottom:8px; border:none; padding:10px 14px;">
+              <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
+              My Stitching Orders
+            </a>
+            <a href="/wishlist.html" class="lb-cta lb-cta--ghost" style="width:100%; justify-content:flex-start; margin-bottom:8px; border:none; padding:10px 14px;">
+              <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-heart"></use></svg>
+              Saved Looks & Wishlist
+            </a>
+            <a href="/tailors.html" class="lb-cta lb-cta--ghost" style="width:100%; justify-content:flex-start; border:none; padding:10px 14px;">
+              🔍 Browse Verified Tailors
+            </a>
+          </div>
+        </div>
+
+        <!-- MAIN DETAILS -->
+        <div>
+          
+          <!-- MEASUREMENT PROFILES -->
+          <div class="lb-acc-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
+              <div>
+                <div class="lb-eyebrow" style="margin-bottom:4px;">Tailoring Cards</div>
+                <h2 class="lb-h2" style="font-size:22px;">Saved Measurement Profiles</h2>
+              </div>
+              <a href="/get-stitched.html?step=3" class="lb-cta" style="padding:8px 16px; font-size:11.5px;">+ Create New Profile</a>
+            </div>
+
+            <!-- Profile Card 1 -->
+            <div class="lb-meas-card-item">
+              <div>
+                <strong style="font-size:15px; color:var(--lb-charcoal);">Standard Bespoke Kameez (Default)</strong>
+                <span class="lb-tag" style="background:#FFF; margin-left:8px;">Regular Fit</span>
+                <div class="lb-meas-val-grid">
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Shoulder: 18.5"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Chest: 41.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Waist: 36.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Hips: 43.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Neck: 16.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Sleeve: 24.5"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Shirt: 41.5"</span>
+                </div>
+              </div>
+              <a href="/get-stitched.html?tailor=rafiq" class="lb-cta" style="padding:8px 14px; font-size:11.5px;">Use for Stitching →</a>
+            </div>
+
+            <!-- Profile Card 2 -->
+            <div class="lb-meas-card-item">
+              <div>
+                <strong style="font-size:15px; color:var(--lb-charcoal);">Slim Formal Kurta (Eid & Weddings)</strong>
+                <span class="lb-tag" style="background:#FFF; margin-left:8px;">Slim Fit</span>
+                <div class="lb-meas-val-grid">
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Shoulder: 18.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Chest: 39.5"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Waist: 34.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Hips: 41.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Neck: 15.5"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Sleeve: 25.0"</span>
+                  <span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">Shirt: 40.0"</span>
+                </div>
+              </div>
+              <a href="/get-stitched.html?tailor=aslam" class="lb-cta" style="padding:8px 14px; font-size:11.5px;">Use for Stitching →</a>
+            </div>
+          </div>
+
+          <!-- RECENT ORDERS SUMMARY -->
+          <div class="lb-acc-card">
+            <div class="lb-eyebrow">Recent Activity</div>
+            <h2 class="lb-h2" style="font-size:22px; margin-bottom:14px;">Recent Stitching Commission</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF6F0; padding:16px; border-radius:6px;">
+              <div>
+                <span class="lb-tag" style="background:#FFF;">In Progress</span>
+                <strong style="display:block; font-size:15px; margin:4px 0 2px;">Festive Embroidered Raw Silk Kameez</strong>
+                <span style="font-size:12.5px; color:rgba(25,20,18,0.65);">Master Rafiq Atelier · Est Delivery: 10 Sep 2026</span>
+              </div>
+              <a href="/my-requests.html" class="lb-cta lb-cta--ghost" style="padding:8px 14px; font-size:11.5px;">Track Order →</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find a Tailor</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+</body>
+</html>

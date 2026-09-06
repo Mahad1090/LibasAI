@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About LibasAI — Intelligent Pakistani Apparel Discovery</title>
+  <meta name="description" content="LibasAI is an AI-powered multi-agent shopping assistant and bespoke tailoring network for Pakistani fashion. FAST-NUCES Final Year Project 2026-2027.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-about-hero {
+      background: radial-gradient(120% 120% at 80% 20%, rgba(201,143,130,0.25) 0%, rgba(247,237,223,0) 60%),
+                  linear-gradient(180deg, #FBF6EE 0%, #F7EDDF 100%);
+      padding: clamp(60px, 7vw, 100px) clamp(20px, 5vw, 72px) 50px;
+      border-bottom: 1px solid var(--lb-hairline);
+    }
+    .lb-team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .lb-team-card {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 28px;
+      box-shadow: 0 4px 16px rgba(25,20,18,0.03);
+    }
+    .lb-arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .lb-arch-box {
+      background: #FAF6F0;
+      border: 1px solid rgba(25,20,18,0.08);
+      border-radius: 6px;
+      padding: 22px;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <a href="/index.html" class="lb-nav__link">Home</a>
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">Discover</button>
+          <button type="button" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">Brands</button>
+          <a href="/ai-features.html" class="lb-nav__link">AI Features</a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">Find Tailors</a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson);">Get Stitched</a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/get-stitched.html" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;"><use href="#lb-i-scissors"></use></svg>
+            Book Stitching
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="lb-about-hero">
+    <div class="lb-wrap">
+      <div class="lb-eyebrow">FAST-NUCES Final Year Project · 2026–2027</div>
+      <h1 class="lb-h1" style="font-size:clamp(36px, 5vw, 64px); max-width:900px;">
+        Empowering Pakistani Fashion Through Artificial Intelligence & Master Craft
+      </h1>
+      <p class="lb-body" style="font-size:18px; max-width:760px; margin-top:16px;">
+        LibasAI is an AI-powered conversational shopping assistant that aggregates 80+ Pakistani apparel brands, solves the relevance-fairness trade-off for emerging local designers, and bridges fabric discovery with master bespoke tailoring.
+      </p>
+    </div>
+  </section>
+
+  <!-- MOTIVATION & PROBLEM -->
+  <section class="lb-section">
+    <div class="lb-wrap">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:center;">
+        <div>
+          <div class="lb-eyebrow">The Real-World Challenge</div>
+          <h2 class="lb-h2" style="font-size:clamp(28px, 3.5vw, 42px);">The Fragmented Pakistani E-Commerce Landscape</h2>
+          <p class="lb-body">
+            Online apparel shoppers in Pakistan spend excessive time jumping across dozens of separate brand websites to compare fabrics, cuts, sizes, and pricing. Conventional search relying solely on exact keywords and rigid filters fails to understand conversational intent like <em>"Show me olive festive raw silk kurtas under PKR 5,000 for an outdoor dholak"</em>.
+          </p>
+          <p class="lb-body">
+            Simultaneously, small and emerging Pakistani fashion labels struggle to compete against retail titans with massive marketing budgets. Purely popularity-based recommendation algorithms naturally reinforce this bias, starving young design houses of visibility.
+          </p>
+        </div>
+        <div style="background:var(--lb-paper); padding:36px; border-radius:8px; border:1px solid rgba(25,20,18,0.08);">
+          <h3 class="lb-h2" style="font-size:22px; margin-bottom:14px;">The LibasAI Solution</h3>
+          <ul style="padding-left:20px; font-size:14.5px; line-height:1.8; color:rgba(25,20,18,0.8); margin:0;">
+            <li><strong>Cross-Brand Aggregation:</strong> Unified search index across 80+ Pakistani brands without requiring individual site hopping.</li>
+            <li><strong>Multi-Agent AI Pipeline:</strong> Specialized collaborative AI agents for search, fair recommendation, multi-brand comparison, and outfit styling.</li>
+            <li><strong>Computer Vision:</strong> CLIP-based visual image search to find matching apparel by snapping a picture or uploading an Instagram look.</li>
+            <li><strong>Fair Visibility Re-Ranking:</strong> Algorithmic post-hoc re-ranking ensuring small and emerging artisans gain equitable shelf space.</li>
+            <li><strong>Master Tailor Integration:</strong> Seamlessly bridge from discovering unstitched fabrics to having verified ustaad tailors cut and stitch your suit.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MULTI-AGENT ARCHITECTURE -->
+  <section class="lb-section lb-section--paper">
+    <div class="lb-wrap">
+      <div class="lb-section__head centered">
+        <div class="lb-eyebrow">System Architecture</div>
+        <h2 class="lb-h2" style="font-size:clamp(28px, 3.2vw, 42px);">Collaborative Multi-Agent Intelligence</h2>
+        <p class="lb-body" style="margin-top:8px;">Four dedicated AI agents operating concurrently to deliver instantaneous, tailored fashion recommendations.</p>
+      </div>
+
+      <div class="lb-arch-grid">
+        <div class="lb-arch-box">
+          <strong style="font-size:16px; color:var(--lb-burgundy); display:block; margin-bottom:6px;">1. Search Agent</strong>
+          <p style="font-size:13px; color:rgba(25,20,18,0.7); line-height:1.6; margin:0;">
+            Parses natural language user queries, extracts semantic constraints (budget, fabric, occasion, color), and queries vector embeddings via pgvector and full-text indexes.
+          </p>
+        </div>
+        <div class="lb-arch-box">
+          <strong style="font-size:16px; color:var(--lb-burgundy); display:block; margin-bottom:6px;">2. Recommendation Agent</strong>
+          <p style="font-size:13px; color:rgba(25,20,18,0.7); line-height:1.6; margin:0;">
+            Implements Matrix Factorization and post-hoc bounded re-ranking to balance personalized user relevance against equitable visibility for emerging local labels.
+          </p>
+        </div>
+        <div class="lb-arch-box">
+          <strong style="font-size:16px; color:var(--lb-burgundy); display:block; margin-bottom:6px;">3. Comparison Agent</strong>
+          <p style="font-size:13px; color:rgba(25,20,18,0.7); line-height:1.6; margin:0;">
+            Evaluates candidate items side-by-side on fabric composition, price per piece, delivery timelines, and returns policy to generate objective trade-off verdicts.
+          </p>
+        </div>
+        <div class="lb-arch-box">
+          <strong style="font-size:16px; color:var(--lb-burgundy); display:block; margin-bottom:6px;">4. Outfit Agent</strong>
+          <p style="font-size:13px; color:rgba(25,20,18,0.7); line-height:1.6; margin:0;">
+            Calculates complementary color harmonies and cultural dress codes, automatically pairing primary garments with matching dupattas, footwear, and Kundan jewellery.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT TEAM & SUPERVISION -->
+  <section class="lb-section">
+    <div class="lb-wrap">
+      <div class="lb-section__head centered">
+        <div class="lb-eyebrow">Academic Foundation</div>
+        <h2 class="lb-h2" style="font-size:clamp(28px, 3.2vw, 42px);">Project Team</h2>
+        <p class="lb-body" style="margin-top:8px;">Developed at National University of Computer and Emerging Sciences (FAST-NUCES), Islamabad.</p>
+      </div>
+
+      <div class="lb-team-grid">
+        <div class="lb-team-card">
+          <span class="lb-tag" style="background:var(--lb-paper); margin-bottom:10px;">Team Lead · Product &amp; AI Experience</span>
+          <h3 class="lb-h2" style="font-size:20px; margin:0 0 4px;">Areeba Waqar</h3>
+          <span style="font-size:13px; color:rgba(25,20,18,0.6); display:block; margin-bottom:14px;">FAST-NUCES Islamabad</span>
+          <p style="font-size:13.5px; line-height:1.6; color:rgba(25,20,18,0.75); margin:0;">
+            Lead product design, UX/UI architecture, and fashion editorial direction. Orchestration of bespoke tailoring workflows, user personalization, and AI shopping intelligence.
+          </p>
+        </div>
+
+        <div class="lb-team-card">
+          <span class="lb-tag" style="background:var(--lb-paper); margin-bottom:10px;">Team Lead · Backend &amp; AI</span>
+          <h3 class="lb-h2" style="font-size:20px; margin:0 0 4px;">Mahad Malik</h3>
+          <span style="font-size:13px; color:rgba(25,20,18,0.6); display:block; margin-bottom:14px;">FAST-NUCES Islamabad</span>
+          <p style="font-size:13.5px; line-height:1.6; color:rgba(25,20,18,0.75); margin:0;">
+            Lead backend architecture with FastAPI and PostgreSQL/pgvector. Design and evaluation of the recommendation engine and fair visibility re-ranking algorithms.
+          </p>
+        </div>
+
+        <div class="lb-team-card">
+          <span class="lb-tag" style="background:var(--lb-paper); margin-bottom:10px;">Team Lead · Frontend &amp; Workflow</span>
+          <h3 class="lb-h2" style="font-size:20px; margin:0 0 4px;">M. Shayan Asad</h3>
+          <span style="font-size:13px; color:rgba(25,20,18,0.6); display:block; margin-bottom:14px;">FAST-NUCES Islamabad</span>
+          <p style="font-size:13.5px; line-height:1.6; color:rgba(25,20,18,0.75); margin:0;">
+            Lead frontend architecture with Flutter and conversational interface engineering. Integration of multi-agent orchestration workflows and AI chatbot experience.
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find a Tailor</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+</body>
+</html>

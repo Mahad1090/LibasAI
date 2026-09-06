@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tailor Partner Workbench & Portal — LibasAI</title>
+  <meta name="description" content="Dedicated workbench for Pakistani master tailors. Manage incoming customer stitching requests, view measurement cards, update production status, and manage rate cards.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    .lb-portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 80px);
+    }
+    @media (max-width: 900px) {
+      .lb-portal-layout { grid-template-columns: 1fr; }
+    }
+    .lb-portal-sidebar {
+      background: #5E0A26;
+      color: var(--lb-cream);
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .lb-portal-main {
+      padding: clamp(24px, 4vw, 48px);
+      background: #F7EDDF;
+      overflow-y: auto;
+    }
+    .lb-portal-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .lb-stat-box {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(25,20,18,0.03);
+    }
+    .lb-stat-box strong {
+      display: block;
+      font-size: 28px;
+      font-family: 'Playfair Display', serif;
+      color: var(--lb-burgundy);
+      margin-top: 6px;
+    }
+    .lb-stat-box span {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(25,20,18,0.55);
+    }
+    .lb-workbench-card {
+      background: #FFF;
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(25,20,18,0.03);
+    }
+    .lb-workbench-card.is-pending {
+      border-left: 5px solid #F59E0B;
+    }
+    .lb-workbench-card.is-inprogress {
+      border-left: 5px solid var(--lb-burgundy);
+    }
+    .lb-workbench-card.is-ready {
+      border-left: 5px solid #10B981;
+    }
+    .lb-side-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 4px;
+      color: rgba(247,237,223,0.7);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 160ms ease;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+    .lb-side-nav-link:hover, .lb-side-nav-link.is-active {
+      background: rgba(247,237,223,0.12);
+      color: #FFF;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- PORTAL TOPBAR -->
+  <header style="background:var(--lb-charcoal); border-bottom:1px solid rgba(247,237,223,0.1); padding:14px clamp(20px,4vw,40px); display:flex; justify-content:space-between; align-items:center; color:var(--lb-cream);">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="/" class="lb-logo" style="color:var(--lb-cream);">
+        <img src="assets/libasai-logo.png" alt="LibasAI">
+        <span style="color:var(--lb-cream);">LibasAI Tailor Studio</span>
+      </a>
+      <span class="lb-tag" style="border-color:var(--lb-rose); color:var(--lb-rose);">Artisan Partner Workbench</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <!-- SWITCH TAILOR IDENTITY -->
+      <div style="display:flex; align-items:center; gap:8px; font-size:12.5px;">
+        <span style="color:rgba(247,237,223,0.6);">Switch Studio:</span>
+        <select id="portal-tailor-switch" onchange="switchPortalTailor()" style="background:#2A2320; color:var(--lb-cream); border:1px solid rgba(247,237,223,0.2); padding:6px 10px; border-radius:4px; font-family:'Manrope',sans-serif; font-size:12.5px;">
+          <option value="rafiq">Master Rafiq & Sons (Lahore)</option>
+          <option value="noor">Noor Bridal Studio (Karachi)</option>
+          <option value="aslam">Ustaad Aslam Cutter (Islamabad)</option>
+          <option value="gulberg">Gulberg Express (Lahore)</option>
+        </select>
+      </div>
+      <a href="/my-requests.html" style="font-size:12px; color:var(--lb-rose); text-decoration:none;">View Customer View →</a>
+    </div>
+  </header>
+
+  <!-- PORTAL BODY -->
+  <div class="lb-portal-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="lb-portal-sidebar">
+      <div>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:28px; padding-bottom:18px; border-bottom:1px solid rgba(247,237,223,0.1);">
+          <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" style="width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid var(--lb-rose);" alt="">
+          <div>
+            <strong id="sidebar-name" style="font-size:14px; display:block; color:var(--lb-cream);">Master Rafiq</strong>
+            <span style="font-size:11px; color:#10B981; font-weight:700;">● Online & Accepting</span>
+          </div>
+        </div>
+
+        <nav>
+          <div class="lb-side-nav-link is-active" onclick="switchTab('orders', this)">
+            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-box"></use></svg>
+            Stitching Workbench (<span id="side-order-count">2</span>)
+          </div>
+          <div class="lb-side-nav-link" onclick="switchTab('services', this)">
+            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
+            Rate Card & Services
+          </div>
+          <div class="lb-side-nav-link" onclick="switchTab('capacity', this)">
+            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-settings"></use></svg>
+            Capacity & Turnaround
+          </div>
+        </nav>
+      </div>
+
+      <div style="background:rgba(247,237,223,0.06); border-radius:6px; padding:16px; font-size:12px; color:rgba(247,237,223,0.7);">
+        <strong style="color:var(--lb-cream); display:block; margin-bottom:4px;">Need Tailor Support?</strong>
+        <span>LibasAI Master Cutter helpline: 0800-LIBAS (Mon-Sat, 9am-8pm)</span>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD -->
+    <main class="lb-portal-main">
+      
+      <!-- STATS BAR -->
+      <div class="lb-portal-stat-grid">
+        <div class="lb-stat-box">
+          <span>Pending Customer Requests</span>
+          <strong id="stat-pending" style="color:#D97706;">1</strong>
+        </div>
+        <div class="lb-stat-box">
+          <span>Active on Cutting Table</span>
+          <strong id="stat-active" style="color:var(--lb-burgundy);">2</strong>
+        </div>
+        <div class="lb-stat-box">
+          <span>Ready for Delivery</span>
+          <strong id="stat-ready" style="color:#10B981;">1</strong>
+        </div>
+        <div class="lb-stat-box">
+          <span>This Month Earnings</span>
+          <strong id="stat-earnings" style="color:var(--lb-charcoal);">PKR 48,200</strong>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: WORKBENCH -->
+      <div id="tab-orders">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div>
+            <h2 class="lb-h2" style="font-size:24px;">Incoming Stitching Requests</h2>
+            <p class="lb-body" style="font-size:13.5px; margin-top:2px;">Accept new commissions, review customer measurements, and move suits along production stages.</p>
+          </div>
+          <button class="lb-cta lb-cta--ghost" onclick="refreshPortalOrders()">↻ Refresh Requests</button>
+        </div>
+
+        <div id="workbench-list">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: SERVICES & RATE CARD -->
+      <div id="tab-services" style="display:none; background:#FFF; border-radius:6px; padding:28px; border:1px solid var(--lb-hairline);">
+        <h2 class="lb-h2" style="font-size:22px; margin-bottom:8px;">Manage Stitching Services & Base Rates</h2>
+        <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">Update your base charges displayed to customers browsing the tailor directory.</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:700px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Men's Plain Shalwar Kameez (PKR)</label>
+            <input type="number" id="srv-rate-1" class="lb-input" value="2400">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Women's 3-Piece Lawn / Silk (PKR)</label>
+            <input type="number" id="srv-rate-2" class="lb-input" value="2800">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Waistcoat / Prince Coat (PKR)</label>
+            <input type="number" id="srv-rate-3" class="lb-input" value="3600">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">⚡ 48h Express Rush Surcharge (PKR)</label>
+            <input type="number" id="srv-rate-4" class="lb-input" value="800">
+          </div>
+        </div>
+
+        <button class="lb-cta" style="margin-top:24px;" onclick="alert('Pricing saved! Your rate card on the directory has been updated.')">Save Changes</button>
+      </div>
+
+      <!-- TAB CONTENT: CAPACITY -->
+      <div id="tab-capacity" style="display:none; background:#FFF; border-radius:6px; padding:28px; border:1px solid var(--lb-hairline);">
+        <h2 class="lb-h2" style="font-size:22px; margin-bottom:8px;">Studio Capacity & Availability Toggle</h2>
+        <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">Control whether your atelier appears as available or busy during peak Eid/wedding seasons.</p>
+
+        <div style="max-width:560px; display:flex; flex-direction:column; gap:16px;">
+          <label style="display:flex; align-items:center; gap:12px; cursor:pointer;">
+            <input type="checkbox" id="avail-toggle" checked style="accent-color:var(--lb-burgundy); width:20px; height:20px;">
+            <div>
+              <strong style="font-size:14px; display:block;">Accept New Stitching Orders Online</strong>
+              <span style="font-size:12.5px; color:rgba(25,20,18,0.6);">When unchecked, customers will see "At Capacity — Booking Reopens Soon"</span>
+            </div>
+          </label>
+
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Weekly Order Quota Limit</label>
+            <input type="number" class="lb-input" value="15" style="max-width:180px;">
+          </div>
+
+          <button class="lb-cta" style="width:fit-content; margin-top:10px;" onclick="alert('Capacity preferences saved.')">Update Capacity</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    var currentTailorKey = 'rafiq';
+
+    function switchPortalTailor() {
+      currentTailorKey = document.getElementById('portal-tailor-switch').value;
+      var nameEl = document.getElementById('sidebar-name');
+      var avatarEl = document.getElementById('sidebar-avatar');
+
+      if (currentTailorKey === 'rafiq') {
+        nameEl.innerText = "Master Rafiq";
+        avatarEl.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80";
+      } else if (currentTailorKey === 'noor') {
+        nameEl.innerText = "Noor Bridal Studio";
+        avatarEl.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80";
+      } else if (currentTailorKey === 'aslam') {
+        nameEl.innerText = "Ustaad Aslam";
+        avatarEl.src = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80";
+      } else if (currentTailorKey === 'gulberg') {
+        nameEl.innerText = "Gulberg Express";
+        avatarEl.src = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80";
+      }
+
+      refreshPortalOrders();
+    }
+
+    function switchTab(tab, linkEl) {
+      document.querySelectorAll('.lb-side-nav-link').forEach(function(l) { l.classList.remove('is-active'); });
+      if (linkEl) linkEl.classList.add('is-active');
+
+      document.getElementById('tab-orders').style.display = (tab === 'orders') ? 'block' : 'none';
+      document.getElementById('tab-services').style.display = (tab === 'services') ? 'block' : 'none';
+      document.getElementById('tab-capacity').style.display = (tab === 'capacity') ? 'block' : 'none';
+    }
+
+    function refreshPortalOrders() {
+      var saved = [];
+      try {
+        saved = JSON.parse(localStorage.getItem('libasai_stitching_requests') || '[]');
+      } catch (e) {}
+
+      // Seed if empty
+      if (!saved.length) {
+        saved = [
+          {
+            id: "REQ-8492",
+            dateSubmitted: "Today",
+            status: "Pending",
+            tailorKey: "rafiq",
+            tailorName: "Master Rafiq & Sons Bespoke Atelier",
+            designTitle: "Olive Raw Silk Traditional Kurta",
+            designImg: "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102",
+            garment: "Men's Shalwar Kameez",
+            fit: "Regular Fit",
+            collar: "Sherwani Band Collar (Stiff/Ban)",
+            sleeve: "Straight Hem",
+            buttons: "Concealed Placket",
+            daman: "Round Daman",
+            notes: "Please add crisp fusing on collar and check side pockets width.",
+            requiredDate: "2026-09-14",
+            estimatedPrice: "PKR 2,650",
+            measurements: {
+              shoulder: "18.5",
+              chest: "41.0",
+              waist: "36.0",
+              hips: "43.0",
+              neck: "16.0",
+              sleeve: "24.5",
+              shirtLength: "41.5",
+              trouserLength: "39.0"
+            }
+          }
+        ];
+        try { localStorage.setItem('libasai_stitching_requests', JSON.stringify(saved)); } catch(e) {}
+      }
+
+      var listContainer = document.getElementById('workbench-list');
+      var pendingCount = 0;
+      var activeCount = 0;
+      var readyCount = 0;
+
+      listContainer.innerHTML = saved.map(function(item, idx) {
+        if (item.status === 'Pending') pendingCount++;
+        if (item.status === 'In Progress' || item.status === 'Accepted') activeCount++;
+        if (item.status === 'Ready') readyCount++;
+
+        var cardCls = 'is-pending';
+        if (item.status === 'In Progress') cardCls = 'is-inprogress';
+        if (item.status === 'Ready' || item.status === 'Completed') cardCls = 'is-ready';
+
+        var m = item.measurements || {};
+        var measChips = Object.keys(m).map(function(k) {
+          return '<span class="lb-tag" style="background:#FAF6F0; font-size:11px; text-transform:none;">' + k + ': <strong>' + m[k] + '"</strong></span>';
+        }).join('');
+
+        return '<div class="lb-workbench-card ' + cardCls + '">' +
+          '<div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px;">' +
+            '<div style="display:flex; gap:16px; align-items:center;">' +
+              '<img src="' + (item.designImg || '') + '" style="width:64px; height:64px; object-fit:cover; border-radius:4px;" alt="">' +
+              '<div>' +
+                '<span class="lb-tag" style="background:var(--lb-paper);">' + item.id + '</span>' +
+                '<h3 class="lb-h2" style="font-size:18px; margin:2px 0;">' + item.designTitle + '</h3>' +
+                '<div style="font-size:12.5px; color:rgba(25,20,18,0.65);">' + item.garment + ' · ' + item.fit + ' · Target: <strong>' + item.requiredDate + '</strong></div>' +
+              '</div>' +
+            '</div>' +
+            '<div style="text-align:right;">' +
+              '<span class="lb-tag" style="background:#FAF6F0; font-weight:800; font-size:12px; border-color:var(--lb-burgundy); color:var(--lb-burgundy);">' + item.status + '</span>' +
+              '<div style="font-size:14px; font-weight:700; color:var(--lb-charcoal); margin-top:6px;">' + item.estimatedPrice + '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div style="background:#FAF6F0; padding:12px 16px; border-radius:4px; margin-bottom:14px; font-size:13px;">' +
+            '<div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:8px;">' +
+              '<span>Collar: <strong>' + (item.collar || 'Standard') + '</strong></span>' +
+              '<span>Sleeve: <strong>' + (item.sleeve || 'Straight') + '</strong></span>' +
+              '<span>Buttons: <strong>' + (item.buttons || 'Concealed') + '</strong></span>' +
+              '<span>Daman: <strong>' + (item.daman || 'Round') + '</strong></span>' +
+            '</div>' +
+            '<div style="color:rgba(25,20,18,0.7); font-style:italic;">Notes: "' + (item.notes || 'None') + '"</div>' +
+          '</div>' +
+
+          '<div style="margin-bottom:16px;">' +
+            '<span style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); display:block; margin-bottom:6px;">Customer Measurements (Inches)</span>' +
+            '<div style="display:flex; flex-wrap:wrap; gap:6px;">' + measChips + '</div>' +
+          '</div>' +
+
+          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:14px; border-top:1px solid rgba(25,20,18,0.06);">' +
+            '<div style="font-size:12.5px; color:rgba(25,20,18,0.6);">' +
+              'Action: Advance Production Stage' +
+            '</div>' +
+            '<div style="display:flex; gap:8px;">' +
+              (item.status === 'Pending' ? 
+                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:#10B981;" onclick="updateOrderStatus(' + idx + ', \'Accepted\')">✓ Accept Order</button>' +
+                '<button class="lb-cta lb-cta--ghost" style="padding:7px 14px; font-size:12px; color:#DC2626;" onclick="updateOrderStatus(' + idx + ', \'Declined\')">Decline</button>' :
+               item.status === 'Accepted' ?
+                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:var(--lb-burgundy);" onclick="updateOrderStatus(' + idx + ', \'In Progress\')">✂️ Start Cutting & Stitching</button>' :
+               item.status === 'In Progress' ?
+                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:#047857;" onclick="updateOrderStatus(' + idx + ', \'Ready\')">📦 Mark Ready for Pickup</button>' :
+               item.status === 'Ready' ?
+                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:#166534;" onclick="updateOrderStatus(' + idx + ', \'Completed\')">🎉 Mark Delivered & Completed</button>' :
+                '<span style="color:#166534; font-weight:700; font-size:12px;">✓ Completed</span>'
+              ) +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      document.getElementById('stat-pending').innerText = pendingCount;
+      document.getElementById('stat-active').innerText = activeCount;
+      document.getElementById('stat-ready').innerText = readyCount;
+      document.getElementById('side-order-count').innerText = saved.length;
+    }
+
+    function updateOrderStatus(index, newStatus) {
+      var saved = [];
+      try {
+        saved = JSON.parse(localStorage.getItem('libasai_stitching_requests') || '[]');
+      } catch (e) {}
+
+      if (saved[index]) {
+        saved[index].status = newStatus;
+        localStorage.setItem('libasai_stitching_requests', JSON.stringify(saved));
+        refreshPortalOrders();
+        alert('Order ' + saved[index].id + ' updated to: ' + newStatus + '. Changes are instantly visible in the customer dashboard!');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', refreshPortalOrders);
+  </script>
+</body>
+</html>
