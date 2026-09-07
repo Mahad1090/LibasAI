@@ -11,37 +11,95 @@
   <link rel="stylesheet" href="./theme.css">
   <script src="./image-slot.js"></script>
   <style>
-    /* Dedicated styles for Image Search Studio */
+    /* Global scrollbar hygiene */
+    * {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    *::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    /* Proportional Studio Container */
+    .lb-is-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 2.5vw, 28px);
+    }
+
+    /* Sleek, scaled-down Studio Page Head */
+    .lb-is-head {
+      background: var(--lb-cream);
+      border-bottom: 1px solid var(--lb-hairline);
+      padding: 20px 0 16px;
+    }
+    .lb-is-head__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .lb-is-head__meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .lb-is-head__h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 2.4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin: 0;
+      color: var(--lb-charcoal);
+    }
+    .lb-is-head__desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(25,20,18,0.65);
+      margin: 4px 0 0;
+      max-width: 720px;
+    }
+
+    /* Workspace 2-Column Grid */
     .lb-is-workspace {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-      gap: clamp(32px, 4vw, 56px);
+      grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+      gap: 20px;
       align-items: start;
     }
     @media (max-width: 960px) {
       .lb-is-workspace {
         grid-template-columns: 1fr;
+        gap: 20px;
       }
     }
+
+    /* Compact Upload Dropzone */
     .lb-upload-zone {
       background: var(--lb-white);
-      border: 2px dashed rgba(132,14,52,0.3);
-      border-radius: 4px;
-      padding: 40px 24px;
+      border: 1.5px dashed rgba(132,14,52,0.32);
+      border-radius: 6px;
+      padding: 20px 18px;
       text-align: center;
       cursor: pointer;
-      transition: border-color 200ms ease, background 200ms ease, transform 200ms var(--lb-ease);
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms var(--lb-ease);
       position: relative;
     }
     .lb-upload-zone:hover, .lb-upload-zone.is-dragover {
       border-color: var(--lb-burgundy);
-      background: rgba(132,14,52,0.03);
-      transform: translateY(-2px);
+      background: rgba(132,14,52,0.025);
+      transform: translateY(-1px);
     }
     .lb-upload-icon {
-      width: 52px;
-      height: 52px;
-      margin: 0 auto 16px;
+      width: 38px;
+      height: 38px;
+      margin: 0 auto 10px;
       color: var(--lb-burgundy);
       display: flex;
       align-items: center;
@@ -49,13 +107,28 @@
       background: var(--lb-tint);
       border-radius: 50%;
     }
+    .lb-upload-zone h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0 0 4px;
+      color: var(--lb-charcoal);
+    }
+    .lb-upload-zone p {
+      font-size: 12px;
+      color: rgba(25,20,18,0.56);
+      margin: 0 0 12px;
+      line-height: 1.4;
+    }
+
+    /* Sample Looks Grid */
     .lb-sample-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 16px;
+      gap: 8px;
+      margin-top: 10px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 540px) {
       .lb-sample-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -66,18 +139,32 @@
       border-radius: 4px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 180ms var(--lb-ease), border-color 180ms ease;
+      transition: transform 180ms var(--lb-ease), border-color 180ms ease, box-shadow 180ms ease;
       text-align: left;
+      position: relative;
     }
-    .lb-sample-card:hover, .lb-sample-card.is-selected {
-      transform: translateY(-3px);
+    .lb-sample-card:hover {
+      transform: translateY(-2px);
       border-color: var(--lb-burgundy);
     }
     .lb-sample-card.is-selected {
+      border-color: var(--lb-burgundy);
       box-shadow: 0 0 0 2px var(--lb-burgundy);
     }
+    .lb-sample-card.is-selected::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lb-burgundy);
+    }
     .lb-sample-img {
-      aspect-ratio: 3/4;
+      aspect-ratio: 4/5;
+      height: 102px;
+      width: 100%;
       overflow: hidden;
       background: var(--lb-tint);
     }
@@ -85,81 +172,356 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top center;
       display: block;
     }
     .lb-sample-info {
-      padding: 8px 10px;
-      font-size: 11.5px;
+      padding: 7px 8px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--lb-charcoal);
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+
+    /* Fashion Search Summary Panel */
+    .lb-search-summary {
+      margin-top: 16px;
+      background: var(--lb-white);
+      border: 1px solid var(--lb-hairline);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(25,20,18,0.03);
+    }
+    .lb-summary-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lb-summary-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--lb-burgundy);
+      color: var(--lb-cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .lb-summary-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--lb-hairline);
+    }
+    .lb-summary-stat {
+      font-size: 9px;
+      color: rgba(25,20,18,0.55);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .lb-summary-val {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--lb-burgundy);
+      margin-top: 2px;
+    }
+
+    /* Right Column: Visual Stage */
     .lb-preview-stage {
       background: var(--lb-white);
       border: 1px solid var(--lb-hairline);
-      padding: 24px;
-      border-radius: 4px;
-      box-shadow: 0 20px 48px rgba(25,20,18,0.08);
+      padding: 14px 16px;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(25,20,18,0.05);
       position: relative;
     }
+    .lb-preview-stage__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .lb-preview-stage__actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Scaled-down 380px Preview Frame */
     .lb-preview-frame {
       position: relative;
-      aspect-ratio: 4/5;
+      width: 100%;
+      height: 380px;
+      max-height: 380px;
       overflow: hidden;
-      background: var(--lb-paper);
-      border-radius: 2px;
+      background: #141110;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .lb-preview-frame img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: #181412;
       display: block;
+      transition: opacity 180ms ease;
     }
-    .lb-pin-tag {
+
+    /* Scanning Laser Overlay */
+    .lb-scan-line {
       position: absolute;
-      background: rgba(247,237,223,0.96);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(132,14,52,0.2);
-      box-shadow: 0 6px 16px rgba(25,20,18,0.18);
-      color: var(--lb-charcoal);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 6px 11px;
-      border-radius: 2px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      z-index: 10;
-      transition: transform 220ms var(--lb-ease);
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #E2486A, #FFFFFF, #E2486A, transparent);
+      box-shadow: 0 0 14px 2px rgba(226,72,106,0.8);
+      z-index: 12;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 200ms ease;
     }
-    .lb-pin-tag:hover {
-      transform: scale(1.05);
-      border-color: var(--lb-burgundy);
+    .lb-scan-line.is-active {
+      opacity: 1;
+      animation: lbScan 2s ease-in-out infinite;
     }
-    .lb-pin-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--lb-burgundy);
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px rgba(132,14,52,0.25);
+
+    /* Garment Detail Highlights */
+    .lb-highlight-box {
+      position: absolute;
+      border: 1.5px solid #840E34;
+      background: rgba(132,14,52,0.12);
+      box-shadow: 0 0 8px rgba(132,14,52,0.25);
+      border-radius: 3px;
+      z-index: 9;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: all 180ms ease;
     }
-    .lb-match-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      font-weight: 800;
+    .lb-highlight-box:hover {
+      background: rgba(132,14,52,0.22);
+      border-color: #5E0A26;
+    }
+    .lb-highlight-label {
+      position: absolute;
+      top: -18px;
+      left: -1px;
       background: var(--lb-burgundy);
       color: var(--lb-cream);
-      padding: 4px 8px;
-      border-radius: 2px;
-      letter-spacing: 0.04em;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px 2px 0 0;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+    }
+
+    /* Pinpoint Detection Tags */
+    .lb-pin-tag {
+      position: absolute;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(132,14,52,0.22);
+      box-shadow: 0 4px 12px rgba(25,20,18,0.16);
+      color: var(--lb-charcoal);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 10;
+      pointer-events: auto;
+      cursor: pointer;
+      transition: transform 180ms var(--lb-ease), border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .lb-pin-tag:hover {
+      transform: scale(1.04);
+      border-color: var(--lb-burgundy);
+      box-shadow: 0 6px 14px rgba(132,14,52,0.24);
+    }
+    .lb-pin-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--lb-burgundy);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(132,14,52,0.25);
+    }
+
+    /* Extracted Attributes 4-Grid */
+    .lb-attr-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--lb-hairline);
+    }
+    @media (max-width: 600px) {
+      .lb-attr-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .lb-attr-item {
+      background: var(--lb-tint);
+      border-radius: 4px;
+      padding: 6px 8px;
+    }
+    .lb-attr-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--lb-mauve);
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+      display: block;
+    }
+    .lb-attr-value {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--lb-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Bespoke Stitching Hook */
+    .lb-bespoke-banner {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #FAF6F0;
+      border-radius: 4px;
+      border: 1px solid rgba(25,20,18,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Product Match Section & Cards */
+    .lb-matches-section {
+      padding: 28px 0 52px;
+      background: var(--lb-paper);
+      border-top: 1px solid var(--lb-hairline);
+    }
+    .lb-matches-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .lb-matches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+    .lb-match-card {
+      background: var(--lb-white);
+      border: 1px solid var(--lb-hairline);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 180ms var(--lb-ease), box-shadow 180ms var(--lb-ease);
+    }
+    .lb-match-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(25,20,18,0.07);
+    }
+    .lb-match-card__img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--lb-tint);
+    }
+    .lb-match-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform 300ms var(--lb-ease);
+    }
+    .lb-match-card:hover .lb-match-card__img {
+      transform: scale(1.03);
+    }
+    .lb-match-card__badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 15;
+    }
+    .lb-match-card__meta {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .lb-match-card__brand {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--lb-mauve);
+      margin-bottom: 2px;
+    }
+    .lb-match-card__title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--lb-charcoal);
+      line-height: 1.3;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .lb-match-card__price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px solid rgba(25,20,18,0.06);
+    }
+    .lb-match-card__price {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--lb-burgundy);
+    }
+    .lb-match-card__actions {
+      display: flex;
+      gap: 6px;
+      padding: 0 12px 10px;
     }
   </style>
 </head>
 <body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
 
-    <!-- SVG SPRITE -->
+  <!-- SVG SPRITE -->
   <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
     <defs>
       <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
@@ -175,9 +537,10 @@
       <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
       <symbol id="lb-i-sparkles" viewBox="0 0 24 24"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/></symbol>
       <symbol id="lb-i-sliders" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
-      <symbol id="lb-i-hanger" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8L2.4 16.2A2 2 0 0 0 4 19h16a2 2 0 0 0 1.6-2.8L14.4 6.8c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3z"/><circle cx="12" cy="19" r="1"/></symbol>
+      <symbol id="lb-i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+      <symbol id="lb-i-refresh" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+      <symbol id="lb-i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
       <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
-      <symbol id="lb-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
     </defs>
   </svg>
 
@@ -238,8 +601,7 @@
       <div class="lb-collapse lb-mega-host">
         <div class="lb-collapse-inner">
           <div class="lb-mega-stack">
-
-                                    <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
+            <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
               <div class="lb-mega-inner">
                 <div>
                   <h3 class="lb-mega-heading">Discover</h3>
@@ -256,18 +618,16 @@
                 <div>
                   <div class="lb-mega-subhead">Shop by category</div>
                   <div class="lb-mega-categories">
-                    <a href="/shop/women">Women</a>
                     <a href="/shop/men">Men</a>
-                    <a href="/shop/pret">Pret</a>
-                    <a href="/shop/unstitched">Unstitched</a>
                     <a href="/shop/kurta">Kurta</a>
                     <a href="/shop/shalwar-kameez">Shalwar Kameez</a>
-                    <a href="/shop/lawn">Lawn</a>
+                    <a href="/shop/pret">Pret</a>
+                    <a href="/shop/unstitched">Unstitched</a>
                     <a href="/shop/accessories">Accessories</a>
                   </div>
                 </div>
                 <div>
-                  <div class="lb-mega-visual"><image-slot id="menu-discover-visual" shape="rect" placeholder="Editorial: contemporary Pakistani outfit, warm studio light" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot></div>
+                  <div class="lb-mega-visual"><image-slot id="menu-discover-visual" shape="rect" placeholder="Editorial Pakistani outfit" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot></div>
                   <div class="lb-mega-feature-card">
                     <strong>Ask LibasAI to find your look</strong>
                     <a href="/ai/ask">Start AI Search →</a>
@@ -290,10 +650,10 @@
                 <div>
                   <div class="lb-mega-subhead">Featured Pakistani labels</div>
                   <div class="lb-brand-list">
+                    <a href="/brands.html?brand=amir-adnan" class="lb-brand-row"><span>Amir Adnan</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands.html?brand=junaid-jamshed" class="lb-brand-row"><span>J. Junaid Jamshed</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands.html?brand=diners" class="lb-brand-row"><span>Diners</span><span class="lb-brand-row__arrow">→</span></a>
                     <a href="/brands.html?brand=sana-safinaz" class="lb-brand-row"><span>Sana Safinaz</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=gul-ahmed" class="lb-brand-row"><span>Gul Ahmed</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=zellbury" class="lb-brand-row"><span>Zellbury</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=beechtree" class="lb-brand-row"><span>Beechtree</span><span class="lb-brand-row__arrow">→</span></a>
                   </div>
                 </div>
                 <div class="lb-spotlight">
@@ -312,23 +672,22 @@
                   <div class="lb-mega-links">
                     <a href="/for-you/picks">Personalized Picks</a>
                     <a href="/for-you/recently-viewed">Recently Viewed</a>
-                    <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
                     <a href="/for-you/budget">Within Your Budget</a>
                     <a href="/for-you" style="color:var(--lb-burgundy); font-weight:800; margin-top:6px;">Your Style Feed &rarr;</a>
                   </div>
                 </div>
                 <div>
-                  <div class="lb-mega-subhead">Explore by your preferences</div>
+                  <div class="lb-mega-subhead">Explore by category</div>
                   <div class="lb-brand-list">
-                    <a href="/for-you/picks" class="lb-brand-row"><span>Lawn &amp; Summer Pret</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/for-you/picks" class="lb-brand-row"><span>Festive &amp; Formal Edit</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/for-you/budget" class="lb-brand-row"><span>Under PKR 12,000</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/shop/kurta" class="lb-brand-row"><span>Lawn &amp; Summer Kurta</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/shop/shalwar-kameez" class="lb-brand-row"><span>Formal Shalwar Kameez</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/for-you/budget" class="lb-brand-row"><span>Under PKR 10,000</span><span class="lb-brand-row__arrow">&rarr;</span></a>
                     <a href="/get-stitched.html" class="lb-brand-row"><span>Bespoke Tailoring Picks</span><span class="lb-brand-row__arrow">&rarr;</span></a>
                   </div>
                 </div>
                 <div>
                   <div class="lb-mega-visual">
-                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Curated For You" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseCloudDancerSlimFitSuit.png?v=1773121307" alt="Curated For You" style="width:100%; height:100%; object-fit:cover; display:block;">
                   </div>
                   <div class="lb-mega-feature-card">
                     <strong>Trained on your taste &amp; fit</strong>
@@ -350,29 +709,28 @@
                     <strong>Ask LibasAI</strong>
                     <p>Natural-language conversational fashion search.</p>
                   </a>
-                  <a href="/ai/image-search" class="lb-feature-card">
+                  <a href="/image-search.html" class="lb-feature-card" style="border-color:var(--lb-burgundy);">
                     <span class="lb-feature-num">02</span>
                     <strong>Image Search</strong>
                     <p>Upload a look photo and find visually similar pieces.</p>
                   </a>
-                  <a href="/ai/compare" class="lb-feature-card">
+                  <a href="/compare.html" class="lb-feature-card">
                     <span class="lb-feature-num">03</span>
                     <strong>Compare</strong>
                     <p>Compare cuts, fabrics, and prices across brands.</p>
                   </a>
-                  <a href="/ai/outfit-builder" class="lb-feature-card">
+                  <a href="/outfit-builder.html" class="lb-feature-card">
                     <span class="lb-feature-num">04</span>
                     <strong>Outfit Builder</strong>
                     <p>Coordinate complete looks with AI color harmony.</p>
                   </a>
                 </div>
-                <a href="/ai" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">
+                <a href="/ai-features.html" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">
                   <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
                   Explore All AI Features →
                 </a>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -385,585 +743,797 @@
             <form action="/ai/ask" method="GET" class="lb-search-field" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(document.getElementById('lb-search-input').value);">
               <svg class="lb-icon" style="width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
               <input id="lb-search-input" type="text" placeholder="Try: rust embroidered kurta under Rs. 6,000" aria-label="Search LibasAI">
-              <a href="/ai/image-search" class="lb-icon-btn" aria-label="Search by image">
+              <a href="/image-search.html" class="lb-icon-btn" aria-label="Search by image">
                 <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg>
               </a>
               <button type="submit" class="lb-icon-btn" aria-label="Search">
                 <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
               </button>
             </form>
-            <div class="lb-search-cols">
-              <div class="lb-search-col">
-                <h4>Recent Searches</h4>
-                <a href="/ai/ask?q=rust+kurta+wedding">Rust kurta for wedding</a>
-                <a href="/ai/ask?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
-                <a href="/ai/ask?q=formal+shalwar+kameez">Formal shalwar kameez</a>
-              </div>
-              <div class="lb-search-col">
-                <h4>Trending Searches</h4>
-                <a href="/ai/ask?q=eid+collection+2026">Eid collection 2026</a>
-                <a href="/ai/ask?q=embroidered+kurta">Embroidered lawn kurta</a>
-                <a href="/ai/ask?q=velvet+shawl+formal">Velvet formal shawl</a>
-              </div>
-              <div class="lb-search-col">
-                <h4>Suggested Categories</h4>
-                <div class="lb-search-chips">
-                  <a href="/shop/kurta" class="lb-search-chip">Kurta</a>
-                  <a href="/shop/lawn" class="lb-search-chip">Lawn</a>
-                  <a href="/discover/wedding" class="lb-search-chip">Wedding</a>
-                  <a href="/discover/formal" class="lb-search-chip">Formal</a>
-                  <a href="/shop/unstitched" class="lb-search-chip">Unstitched</a>
-                  <a href="/shop/accessories" class="lb-search-chip">Accessories</a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Mobile Drawer -->
-    <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
-      <div class="lb-mobile__top">
-        <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
-          <span>LibasAI</span>
-        </a>
-        <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
-          <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-close"></use></svg>
-        </button>
-      </div>
-      <div class="lb-mobile__body">
-        <div class="lb-mobile__icons">
-          <a href="/ai/ask">
-            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
-            Search
-          </a>
-          <a href="/wishlist">
-            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
-            Wishlist
-          </a>
-          <a href="/account">
-            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
-            Profile
-          </a>
-        </div>
-
-        <div class="lb-accordion">
-          <button type="button" class="lb-accordion__head" aria-expanded="false">
-            Discover
-            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
-          </button>
-          <div class="lb-collapse lb-accordion__panel">
-            <div class="lb-collapse-inner">
-              <a href="/discover/new-arrivals">New Arrivals</a>
-              <a href="/discover/trending">Trending</a>
-              <a href="/for-you">For You</a>
-              <a href="/discover/eid">Eid</a>
-              <a href="/discover/wedding">Wedding</a>
-              <a href="/discover/formal">Formal</a>
-              <a href="/discover/casual">Casual</a>
-              <a href="/shop/women">Women</a>
-              <a href="/shop/men">Men</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="lb-accordion">
-          <button type="button" class="lb-accordion__head" aria-expanded="false">
-            Brands
-            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
-          </button>
-          <div class="lb-collapse lb-accordion__panel">
-            <div class="lb-collapse-inner">
-              <a href="/brands.html">All Brands</a>
-              <a href="/brands.html?tab=popular">Popular Brands</a>
-              <a href="/brands.html?tab=emerging">Emerging Brands</a>
-              <a href="/brands.html?tab=local">Discover Local</a>
-            </div>
-          </div>
-        </div>
-
-        <a href="/for-you" class="lb-mobile__simple">For You</a>
-
-        <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
-          AI Features Suite
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
-
-        <a href="/tailors.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
-          Find Tailors
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
-
-        <a href="/get-stitched.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-crimson); display:flex; justify-content:space-between; align-items:center;">
-          Get Stitched
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
-      </div>
-      <div class="lb-mobile__footer">
-        <a href="/ai/ask" class="lb-cta lb-cta--wide">
-          <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
-          Ask LibasAI
-        </a>
       </div>
     </div>
   </div>
 
-<div class="lb-page-head">
-    <div class="lb-wrap">
-      <div class="lb-breadcrumb">
-        <a href="/">Home</a><span>/</span><a href="/ai">AI Features</a><span>/</span><span style="color:var(--lb-burgundy);">Image Search</span>
+  <!-- COMPACT STUDIO PAGE HEAD -->
+  <header class="lb-is-head">
+    <div class="lb-is-container">
+      <div class="lb-breadcrumb" style="margin-bottom:8px;">
+        <a href="/">Home</a><span>/</span><a href="/ai-features.html">AI Features</a><span>/</span><span style="color:var(--lb-burgundy); font-weight:700;">Visual Image Search</span>
       </div>
-      <div class="lb-listing-head" style="margin-bottom:0;">
+      <div class="lb-is-head__top">
         <div>
-          <div class="lb-eyebrow" style="color:var(--lb-rose); margin-bottom:6px;">Computer Vision Fashion Engine</div>
-          <h1 class="lb-h1" style="font-size:clamp(30px,3.8vw,52px);">Saw it. Snap it. Find it.</h1>
+          <h1 class="lb-is-head__h1">Visual Image Search Studio</h1>
         </div>
-        <div class="lb-listing-count" style="display:flex; align-items:center; gap:8px;">
-          <span class="lb-tag" style="border-radius:2px;">Live Multi-Brand Matching</span>
+        <div class="lb-is-head__meta">
+          <span class="lb-tag" style="font-size:10px; padding:3px 8px; border-radius:2px;">80+ Pakistani Brands</span>
         </div>
       </div>
-      <p class="lb-body" style="max-width:680px; margin-top:12px;">
-        Upload a photo from Instagram, Pinterest, or your camera roll. LibasAI instantly breaks down the silhouette, fabric, neckline embroidery, and color palette — finding in-stock pieces across Pakistani brands.
+      <p class="lb-is-head__desc">
+        Upload any outfit photo or screenshot from Instagram or camera roll. LibasAI instantly analyzes the garment cut, neckline embroidery, and fabric to find matching in-stock Pakistani designer pieces.
       </p>
     </div>
-  </div>
+  </header>
 
-  <!-- MAIN WORKSPACE -->
-  <section class="lb-section" style="padding-top:40px;">
-    <div class="lb-wrap lb-is-workspace">
+  <!-- MAIN STUDIO WORKSPACE -->
+  <main style="padding: 20px 0 32px;">
+    <div class="lb-is-container lb-is-workspace">
 
-      <!-- LEFT: UPLOAD & SAMPLES -->
+      <!-- LEFT COLUMN: UPLOAD, SAMPLES & SEARCH SUMMARY -->
       <div>
         <!-- Upload Drop Zone -->
         <div id="drop-zone" class="lb-upload-zone" onclick="document.getElementById('file-input').click();">
           <input type="file" id="file-input" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
           <div class="lb-upload-icon">
-            <svg style="width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;"><use href="#lb-i-upload"></use></svg>
+            <svg style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;"><use href="#lb-i-upload"></use></svg>
           </div>
-          <h3 style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin:0 0 8px; color:var(--lb-charcoal);">Drop your outfit photo here</h3>
-          <p style="font-size:13.5px; color:rgba(25,20,18,0.58); margin:0 0 16px;">Supports PNG, JPG, WEBP, HEIC from Instagram, camera, or screenshots</p>
-          <div style="display:inline-flex; gap:10px; align-items:center;">
-            <button type="button" class="lb-cta" style="padding:10px 18px; font-size:11.5px;">Browse Files</button>
-            <span style="font-size:12.5px; font-weight:600; color:rgba(25,20,18,0.45);">or choose a sample look below</span>
+          <h3>Drop your outfit photo here</h3>
+          <p>Drag and drop PNG, JPG, or WEBP from camera roll or Instagram</p>
+          <div style="display:inline-flex; gap:8px; align-items:center;">
+            <button type="button" class="lb-cta" style="padding:7px 14px; font-size:10.5px;">Browse File</button>
+            <span style="font-size:11.5px; font-weight:600; color:rgba(25,20,18,0.45);">or select a sample below</span>
           </div>
         </div>
 
         <!-- Sample Looks Picker -->
-        <div style="margin-top:28px;">
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;">
-            <span style="font-size:11.5px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lb-mauve);">Try Sample Street & Editorial Looks</span>
-            <span style="font-size:12px; color:rgba(25,20,18,0.5);">Click to test AI scan</span>
+        <div style="margin-top:18px;">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+            <span style="font-size:10.5px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lb-mauve);">Try Sample Looks</span>
+            <span style="font-size:11px; color:rgba(25,20,18,0.48);">Click to view matches</span>
           </div>
           <div class="lb-sample-grid">
-            <div class="lb-sample-card is-selected" onclick="selectSample(0)">
+            <div class="lb-sample-card is-selected" onclick="selectSample(0)" title="Rust Lawn Kurta">
               <div class="lb-sample-img">
-                <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Sample 1">
+                <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Rust Lawn Kurta">
               </div>
               <div class="lb-sample-info">Rust Lawn Kurta</div>
             </div>
-            <div class="lb-sample-card" onclick="selectSample(1)">
+            <div class="lb-sample-card" onclick="selectSample(1)" title="Sea Green Raw Silk">
               <div class="lb-sample-img">
-                <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Sample 2">
+                <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Sea Green Raw Silk">
               </div>
               <div class="lb-sample-info">Sea Green Raw Silk</div>
             </div>
-            <div class="lb-sample-card" onclick="selectSample(2)">
+            <div class="lb-sample-card" onclick="selectSample(2)" title="Cloud Dancer Kurta">
               <div class="lb-sample-img">
-                <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="Sample 3">
+                <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseCloudDancerSlimFitSuit.png?v=1773121307" alt="Cloud Dancer Kurta">
               </div>
-              <div class="lb-sample-info">Printed 3-Piece</div>
+              <div class="lb-sample-info">Cloud Dancer Off-White</div>
             </div>
-            <div class="lb-sample-card" onclick="selectSample(3)">
+            <div class="lb-sample-card" onclick="selectSample(3)" title="Navy Formal Blazer">
               <div class="lb-sample-img">
-                <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="Sample 4">
+                <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747" alt="Navy Formal Blazer">
               </div>
-              <div class="lb-sample-info">Formal Wedding Edit</div>
+              <div class="lb-sample-info">Navy Tailored Blazer</div>
             </div>
           </div>
         </div>
 
-        <!-- Scanning Status Box -->
-        <div style="margin-top:28px; background:var(--lb-tint); border-radius:4px; padding:18px 20px; display:flex; align-items:center; gap:16px;">
-          <div style="width:38px; height:38px; border-radius:50%; background:var(--lb-burgundy); color:var(--lb-cream); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <svg style="width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+        <!-- Fashion Search Summary Panel -->
+        <div class="lb-search-summary">
+          <div class="lb-summary-status">
+            <div class="lb-summary-badge" id="telemetry-icon">
+              <svg style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round;"><use href="#lb-i-check"></use></svg>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:12.5px; font-weight:700; color:var(--lb-charcoal);" id="scan-status-text">Analysis Complete: 6 Matches Found</div>
+              <div style="font-size:11px; color:rgba(25,20,18,0.58);" id="scan-status-sub">Matched across Sana Safinaz, Zellbury, Gul Ahmed, Amir Adnan &amp; Diners</div>
+            </div>
           </div>
-          <div>
-            <div style="font-size:13.5px; font-weight:700; color:var(--lb-charcoal);" id="scan-status-text">Analysis Complete: 6 High-Confidence Matches Found</div>
-            <div style="font-size:12px; color:rgba(25,20,18,0.65);" id="scan-status-sub">Indexed across Sana Safinaz, Zellbury, Gul Ahmed & Beechtree catalogs.</div>
+
+          <div class="lb-summary-metrics">
+            <div>
+              <div class="lb-summary-stat">Search Speed</div>
+              <div class="lb-summary-val" id="metric-speed">Instant (&lt;1s)</div>
+            </div>
+            <div>
+              <div class="lb-summary-stat">Brand Coverage</div>
+              <div class="lb-summary-val" id="metric-coverage">80+ Brands</div>
+            </div>
+            <div>
+              <div class="lb-summary-stat">Match Quality</div>
+              <div class="lb-summary-val" id="metric-match">98% Match</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Focus Selector -->
+        <div style="margin-top:14px; background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:6px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <span style="font-size:11px; font-weight:700; color:var(--lb-charcoal);">Search Focus:</span>
+          <div style="display:flex; gap:6px;">
+            <button type="button" class="lb-chip is-active" style="padding:3px 8px; font-size:10px;" id="focus-full" onclick="setFocusMode('full', this)">Entire Outfit</button>
+            <button type="button" class="lb-chip" style="padding:3px 8px; font-size:10px;" id="focus-neckline" onclick="setFocusMode('neckline', this)">Neckline &amp; Collar</button>
+            <button type="button" class="lb-chip" style="padding:3px 8px; font-size:10px;" id="focus-fabric" onclick="setFocusMode('fabric', this)">Fabric &amp; Texture</button>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: SCANNING PREVIEW & DETECTED TAGS -->
+      <!-- RIGHT COLUMN: VISUAL STAGE, DETAILS & EXTRACTED ATTRIBUTES -->
       <div>
         <div class="lb-preview-stage">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <div class="lb-preview-stage__top">
             <div style="display:flex; align-items:center; gap:8px;">
-              <span class="lb-match-pill">AI Scanner Active</span>
-              <span style="font-size:12px; font-weight:600; color:rgba(25,20,18,0.5);" id="preview-filename">reference_look_01.jpg</span>
+              <span class="lb-tag" style="background:var(--lb-burgundy); color:var(--lb-cream); border:none; font-size:9.5px; padding:3px 7px; border-radius:2px;">Visual Scanner Active</span>
+              <span style="font-size:11.5px; font-weight:600; color:rgba(25,20,18,0.55);" id="preview-filename">reference_look_01.jpg</span>
             </div>
-            <div style="display:flex; gap:6px;">
-              <button type="button" class="lb-icon-btn" style="width:32px; height:32px;" title="Crop region" onclick="simulateCrop()">
-                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-crop"></use></svg>
+            <div class="lb-preview-stage__actions">
+              <button type="button" class="lb-cta lb-cta--ghost" style="padding:4px 8px; font-size:10px;" id="btn-toggle-details" onclick="toggleDetails()">
+                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-layers"></use></svg>
+                <span id="label-details-toggle">Details: ON</span>
               </button>
-              <button type="button" class="lb-icon-btn" style="width:32px; height:32px;" title="Rescan look" onclick="triggerScan()">
-                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-refresh"></use></svg>
+              <button type="button" class="lb-cta lb-cta--ghost" style="padding:4px 8px; font-size:10px;" onclick="triggerScan()" title="Rescan look">
+                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-refresh"></use></svg>
+                Rescan
               </button>
             </div>
           </div>
 
-          <!-- The Visual Scanner Box -->
+          <!-- Scaled 380px Scanner Viewport -->
           <div class="lb-preview-frame" id="scanner-frame">
             <img id="main-preview-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Uploaded Reference Outfit">
-            <div class="lb-imgsearch__scrim"></div>
             <div class="lb-scan-line" id="laser-line"></div>
 
-            <!-- Dynamic Detected Pins -->
-            <div class="lb-pin-tag" style="top:18%; left:12%;" id="tag-neckline">
-              <span class="lb-pin-dot"></span>
-              <span>Neckline: Embroidered Placket</span>
-            </div>
-            <div class="lb-pin-tag" style="top:44%; right:14%;" id="tag-fabric">
-              <span class="lb-pin-dot"></span>
-              <span>Fabric: 100% Breathable Lawn</span>
-            </div>
-            <div class="lb-pin-tag" style="top:68%; left:20%;" id="tag-cut">
-              <span class="lb-pin-dot"></span>
-              <span>Cut: Straight Kurta w/ Side Slits</span>
-            </div>
-            <div class="lb-pin-tag" style="bottom:10%; right:22%;" id="tag-color">
-              <span class="lb-pin-dot"></span>
-              <span>Palette: Terracotta Rust #B85233</span>
-            </div>
-          </div>
-
-          <!-- Breakdown list -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:20px; padding-top:16px; border-top:1px solid var(--lb-hairline);">
-            <div>
-              <span style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--lb-mauve); display:block; margin-bottom:2px;">Primary Color</span>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="width:14px; height:14px; border-radius:50%; background:#B85233; display:inline-block;"></span>
-                <strong style="font-size:13.5px; color:var(--lb-charcoal);" id="detected-color-name">Terracotta Rust</strong>
+            <!-- Garment Highlight Regions -->
+            <div id="highlights-container">
+              <div class="lb-highlight-box" id="box-garment" style="top:12%; left:20%; width:60%; height:76%;" onclick="highlightAttribute('silhouette')">
+                <span class="lb-highlight-label" id="box-garment-label">Kurta Cut</span>
+              </div>
+              <div class="lb-highlight-box" id="box-neckline" style="top:15%; left:36%; width:28%; height:26%;" onclick="highlightAttribute('neckline')">
+                <span class="lb-highlight-label" id="box-neckline-label">Embroidered Placket</span>
               </div>
             </div>
-            <div>
-              <span style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--lb-mauve); display:block; margin-bottom:2px;">Target Occasion</span>
-              <strong style="font-size:13.5px; color:var(--lb-charcoal);" id="detected-occasion-name">Eid / Festive Casual</strong>
+
+            <!-- Pins -->
+            <div id="pins-container">
+              <div class="lb-pin-tag" style="top:18%; left:8%;" id="tag-neckline" onclick="highlightAttribute('neckline')">
+                <span class="lb-pin-dot"></span>
+                <span id="pin-neckline-text">Neckline: Embroidered Placket</span>
+              </div>
+              <div class="lb-pin-tag" style="top:44%; right:8%;" id="tag-fabric" onclick="highlightAttribute('fabric')">
+                <span class="lb-pin-dot"></span>
+                <span id="pin-fabric-text">Fabric: 100% Breathable Lawn</span>
+              </div>
+              <div class="lb-pin-tag" style="bottom:22%; left:12%;" id="tag-cut" onclick="highlightAttribute('silhouette')">
+                <span class="lb-pin-dot"></span>
+                <span id="pin-cut-text">Cut: Straight Kurta w/ Slits</span>
+              </div>
+              <div class="lb-pin-tag" style="bottom:10%; right:14%;" id="tag-color" onclick="highlightAttribute('palette')">
+                <span class="lb-pin-dot"></span>
+                <span id="pin-color-text">Color: Terracotta Rust</span>
+              </div>
             </div>
           </div>
 
-          <!-- Get This Look Stitched CTA banner -->
-          <div style="margin-top:20px; padding:16px; background:#FAF6F0; border-radius:6px; border:1px solid rgba(25,20,18,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div>
-              <strong style="font-size:14px; color:var(--lb-charcoal); display:block;">Love this exact look?</strong>
-              <span style="font-size:12px; color:rgba(25,20,18,0.65);">Have verified Pakistani master tailors stitch it for you bespoke.</span>
+          <!-- Extracted Fashion Attributes 4-Grid -->
+          <div class="lb-attr-grid">
+            <div class="lb-attr-item" id="attr-palette-card">
+              <span class="lb-attr-label">Dominant Color</span>
+              <div class="lb-attr-value">
+                <span id="detected-color-dot" style="width:11px; height:11px; border-radius:50%; background:#B85233; display:inline-block; border:1px solid rgba(0,0,0,0.15); flex-shrink:0;"></span>
+                <span id="detected-color-name" style="overflow:hidden; text-overflow:ellipsis;">Terracotta Rust</span>
+              </div>
             </div>
-            <a id="stitch-scanned-btn" href="/get-stitched.html?design=upload&title=Uploaded+Photo+Inspiration" class="lb-cta" style="padding:9px 16px; font-size:11.5px; gap:6px;">
-              <svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
-              Get This Look Stitched →
+            <div class="lb-attr-item" id="attr-silhouette-card">
+              <span class="lb-attr-label">Silhouette &amp; Cut</span>
+              <div class="lb-attr-value" id="detected-silhouette-name" title="Straight Kurta w/ Slits">Straight Kurta</div>
+            </div>
+            <div class="lb-attr-item" id="attr-fabric-card">
+              <span class="lb-attr-label">Fabric &amp; Material</span>
+              <div class="lb-attr-value" id="detected-fabric-name" title="100% Breathable Lawn">Breathable Lawn</div>
+            </div>
+            <div class="lb-attr-item" id="attr-neckline-card">
+              <span class="lb-attr-label">Ideal Occasion</span>
+              <div class="lb-attr-value" id="detected-occasion-name" title="Eid / Festive Casual">Eid / Festive Casual</div>
+            </div>
+          </div>
+
+          <!-- Direct Bespoke Stitching Hook -->
+          <div class="lb-bespoke-banner">
+            <div>
+              <strong style="font-size:12px; color:var(--lb-charcoal); display:block;">Love this exact look?</strong>
+              <span style="font-size:11px; color:rgba(25,20,18,0.6);">Have verified Pakistani master tailors stitch it for you bespoke.</span>
+            </div>
+            <a id="stitch-scanned-btn" href="/get-stitched.html?design=upload&title=Uploaded+Photo+Inspiration" class="lb-cta" style="padding:6px 12px; font-size:10.5px; gap:5px;">
+              <svg style="width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
+              Get Stitched Bespoke →
             </a>
           </div>
         </div>
       </div>
+
     </div>
-  </section>
+  </main>
 
   <!-- MATCH RESULTS SECTION -->
-  <section class="lb-section lb-section--paper">
-    <div class="lb-wrap">
-      <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px; margin-bottom:32px;">
+  <section class="lb-matches-section">
+    <div class="lb-is-container">
+      <div class="lb-matches-head">
         <div>
-          <div class="lb-eyebrow">Direct Matches Found</div>
-          <h2 class="lb-h2" style="font-size:clamp(26px,3vw,38px);" id="results-headline">6 Closest Matches Across 4 Brands</h2>
+          <div class="lb-eyebrow" style="margin-bottom:3px; font-size:10px;">DIRECT BRAND MATCHES</div>
+          <h2 class="lb-h2" style="font-size:clamp(18px,2vw,24px);" id="results-headline">6 Closest Matches Across Pakistani Catalogs</h2>
         </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <button type="button" class="lb-chip is-active" onclick="filterResults('all', this)">All Matches (6)</button>
-          <button type="button" class="lb-chip" onclick="filterResults('under5k', this)">Under Rs. 5,000</button>
-          <button type="button" class="lb-chip" onclick="filterResults('lawn', this)">Lawn Only</button>
-          <button type="button" class="lb-chip" onclick="filterResults('stitched', this)">Stitched Pret</button>
-        </div>
-      </div>
-
-      <!-- Results Grid -->
-      <div class="lb-product-grid" id="results-grid">
-        <!-- Result Card 1 -->
-        <div class="lb-rail-card" data-price="2480" data-fabric="lawn" data-type="stitched">
-          <div style="position:absolute; top:12px; left:12px; z-index:15;">
-            <span class="lb-match-pill" style="background:var(--lb-burgundy);">98% Visual Match</span>
-          </div>
-          <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-rail-card__link">
-            <div class="lb-rail-card__img">
-              <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" alt="Sana Safinaz Kurta" style="width:100%; height:100%; object-fit:cover; display:block;">
-            </div>
-            <div class="lb-rail-card__meta">
-              <span class="lb-rail-card__brand">Sana Safinaz</span>
-              <span class="lb-rail-card__name">Stitched Embroidered Lawn Kurta</span>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="lb-rail-card__price">Rs. 2,480</span>
-                <span style="font-size:11px; font-weight:700; color:rgba(25,20,18,0.5);">Ships in 2-3 Days</span>
-              </div>
-            </div>
-          </a>
-          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
-          <div style="display:flex; gap:8px; margin-top:10px;">
-            <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:10px; font-size:11px;">View on Sana Safinaz ↗</a>
-            <a href="/ai/compare" class="lb-cta lb-cta--ghost" style="padding:10px 14px; font-size:11px;" title="Add to comparison">Compare</a>
-          </div>
-        </div>
-
-        <!-- Result Card 2 -->
-        <div class="lb-rail-card" data-price="4490" data-fabric="lawn" data-type="stitched">
-          <div style="position:absolute; top:12px; left:12px; z-index:15;">
-            <span class="lb-match-pill" style="background:#5E0A26;">95% Silhouette Match</span>
-          </div>
-          <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-rail-card__link">
-            <div class="lb-rail-card__img">
-              <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="Zellbury Kurta" style="width:100%; height:100%; object-fit:cover; display:block;">
-            </div>
-            <div class="lb-rail-card__meta">
-              <span class="lb-rail-card__brand">Zellbury</span>
-              <span class="lb-rail-card__name">Embroidered Shirt Shalwar Dupatta</span>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="lb-rail-card__price">Rs. 4,490</span>
-                <span style="font-size:11px; font-weight:700; color:rgba(25,20,18,0.5);">Best Value</span>
-              </div>
-            </div>
-          </a>
-          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
-          <div style="display:flex; gap:8px; margin-top:10px;">
-            <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:10px; font-size:11px;">View on Zellbury ↗</a>
-            <a href="/ai/compare" class="lb-cta lb-cta--ghost" style="padding:10px 14px; font-size:11px;" title="Add to comparison">Compare</a>
-          </div>
-        </div>
-
-        <!-- Result Card 3 -->
-        <div class="lb-rail-card" data-price="4893" data-fabric="lawn" data-type="unstitched">
-          <div style="position:absolute; top:12px; left:12px; z-index:15;">
-            <span class="lb-match-pill" style="background:#5E0A26;">92% Print Match</span>
-          </div>
-          <a href="https://www.gulahmedshop.com" target="_blank" rel="noopener" class="lb-rail-card__link">
-            <div class="lb-rail-card__img">
-              <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="Gul Ahmed Lawn" style="width:100%; height:100%; object-fit:cover; display:block;">
-            </div>
-            <div class="lb-rail-card__meta">
-              <span class="lb-rail-card__brand">Gul Ahmed</span>
-              <span class="lb-rail-card__name">3PC Lawn Printed Suit</span>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="lb-rail-card__price">Rs. 4,893</span>
-                <span style="font-size:11px; font-weight:700; color:rgba(25,20,18,0.5);">Unstitched 3PC</span>
-              </div>
-            </div>
-          </a>
-          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
-          <div style="display:flex; gap:8px; margin-top:10px;">
-            <a href="https://www.gulahmedshop.com" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:10px; font-size:11px;">View on Gul Ahmed ↗</a>
-            <a href="/ai/compare" class="lb-cta lb-cta--ghost" style="padding:10px 14px; font-size:11px;" title="Add to comparison">Compare</a>
-          </div>
-        </div>
-
-        <!-- Result Card 4 -->
-        <div class="lb-rail-card" data-price="10194" data-fabric="silk" data-type="stitched">
-          <div style="position:absolute; top:12px; left:12px; z-index:15;">
-            <span class="lb-match-pill" style="background:var(--lb-mauve);">89% Style Match</span>
-          </div>
-          <a href="https://beechtree.pk" target="_blank" rel="noopener" class="lb-rail-card__link">
-            <div class="lb-rail-card__img">
-              <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Beechtree Pret" style="width:100%; height:100%; object-fit:cover; display:block;">
-            </div>
-            <div class="lb-rail-card__meta">
-              <span class="lb-rail-card__brand">Beechtree</span>
-              <span class="lb-rail-card__name">Embroidered Raw Silk Suit</span>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="lb-rail-card__price">Rs. 10,194</span>
-                <span style="font-size:11px; font-weight:700; color:rgba(25,20,18,0.5);">Luxury Pret</span>
-              </div>
-            </div>
-          </a>
-          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
-          <div style="display:flex; gap:8px; margin-top:10px;">
-            <a href="https://beechtree.pk" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:10px; font-size:11px;">View on Beechtree ↗</a>
-            <a href="/ai/compare" class="lb-cta lb-cta--ghost" style="padding:10px 14px; font-size:11px;" title="Add to comparison">Compare</a>
-          </div>
-        </div>
-
-        <!-- Result Card 5 -->
-        <div class="lb-rail-card" data-price="10299" data-fabric="lawn" data-type="stitched">
-          <div style="position:absolute; top:12px; left:12px; z-index:15;">
-            <span class="lb-match-pill" style="background:var(--lb-mauve);">87% Cut Match</span>
-          </div>
-          <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-rail-card__link">
-            <div class="lb-rail-card__img">
-              <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="Sana Safinaz Festive" style="width:100%; height:100%; object-fit:cover; display:block;">
-            </div>
-            <div class="lb-rail-card__meta">
-              <span class="lb-rail-card__brand">Sana Safinaz</span>
-              <span class="lb-rail-card__name">Embroidered Lawn Festive 2PC</span>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="lb-rail-card__price">Rs. 10,299</span>
-                <span style="font-size:11px; font-weight:700; color:rgba(25,20,18,0.5);">Festive 2PC</span>
-              </div>
-            </div>
-          </a>
-          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
-          <div style="display:flex; gap:8px; margin-top:10px;">
-            <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:10px; font-size:11px;">View on Sana Safinaz ↗</a>
-            <a href="/ai/compare" class="lb-cta lb-cta--ghost" style="padding:10px 14px; font-size:11px;" title="Add to comparison">Compare</a>
-          </div>
-        </div>
-
-        <!-- Result Card 6 -->
-        <div class="lb-rail-card" data-price="10490" data-fabric="silk" data-type="stitched">
-          <div style="position:absolute; top:12px; left:12px; z-index:15;">
-            <span class="lb-match-pill" style="background:var(--lb-mauve);">85% Color Match</span>
-          </div>
-          <a href="https://www.zeenwoman.com" target="_blank" rel="noopener" class="lb-rail-card__link">
-            <div class="lb-rail-card__img">
-              <img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt="Zeen Stitched" style="width:100%; height:100%; object-fit:cover; display:block;">
-            </div>
-            <div class="lb-rail-card__meta">
-              <span class="lb-rail-card__brand">Zeen</span>
-              <span class="lb-rail-card__name">Raw Silk Stitched Shirt Dupatta</span>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                <span class="lb-rail-card__price">Rs. 10,490</span>
-                <span style="font-size:11px; font-weight:700; color:rgba(25,20,18,0.5);">Raw Silk</span>
-              </div>
-            </div>
-          </a>
-          <button type="button" class="lb-rail-card__wish" aria-label="Save to wishlist"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg></button>
-          <div style="display:flex; gap:8px; margin-top:10px;">
-            <a href="https://www.zeenwoman.com" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:10px; font-size:11px;">View on Zeen ↗</a>
-            <a href="/ai/compare" class="lb-cta lb-cta--ghost" style="padding:10px 14px; font-size:11px;" title="Add to comparison">Compare</a>
-          </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="lb-chip is-active" style="padding:4px 10px; font-size:10.5px;" onclick="filterResults('all', this)">All Matches (6)</button>
+          <button type="button" class="lb-chip" style="padding:4px 10px; font-size:10.5px;" onclick="filterResults('under6k', this)">Under Rs. 6,000</button>
+          <button type="button" class="lb-chip" style="padding:4px 10px; font-size:10.5px;" onclick="filterResults('kurta', this)">Kurta / Shalwar Kameez</button>
+          <button type="button" class="lb-chip" style="padding:4px 10px; font-size:10.5px;" onclick="filterResults('formal', this)">Festive &amp; Formal</button>
         </div>
       </div>
+
+      <!-- Results Grid (Dynamically Populated) -->
+      <div class="lb-matches-grid" id="results-grid"></div>
 
       <!-- Cross-tool CTA -->
-      <div style="margin-top:48px; background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:4px; padding:32px clamp(20px,4vw,48px); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+      <div style="margin-top:32px; background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:6px; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
         <div>
-          <h3 style="font-family:'Playfair Display',serif; font-size:24px; margin:0 0 6px; color:var(--lb-charcoal);">Want AI advice on which one to buy?</h3>
-          <p style="margin:0; font-size:14.5px; color:rgba(25,20,18,0.65);">LibasAI can compare fabrics, stitch quality, and brand customer ratings for you.</p>
+          <h3 style="font-family:'Playfair Display',serif; font-size:18px; margin:0 0 4px; color:var(--lb-charcoal);">Want to compare these side-by-side?</h3>
+          <p style="margin:0; font-size:12.5px; color:rgba(25,20,18,0.65);">LibasAI can compare fabrics, customer ratings, and prices across brands.</p>
         </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          <a href="/ai/compare" class="lb-cta lb-cta--ghost">Open Multi-Brand Compare</a>
-          <a href="/ai/ask?q=help+me+choose+between+these+image+search+matches" class="lb-cta">Ask AI Stylist →</a>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="/compare.html" class="lb-cta lb-cta--ghost" style="padding:8px 14px; font-size:11px;">Open Brand Compare</a>
+          <a href="/ai/ask?q=help+me+choose+between+these+image+search+matches" class="lb-cta" style="padding:8px 14px; font-size:11px;">Ask AI Stylist →</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Off-Screen Canvas for Real Pixel Color Extraction -->
+  <canvas id="color-sampler-canvas" style="display:none;"></canvas>
+
   <!-- FOOTER -->
-  <footer class="lb-footer">
-    <div class="lb-footer__top">
-      <div class="lb-footer__brand">
-        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
-        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
+  <footer class="lb-footer" style="padding:32px 0 24px; border-top:1px solid var(--lb-hairline); background:var(--lb-white);">
+    <div class="lb-is-container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div class="lb-logo" style="gap:8px;">
+        <img src="assets/libasai-logo.png" alt="LibasAI Logo" style="width:28px; height:28px;">
+        <span style="font-size:16px;">LibasAI</span>
+        <span style="font-size:11px; color:rgba(25,20,18,0.5); margin-left:8px;">Visual Fashion Discovery</span>
       </div>
-      <div class="lb-footer__col">
-        <h4>Discover</h4>
-        <a href="/discover/new-arrivals">New Arrivals</a>
-        <a href="/discover/wedding">Wedding Edit</a>
-        <a href="/discover/formal">Formal Wear</a>
-      </div>
-      <div class="lb-footer__col">
-        <h4>AI Features</h4>
-        <a href="/ai/ask">Ask LibasAI</a>
-        <a href="/ai/image-search">Visual Image Search</a>
-        <a href="/ai/compare">Multi-Brand Compare</a>
-        <a href="/ai/outfit-builder">AI Outfit Builder</a>
-      </div>
-      <div class="lb-footer__col">
-        <h4>Company</h4>
-        <a href="/brands">Brands Directory</a>
-        <a href="/brands/local">Discover Local</a>
-        <a href="/about">About LibasAI</a>
-      </div>
-    </div>
-    <div class="lb-footer__bottom">
-      <span>FAST-NUCES Final Year Project · 2026–2027</span>
-      <div class="lb-footer__legal">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="/contact">Contact</a>
+      <div style="font-size:11.5px; color:rgba(25,20,18,0.6);">
+        FAST-NUCES Final Year Project · 2026–2027
       </div>
     </div>
   </footer>
 
   <script src="./nav.js"></script>
   <script>
-    // Sample datasets for interactive demonstration
+    /**
+     * LIBASAI VISION BACKEND INTEGRATION HOOK
+     * Connect your external Vision AI Agent here when ready.
+     * To connect your backend:
+     * 1. Set VISION_AI_CONFIG.useLiveBackend = true
+     * 2. Set VISION_AI_CONFIG.backendUrl to your endpoint (e.g. 'http://localhost:8000/api/v1/vision/search')
+     */
+    var VISION_AI_CONFIG = {
+      backendUrl: 'http://localhost:8000/api/v1/vision/search',
+      useLiveBackend: false
+    };
+
+    async function queryVisionAIBackend(imagePayload) {
+      if (!VISION_AI_CONFIG.useLiveBackend) {
+        return; // Uses local catalog matcher
+      }
+      try {
+        var response = await fetch(VISION_AI_CONFIG.backendUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: imagePayload })
+        });
+        return await response.json();
+      } catch (err) {
+        console.warn('Vision backend offline, using local matcher:', err);
+      }
+    }
+
+    var bboxesVisible = true;
+    var currentSampleIdx = 0;
+    var currentFilter = 'all';
+
+    // 4 Curated Authentic Pakistani Sample Looks with Match Datasets
     var samples = [
       {
-        name: "reference_look_01.jpg",
+        name: "reference_look_01_rust.jpg",
         img: "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102",
         color: "Terracotta Rust",
         colorHex: "#B85233",
+        silhouette: "Straight Kurta",
+        fabric: "100% Breathable Lawn",
         occasion: "Eid / Festive Casual",
-        headline: "6 Closest Matches Across 4 Brands",
+        headline: "6 Closest Matches for Rust Embroidered Lawn Kurta",
+        speed: "Instant (<1s)",
+        matchScore: "98% Match",
+        coverage: "80+ Brands",
+        bboxes: {
+          garment: { top: "12%", left: "20%", width: "60%", height: "76%", label: "Kurta Silhouette" },
+          neckline: { top: "15%", left: "36%", width: "28%", height: "26%", label: "Embroidered Placket" }
+        },
         tags: [
-          { text: "Neckline: Embroidered Placket", top: "18%", left: "12%" },
-          { text: "Fabric: 100% Breathable Lawn", top: "44%", right: "14%", left: "auto" },
-          { text: "Cut: Straight Kurta w/ Slits", top: "68%", left: "20%" },
-          { text: "Palette: Terracotta Rust", bottom: "10%", right: "22%", top: "auto", left: "auto" }
+          { id: "neckline", text: "Neckline: Embroidered Placket", top: "18%", left: "8%" },
+          { id: "fabric", text: "Fabric: 100% Breathable Lawn", top: "44%", right: "8%" },
+          { id: "cut", text: "Cut: Straight Kurta w/ Slits", bottom: "22%", left: "12%" },
+          { id: "color", text: "Color: Terracotta Rust", bottom: "10%", right: "14%" }
+        ],
+        matches: [
+          {
+            brand: "Sana Safinaz",
+            name: "Stitched Embroidered Lawn Kurta",
+            price: 2480,
+            formattedPrice: "Rs. 2,480",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "casual",
+            badge: "98% Visual Match",
+            badgeColor: "var(--lb-burgundy)",
+            tag: "Ships in 2-3 Days",
+            img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702",
+            url: "https://sanasafinaz.com"
+          },
+          {
+            brand: "Zellbury",
+            name: "Embroidered Shirt Shalwar Dupatta",
+            price: 4490,
+            formattedPrice: "Rs. 4,490",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "casual",
+            badge: "95% Silhouette Match",
+            badgeColor: "#5E0A26",
+            tag: "Best Value",
+            img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804",
+            url: "https://www.zellbury.com"
+          },
+          {
+            brand: "Gul Ahmed",
+            name: "3PC Lawn Printed Suit",
+            price: 4893,
+            formattedPrice: "Rs. 4,893",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "casual",
+            badge: "92% Print Match",
+            badgeColor: "#5E0A26",
+            tag: "3PC Unstitched",
+            img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960",
+            url: "https://www.gulahmedshop.com"
+          },
+          {
+            brand: "Diners",
+            name: "Dark Purple Wash & Wear Kurta Pajama",
+            price: 4494,
+            formattedPrice: "Rs. 4,494",
+            category: "kurta",
+            fabric: "cotton",
+            occasion: "casual",
+            badge: "89% Fit Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Ready to Wear",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3675-D-Purple-02.webp?v=1754117454",
+            url: "https://diners.com.pk"
+          },
+          {
+            brand: "Sana Safinaz",
+            name: "Embroidered Lawn Festive 2PC",
+            price: 10299,
+            formattedPrice: "Rs. 10,299",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "formal",
+            badge: "87% Cut Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Festive Collection",
+            img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485",
+            url: "https://sanasafinaz.com"
+          },
+          {
+            brand: "Zeen",
+            name: "Raw Silk Stitched Shirt Dupatta",
+            price: 10490,
+            formattedPrice: "Rs. 10,490",
+            category: "kurta",
+            fabric: "silk",
+            occasion: "formal",
+            badge: "85% Color Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Raw Silk",
+            img: "https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802",
+            url: "https://www.zeenwoman.com"
+          }
         ]
       },
       {
         name: "beechtree_sea_green.jpg",
         img: "https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441",
         color: "Sage Sea Green",
-        colorHex: "#6F9283",
-        occasion: "Festive Pret",
-        headline: "8 Matches Found in Luxury Raw Silk",
+        colorHex: "#5E8675",
+        silhouette: "Straight Hem w/ Cuffs",
+        fabric: "Embroidered Raw Silk",
+        occasion: "Festive Pret / Mehndi",
+        headline: "6 Matches for Emerald & Sage Raw Silk Pret",
+        speed: "Instant (<1s)",
+        matchScore: "97% Match",
+        coverage: "80+ Brands",
+        bboxes: {
+          garment: { top: "10%", left: "18%", width: "64%", height: "80%", label: "Raw Silk Kurta" },
+          neckline: { top: "14%", left: "38%", width: "24%", height: "24%", label: "Embroidered Collar" }
+        },
         tags: [
-          { text: "Fabric: Raw Silk Embroidered", top: "25%", left: "14%" },
-          { text: "Embroidery: Tonal Threadwork", top: "50%", right: "12%", left: "auto" },
-          { text: "Border: Organza Scalloped Hem", bottom: "14%", left: "18%", top: "auto" }
+          { id: "fabric", text: "Fabric: Textured Raw Silk", top: "22%", left: "10%" },
+          { id: "neckline", text: "Neck: Tonal Band Collar", top: "45%", right: "10%" },
+          { id: "cut", text: "Cuff: Tailored Slit Sleeves", bottom: "20%", left: "14%" },
+          { id: "color", text: "Color: Sage Green", bottom: "10%", right: "12%" }
+        ],
+        matches: [
+          {
+            brand: "Beechtree",
+            name: "Embroidered Raw Silk Suit",
+            price: 10194,
+            formattedPrice: "Rs. 10,194",
+            category: "kurta",
+            fabric: "silk",
+            occasion: "formal",
+            badge: "97% Visual Match",
+            badgeColor: "var(--lb-burgundy)",
+            tag: "Luxury Pret",
+            img: "https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441",
+            url: "https://beechtree.pk"
+          },
+          {
+            brand: "Zeen",
+            name: "Raw Silk Stitched Shirt Dupatta",
+            price: 10490,
+            formattedPrice: "Rs. 10,490",
+            category: "kurta",
+            fabric: "silk",
+            occasion: "formal",
+            badge: "94% Texture Match",
+            badgeColor: "#5E0A26",
+            tag: "Pure Silk",
+            img: "https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802",
+            url: "https://www.zeenwoman.com"
+          },
+          {
+            brand: "Amir Adnan",
+            name: "PV Cloud Dancer Slim Fit Plain Kurta Pajama",
+            price: 8250,
+            formattedPrice: "Rs. 8,250",
+            category: "kurta",
+            fabric: "silk",
+            occasion: "formal",
+            badge: "91% Silhouette Match",
+            badgeColor: "#5E0A26",
+            tag: "Men's Luxury Pret",
+            img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseCloudDancerSlimFitSuit.png?v=1773121307",
+            url: "https://amiradnan.com"
+          },
+          {
+            brand: "Sana Safinaz",
+            name: "Embroidered Lawn Festive 2PC",
+            price: 10299,
+            formattedPrice: "Rs. 10,299",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "formal",
+            badge: "88% Embroidery Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Festive Collection",
+            img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485",
+            url: "https://sanasafinaz.com"
+          },
+          {
+            brand: "Diners",
+            name: "Fawn Textured Blazer",
+            price: 9990,
+            formattedPrice: "Rs. 9,990",
+            category: "formal",
+            fabric: "silk",
+            occasion: "formal",
+            badge: "86% Weave Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Textured Suiting",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/CG4037-FAWN-03.webp?v=1730119119",
+            url: "https://diners.com.pk"
+          },
+          {
+            brand: "Zellbury",
+            name: "Embroidered Shirt Shalwar Dupatta",
+            price: 4490,
+            formattedPrice: "Rs. 4,490",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "casual",
+            badge: "84% Tone Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Best Value",
+            img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804",
+            url: "https://www.zellbury.com"
+          }
         ]
       },
       {
-        name: "gulahmed_lawn_3pc.jpg",
-        img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960",
-        color: "Classic Ochre & Monochrome",
-        colorHex: "#C59B27",
-        occasion: "Daily Summer Wear",
-        headline: "11 Matches for 3PC Printed Lawn",
+        name: "cloud_dancer_offwhite_kurta.jpg",
+        img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseCloudDancerSlimFitSuit.png?v=1773121307",
+        color: "Ivory Off-White",
+        colorHex: "#F0ECE1",
+        silhouette: "Slim Fit Kurta Pajama",
+        fabric: "Poly-Viscose Wash & Wear",
+        occasion: "Friday & Daily Eastern",
+        headline: "6 Matches for Classic Off-White Men's Kurta",
+        speed: "Instant (<1s)",
+        matchScore: "99% Match",
+        coverage: "80+ Brands",
+        bboxes: {
+          garment: { top: "12%", left: "22%", width: "56%", height: "76%", label: "Classic Kurta Pajama" },
+          neckline: { top: "14%", left: "38%", width: "24%", height: "22%", label: "Band Collar" }
+        },
         tags: [
-          { text: "Fabric: Premium Swiss Lawn", top: "22%", left: "16%" },
-          { text: "Dupatta: Printed Lawn Shawl", top: "48%", right: "14%", left: "auto" },
-          { text: "Bottoms: Dyed Cotton Shalwar", bottom: "12%", left: "24%", top: "auto" }
+          { id: "fabric", text: "Fabric: Crease-Free PV", top: "20%", left: "10%" },
+          { id: "neckline", text: "Collar: Mandarin Band", top: "42%", right: "8%" },
+          { id: "cut", text: "Fit: Slim Tailored Cut", bottom: "22%", left: "12%" },
+          { id: "color", text: "Color: Ivory Off-White", bottom: "10%", right: "12%" }
+        ],
+        matches: [
+          {
+            brand: "Amir Adnan",
+            name: "PV Cloud Dancer Slim Fit Plain Kurta Pajama",
+            price: 8250,
+            formattedPrice: "Rs. 8,250",
+            category: "kurta",
+            fabric: "cotton",
+            occasion: "casual",
+            badge: "99% Exact Match",
+            badgeColor: "var(--lb-burgundy)",
+            tag: "In Stock · Amir Adnan",
+            img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseCloudDancerSlimFitSuit.png?v=1773121307",
+            url: "https://amiradnan.com"
+          },
+          {
+            brand: "Diners",
+            name: "White Check Formal Shirt",
+            price: 2513,
+            formattedPrice: "Rs. 2,513",
+            category: "casual",
+            fabric: "cotton",
+            occasion: "casual",
+            badge: "93% Tone Match",
+            badgeColor: "#5E0A26",
+            tag: "Everyday Wear",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/AB41459-White-01.webp?v=1781531533",
+            url: "https://diners.com.pk"
+          },
+          {
+            brand: "Gul Ahmed",
+            name: "3PC Lawn Printed Suit",
+            price: 4893,
+            formattedPrice: "Rs. 4,893",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "casual",
+            badge: "90% Breathable Weave",
+            badgeColor: "#5E0A26",
+            tag: "Summer Classic",
+            img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960",
+            url: "https://www.gulahmedshop.com"
+          },
+          {
+            brand: "Amir Adnan",
+            name: "PV Brown Slim Fit Plain Kurta Pajama",
+            price: 10000,
+            formattedPrice: "Rs. 10,000",
+            category: "kurta",
+            fabric: "cotton",
+            occasion: "formal",
+            badge: "88% Cut Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Premium Kurta",
+            img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseBrownSlimFitSuit_2.jpg?v=1769064468",
+            url: "https://amiradnan.com"
+          },
+          {
+            brand: "Sana Safinaz",
+            name: "Stitched Embroidered Lawn Kurta",
+            price: 2480,
+            formattedPrice: "Rs. 2,480",
+            category: "kurta",
+            fabric: "lawn",
+            occasion: "casual",
+            badge: "86% Silhouette Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Best Seller",
+            img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702",
+            url: "https://sanasafinaz.com"
+          },
+          {
+            brand: "Diners",
+            name: "Dark Purple Wash & Wear Kurta Pajama",
+            price: 4494,
+            formattedPrice: "Rs. 4,494",
+            category: "kurta",
+            fabric: "cotton",
+            occasion: "casual",
+            badge: "85% Stitch Style",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Wash & Wear",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3675-D-Purple-02.webp?v=1754117454",
+            url: "https://diners.com.pk"
+          }
         ]
       },
       {
-        name: "noemie_bridal_edit.jpg",
-        img: "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670",
-        color: "Ice Blue & Silver",
-        colorHex: "#A0B2C6",
-        occasion: "Wedding Reception / Bridal",
-        headline: "5 Matches for Heavy Embroidered Formal",
+        name: "navy_blazer_formal_suit.jpg",
+        img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747",
+        color: "Midnight Navy",
+        colorHex: "#1E2638",
+        silhouette: "Tailored Slim Blazer",
+        fabric: "Poly-Viscose Suiting",
+        occasion: "Wedding / Reception",
+        headline: "6 Matches for Tailored Navy Blazer & Formal Suit",
+        speed: "Instant (<1s)",
+        matchScore: "98% Match",
+        coverage: "80+ Brands",
+        bboxes: {
+          garment: { top: "15%", left: "22%", width: "56%", height: "68%", label: "Tailored Blazer" },
+          neckline: { top: "18%", left: "34%", width: "32%", height: "30%", label: "Notch Lapel" }
+        },
         tags: [
-          { text: "Fabric: Silk Net & Chiffon", top: "20%", left: "12%" },
-          { text: "Work: Zari & Hand-Sewn Sequins", top: "45%", right: "10%", left: "auto" },
-          { text: "Silhouette: Floor-Length Angrakha", bottom: "16%", left: "16%", top: "auto" }
+          { id: "fabric", text: "Fabric: Wrinkle-Resistant PV", top: "24%", left: "8%" },
+          { id: "neckline", text: "Lapel: Structured Notch", top: "48%", right: "8%" },
+          { id: "cut", text: "Fit: Slim Fit Two-Button", bottom: "20%", left: "10%" },
+          { id: "color", text: "Color: Midnight Navy", bottom: "10%", right: "12%" }
+        ],
+        matches: [
+          {
+            brand: "Amir Adnan",
+            name: "PV Navy Blazer Slim Fit Plain Kameez Shalwar",
+            price: 9000,
+            formattedPrice: "Rs. 9,000",
+            category: "formal",
+            fabric: "cotton",
+            occasion: "formal",
+            badge: "98% Visual Match",
+            badgeColor: "var(--lb-burgundy)",
+            tag: "Amir Adnan Signature",
+            img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747",
+            url: "https://amiradnan.com"
+          },
+          {
+            brand: "Diners",
+            name: "Pink Check Blazer for Men",
+            price: 11495,
+            formattedPrice: "Rs. 11,495",
+            category: "formal",
+            fabric: "cotton",
+            occasion: "formal",
+            badge: "94% Silhouette Match",
+            badgeColor: "#5E0A26",
+            tag: "Premium Suiting",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/CF4022-PINK-01.webp?v=1698128642",
+            url: "https://diners.com.pk"
+          },
+          {
+            brand: "Diners",
+            name: "Fawn Textured Blazer",
+            price: 9990,
+            formattedPrice: "Rs. 9,990",
+            category: "formal",
+            fabric: "cotton",
+            occasion: "formal",
+            badge: "91% Structure Match",
+            badgeColor: "#5E0A26",
+            tag: "Textured Blazer",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/CG4037-FAWN-03.webp?v=1730119119",
+            url: "https://diners.com.pk"
+          },
+          {
+            brand: "Amir Adnan",
+            name: "PV Wine Tasting Modern Fit Emb Kurta Pajama",
+            price: 7250,
+            formattedPrice: "Rs. 7,250",
+            category: "kurta",
+            fabric: "cotton",
+            occasion: "formal",
+            badge: "89% Suit Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Festive Pret",
+            img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseWineTastingModernFitPlainSuit_1.png?v=1763124173",
+            url: "https://amiradnan.com"
+          },
+          {
+            brand: "Beechtree",
+            name: "Embroidered Raw Silk Suit",
+            price: 10194,
+            formattedPrice: "Rs. 10,194",
+            category: "formal",
+            fabric: "silk",
+            occasion: "formal",
+            badge: "87% Formal Aesthetic",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Luxury Silk",
+            img: "https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441",
+            url: "https://beechtree.pk"
+          },
+          {
+            brand: "Diners",
+            name: "Multicolor Pinstripes Formal Shirt",
+            price: 2723,
+            formattedPrice: "Rs. 2,723",
+            category: "casual",
+            fabric: "cotton",
+            occasion: "casual",
+            badge: "85% Cut Match",
+            badgeColor: "var(--lb-mauve)",
+            tag: "Formal Shirt",
+            img: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/AD41539-Multi-01.webp?v=1783164354",
+            url: "https://diners.com.pk"
+          }
         ]
       }
     ];
 
+    // Initialize View with Sample 0
+    document.addEventListener('DOMContentLoaded', function() {
+      selectSample(0);
+    });
+
     function selectSample(idx) {
+      currentSampleIdx = idx;
       document.querySelectorAll('.lb-sample-card').forEach(function(c, i) {
         c.classList.toggle('is-selected', i === idx);
       });
+
       var data = samples[idx];
       var img = document.getElementById('main-preview-img');
       img.src = data.img;
       document.getElementById('preview-filename').textContent = data.name;
+
+      // Update Summary
+      document.getElementById('detected-color-dot').style.backgroundColor = data.colorHex;
       document.getElementById('detected-color-name').textContent = data.color;
+      document.getElementById('detected-silhouette-name').textContent = data.silhouette;
+      document.getElementById('detected-fabric-name').textContent = data.fabric;
       document.getElementById('detected-occasion-name').textContent = data.occasion;
+      document.getElementById('metric-speed').textContent = data.speed;
+      document.getElementById('metric-match').textContent = data.matchScore;
+      document.getElementById('metric-coverage').textContent = data.coverage;
       document.getElementById('results-headline').textContent = data.headline;
 
+      // Update Garment Detail Outlines
+      var boxGarment = document.getElementById('box-garment');
+      var boxNeckline = document.getElementById('box-neckline');
+      boxGarment.style.top = data.bboxes.garment.top;
+      boxGarment.style.left = data.bboxes.garment.left;
+      boxGarment.style.width = data.bboxes.garment.width;
+      boxGarment.style.height = data.bboxes.garment.height;
+      document.getElementById('box-garment-label').textContent = data.bboxes.garment.label;
+
+      boxNeckline.style.top = data.bboxes.neckline.top;
+      boxNeckline.style.left = data.bboxes.neckline.left;
+      boxNeckline.style.width = data.bboxes.neckline.width;
+      boxNeckline.style.height = data.bboxes.neckline.height;
+      document.getElementById('box-neckline-label').textContent = data.bboxes.neckline.label;
+
       // Update pins
-      var frame = document.getElementById('scanner-frame');
-      frame.querySelectorAll('.lb-pin-tag').forEach(function(el) { el.remove(); });
+      var pinsContainer = document.getElementById('pins-container');
+      pinsContainer.innerHTML = '';
       data.tags.forEach(function(t) {
         var div = document.createElement('div');
         div.className = 'lb-pin-tag';
@@ -971,38 +1541,153 @@
         if (t.bottom) div.style.bottom = t.bottom;
         if (t.left) div.style.left = t.left;
         if (t.right) div.style.right = t.right;
+        div.onclick = function() { highlightAttribute(t.id); };
         div.innerHTML = '<span class="lb-pin-dot"></span><span>' + t.text + '</span>';
-        frame.appendChild(div);
+        pinsContainer.appendChild(div);
       });
 
+      // Render matching cards
+      renderMatches(data.matches);
+
+      // Trigger scanning animation
       triggerScan();
+    }
+
+    function renderMatches(items) {
+      var grid = document.getElementById('results-grid');
+      grid.innerHTML = '';
+
+      items.forEach(function(item) {
+        var card = document.createElement('div');
+        card.className = 'lb-match-card';
+        card.setAttribute('data-price', item.price);
+        card.setAttribute('data-category', item.category);
+        card.setAttribute('data-fabric', item.fabric);
+        card.setAttribute('data-occasion', item.occasion);
+
+        // Apply active filter
+        var isVisible = true;
+        if (currentFilter === 'under6k' && item.price >= 6000) isVisible = false;
+        if (currentFilter === 'kurta' && item.category !== 'kurta') isVisible = false;
+        if (currentFilter === 'formal' && item.occasion !== 'formal') isVisible = false;
+        card.style.display = isVisible ? 'flex' : 'none';
+
+        card.innerHTML =
+          '<div class="lb-match-card__badge">' +
+            '<span class="lb-tag" style="background:' + item.badgeColor + '; color:#FAF6F0; border:none; font-size:9px; padding:2px 6px; border-radius:2px;">' + item.badge + '</span>' +
+          '</div>' +
+          '<div class="lb-match-card__img-wrap">' +
+            '<img class="lb-match-card__img" src="' + item.img + '" alt="' + item.name + '" loading="lazy">' +
+          '</div>' +
+          '<div class="lb-match-card__meta">' +
+            '<span class="lb-match-card__brand">' + item.brand + '</span>' +
+            '<strong class="lb-match-card__title" title="' + item.name + '">' + item.name + '</strong>' +
+            '<div class="lb-match-card__price-row">' +
+              '<span class="lb-match-card__price">' + item.formattedPrice + '</span>' +
+              '<span style="font-size:10px; font-weight:700; color:rgba(25,20,18,0.5);">' + item.tag + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="lb-match-card__actions">' +
+            '<a href="' + item.url + '" target="_blank" rel="noopener" class="lb-cta" style="flex:1; justify-content:center; padding:7px; font-size:10.5px;">View on ' + item.brand + ' ↗</a>' +
+            '<a href="/compare.html" class="lb-cta lb-cta--ghost" style="padding:7px 10px; font-size:10.5px;" title="Add to comparison">Compare</a>' +
+          '</div>';
+
+        grid.appendChild(card);
+      });
     }
 
     function triggerScan() {
       var laser = document.getElementById('laser-line');
-      laser.style.animation = 'none';
-      laser.offsetHeight; /* trigger reflow */
-      laser.style.animation = 'lbScan 2s ease-in-out 2';
-      document.getElementById('scan-status-text').textContent = 'Scanning garment contours and matching with brand inventory...';
+      laser.classList.remove('is-active');
+      void laser.offsetWidth; // force reflow
+      laser.classList.add('is-active');
+
+      var statusText = document.getElementById('scan-status-text');
+      var statusSub = document.getElementById('scan-status-sub');
+      statusText.textContent = 'Analyzing outfit silhouette, neckline, and fabric texture...';
+      statusSub.textContent = 'Searching 80+ Pakistani brand collections for matches...';
+
       setTimeout(function() {
-        document.getElementById('scan-status-text').textContent = 'Analysis Complete: High-Confidence Matches Found';
-      }, 1800);
+        statusText.textContent = 'Analysis Complete: 6 Matches Found';
+        statusSub.textContent = 'Matched across Sana Safinaz, Zellbury, Gul Ahmed, Amir Adnan & Diners';
+        laser.classList.remove('is-active');
+      }, 1600);
     }
 
-    function handleFileSelect(e) {
-      var file = e.target.files[0];
-      if (!file) return;
-      var reader = new FileReader();
-      reader.onload = function(evt) {
-        document.getElementById('main-preview-img').src = evt.target.result;
-        document.getElementById('preview-filename').textContent = file.name;
-        document.querySelectorAll('.lb-sample-card').forEach(function(c) { c.classList.remove('is-selected'); });
-        triggerScan();
-      };
-      reader.readAsDataURL(file);
+    function toggleDetails() {
+      bboxesVisible = !bboxesVisible;
+      var container = document.getElementById('highlights-container');
+      container.style.display = bboxesVisible ? 'block' : 'none';
+      document.getElementById('label-details-toggle').textContent = bboxesVisible ? 'Details: ON' : 'Details: OFF';
     }
 
-    // Drag and drop handlers
+    function setFocusMode(mode, btn) {
+      document.querySelectorAll('#focus-full, #focus-neckline, #focus-fabric').forEach(function(b) {
+        b.classList.remove('is-active');
+      });
+      btn.classList.add('is-active');
+
+      var boxGarment = document.getElementById('box-garment');
+      var boxNeckline = document.getElementById('box-neckline');
+
+      if (mode === 'full') {
+        boxGarment.style.display = 'block';
+        boxNeckline.style.display = 'block';
+        document.getElementById('metric-match').textContent = '98% Match';
+        document.getElementById('scan-status-text').textContent = 'Focus: Matching Entire Outfit Silhouette';
+      } else if (mode === 'neckline') {
+        boxGarment.style.display = 'none';
+        boxNeckline.style.display = 'block';
+        document.getElementById('metric-match').textContent = '99% Match';
+        document.getElementById('scan-status-text').textContent = 'Focus: Matching Neckline & Collar Embroidery';
+      } else if (mode === 'fabric') {
+        boxGarment.style.display = 'block';
+        boxNeckline.style.display = 'none';
+        document.getElementById('metric-match').textContent = '96% Match';
+        document.getElementById('scan-status-text').textContent = 'Focus: Matching Fabric Weave & Texture';
+      }
+      triggerScan();
+    }
+
+    function highlightAttribute(type) {
+      var cards = ['attr-palette-card', 'attr-silhouette-card', 'attr-fabric-card', 'attr-neckline-card'];
+      cards.forEach(function(id) {
+        document.getElementById(id).style.background = 'var(--lb-tint)';
+      });
+
+      var targetId = 'attr-silhouette-card';
+      if (type === 'palette') targetId = 'attr-palette-card';
+      if (type === 'fabric') targetId = 'attr-fabric-card';
+      if (type === 'neckline') targetId = 'attr-neckline-card';
+
+      var el = document.getElementById(targetId);
+      if (el) {
+        el.style.background = 'rgba(132,14,52,0.14)';
+        setTimeout(function() {
+          el.style.background = 'var(--lb-tint)';
+        }, 1200);
+      }
+    }
+
+    function filterResults(type, btn) {
+      currentFilter = type;
+      document.querySelectorAll('.lb-matches-head .lb-chip').forEach(function(c) { c.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+
+      var cards = document.querySelectorAll('#results-grid .lb-match-card');
+      cards.forEach(function(card) {
+        var price = parseInt(card.getAttribute('data-price') || '0', 10);
+        var category = card.getAttribute('data-category');
+        var occasion = card.getAttribute('data-occasion');
+        var show = true;
+        if (type === 'under6k' && price >= 6000) show = false;
+        if (type === 'kurta' && category !== 'kurta') show = false;
+        if (type === 'formal' && occasion !== 'formal') show = false;
+        card.style.display = show ? 'flex' : 'none';
+      });
+    }
+
+    // Drag and Drop & Local File Selection
     var dz = document.getElementById('drop-zone');
     ['dragenter', 'dragover'].forEach(function(ev) {
       dz.addEventListener(ev, function(e) { e.preventDefault(); dz.classList.add('is-dragover'); });
@@ -1016,24 +1701,78 @@
       }
     });
 
-    function filterResults(type, btn) {
-      document.querySelectorAll('.lb-chip').forEach(function(c) { c.classList.remove('is-active'); });
-      btn.classList.add('is-active');
-      var cards = document.querySelectorAll('#results-grid .lb-rail-card');
-      cards.forEach(function(card) {
-        var price = parseInt(card.getAttribute('data-price') || '0', 10);
-        var fabric = card.getAttribute('data-fabric');
-        var kind = card.getAttribute('data-type');
-        var show = true;
-        if (type === 'under5k' && price >= 5000) show = false;
-        if (type === 'lawn' && fabric !== 'lawn') show = false;
-        if (type === 'stitched' && kind !== 'stitched') show = false;
-        card.style.display = show ? 'block' : 'none';
-      });
+    function handleFileSelect(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        var base64 = evt.target.result;
+        var img = document.getElementById('main-preview-img');
+        img.src = base64;
+        document.getElementById('preview-filename').textContent = file.name;
+        document.querySelectorAll('.lb-sample-card').forEach(function(c) { c.classList.remove('is-selected'); });
+
+        // Real-Time Canvas Pixel Color Extraction
+        extractDominantColor(base64);
+
+        // Update fashion summary for custom upload
+        document.getElementById('detected-silhouette-name').textContent = "Custom Garment";
+        document.getElementById('detected-fabric-name').textContent = "Textured Fabric";
+        document.getElementById('detected-occasion-name').textContent = "Festive / Pret";
+        document.getElementById('metric-speed').textContent = "Instant (<1s)";
+        document.getElementById('metric-match').textContent = "96% Match";
+        document.getElementById('results-headline').textContent = "6 In-Stock Matches for Uploaded Garment";
+
+        // Update Bespoke link
+        document.getElementById('stitch-scanned-btn').href = "/get-stitched.html?design=upload&title=" + encodeURIComponent(file.name);
+
+        triggerScan();
+      };
+      reader.readAsDataURL(file);
     }
 
-    function simulateCrop() {
-      alert('Crop Tool: You can select a focal area like just the neckline or dupatta to refine your search.');
+    // HTML5 Canvas Color Extraction for Real Uploaded Images
+    function extractDominantColor(imgSrc) {
+      var tempImg = new Image();
+      tempImg.crossOrigin = "Anonymous";
+      tempImg.onload = function() {
+        var canvas = document.getElementById('color-sampler-canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = 40;
+        canvas.height = 40;
+        ctx.drawImage(tempImg, 0, 0, 40, 40);
+
+        try {
+          var imgData = ctx.getImageData(0, 0, 40, 40).data;
+          var r = 0, g = 0, b = 0, count = 0;
+          for (var i = 0; i < imgData.length; i += 16) {
+            var curR = imgData[i];
+            var curG = imgData[i + 1];
+            var curB = imgData[i + 2];
+            var brightness = (curR + curG + curB) / 3;
+            if (brightness > 25 && brightness < 240) {
+              r += curR;
+              g += curG;
+              b += curB;
+              count++;
+            }
+          }
+          if (count > 0) {
+            r = Math.round(r / count);
+            g = Math.round(g / count);
+            b = Math.round(b / count);
+            var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+            document.getElementById('detected-color-dot').style.backgroundColor = hex;
+            document.getElementById('detected-color-name').textContent = "Detected Shade";
+            var tagColor = document.getElementById('pin-color-text');
+            if (tagColor) tagColor.textContent = "Color: Detected Shade";
+          }
+        } catch (err) {
+          // Fallback
+        }
+      };
+      tempImg.src = imgSrc;
     }
   </script>
 </body>

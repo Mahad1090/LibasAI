@@ -8,15 +8,489 @@
 </head>
 <body>
 <x-dc>
-<![CDATA[
 <helmet>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="./image-slot.js"></script>
   <link rel="stylesheet" href="./theme.css">
+  <style>
+    /* Prevent window jitter / shaking and enforce single viewport app */
+    html, body {
+      height: 100% !important;
+      max-height: 100% !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Ensure all content is immediately visible without scroll-reveal delays */
+    .lb-reveal,
+    .lb-chat,
+    .lb-chat *,
+    .lb-chat__main * {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
+
+    /* Hide scrollbars across all panels while maintaining smooth scrolling */
+    * {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    /* 3-Column Chat Layout */
+    .lb-chat {
+      display: grid !important;
+      grid-template-columns: 240px minmax(0, 1fr) 290px !important;
+      flex: 1 !important;
+      min-height: 0 !important;
+      height: calc(100vh - 65px - 26px) !important;
+      overflow: hidden !important;
+      background: #F7EDDF;
+    }
+
+    @media (max-width: 1100px) {
+      .lb-chat {
+        grid-template-columns: 1fr !important;
+      }
+      .lb-chat__history,
+      .lb-chat__context {
+        display: none !important;
+      }
+    }
+
+    /* Left Sidebar: Conversations History */
+    .lb-chat__history {
+      border-right: 1px solid rgba(25, 20, 18, 0.08) !important;
+      padding: 18px 14px !important;
+      overflow-y: auto !important;
+      height: 100% !important;
+      background: #FAF3E8;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    .lb-chat__new-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 12px;
+      margin-bottom: 16px;
+      background: #840E34;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(132, 14, 52, 0.18);
+      transition: background 180ms ease, transform 160ms ease;
+    }
+    .lb-chat__new-btn:hover {
+      background: #5E0A26;
+      transform: translateY(-1px);
+    }
+    .lb-chat__history h4 {
+      font-size: 10.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: rgba(25, 20, 18, 0.45) !important;
+      margin: 0 0 10px !important;
+    }
+    .lb-conv-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow-y: auto;
+    }
+    .lb-chat__history-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      padding: 9px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(25, 20, 18, 0.72);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Manrope', sans-serif;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lb-chat__history-item:hover {
+      background: rgba(132, 14, 52, 0.06);
+      color: #840E34;
+    }
+    .lb-chat__history-item.is-active {
+      color: #840E34;
+      background: #F0E2CF;
+      border-color: rgba(132, 14, 52, 0.2);
+      font-weight: 700;
+    }
+
+    /* Center Main Chat Canvas */
+    .lb-chat__main {
+      padding: 16px 28px 12px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      max-width: 860px !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+      height: 100% !important;
+      box-sizing: border-box !important;
+      overflow-y: auto !important;
+      min-height: 0 !important;
+    }
+
+    /* Starter prompt chips */
+    .lb-chat__prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .lb-chat__prompt {
+      background: #FAF6F0;
+      border: 1px solid rgba(25, 20, 18, 0.12);
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #191412;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+    .lb-chat__prompt:hover {
+      background: #FFFFFF;
+      border-color: #840E34;
+      color: #840E34;
+      transform: translateY(-1px);
+    }
+
+    /* Chat Messages Flow */
+    .lb-chat__thread {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+    .lb-chat-msg-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 2px;
+      width: 100%;
+    }
+    .lb-chat-msg-row--user {
+      justify-content: flex-end;
+    }
+    .lb-chat-msg-row--ai {
+      justify-content: flex-start;
+    }
+
+    .lb-chat-avatar-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #840E34;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #F7EDDF;
+      box-shadow: 0 4px 10px rgba(132, 14, 52, 0.2);
+    }
+
+    .lb-chat-bubble-user {
+      background: #840E34;
+      color: #FFFFFF;
+      font-size: 13.5px;
+      font-weight: 550;
+      line-height: 1.45;
+      padding: 10px 18px;
+      border-radius: 18px 18px 4px 18px;
+      max-width: 78%;
+      box-shadow: 0 4px 14px rgba(132, 14, 52, 0.15);
+    }
+
+    .lb-chat-bubble-ai {
+      background: #FFFFFF;
+      color: #191412;
+      border: 1px solid rgba(25, 20, 18, 0.08);
+      border-radius: 4px 18px 18px 18px;
+      padding: 16px 18px;
+      max-width: 92%;
+      box-shadow: 0 4px 18px rgba(25, 20, 18, 0.04);
+    }
+
+    .lb-chat-ai-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .lb-chat-ai-header strong {
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #840E34;
+    }
+    .lb-chat-ai-header span {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(25, 20, 18, 0.5);
+      background: #F7EDDF;
+      padding: 2px 7px;
+      border-radius: 8px;
+    }
+
+    /* Result Cards in Chat */
+    .lb-ask-results {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 10px !important;
+      margin-top: 12px !important;
+    }
+    @media (max-width: 640px) {
+      .lb-ask-results {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .lb-ask-result-card {
+      background: #FAF6F0;
+      border: 1px solid rgba(25, 20, 18, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .lb-ask-result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(132, 14, 52, 0.08);
+      border-color: rgba(132, 14, 52, 0.3);
+    }
+    .lb-ask-result-card__img {
+      width: 100%;
+      height: 190px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top center;
+      background: #F0E5D4;
+      display: block;
+    }
+    .lb-ask-result-card__body {
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .lb-ask-result-card__brand {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #840E34;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .lb-ask-result-card__title {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #191412;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lb-ask-result-card__price {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #191412;
+      margin-top: 2px;
+    }
+    .lb-ask-result-card__cta {
+      font-size: 10px;
+      font-weight: 700;
+      color: #840E34;
+      margin-top: 4px;
+    }
+
+    /* Floating Chat Input Bar */
+    .lb-chat__input-wrapper {
+      position: sticky;
+      bottom: 0;
+      margin-top: auto;
+      padding: 8px 0 2px;
+      background: transparent;
+      z-index: 20;
+    }
+    .lb-chat__input-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(132, 14, 52, 0.25);
+      border-radius: 30px;
+      padding: 5px 6px 5px 16px;
+      box-shadow: 0 8px 24px rgba(25, 20, 18, 0.08);
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .lb-chat__input-pill:focus-within {
+      border-color: #840E34;
+      box-shadow: 0 10px 30px rgba(132, 14, 52, 0.14);
+    }
+    .lb-chat__input-pill input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13.5px;
+      color: #191412;
+    }
+
+    /* Right Sidebar: "In This Conversation" - Compact Cards */
+    .lb-chat__context {
+      border-left: 1px solid rgba(25, 20, 18, 0.08) !important;
+      padding: 18px 14px !important;
+      overflow-y: auto !important;
+      height: 100% !important;
+      background: #FAF3E8;
+    }
+    .lb-chat__context h4 {
+      font-size: 10.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: rgba(25, 20, 18, 0.45) !important;
+      margin: 0;
+    }
+    .lb-ctx-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid rgba(25, 20, 18, 0.08);
+      border-radius: 6px;
+      padding: 7px;
+      margin-bottom: 9px;
+      text-decoration: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+    .lb-ctx-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(132, 14, 52, 0.08);
+      border-color: rgba(132, 14, 52, 0.3);
+    }
+    .lb-ctx-item__img {
+      width: 58px;
+      height: 76px;
+      border-radius: 4px;
+      object-fit: cover;
+      object-position: top center;
+      flex-shrink: 0;
+      background: #F3E7D6;
+      display: block;
+    }
+    .lb-ctx-item__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+    .lb-ctx-item__brand {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #840E34;
+    }
+    .lb-ctx-item__title {
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #191412;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .lb-ctx-item__price {
+      font-size: 11px;
+      font-weight: 700;
+      color: #191412;
+      margin-top: 1px;
+    }
+    .lb-ctx-item__link {
+      font-size: 10px;
+      font-weight: 700;
+      color: #840E34;
+      text-decoration: none;
+      margin-top: 1px;
+    }
+
+    /* Animated typing & multimodal demo toast */
+    .lb-chat-typing-dots {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .lb-chat-typing-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #840E34;
+      animation: typeDot 1.4s infinite ease-in-out both;
+    }
+    .lb-chat-typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .lb-chat-typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+    .lb-demo-toast {
+      position: fixed;
+      bottom: 74px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #191412;
+      color: #FFFFFF;
+      padding: 9px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      z-index: 1000;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .lb-demo-toast.is-shown {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
 </helmet>
 
-<div style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden;">
+<div style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; height:100vh; display:flex; flex-direction:column; overflow:hidden;">
 
   <!-- NAV -->
   <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
@@ -34,7 +508,7 @@
     </defs>
   </svg>
 
-  <div id="lb-nav-root" class="lb-nav-root" onMouseLeave="{{ scheduleCloseMenu }}">
+  <div id="lb-nav-root" class="lb-nav-root" style="flex-shrink:0;" onMouseLeave="{{ scheduleCloseMenu }}">
     <div class="{{ navClass }}">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
@@ -330,81 +804,448 @@
   <!-- AI ASSISTANT -->
   <div class="lb-chat">
     <aside class="lb-chat__history">
+      <button type="button" id="lb-new-chat-btn" class="lb-chat__new-btn">
+        <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;"><use href="#lb-i-plus"></use></svg>
+        <span>New Consultation</span>
+      </button>
       <h4>Conversations</h4>
-      <a href="/ai/ask" class="lb-chat__history-item is-active">Rust kurta for a wedding</a>
-      <a href="/ai/ask" class="lb-chat__history-item">Eid outfit ideas</a>
-      <a href="/ai/ask" class="lb-chat__history-item">Compare lawn suits</a>
-      <a href="/ai/ask" class="lb-chat__history-item">Formal shalwar kameez</a>
+      <div id="lb-conv-list" class="lb-conv-list">
+        <button type="button" class="lb-chat__history-item is-active" data-conv-id="rust-kurta">Rust kurta for a wedding</button>
+        <button type="button" class="lb-chat__history-item" data-conv-id="eid-outfit">Eid outfit ideas</button>
+        <button type="button" class="lb-chat__history-item" data-conv-id="compare-lawn">Compare lawn suits</button>
+        <button type="button" class="lb-chat__history-item" data-conv-id="formal-shalwar">Formal shalwar kameez</button>
+      </div>
     </aside>
 
-    <main class="lb-chat__main">
-      <div class="lb-reveal">
-        <div class="lb-eyebrow">Ask LibasAI</div>
-        <h1 class="lb-h1" style="font-size:clamp(30px,3.4vw,46px);">Good evening.<br>What are you looking for?</h1>
+    <main class="lb-chat__main" id="lb-chat-main">
+      <div id="lb-chat-welcome" style="margin-bottom:8px;">
+        <div class="lb-eyebrow" style="margin-bottom:4px;">Ask LibasAI</div>
+        <h1 class="lb-h1" style="font-size:clamp(24px,2.8vw,38px); margin:0 0 14px;">Good evening.<br>What are you looking for?</h1>
         <div class="lb-chat__prompts">
-          <button type="button" class="lb-chat__prompt">Find an Eid look under Rs. 12,000</button>
-          <button type="button" class="lb-chat__prompt">Compare black kurtas</button>
-          <button type="button" class="lb-chat__prompt">Style this for a wedding</button>
-          <button type="button" class="lb-chat__prompt">Find this from a photo</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Find an Eid look under Rs. 12,000">✨ Find an Eid look under Rs. 12,000</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Compare luxury lawn suits">✨ Compare luxury lawn suits</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Formal shalwar kameez for men">✨ Formal shalwar kameez for men</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Find me a rust-colored formal kurta under Rs. 6,000">✨ Rust wedding kurta under 6k</button>
         </div>
       </div>
 
-      <div class="lb-chat__thread lb-reveal">
-        <div class="lb-chat__msg lb-chat__msg--user">Find me a rust-colored formal kurta under Rs. 6,000</div>
-
-        <div class="lb-chat__progress" role="status" aria-label="LibasAI is processing your request">
-          <span class="lb-chat__step is-done"><span class="lb-chat__step-dot"></span>Understanding request</span>
-          <span class="lb-chat__step is-done"><span class="lb-chat__step-dot"></span>Searching products</span>
-          <span class="lb-chat__step is-done"><span class="lb-chat__step-dot"></span>Personalizing</span>
-          <span class="lb-chat__step is-active"><span class="lb-chat__step-dot"></span>Comparing</span>
-          <span class="lb-chat__step"><span class="lb-chat__step-dot"></span>Building recommendations</span>
-        </div>
-
-        <div class="lb-chat__msg lb-chat__msg--ai">
-          Found 6 options across 4 brands. Here are the closest matches:
-          <div class="lb-ask-results" style="margin-top:16px;">
-            <div class="lb-ask-result"><image-slot id="chat-1" shape="rect" placeholder="Rust kurta match 1" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702"></image-slot><span>Sana Safinaz · Rs. 2,480</span></div>
-            <div class="lb-ask-result"><image-slot id="chat-2" shape="rect" placeholder="Rust kurta match 2" src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804"></image-slot><span>Zellbury · Rs. 4,490</span></div>
-            <div class="lb-ask-result"><image-slot id="chat-3" shape="rect" placeholder="Rust kurta match 3" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960"></image-slot><span>Gul Ahmed · Rs. 4,893</span></div>
-          </div>
-        </div>
+      <!-- Chat Thread: Authentically Styled Conversational Turns -->
+      <div class="lb-chat__thread" id="lb-chat-thread">
+        <!-- Rendered dynamically -->
       </div>
 
-      <div class="lb-chat__input lb-reveal">
-        <svg style="width:18px;height:18px;flex-shrink:0;fill:none;stroke:var(--lb-burgundy);stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
-        <input type="text" placeholder="Ask LibasAI anything about fashion..." aria-label="Message LibasAI">
-        <button type="button" aria-label="Search by voice" style="width:40px;height:40px;border:none;background:none;border-radius:50%;color:var(--lb-charcoal);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-mic"></use></svg></button>
-        <button type="button" aria-label="Search by image" style="width:40px;height:40px;border:none;background:none;border-radius:50%;color:var(--lb-charcoal);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg></button>
-        <button type="button" class="lb-search-hero__send" aria-label="Send" style="border-radius:2px;width:44px;height:44px;background:var(--lb-burgundy);color:var(--lb-cream);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-arrow-right"></use></svg></button>
+      <!-- Modern Pinned Floating Chat Input -->
+      <div class="lb-chat__input-wrapper">
+        <form id="lb-chat-form" class="lb-chat__input-pill" onsubmit="return false;">
+          <svg style="width:17px;height:17px;flex-shrink:0;fill:none;stroke:#840E34;stroke-width:1.8;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          <input type="text" id="lb-chat-input" placeholder="Ask LibasAI anything about sizes, colors, or fabrics..." aria-label="Message LibasAI" autocomplete="off">
+          <button type="button" id="lb-voice-btn" title="Voice Search (Live Demo)" aria-label="Search by voice" style="width:32px;height:32px;border:none;background:none;border-radius:50%;color:rgba(25,20,18,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-mic"></use></svg></button>
+          <button type="button" id="lb-image-btn" title="Visual Search (Live Demo)" aria-label="Search by image" style="width:32px;height:32px;border:none;background:none;border-radius:50%;color:rgba(25,20,18,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg></button>
+          <button type="submit" id="lb-chat-send" aria-label="Send" style="width:32px;height:32px;border-radius:50%;background:#840E34;color:#FFF;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-arrow-right"></use></svg></button>
+        </form>
       </div>
     </main>
 
-    <aside class="lb-chat__context">
-      <h4>In This Conversation</h4>
-      <div class="lb-rail-card">
-        <a href="https://sanasafinaz.com/products/stitched-embroidered-shalwar" class="lb-rail-card__link">
-          <div class="lb-rail-card__img"><image-slot id="chat-ctx-1" shape="rect" placeholder="Rust embroidered kurta" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702"></image-slot></div>
-          <div class="lb-rail-card__meta"><span class="lb-rail-card__brand">Sana Safinaz</span><span class="lb-rail-card__name">Stitched Embroidered Lawn Skinny Shalwar</span><span class="lb-rail-card__price">Rs. 2,480</span></div>
-        </a>
+    <!-- Refined, Compact Right Sidebar: "In This Conversation" -->
+    <aside class="lb-chat__context" id="lb-chat-context">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+        <h4 style="margin:0;">In This Conversation</h4>
+        <span id="lb-context-count" style="font-size:10px; font-weight:800; color:#840E34; background:#F0E2CF; padding:2px 8px; border-radius:10px;">3 items</span>
       </div>
-      <div class="lb-rail-card">
-        <a href="https://www.gulahmedshop.com/products/3pc-lawn-printed-suit-iustksd-2207" class="lb-rail-card__link">
-          <div class="lb-rail-card__img"><image-slot id="chat-ctx-2" shape="rect" placeholder="Gul Ahmed lawn suit" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960"></image-slot></div>
-          <div class="lb-rail-card__meta"><span class="lb-rail-card__brand">Gul Ahmed</span><span class="lb-rail-card__name">3PC Lawn Printed Suit</span><span class="lb-rail-card__price">Rs. 4,893</span></div>
-        </a>
+      <div id="lb-context-items">
+        <!-- Rendered dynamically -->
       </div>
     </aside>
   </div>
 
-  <!-- Minimal 1-line subtle disclaimer instead of overlapping 300px footer -->
-  <div style="text-align:center; padding:4px 16px; font-size:11px; color:rgba(25,20,18,0.45); background:var(--lb-cream); flex-shrink:0; border-top:1px solid rgba(25,20,18,0.06);">
+  <div id="lb-demo-toast" class="lb-demo-toast"></div>
+
+  <!-- Minimal 1-line subtle disclaimer -->
+  <div style="text-align:center; padding:5px 16px; font-size:11px; color:rgba(25,20,18,0.45); background:var(--lb-cream); flex-shrink:0; border-top:1px solid rgba(25,20,18,0.06);">
     LibasAI Autonomous Fashion Intelligence · FAST-NUCES FYP 2026–2027
   </div>
 
 </div>
-]]>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+// =========================================================================
+// LIBASAI CHAT ENGINE & PAKISTANI BRAND CATALOG
+// =========================================================================
+
+const PRESET_CONVERSATIONS = {
+  'rust-kurta': {
+    id: 'rust-kurta',
+    title: 'Rust kurta for a wedding',
+    messages: [
+      {
+        role: 'user',
+        text: 'Find me a rust-colored formal kurta under Rs. 6,000 for an evening wedding event'
+      },
+      {
+        role: 'assistant',
+        steps: ['Understanding request', 'Searching products', 'Personalizing', 'Comparing', 'Building recommendations'],
+        text: 'Found 6 verified options across 4 Pakistani brands. Here are the 3 closest matches for your formal wedding budget:',
+        products: [
+          {
+            brand: 'Sana Safinaz',
+            title: 'Stitched Embroidered Kurta',
+            price: 'PKR 2,480',
+            img: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702',
+            url: 'https://sanasafinaz.com'
+          },
+          {
+            brand: 'Zellbury',
+            title: 'Rust Festive 2-Piece Kurta Set',
+            price: 'PKR 4,490',
+            img: 'https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804',
+            url: 'https://www.zellbury.com'
+          },
+          {
+            brand: 'Gul Ahmed',
+            title: 'Embroidered Festive Kurti',
+            price: 'PKR 4,893',
+            img: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+            url: 'https://www.gulahmedshop.com'
+          }
+        ]
+      }
+    ]
+  },
+  'eid-outfit': {
+    id: 'eid-outfit',
+    title: 'Eid outfit ideas',
+    messages: [
+      {
+        role: 'user',
+        text: 'Show me trending Eid outfit ideas with a pastel or festive vibe under Rs. 15,000'
+      },
+      {
+        role: 'assistant',
+        steps: ['Scanning Eid 2026 collections', 'Fabric check (Lawn/Jacquard)', 'Price filtering (<15k)', 'Curating 3 top looks'],
+        text: 'Curated 3 festive Eid looks from J., Diners, and Generation featuring pastel tones, intricate resham embroidery, and breathable luxury fabrics:',
+        products: [
+          {
+            brand: 'J. Junaid Jamshed',
+            title: 'Festive Jacquard Pastel Mint Kurta',
+            price: 'PKR 6,490',
+            img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202',
+            url: 'https://www.junaidjamshed.com'
+          },
+          {
+            brand: 'Diners',
+            title: 'Platinum Festive Egyptian Cotton Suit',
+            price: 'PKR 8,990',
+            img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+            url: 'https://diners.com.pk'
+          },
+          {
+            brand: 'Generation',
+            title: 'Jacquard Festive 3-Piece Stitched Suit',
+            price: 'PKR 11,500',
+            img: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+            url: 'https://generation.com.pk'
+          }
+        ]
+      }
+    ]
+  },
+  'compare-lawn': {
+    id: 'compare-lawn',
+    title: 'Compare lawn suits',
+    messages: [
+      {
+        role: 'user',
+        text: 'Compare unstitched 3-piece luxury lawn suits from Sana Safinaz and Gul Ahmed'
+      },
+      {
+        role: 'assistant',
+        steps: ['Analyzing lawn thread-count', 'Comparing dupatta fabrics', 'Price-to-quality index', 'Comparison ready'],
+        text: 'Detailed comparison for 2026 Luxury Lawn: Sana Safinaz Muzlin features delicate organza borders and silk chiffon dupattas, while Gul Ahmed Festive Lawn utilizes Swiss voile with superior color retention:',
+        products: [
+          {
+            brand: 'Sana Safinaz',
+            title: 'Muzlin Luxury 3PC Lawn Suit',
+            price: 'PKR 7,990',
+            img: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702',
+            url: 'https://sanasafinaz.com'
+          },
+          {
+            brand: 'Gul Ahmed',
+            title: '3PC Printed Festive Lawn Suit',
+            price: 'PKR 4,893',
+            img: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+            url: 'https://www.gulahmedshop.com'
+          },
+          {
+            brand: 'Zellbury',
+            title: 'Digital Printed 3-Piece Lawn Set',
+            price: 'PKR 3,690',
+            img: 'https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804',
+            url: 'https://www.zellbury.com'
+          }
+        ]
+      }
+    ]
+  },
+  'formal-shalwar': {
+    id: 'formal-shalwar',
+    title: 'Formal shalwar kameez',
+    messages: [
+      {
+        role: 'user',
+        text: 'Looking for pure Egyptian cotton or premium latha formal shalwar kameez for men'
+      },
+      {
+        role: 'assistant',
+        steps: ['Filtering fabric: Egyptian Cotton & Latha', 'Verifying collar & cuff tailoring', 'Brand availability confirmed'],
+        text: 'Found top-tier formal men\'s ethnic wear in pure Egyptian cotton and hard-finish latha from premier Pakistani menswear ateliers:',
+        products: [
+          {
+            brand: 'Amir Adnan',
+            title: 'PV Navy Blazer Slim Fit Suit',
+            price: 'PKR 9,000',
+            img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+            url: 'https://amiradnan.com'
+          },
+          {
+            brand: 'Amir Adnan',
+            title: 'Maluki Classic Fit Kurta Pajama',
+            price: 'PKR 7,000',
+            img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202',
+            url: 'https://amiradnan.com'
+          },
+          {
+            brand: 'Diners',
+            title: 'Pure Egyptian Cotton Formal Suit',
+            price: 'PKR 8,990',
+            img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+            url: 'https://diners.com.pk'
+          }
+        ]
+      }
+    ]
+  }
+};
+
+const PRODUCT_CATALOG = [
+  {
+    brand: 'Amir Adnan',
+    title: 'PV Navy Blazer Slim Fit Plain Kameez Shalwar',
+    category: 'shalwar kameez formal suit men wedding',
+    gender: 'men',
+    color: 'navy blue',
+    price: 'PKR 9,000',
+    priceNum: 9000,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+    url: 'https://amiradnan.com'
+  },
+  {
+    brand: 'Amir Adnan',
+    title: 'PV Maluki Navy Blazer Slim Fit Kurta Pajama',
+    category: 'kurta formal eid wedding men',
+    gender: 'men',
+    color: 'navy blue',
+    price: 'PKR 7,000',
+    priceNum: 7000,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202',
+    url: 'https://amiradnan.com'
+  },
+  {
+    brand: 'Amir Adnan',
+    title: 'Ceremonial Embroidered Silk Sherwani',
+    category: 'sherwani wedding groom formal men',
+    gender: 'men',
+    color: 'black gold',
+    price: 'PKR 34,500',
+    priceNum: 34500,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+    url: 'https://amiradnan.com'
+  },
+  {
+    brand: 'Diners',
+    title: 'Pure Egyptian Cotton White Formal Suit',
+    category: 'shalwar kameez latha cotton men formal',
+    gender: 'men',
+    color: 'white',
+    price: 'PKR 8,990',
+    priceNum: 8990,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+    url: 'https://diners.com.pk'
+  },
+  {
+    brand: 'Diners',
+    title: 'Obsidian Black Textured Kurta',
+    category: 'kurta formal black men eid',
+    gender: 'men',
+    color: 'black',
+    price: 'PKR 5,450',
+    priceNum: 5450,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202',
+    url: 'https://diners.com.pk'
+  },
+  {
+    brand: 'J. Junaid Jamshed',
+    title: 'Festive Jacquard Pastel Mint Kurta',
+    category: 'kurta eid festive pastel men',
+    gender: 'men',
+    color: 'mint green pastel',
+    price: 'PKR 6,490',
+    priceNum: 6490,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202',
+    url: 'https://www.junaidjamshed.com'
+  },
+  {
+    brand: 'J. Junaid Jamshed',
+    title: 'Executive Hard-Finish Latha Shalwar Suit',
+    category: 'shalwar kameez latha formal men',
+    gender: 'men',
+    color: 'cream offwhite',
+    price: 'PKR 7,850',
+    priceNum: 7850,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+    url: 'https://www.junaidjamshed.com'
+  },
+  {
+    brand: 'Ismail Farid',
+    title: 'Signature Cut Bespoke Raw Silk Waistcoat',
+    category: 'waistcoat wedding formal men',
+    gender: 'men',
+    color: 'charcoal black',
+    price: 'PKR 16,500',
+    priceNum: 16500,
+    img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747',
+    url: 'https://ismailfarid.com'
+  },
+  {
+    brand: 'Sana Safinaz',
+    title: 'Stitched Embroidered Lawn Shalwar Set',
+    category: 'kurta lawn wedding festive women',
+    gender: 'women',
+    color: 'rust maroon brown',
+    price: 'PKR 2,480',
+    priceNum: 2480,
+    img: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702',
+    url: 'https://sanasafinaz.com'
+  },
+  {
+    brand: 'Zellbury',
+    title: 'Rust Festive 2-Piece Kurta Set',
+    category: 'kurta festive wedding pret women',
+    gender: 'women',
+    color: 'rust orange terracotta',
+    price: 'PKR 4,490',
+    priceNum: 4490,
+    img: 'https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804',
+    url: 'https://www.zellbury.com'
+  },
+  {
+    brand: 'Gul Ahmed',
+    title: '3PC Lawn Printed Festive Suit',
+    category: 'lawn suit unstitched festive women',
+    gender: 'women',
+    color: 'mustard yellow olive',
+    price: 'PKR 4,893',
+    priceNum: 4893,
+    img: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+    url: 'https://www.gulahmedshop.com'
+  },
+  {
+    brand: 'Sana Safinaz',
+    title: 'Muzlin Luxury 3PC Lawn Collection',
+    category: 'lawn suit luxury unstitched women',
+    gender: 'women',
+    color: 'pastel peach teal',
+    price: 'PKR 7,990',
+    priceNum: 7990,
+    img: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702',
+    url: 'https://sanasafinaz.com'
+  },
+  {
+    brand: 'Generation',
+    title: 'Jacquard Festive 3-Piece Stitched Suit',
+    category: 'eid festive jacquard pret women',
+    gender: 'women',
+    color: 'emerald green gold',
+    price: 'PKR 11,500',
+    priceNum: 11500,
+    img: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+    url: 'https://generation.com.pk'
+  },
+  {
+    brand: 'Beechtree',
+    title: 'Embroidered Chiffon 3PC Festive Ensemble',
+    category: 'chiffon wedding festive party women',
+    gender: 'women',
+    color: 'lilac lavender silver',
+    price: 'PKR 8,950',
+    priceNum: 8950,
+    img: 'https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804',
+    url: 'https://beechtree.pk'
+  },
+  {
+    brand: 'Khaadi',
+    title: 'Printed Light Khaddar Daily Kurta',
+    category: 'kurta casual pret women',
+    gender: 'women',
+    color: 'black beige monochrome',
+    price: 'PKR 3,290',
+    priceNum: 3290,
+    img: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702',
+    url: 'https://pk.khaadi.com'
+  }
+];
+
+function performCatalogSearch(query) {
+  const q = query.toLowerCase();
+  const words = q.split(/\s+/).filter(w => w.length > 1);
+
+  const scored = PRODUCT_CATALOG.map(p => {
+    let score = 0;
+    const text = `${p.brand} ${p.title} ${p.category} ${p.gender} ${p.color}`.toLowerCase();
+    for (const w of words) {
+      if (text.includes(w)) score += 2;
+    }
+    const match = q.match(/(?:under|below|<)\s*(?:rs\.?|pkr)?\s*(\d+)(?:k)?/i);
+    if (match) {
+      let max = parseInt(match[1], 10);
+      if (q.includes('k') || max < 500) max *= 1000;
+      if (p.priceNum <= max) score += 3;
+      else score -= 3;
+    }
+    return { product: p, score };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  const matched = scored.filter(s => s.score > 0).map(s => s.product);
+  const results = matched.length >= 3 ? matched.slice(0, 3) : PRODUCT_CATALOG.slice(0, 3);
+
+  return {
+    answer: `Found ${results.length} verified options across Pakistani brand archives matching "${query}". Filtered by fabric suitability, verified silhouettes, and official pricing:`,
+    products: results
+  };
+}
+
+/**
+ * =========================================================================
+ * LIBASAI BACKEND MODEL INTEGRATION HOOK (FYP DEFENSE & BACKEND DEPLOYMENT)
+ * =========================================================================
+ * When you integrate your external AI backend (e.g. FastAPI, Flask, Gemini API,
+ * Ollama, Llama-3, or custom fine-tuned PyTorch / HuggingFace model):
+ * 
+ * 1. Uncomment the fetch call below.
+ * 2. Return { answer: "...", products: [...] } from your backend route.
+ * 
+ * async function queryAIBackend(prompt, history) {
+ *   const response = await fetch('http://localhost:8000/api/ai-assistant', {
+ *     method: 'POST',
+ *     headers: { 'Content-Type': 'application/json' },
+ *     body: JSON.stringify({ prompt, history })
+ *   });
+ *   return await response.json();
+ * }
+ * =========================================================================
+ */
+
 class Component extends DCLogic {
   state = {
     activeMenu: null,      // 'discover' | 'brands' | 'features' | 'foryou' | null
@@ -446,7 +1287,328 @@ class Component extends DCLogic {
     } else {
       revealEls.forEach((el) => el.classList.add('is-visible'));
     }
+
+    // Initialize interactive Defense-Ready Chat Engine
+    this.initChatEngine();
   }
+
+  initChatEngine = () => {
+    const threadEl = document.getElementById('lb-chat-thread');
+    const welcomeEl = document.getElementById('lb-chat-welcome');
+    const convListEl = document.getElementById('lb-conv-list');
+    const contextItemsEl = document.getElementById('lb-context-items');
+    const contextCountEl = document.getElementById('lb-context-count');
+    const formEl = document.getElementById('lb-chat-form');
+    const inputEl = document.getElementById('lb-chat-input');
+    const newChatBtn = document.getElementById('lb-new-chat-btn');
+    const voiceBtn = document.getElementById('lb-voice-btn');
+    const imageBtn = document.getElementById('lb-image-btn');
+    const mainEl = document.getElementById('lb-chat-main');
+    const toastEl = document.getElementById('lb-demo-toast');
+
+    if (!threadEl || !contextItemsEl) return;
+
+    const showToast = (msg, duration = 3200) => {
+      if (!toastEl) return;
+      toastEl.textContent = msg;
+      toastEl.classList.add('is-shown');
+      clearTimeout(this._toastTimer);
+      this._toastTimer = setTimeout(() => toastEl.classList.remove('is-shown'), duration);
+    };
+
+    const renderContextCards = (products) => {
+      if (!products || !products.length) {
+        contextItemsEl.innerHTML = '<div style="font-size:12px;color:rgba(25,20,18,0.5);text-align:center;padding:24px 8px;">No items in active consultation.<br>Type a search prompt below.</div>';
+        if (contextCountEl) contextCountEl.textContent = '0 items';
+        return;
+      }
+      if (contextCountEl) contextCountEl.textContent = `${products.length} items`;
+      contextItemsEl.innerHTML = products.map(p => `
+        <a href="${p.url}" target="_blank" rel="noopener" class="lb-ctx-item">
+          <img src="${p.img}" alt="${p.brand}" class="lb-ctx-item__img">
+          <div class="lb-ctx-item__body">
+            <span class="lb-ctx-item__brand">${p.brand}</span>
+            <h5 class="lb-ctx-item__title">${p.title}</h5>
+            <div class="lb-ctx-item__price">${p.price}</div>
+            <span class="lb-ctx-item__link">View item &rarr;</span>
+          </div>
+        </a>
+      `).join('');
+    };
+
+    const renderThread = (messages) => {
+      threadEl.innerHTML = messages.map(msg => {
+        if (msg.role === 'user') {
+          return `
+            <div class="lb-chat-msg-row lb-chat-msg-row--user">
+              <div class="lb-chat-bubble-user">
+                ${msg.text}
+              </div>
+            </div>
+          `;
+        } else {
+          const stepsHtml = (msg.steps || ['Understanding request', 'Searching Pakistani brands', 'Curating recommendations'])
+            .map((s, idx, arr) => `
+              <span class="lb-chat__step ${idx < arr.length - 1 ? 'is-done' : 'is-active'}">
+                <span class="lb-chat__step-dot"></span>${s}
+              </span>
+            `).join('');
+
+          const productsHtml = (msg.products || []).map(p => `
+            <a href="${p.url}" target="_blank" rel="noopener" class="lb-ask-result-card">
+              <img src="${p.img}" alt="${p.brand}" class="lb-ask-result-card__img">
+              <div class="lb-ask-result-card__body">
+                <span class="lb-ask-result-card__brand">${p.brand}</span>
+                <span class="lb-ask-result-card__title">${p.title}</span>
+                <span class="lb-ask-result-card__price">${p.price}</span>
+                <span class="lb-ask-result-card__cta">View item &rarr;</span>
+              </div>
+            </a>
+          `).join('');
+
+          return `
+            <div class="lb-chat-msg-row lb-chat-msg-row--ai">
+              <div class="lb-chat-avatar-badge" title="LibasAI">
+                <svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+              </div>
+              <div class="lb-chat-bubble-ai">
+                <div class="lb-chat-ai-header">
+                  <strong>LibasAI Assistant</strong>
+                  <span>Live Brand Search</span>
+                </div>
+                <div class="lb-chat__progress" role="status" style="margin-bottom:12px;">
+                  ${stepsHtml}
+                </div>
+                <p style="margin:0 0 10px; font-size:13px; line-height:1.5; color:#191412;">
+                  ${msg.text}
+                </p>
+                <div class="lb-ask-results">
+                  ${productsHtml}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+
+      if (mainEl) {
+        setTimeout(() => { mainEl.scrollTop = mainEl.scrollHeight; }, 30);
+      }
+    };
+
+    const loadConversation = (convId) => {
+      const conv = PRESET_CONVERSATIONS[convId];
+      if (!conv) return;
+
+      if (convListEl) {
+        const items = convListEl.querySelectorAll('.lb-chat__history-item');
+        items.forEach(it => {
+          if (it.getAttribute('data-conv-id') === convId) {
+            it.classList.add('is-active');
+          } else {
+            it.classList.remove('is-active');
+          }
+        });
+      }
+
+      renderThread(conv.messages);
+      const lastAiMsg = [...conv.messages].reverse().find(m => m.role === 'assistant');
+      renderContextCards(lastAiMsg ? lastAiMsg.products : []);
+    };
+
+    // Load initial conversation
+    loadConversation('rust-kurta');
+
+    // Conversation switching
+    if (convListEl) {
+      convListEl.addEventListener('click', (e) => {
+        const item = e.target.closest('.lb-chat__history-item');
+        if (!item) return;
+        const convId = item.getAttribute('data-conv-id');
+        if (convId) loadConversation(convId);
+      });
+    }
+
+    // New consultation
+    if (newChatBtn) {
+      newChatBtn.addEventListener('click', () => {
+        if (convListEl) {
+          const items = convListEl.querySelectorAll('.lb-chat__history-item');
+          items.forEach(it => it.classList.remove('is-active'));
+        }
+        threadEl.innerHTML = '';
+        renderContextCards([]);
+        if (welcomeEl) welcomeEl.style.display = 'block';
+        if (inputEl) {
+          inputEl.value = '';
+          inputEl.focus();
+        }
+        showToast('New Consultation started. Type a prompt or select below.');
+      });
+    }
+
+    // Starter Prompt chips
+    const promptBtns = document.querySelectorAll('.lb-chat__prompt');
+    promptBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prompt = btn.getAttribute('data-prompt') || btn.textContent.replace('✨', '').trim();
+        if (inputEl) inputEl.value = prompt;
+        executeSearch(prompt);
+      });
+    });
+
+    // Voice Search Demo
+    if (voiceBtn) {
+      voiceBtn.addEventListener('click', () => {
+        showToast('🎙️ Listening... Speak your fashion search query');
+        setTimeout(() => {
+          const sampleQuery = 'Find obsidian black kurta for men under 8000';
+          if (inputEl) inputEl.value = sampleQuery;
+          showToast(`Voice Recognized: "${sampleQuery}"`);
+          setTimeout(() => executeSearch(sampleQuery), 600);
+        }, 1100);
+      });
+    }
+
+    // Image Search Demo
+    if (imageBtn) {
+      imageBtn.addEventListener('click', () => {
+        showToast('📷 Image Analysis: Scanning dress pattern, color palette, and embroidery weave...');
+        setTimeout(() => {
+          const sampleQuery = 'Find matching festive embroidered lawn suit from photo';
+          if (inputEl) inputEl.value = sampleQuery;
+          executeSearch(sampleQuery);
+        }, 1100);
+      });
+    }
+
+    // Dynamic Search Execution
+    const executeSearch = (rawQuery) => {
+      const query = (rawQuery || (inputEl ? inputEl.value : '')).trim();
+      if (!query) return;
+
+      if (inputEl) inputEl.value = '';
+
+      // Append user message
+      const userMsgHtml = `
+        <div class="lb-chat-msg-row lb-chat-msg-row--user">
+          <div class="lb-chat-bubble-user">
+            ${query}
+          </div>
+        </div>
+      `;
+      threadEl.insertAdjacentHTML('beforeend', userMsgHtml);
+
+      // Append animated progress / typing indicator
+      const loadingId = 'lb-ai-loading-' + Date.now();
+      const loadingHtml = `
+        <div class="lb-chat-msg-row lb-chat-msg-row--ai" id="${loadingId}">
+          <div class="lb-chat-avatar-badge" title="LibasAI">
+            <svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          </div>
+          <div class="lb-chat-bubble-ai">
+            <div class="lb-chat-ai-header">
+              <strong>LibasAI Assistant</strong>
+              <span>Processing Live Query</span>
+            </div>
+            <div class="lb-chat-typing-dots">
+              <span></span><span></span><span></span>
+              <em style="font-style:normal;font-size:12px;color:rgba(25,20,18,0.6);margin-left:6px;">Searching 80+ Pakistani brand catalogs...</em>
+            </div>
+          </div>
+        </div>
+      `;
+      threadEl.insertAdjacentHTML('beforeend', loadingHtml);
+
+      if (mainEl) mainEl.scrollTop = mainEl.scrollHeight;
+
+      // Simulated realistic model latency
+      setTimeout(() => {
+        const loadingEl = document.getElementById(loadingId);
+        if (loadingEl) loadingEl.remove();
+
+        const searchResult = performCatalogSearch(query);
+
+        const aiMsg = {
+          role: 'assistant',
+          steps: ['Understanding request', 'Searching 80+ Pakistani brands', 'Personalizing', 'Catalog matches verified'],
+          text: searchResult.answer,
+          products: searchResult.products
+        };
+
+        const aiMsgHtml = `
+          <div class="lb-chat-msg-row lb-chat-msg-row--ai">
+            <div class="lb-chat-avatar-badge" title="LibasAI">
+              <svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            </div>
+            <div class="lb-chat-bubble-ai">
+              <div class="lb-chat-ai-header">
+                <strong>LibasAI Assistant</strong>
+                <span>Live Brand Search</span>
+              </div>
+              <div class="lb-chat__progress" role="status" style="margin-bottom:12px;">
+                ${aiMsg.steps.map((s, idx, arr) => `
+                  <span class="lb-chat__step ${idx < arr.length - 1 ? 'is-done' : 'is-active'}">
+                    <span class="lb-chat__step-dot"></span>${s}
+                  </span>
+                `).join('')}
+              </div>
+              <p style="margin:0 0 10px; font-size:13px; line-height:1.5; color:#191412;">
+                ${aiMsg.text}
+              </p>
+              <div class="lb-ask-results">
+                ${aiMsg.products.map(p => `
+                  <a href="${p.url}" target="_blank" rel="noopener" class="lb-ask-result-card">
+                    <img src="${p.img}" alt="${p.brand}" class="lb-ask-result-card__img">
+                    <div class="lb-ask-result-card__body">
+                      <span class="lb-ask-result-card__brand">${p.brand}</span>
+                      <span class="lb-ask-result-card__title">${p.title}</span>
+                      <span class="lb-ask-result-card__price">${p.price}</span>
+                      <span class="lb-ask-result-card__cta">View item &rarr;</span>
+                    </div>
+                  </a>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        threadEl.insertAdjacentHTML('beforeend', aiMsgHtml);
+
+        renderContextCards(aiMsg.products);
+
+        const newConvId = 'conv-' + Date.now();
+        PRESET_CONVERSATIONS[newConvId] = {
+          id: newConvId,
+          title: query,
+          messages: [
+            { role: 'user', text: query },
+            aiMsg
+          ]
+        };
+
+        if (convListEl) {
+          const items = convListEl.querySelectorAll('.lb-chat__history-item');
+          items.forEach(it => it.classList.remove('is-active'));
+
+          const newBtn = document.createElement('button');
+          newBtn.type = 'button';
+          newBtn.className = 'lb-chat__history-item is-active';
+          newBtn.setAttribute('data-conv-id', newConvId);
+          newBtn.textContent = query.length > 24 ? query.slice(0, 23) + '…' : query;
+          convListEl.prepend(newBtn);
+        }
+
+        if (mainEl) mainEl.scrollTop = mainEl.scrollHeight;
+      }, 550);
+    };
+
+    if (formEl) {
+      formEl.addEventListener('submit', (e) => {
+        e.preventDefault();
+        executeSearch();
+      });
+    }
+  };
 
   componentWillUnmount() {
     if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
