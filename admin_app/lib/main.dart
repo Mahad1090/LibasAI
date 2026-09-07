@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/brands_screen.dart';
+import 'screens/admin_shell.dart';
 import 'theme.dart';
 
 void main() async {
@@ -21,10 +21,10 @@ class LibasAIAdminApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LibasAI Admin',
+      title: 'LibasAI Operations Admin',
       debugShowCheckedModeBanner: false,
       theme: buildTheme(),
-      home: const BrandsScreen(),
+      home: const AdminShell(),
     );
   }
 }

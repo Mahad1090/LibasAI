@@ -218,3 +218,166 @@ def publish() -> dict[str, Any]:
         if proc.returncode != 0:
             raise HTTPException(500, detail=results)
     return results
+
+
+# ---- operational & dashboard endpoints ----------------------------------------
+
+@app.get("/stats")
+def get_stats() -> dict[str, Any]:
+    brands = db.list_brands()
+    lux = sum(1 for b in brands if b.get("tier") in ("established", "luxury"))
+    em = len(brands) - lux
+
+    prod_count = 0
+    if PRODUCTS_PATH.exists():
+        with PRODUCTS_PATH.open(encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    prod_count += 1
+
+    tailors = db.list_tailors()
+    orders = db.list_orders()
+    brand_clicks = db.get_brand_clicks()
+    total_clicks = sum(brand_clicks.values())
+    queries = db.get_search_queries()
+
+    return {
+        "total_products": prod_count,
+        "total_brands": len(brands),
+        "luxury_brands": lux,
+        "emerging_brands": em,
+        "active_tailors": len(tailors),
+        "active_orders": len(orders),
+        "outbound_clicks": total_clicks,
+        "emerging_share_percent": round((em / len(brands) * 100) if brands else 48.5, 1),
+        "brand_clicks": brand_clicks,
+        "trending_queries": queries,
+    }
+
+
+@app.get("/tailors")
+def get_tailors() -> list[dict[str, Any]]:
+    return db.list_tailors()
+
+
+@app.patch("/tailors/{tailor_id}")
+def patch_tailor(tailor_id: str, body: dict[str, Any]) -> dict[str, Any]:
+    updated = db.update_tailor(tailor_id, **body)
+    if updated is None:
+        raise HTTPException(404, "tailor not found")
+    return updated
+
+
+@app.get("/orders")
+def get_orders() -> list[dict[str, Any]]:
+    return db.list_orders()
+
+
+@app.patch("/orders/{order_id}")
+def patch_order(order_id: str, body: dict[str, Any]) -> dict[str, Any]:
+    updated = db.update_order(order_id, **body)
+    if updated is None:
+        raise HTTPException(404, "order not found")
+    return updated
+
+
+@app.get("/catalog")
+def get_catalog(
+    q: Optional[str] = None,
+    brand: Optional[str] = None,
+    gender: Optional[str] = None,
+    limit: int = 60,
+) -> list[dict[str, Any]]:
+    results: list[dict[str, Any]] = []
+    if not PRODUCTS_PATH.exists():
+        return results
+
+    with PRODUCTS_PATH.open(encoding="utf-8") as fh:
+        for line in fh:
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except Exception:
+                continue
+
+            title = rec.get("title", "")
+            b_name = rec.get("brand_name", "")
+            tags = " ".join(rec.get("tags", []))
+
+            # Query filter
+            if q:
+                ql = q.lower()
+                if ql not in title.lower() and ql not in b_name.lower() and ql not in tags.lower():
+                    continue
+
+            # Brand filter
+            if brand and brand.lower() != "all" and brand.lower() not in b_name.lower():
+                continue
+
+            # Gender heuristic
+            is_men = any(k in title.lower() or k in tags.lower() for k in ["men", "kurta", "waistcoat", "sherwani", "denim", "polo", "trouser", "shirt"])
+            item_gender = "Men" if is_men else "Women"
+            if gender and gender.lower() != "all" and item_gender.lower() != gender.lower():
+                continue
+
+            images = rec.get("images", [])
+            img_url = images[0] if images else ""
+
+            results.append({
+                "id": rec.get("product_uid", ""),
+                "title": title,
+                "brand": b_name,
+                "price": int(rec.get("price_min", 0)),
+                "original_price": int(rec.get("price_max", 0)),
+                "category": tags.split(",")[0] if tags else "General",
+                "gender": item_gender,
+                "occasion": "Casual",
+                "image_url": img_url,
+                "product_url": rec.get("url", ""),
+                "in_stock": rec.get("in_stock", True),
+            })
+
+            if len(results) >= limit:
+                break
+
+    return results
+
+
+@app.get("/taxonomy")
+def get_taxonomy() -> list[dict[str, Any]]:
+    return db.list_taxonomy()
+
+
+class TaxonomyCreate(BaseModel):
+    id: Optional[str] = None
+    alias: str
+    canonical: str
+    category: str
+    weight: float = 1.0
+
+
+@app.post("/taxonomy")
+def create_taxonomy(body: TaxonomyCreate) -> dict[str, Any]:
+    tid = body.id or f"t_{db.now()[-6:]}"
+    return db.insert_taxonomy(
+        id_=tid,
+        alias=body.alias,
+        canonical=body.canonical,
+        category=body.category,
+        weight=body.weight,
+    )
+
+
+@app.delete("/taxonomy/{term_id}")
+def delete_taxonomy(term_id: str) -> dict[str, str]:
+    db.delete_taxonomy(term_id)
+    return {"status": "deleted"}
+
+
+@app.post("/clicks/{brand_name}")
+def click_brand(brand_name: str) -> dict[str, Any]:
+    db.record_brand_click(brand_name)
+    return {"status": "recorded", "clicks": db.get_brand_clicks().get(brand_name, 1)}
+
+
