@@ -130,13 +130,13 @@ body { background: var(--lb-cream); }
 .lb-mega-categories a { font-size: 14.5px; font-weight: 650; color: var(--lb-ink); padding: 6px 0; transition: color 180ms ease, transform 180ms var(--lb-ease); }
 .lb-mega-categories a:hover { color: var(--lb-burgundy); transform: translateX(4px); }
 
-.lb-mega-visual { border-radius: 3px; overflow: hidden; aspect-ratio: 4/3; margin-bottom: 16px; }
-.lb-mega-visual image-slot, .lb-mega-visual img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--lb-ease); }
+.lb-mega-visual { border-radius: 4px; overflow: hidden; aspect-ratio: 4/3; max-height: 240px; margin-bottom: 16px; background: #E8DCCB; }
+.lb-mega-visual image-slot, .lb-mega-visual img { display: block; width: 100%; height: 100%; max-height: 240px; object-fit: cover; transition: transform 500ms var(--lb-ease); }
 .lb-mega-visual:hover image-slot, .lb-mega-visual:hover img { transform: scale(1.035); }
 
-.lb-mega-feature-card { background: var(--lb-tint); border-radius: 3px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; transition: background 220ms ease; }
+.lb-mega-feature-card { background: var(--lb-tint); border-radius: 4px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; transition: background 220ms ease; }
 .lb-mega-feature-card:hover { background: #EEDCC5; }
-.lb-mega-feature-card strong { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: var(--lb-ink); }
+.lb-mega-feature-card strong { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 15.5px; color: var(--lb-ink); }
 .lb-mega-feature-card a { font-size: 12.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--lb-burgundy); display: inline-flex; align-items: center; gap: 6px; width: fit-content; transition: gap 180ms ease; }
 .lb-mega-feature-card a:hover { gap: 10px; }
 

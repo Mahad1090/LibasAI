@@ -90,6 +90,63 @@ brands:
     tier: emerging
     currency: PKR
 
+  # ---- pakistani menswear brands ------------------------------------------
+  - id: junaid_jamshed
+    name: J. Junaid Jamshed
+    type: shopify
+    base_url: https://www.junaidjamshed.com
+    tier: established
+    currency: PKR
+
+  - id: diners
+    name: Diners
+    type: shopify
+    base_url: https://diners.com.pk
+    tier: established
+    currency: PKR
+
+  - id: edenrobe
+    name: Edenrobe
+    type: shopify
+    base_url: https://edenrobe.com
+    tier: established
+    currency: PKR
+
+  - id: charcoal
+    name: Charcoal
+    type: shopify
+    base_url: https://charcoal.com.pk
+    tier: established
+    currency: PKR
+
+  - id: amir_adnan
+    name: Amir Adnan
+    type: shopify
+    base_url: https://amiradnan.com
+    tier: established
+    currency: PKR
+
+  - id: ismail_farid
+    name: Ismail Farid
+    type: shopify
+    base_url: https://ismailfarid.com
+    tier: emerging
+    currency: PKR
+
+  - id: the_cambridge_shop
+    name: Cambridge
+    type: shopify
+    base_url: https://thecambridgeshop.com
+    tier: established
+    currency: PKR
+
+  - id: mohtaram
+    name: Mohtaram
+    type: shopify
+    base_url: https://mohtaram.com
+    tier: emerging
+    currency: PKR
+
   # ---- not on Shopify: needs a dedicated adapter -------------------------
   - id: khaadi
     name: Khaadi
@@ -98,3 +155,4 @@ brands:
     tier: established
     currency: PKR
     enabled: false
+
