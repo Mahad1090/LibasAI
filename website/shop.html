@@ -563,7 +563,7 @@
               <div class="lb-search-col">
                 <h4>Browse by Department</h4>
                 <div class="lb-search-chips">
-                  <a href="/shop.html?cat=men" class="lb-search-chip">Men</a>
+                  <a href="/men.html" class="lb-search-chip">Men</a>
                   <a href="/shop.html?cat=women" class="lb-search-chip">Women</a>
                   <a href="/shop.html?cat=kurta" class="lb-search-chip">Kurta</a>
                   <a href="/shop.html?cat=shalwar-kameez" class="lb-search-chip">Shalwar Kameez</a>
@@ -611,7 +611,7 @@
           </button>
           <div class="lb-collapse lb-accordion__panel">
             <div class="lb-collapse-inner">
-              <a href="/shop.html?cat=men" style="color:#840E34; font-weight:800;">Men's Collection &rarr;</a>
+              <a href="/men.html" style="color:#840E34; font-weight:800;">Men's Collection &rarr;</a>
               <a href="/shop.html?cat=women" style="color:#840E34; font-weight:800;">Women's Collection &rarr;</a>
               <a href="/shop.html?cat=new-arrivals">New Arrivals</a>
               <a href="/shop.html?cat=eid">Eid Festive 2026</a>
@@ -690,7 +690,7 @@
       <!-- Department Quick Switcher Tabs -->
       <div class="lb-quick-filters" style="margin-top:24px;">
         <button type="button" class="lb-quick-pill is-active" data-cat="all">All Pieces</button>
-        <button type="button" class="lb-quick-pill" data-cat="men">👔 Men's Collection</button>
+        <a href="/men.html" class="lb-quick-pill" style="text-decoration:none; display:inline-flex; align-items:center;">👔 Men's Collection</a>
         <button type="button" class="lb-quick-pill" data-cat="women">👗 Women's Collection</button>
         <button type="button" class="lb-quick-pill" data-cat="shalwar-kameez">Kameez Shalwar</button>
         <button type="button" class="lb-quick-pill" data-cat="kurta">Kurta</button>
@@ -711,7 +711,7 @@
       <div class="lb-filter-sec">
         <h4>Department</h4>
         <label class="lb-filter-item"><input type="radio" name="filter-gender" value="all" checked> All Fashion</label>
-        <label class="lb-filter-item"><input type="radio" name="filter-gender" value="men"> Men's Wear</label>
+        <label class="lb-filter-item"><input type="radio" name="filter-gender" value="men" onchange="window.location.href='/men.html'"> Men's Wear</label>
         <label class="lb-filter-item"><input type="radio" name="filter-gender" value="women"> Women's Wear</label>
       </div>
 
@@ -1161,6 +1161,11 @@
       var urlParams = new URLSearchParams(window.location.search);
       var initialCat = urlParams.get('cat') || 'all';
       var initialGender = urlParams.get('gender') || 'all';
+
+      if (initialCat === 'men' || initialGender === 'men') {
+        window.location.replace('men.html');
+        return;
+      }
 
       var activeCat = initialCat;
       var activeGender = initialGender;

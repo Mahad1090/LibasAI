@@ -519,6 +519,10 @@ class Component extends DCLogic {
       else if (path.includes('/casual')) cat = 'casual';
       else cat = 'kurta';
     }
+    if (cat === 'men') {
+      window.location.replace('men.html');
+      return;
+    }
     this.applyCategory(cat);
   };
 

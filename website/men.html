@@ -1,0 +1,3033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pakistani Menswear Directory — Shalwar Kameez, Kurtas, Waistcoats | LibasAI</title>
+  <meta name="description" content="Discover authentic Pakistani menswear: Shalwar Kameez suits, festive kurtas, waistcoats, unstitched Latha & Boski fabrics, Sherwanis, and tailored blazers from J. Junaid Jamshed, Amir Adnan, Ismail Farid, Diners, Charcoal, Edenrobe, and Cambridge.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <script src="./image-slot.js"></script>
+  <style>
+    /* Catalog & Shop Page Styles */
+    .lb-shop-header {
+      background: #F3E7D6;
+      border-bottom: 1px solid rgba(25,20,18,0.08);
+      padding: clamp(28px, 4vw, 44px) 0;
+    }
+
+    .lb-shop-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 36px;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 36px clamp(20px, 4vw, 56px) 80px;
+    }
+
+    @media (max-width: 960px) {
+      .lb-shop-layout {
+        grid-template-columns: 1fr;
+      }
+      .lb-shop-sidebar {
+        display: none;
+      }
+      .lb-shop-sidebar.is-mobile-open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 150;
+        background: #F7EDDF;
+        padding: 24px;
+        overflow-y: auto;
+      }
+    }
+
+    .lb-shop-sidebar {
+      background: #FAF6F0;
+      border: 1px solid rgba(25,20,18,0.08);
+      border-radius: 6px;
+      padding: 24px 20px;
+      height: fit-content;
+      position: sticky;
+      top: 90px;
+    }
+
+    .lb-filter-sec {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(25,20,18,0.08);
+    }
+
+    .lb-filter-sec:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .lb-filter-sec h4 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin: 0 0 12px;
+    }
+
+    .lb-filter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: rgba(25,20,18,0.78);
+      margin-bottom: 9px;
+      cursor: pointer;
+      user-select: none;
+      transition: color 160ms ease;
+    }
+
+    .lb-filter-item:hover {
+      color: #840E34;
+    }
+
+    .lb-filter-item input[type="checkbox"],
+    .lb-filter-item input[type="radio"] {
+      accent-color: #840E34;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .lb-catalog-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(25,20,18,0.08);
+    }
+
+    .lb-catalog-count {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(25,20,18,0.65);
+    }
+
+    .lb-quick-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lb-quick-pill {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(25,20,18,0.12);
+      background: #FFF;
+      color: #191412;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 180ms ease;
+    }
+
+    .lb-quick-pill:hover,
+    .lb-quick-pill.is-active {
+      background: #840E34;
+      color: #F7EDDF;
+      border-color: #840E34;
+    }
+
+    /* Product Grid */
+    .lb-catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .lb-card {
+      background: #FFF;
+      border: 1px solid rgba(25,20,18,0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 16px rgba(25,20,18,0.03);
+      position: relative;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 200ms ease;
+    }
+
+    .lb-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(132,14,52,0.1);
+      border-color: rgba(132,14,52,0.25);
+    }
+
+    .lb-card__img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: #F3E7D6;
+      overflow: hidden;
+    }
+
+    .lb-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
+
+    .lb-card:hover .lb-card__img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .lb-card__badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #840E34;
+      color: #F7EDDF;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 12px;
+      z-index: 2;
+    }
+
+    .lb-card__badge--men {
+      background: #191412;
+    }
+
+    .lb-card__wish {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #191412;
+      z-index: 2;
+      transition: all 180ms ease;
+    }
+
+    .lb-card__wish:hover,
+    .lb-card__wish.is-active {
+      color: #840E34;
+      background: #FFF;
+    }
+
+    .lb-card__body {
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .lb-card__brand {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #840E34;
+      margin-bottom: 4px;
+    }
+
+    .lb-card__title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #191412;
+      margin: 0 0 8px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 38px;
+    }
+
+    .lb-card__price {
+      font-size: 15px;
+      font-weight: 800;
+      color: #840E34;
+      margin-top: auto;
+      margin-bottom: 12px;
+    }
+
+    .lb-card__actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(25,20,18,0.06);
+    }
+
+    .lb-card__store-btn {
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #840E34;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lb-card__store-btn:hover {
+      text-decoration: underline;
+    }
+
+    .lb-card__stitch-btn {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(25,20,18,0.65);
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(25,20,18,0.04);
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .lb-card__stitch-btn:hover {
+      background: rgba(132,14,52,0.08);
+      color: #840E34;
+    }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-mark" viewBox="0 0 24 24"><path d="M12 4v16M5 8l14 8M19 8L5 16"/></symbol>
+      <symbol id="lb-i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+      <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="lb-i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="lb-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="lb-i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+      <symbol id="lb-i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-sparkles" viewBox="0 0 24 24"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/></symbol>
+      <symbol id="lb-i-sliders" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
+      <symbol id="lb-i-hanger" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8L2.4 16.2A2 2 0 0 0 4 19h16a2 2 0 0 0 1.6-2.8L14.4 6.8c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3z"/><circle cx="12" cy="19" r="1"/></symbol>
+      <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="lb-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger is-current" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">
+            Discover
+          </button>
+          <a href="/brands.html" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">
+            Brands
+          </a>
+          <button type="button" id="lb-foryou-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-foryou">
+            For You
+          </button>
+          <a href="/ai-features.html" id="lb-features-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-features">
+            AI Features
+          </a>
+          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">
+            Find Tailors
+          </a>
+          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson); font-weight:700;">
+            Get Stitched
+          </a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <button type="button" id="lb-search-trigger" class="lb-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lb-search-overlay" aria-label="Search">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+          </button>
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Stitching Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/ai/ask" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            Ask LibasAI
+          </a>
+          <button type="button" id="lb-burger-btn" class="lb-burger" aria-label="Open menu">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-menu"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mega menu -->
+      <div class="lb-collapse lb-mega-host">
+        <div class="lb-collapse-inner">
+          <div class="lb-mega-stack">
+
+                                    <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
+              <div class="lb-mega-inner">
+                <div>
+                  <h3 class="lb-mega-heading">Discover</h3>
+                  <div class="lb-mega-links">
+                    <a href="/discover/new-arrivals">New Arrivals</a>
+                    <a href="/discover/trending">Trending</a>
+                    <a href="/for-you">For You</a>
+                    <a href="/discover/eid">Eid Collection</a>
+                    <a href="/discover/wedding">Wedding Edit</a>
+                    <a href="/discover/formal">Formal Wear</a>
+                    <a href="/discover/casual">Casual Pret</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-subhead">Shop by category</div>
+                  <div class="lb-mega-categories">
+                    <a href="/shop/women">Women</a>
+                    <a href="/shop/men">Men</a>
+                    <a href="/shop/pret">Pret</a>
+                    <a href="/shop/unstitched">Unstitched</a>
+                    <a href="/shop/kurta">Kurta</a>
+                    <a href="/shop/shalwar-kameez">Shalwar Kameez</a>
+                    <a href="/shop/lawn">Lawn</a>
+                    <a href="/shop/accessories">Accessories</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-visual"><image-slot id="menu-discover-visual" shape="rect" placeholder="Editorial: contemporary Pakistani outfit, warm studio light" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot></div>
+                  <div class="lb-mega-feature-card">
+                    <strong>Ask LibasAI to find your look</strong>
+                    <a href="/ai/ask">Start AI Search →</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-brands" class="lb-mega-panel" role="group" aria-label="Brands">
+              <div class="lb-mega-inner">
+                <div>
+                  <h3 class="lb-mega-heading">Brands</h3>
+                  <div class="lb-mega-links">
+                    <a href="/brands.html">All Brands (80+)</a>
+                    <a href="/brands.html?tab=popular">Popular Brands</a>
+                    <a href="/brands.html?tab=emerging">Emerging Brands</a>
+                    <a href="/brands.html?tab=local">Discover Local</a>
+                    <a href="/brands.html?tab=men">Men's Brands</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-subhead">Featured Pakistani labels</div>
+                  <div class="lb-brand-list">
+                    <a href="/brands.html?brand=sana-safinaz" class="lb-brand-row"><span>Sana Safinaz</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands.html?brand=junaid-jamshed" class="lb-brand-row"><span>J. Junaid Jamshed</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands.html?brand=diners" class="lb-brand-row"><span>Diners</span><span class="lb-brand-row__arrow">→</span></a>
+                    <a href="/brands.html?brand=gul-ahmed" class="lb-brand-row"><span>Gul Ahmed</span><span class="lb-brand-row__arrow">→</span></a>
+                  </div>
+                </div>
+                <div class="lb-spotlight">
+                  <h4>Discover Local</h4>
+                  <p>Meet emerging Pakistani labels worth discovering.</p>
+                  <a href="/brands.html?tab=local">Explore Local Brands →</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-foryou" class="lb-mega-panel" role="group" aria-label="For You">
+              <div class="lb-mega-inner">
+                <div>
+                  <div class="lb-mega-eyebrow">Personalized AI</div>
+                  <h3 class="lb-mega-heading">Curated For You</h3>
+                  <div class="lb-mega-links">
+                    <a href="/for-you/picks">Personalized Picks</a>
+                    <a href="/for-you/recently-viewed">Recently Viewed</a>
+                    <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
+                    <a href="/for-you/budget">Within Your Budget</a>
+                    <a href="/for-you" style="color:var(--lb-burgundy); font-weight:800; margin-top:6px;">Your Style Feed &rarr;</a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-subhead">Explore by your preferences</div>
+                  <div class="lb-brand-list">
+                    <a href="/for-you/picks" class="lb-brand-row"><span>Lawn &amp; Summer Pret</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/for-you/picks" class="lb-brand-row"><span>Men's Kurta &amp; Festive</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/for-you/budget" class="lb-brand-row"><span>Under PKR 12,000</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                    <a href="/get-stitched.html" class="lb-brand-row"><span>Bespoke Tailoring Picks</span><span class="lb-brand-row__arrow">&rarr;</span></a>
+                  </div>
+                </div>
+                <div>
+                  <div class="lb-mega-visual">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Curated For You" style="width:100%; height:100%; object-fit:cover; display:block;">
+                  </div>
+                  <div class="lb-mega-feature-card">
+                    <strong>Trained on your taste &amp; fit</strong>
+                    <a href="/for-you">Open Your Style Radar &rarr;</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="AI Features">
+              <div class="lb-mega-inner lb-mega-inner--features">
+                <div class="lb-features-head">
+                  <div class="lb-mega-eyebrow" style="text-align:center;">AI Features</div>
+                  <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
+                </div>
+                <div class="lb-features-grid">
+                  <a href="/ai/ask" class="lb-feature-card">
+                    <span class="lb-feature-num">01</span>
+                    <strong>Ask LibasAI</strong>
+                    <p>Natural-language conversational fashion search.</p>
+                  </a>
+                  <a href="/ai/image-search" class="lb-feature-card">
+                    <span class="lb-feature-num">02</span>
+                    <strong>Image Search</strong>
+                    <p>Upload a look photo and find visually similar pieces.</p>
+                  </a>
+                  <a href="/ai/compare" class="lb-feature-card">
+                    <span class="lb-feature-num">03</span>
+                    <strong>Compare</strong>
+                    <p>Compare cuts, fabrics, and prices across brands.</p>
+                  </a>
+                  <a href="/ai/outfit-builder" class="lb-feature-card">
+                    <span class="lb-feature-num">04</span>
+                    <strong>Outfit Builder</strong>
+                    <p>Coordinate complete looks with AI color harmony.</p>
+                  </a>
+                </div>
+                <a href="/ai" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">
+                  <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+                  Explore All AI Features →
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Search overlay -->
+      <div id="lb-search-overlay" class="lb-collapse lb-search-overlay" role="search" aria-label="Site search">
+        <div class="lb-collapse-inner">
+          <div class="lb-search-inner">
+            <h2 class="lb-search-label">What are you looking for?</h2>
+            <form action="/ai/ask" method="GET" class="lb-search-field" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(document.getElementById('lb-search-input').value);">
+              <svg class="lb-icon" style="width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+              <input id="lb-search-input" type="text" placeholder="Try: Men's navy kurta or lawn 3-piece suit..." aria-label="Search LibasAI">
+              <a href="/ai/image-search" class="lb-icon-btn" aria-label="Search by image">
+                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg>
+              </a>
+              <button type="submit" class="lb-icon-btn" aria-label="Search">
+                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+              </button>
+            </form>
+            <div class="lb-search-cols">
+              <div class="lb-search-col">
+                <h4>Men's Top Searches</h4>
+                <a href="/shop.html?cat=shalwar-kameez&gender=men">Men's Kameez Shalwar</a>
+                <a href="/shop.html?cat=kurta&gender=men">J. Festive Men's Kurta</a>
+                <a href="/shop.html?cat=unstitched&gender=men">Unstitched Latha Cotton</a>
+              </div>
+              <div class="lb-search-col">
+                <h4>Women's Top Searches</h4>
+                <a href="/shop.html?cat=lawn">Sana Safinaz Luxury Lawn</a>
+                <a href="/shop.html?cat=wedding">Bridal Lehenga &amp; Formals</a>
+                <a href="/shop.html?cat=pret">Beechtree 2-Piece Prêt</a>
+              </div>
+              <div class="lb-search-col">
+                <h4>Browse by Department</h4>
+                <div class="lb-search-chips">
+                  <a href="/men.html" class="lb-search-chip">Men</a>
+                  <a href="/shop.html?cat=women" class="lb-search-chip">Women</a>
+                  <a href="/shop.html?cat=kurta" class="lb-search-chip">Kurta</a>
+                  <a href="/shop.html?cat=shalwar-kameez" class="lb-search-chip">Shalwar Kameez</a>
+                  <a href="/shop.html?cat=unstitched" class="lb-search-chip">Unstitched</a>
+                  <a href="/shop.html?cat=eid" class="lb-search-chip">Eid Collection</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="lb-mobile__top">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+        <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
+          <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-close"></use></svg>
+        </button>
+      </div>
+      <div class="lb-mobile__body">
+        <div class="lb-mobile__icons">
+          <a href="/ai/ask">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+            Search
+          </a>
+          <a href="/wishlist">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+            Wishlist
+          </a>
+          <a href="/account">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+            Profile
+          </a>
+        </div>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Discover
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/men.html" style="color:#840E34; font-weight:800;">Men's Collection &rarr;</a>
+              <a href="/shop.html?cat=women" style="color:#840E34; font-weight:800;">Women's Collection &rarr;</a>
+              <a href="/shop.html?cat=new-arrivals">New Arrivals</a>
+              <a href="/shop.html?cat=eid">Eid Festive 2026</a>
+              <a href="/shop.html?cat=kurta">Kurta Collection</a>
+              <a href="/shop.html?cat=shalwar-kameez">Shalwar Kameez</a>
+              <a href="/shop.html?cat=unstitched">Unstitched Fabrics</a>
+              <a href="/shop.html?cat=pret">Prêt Ready-to-Wear</a>
+              <a href="/shop.html?cat=wedding">Wedding &amp; Bridal</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Brands
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/brands.html">All Brands (80+)</a>
+              <a href="/brands.html?tab=popular">Popular Brands</a>
+              <a href="/brands.html?tab=emerging">Emerging Brands</a>
+              <a href="/brands.html?tab=men">Men's Brands</a>
+              <a href="/brands.html?tab=local">Discover Local</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="/for-you" class="lb-mobile__simple">For You</a>
+
+        <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
+          AI Features Suite
+          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
+        </a>
+
+        <a href="/tailors.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
+          Find Tailors
+          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
+        </a>
+
+        <a href="/get-stitched.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-crimson); display:flex; justify-content:space-between; align-items:center;">
+          Get Stitched
+          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
+        </a>
+      </div>
+      <div class="lb-mobile__footer">
+        <a href="/ai/ask" class="lb-cta lb-cta--wide">
+          <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          Ask LibasAI
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENSWEAR SHOP HEADER -->
+  <header class="lb-shop-header">
+    <div class="lb-wrap">
+      <div class="lb-breadcrumb" style="margin-bottom:12px;">
+        <a href="/" style="color:rgba(25,20,18,0.55); text-decoration:none;">Home</a>
+        <span style="margin:0 8px; color:rgba(25,20,18,0.35);">/</span>
+        <a href="/shop.html" style="color:rgba(25,20,18,0.55); text-decoration:none;">Shop</a>
+        <span style="margin:0 8px; color:rgba(25,20,18,0.35);">/</span>
+        <span id="lb-bc-active" style="color:#840E34; font-weight:700;">Men's Collection</span>
+      </div>
+
+      <div class="lb-reveal is-visible">
+        <div id="lb-cat-eyebrow" class="lb-eyebrow">Pakistani Menswear Directory</div>
+        <h1 id="lb-cat-title" class="lb-h1" style="font-size:clamp(30px, 3.8vw, 44px); margin-bottom:10px;">
+          Men's Collection
+        </h1>
+        <p id="lb-cat-desc" class="lb-lead" style="max-width:760px; margin:0; font-size:15px; color:rgba(25,20,18,0.7);">
+          Discover premium Pakistani men's fashion: Shalwar Kameez suits, festive Kurtas, unstitched Latha &amp; Boski fabrics, tailored waistcoats, sherwanis, and blazers from J. Junaid Jamshed, Amir Adnan, Ismail Farid, Diners, Charcoal, Edenrobe, and Cambridge.
+        </p>
+      </div>
+
+      <!-- Pure Menswear Category Quick Switcher Tabs -->
+      <div class="lb-quick-filters" style="margin-top:24px;">
+        <button type="button" class="lb-quick-pill is-active" data-cat="all">All Menswear</button>
+        <button type="button" class="lb-quick-pill" data-cat="shalwar-kameez">Kameez Shalwar</button>
+        <button type="button" class="lb-quick-pill" data-cat="kurta">Kurtas &amp; Tunics</button>
+        <button type="button" class="lb-quick-pill" data-cat="waistcoat">Waistcoats</button>
+        <button type="button" class="lb-quick-pill" data-cat="unstitched">Unstitched Latha &amp; Boski</button>
+        <button type="button" class="lb-quick-pill" data-cat="sherwani">Sherwani &amp; Prince Coats</button>
+        <button type="button" class="lb-quick-pill" data-cat="blazer">Tailored Blazers</button>
+        <button type="button" class="lb-quick-pill" data-cat="eid">🌙 Eid Festive</button>
+        <button type="button" class="lb-quick-pill" data-cat="wedding">Wedding &amp; Groom</button>
+        <button type="button" class="lb-quick-pill" data-cat="casual">Casual Daily Shirts</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CATALOG CONTENT -->
+  <div class="lb-shop-layout">
+    
+    <!-- SIDEBAR FILTERS (ENTIRELY MEN ORIENTED) -->
+    <aside class="lb-shop-sidebar">
+      <div class="lb-filter-sec">
+        <h4>Wardrobe Type</h4>
+        <label class="lb-filter-item"><input type="radio" name="filter-wardrobe" value="all" checked> All Menswear</label>
+        <label class="lb-filter-item"><input type="radio" name="filter-wardrobe" value="traditional"> Eastern Traditional</label>
+        <label class="lb-filter-item"><input type="radio" name="filter-wardrobe" value="festive"> Festive &amp; Groomswear</label>
+        <label class="lb-filter-item"><input type="radio" name="filter-wardrobe" value="western"> Smart Casual &amp; Western</label>
+      </div>
+
+      <div class="lb-filter-sec">
+        <h4>Garment Style</h4>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="shalwar-kameez"> Kameez Shalwar Suits</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="kurta"> Kurtas &amp; Tunics</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="waistcoat"> Waistcoats &amp; Vests</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="unstitched"> Unstitched Latha &amp; Boski</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="sherwani"> Sherwanis &amp; Prince Coats</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="blazer"> Blazers &amp; Tailored Suits</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-style" value="casual"> Casual Shirts &amp; Polos</label>
+      </div>
+
+      <div class="lb-filter-sec">
+        <h4>Occasion</h4>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-occasion" value="eid"> Eid Festive 2026</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-occasion" value="wedding"> Wedding &amp; Groomswear</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-occasion" value="formal"> Formal &amp; Black Tie</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-occasion" value="casual"> Casual Daily Wear</label>
+      </div>
+
+      <div class="lb-filter-sec">
+        <h4>Pakistani Men's Brands</h4>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="J. Junaid Jamshed"> J. Junaid Jamshed</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="Amir Adnan"> Amir Adnan</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="Ismail Farid"> Ismail Farid</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="Edenrobe"> Edenrobe</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="Charcoal"> Charcoal</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="Diners"> Diners</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-brand" value="Cambridge"> Cambridge</label>
+      </div>
+
+      <div class="lb-filter-sec">
+        <h4>Fabric &amp; Craft</h4>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-fabric" value="cotton"> Pure Cotton &amp; Latha</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-fabric" value="wash-wear"> Wash &amp; Wear Poly-Viscose</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-fabric" value="boski"> Pure Boski Silk</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-fabric" value="silk"> Jamawar &amp; Raw Silk</label>
+        <label class="lb-filter-item"><input type="checkbox" name="filter-fabric" value="wool"> Linen &amp; Tropical Wool</label>
+      </div>
+
+      <button type="button" id="lb-clear-filters" class="lb-quick-pill" style="width:100%; text-align:center; margin-top:8px;">Reset All Filters</button>
+    </aside>
+
+    <!-- PRODUCT CATALOG LISTING -->
+    <main>
+      <div class="lb-catalog-top">
+        <span id="lb-product-count" class="lb-catalog-count">Showing 105 pieces across 7 brands</span>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <label style="font-size:12.5px; font-weight:700; color:rgba(25,20,18,0.6);">Sort:</label>
+          <select id="lb-sort-select" class="lb-sort-select" style="padding:6px 12px; border-radius:4px; font-family:'Manrope',sans-serif; font-size:12.5px; border:1px solid rgba(25,20,18,0.15); background:#FFF;">
+            <option value="featured">Recommended</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="lb-catalog-grid" class="lb-catalog-grid">
+        <!-- Populated dynamically by script below -->
+      </div>
+    </main>
+
+  </div>
+<!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Tailor Network</h4>
+        <a href="/tailors.html">Find Master Tailors</a>
+        <a href="/get-stitched.html">Get Your Suit Stitched</a>
+        <a href="/my-requests.html">My Stitching Orders</a>
+        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>AI Features</h4>
+        <a href="/ai-features.html">AI Features Hub</a>
+        <a href="/image-search.html">Visual Image Search</a>
+        <a href="/compare.html">Multi-Brand Compare</a>
+        <a href="/outfit-builder.html">AI Outfit Builder</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/brands.html">Brands</a>
+        <a href="/about.html">About LibasAI</a>
+        <a href="/contact.html">Contact Us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project &middot; 2026&ndash;2027 &middot; Areeba Waqar, Mahad Malik &amp; M. Shayan Asad</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+  <!-- PURE MENSWEAR CATALOG DATA & ENGINE SCRIPT -->
+  <script>
+    (function() {
+      var PRODUCTS = [
+  {
+    "id": "amir_adnan:7119683321920",
+    "brand": "Amir Adnan",
+    "title": "PV Navy Blazer Slim Fit Plain Kameez Shalwar",
+    "price": 9000,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747",
+    "url": "https://amiradnan.com/products/poly-viscose-navy-blazer-slim-fit-suit",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "amir_adnan:6824972517440",
+    "brand": "Amir Adnan",
+    "title": "PV Maluki Navy Blazer Slim Fit Plain Kurta Pajama",
+    "price": 7000,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202",
+    "url": "https://amiradnan.com/products/basic-poly-viscose-maluki-navy-blazer-slim-fit-suit-1",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "amir_adnan:6749881860160",
+    "brand": "Amir Adnan",
+    "title": "PV Navy Blazer Slim Fit Plain Kurta Pajama",
+    "price": 7500,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/FG-0002328-NavyBlazer_1.jpg?v=1696932825",
+    "url": "https://amiradnan.com/products/basic-poly-viscose-navy-blazer-slim-fit-plain-suit-1",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "amir_adnan:7270633275456",
+    "brand": "Amir Adnan",
+    "title": "Slim Fit Emb Shirt Collar Suit",
+    "price": 20000,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackKameezShalwar.jpg?v=1784021153",
+    "url": "https://amiradnan.com/products/slim-fit-emb-shirt-collar-suit",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "amir_adnan:7269834522688",
+    "brand": "Amir Adnan",
+    "title": "Classic Fit Emb Shirt Collar Suit",
+    "price": 17500,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/ClassicFitEmbShirtCollarSuit.jpg?v=1786944952",
+    "url": "https://amiradnan.com/products/classic-fit-emb-shirt-collar-suit-1",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "amir_adnan:6920526823488",
+    "brand": "Amir Adnan",
+    "title": "Men's Green Cotton Polo T-Shirt",
+    "price": 3660,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "cotton",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Men_sGreenCottonPoloT-Shirt.jpg?v=1783599865",
+    "url": "https://amiradnan.com/products/basic-pique-cuban-green-polo-t-shirt",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "amir_adnan:7207751319616",
+    "brand": "Amir Adnan",
+    "title": "PV Cloud Dancer Slim Fit Plain Kurta Pajama",
+    "price": 8250,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseCloudDancerSlimFitSuit.png?v=1773121307",
+    "url": "https://amiradnan.com/products/poly-viscose-cloud-dancer-slim-fit-suit-8",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "amir_adnan:7196613279808",
+    "brand": "Amir Adnan",
+    "title": "PV Brown Slim Fit Plain Kurta Pajama",
+    "price": 10000,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseBrownSlimFitSuit_2.jpg?v=1769064468",
+    "url": "https://amiradnan.com/products/poly-viscose-brown-slim-fit-suit",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "amir_adnan:7177971761216",
+    "brand": "Amir Adnan",
+    "title": "PV Wine Tasting Modern Fit Emb Kurta Pajama",
+    "price": 7250,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseWineTastingModernFitPlainSuit_1.png?v=1763124173",
+    "url": "https://amiradnan.com/products/classic-poly-viscose-wine-tasting-modern-fit-plain-suit-copy",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "amir_adnan:7217580867648",
+    "brand": "Amir Adnan",
+    "title": "PV Tap Shoe Classic Fit Plain Kameez Shalwar",
+    "price": 10000,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseTapShoeClassicFitSuit.jpg?v=1774673279",
+    "url": "https://amiradnan.com/products/poly-viscose-tap-shoe-classic-fit-suit-10",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "amir_adnan:7217580310592",
+    "brand": "Amir Adnan",
+    "title": "PV Ebony Classic Fit Plain Kameez Shalwar",
+    "price": 10000,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseEbonyClassicFitSuit.png?v=1774672152",
+    "url": "https://amiradnan.com/products/poly-viscose-ebony-classic-fit-suit",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "amir_adnan:7217580408896",
+    "brand": "Amir Adnan",
+    "title": "PV Navy Peony Classic Fit Plain Kameez Shalwar",
+    "price": 10000,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyPeonyClassicFitSuit.jpg?v=1774672433",
+    "url": "https://amiradnan.com/products/poly-viscose-navy-peony-classic-fit-suit",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "amir_adnan:7133095493696",
+    "brand": "Amir Adnan",
+    "title": "Premium Karandi Jamawar Tap Shoe  Embroidered Sherwani",
+    "price": 80000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/0002_DSC00024.png?v=1750335693",
+    "url": "https://amiradnan.com/products/premium-karandi-jamawar-tap-shoe-embroidered-sherwani",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "amir_adnan:7145642262592",
+    "brand": "Amir Adnan",
+    "title": "Premium Velvet Tap Shoe Embroidered Sherwani",
+    "price": 200000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/0004_DSC09698.png?v=1750491435",
+    "url": "https://amiradnan.com/products/premium-velvet-tap-shoe-embroidered-sherwani",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "amir_adnan:7030080045120",
+    "brand": "Amir Adnan",
+    "title": "Premium Zari Karandi Jamawar Creme Brulee Couture Sherwani",
+    "price": 55000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PremiumZariKarandiJamawarCremeBruleeCoutureSherwani_4.jpg?v=1730965941",
+    "url": "https://amiradnan.com/products/premium-jamawar-creme-brulee-couture-sherwani",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "amir_adnan:7220592214080",
+    "brand": "Amir Adnan",
+    "title": "Jute Red Dahlia Traditional Waistcoat",
+    "price": 12000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/JuteRedDahliaTraditionalWaistcoat_4.jpg?v=1741154793",
+    "url": "https://amiradnan.com/products/jute-red-dahlia-traditional-waistcoat-1",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "amir_adnan:6844498182208",
+    "brand": "Amir Adnan",
+    "title": "Premium Jamawar Tap Shoe Traditional Waistcoat",
+    "price": 12000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackJamawarWaistcoat.jpg?v=1775820055",
+    "url": "https://amiradnan.com/products/premium-jamawar-tap-shoe-traditional-waistcoat",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "amir_adnan:7280650911808",
+    "brand": "Amir Adnan",
+    "title": "Crushed Raw Silk Plain Waistcoat",
+    "price": 15000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "silk",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/CrushedRawSilkPlainWaistcoat_1.jpg?v=1787826496",
+    "url": "https://amiradnan.com/products/crushed-raw-silk-plain-waistcoat",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "the_cambridge_shop:10366267031847",
+    "brand": "Cambridge",
+    "title": "LINEN BLAZER - NAVY BLUE",
+    "price": 39995,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "linen",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/BLZI26-04Blue_Resize_31ebfacd-bdf5-4883-bc15-0c5472fc06d4.jpg?v=1788432598",
+    "url": "https://thecambridgeshop.com/products/ablaze-blzi26-04-navy-blue",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "the_cambridge_shop:10366266605863",
+    "brand": "Cambridge",
+    "title": "OTTOMAN CROSS SWEATSHIRT BLACK",
+    "price": 5295,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/W26SCO-01Black_Resize.jpg?v=1788422140",
+    "url": "https://thecambridgeshop.com/products/full-sleeves-ottoman-sweatshirt-w26sco01-black",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "the_cambridge_shop:10313830531367",
+    "brand": "Cambridge",
+    "title": "COTTON JERSEY CREW NECK T-SHIRT - PACK OF 3",
+    "price": 4495,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "cotton",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/0001_websizedummy_0001_11copy_15f09779-323c-47b7-8e8a-471b904565f0.webp?v=1785316379",
+    "url": "https://thecambridgeshop.com/products/cotton-crew-neck-ucjc26-4-white",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "the_cambridge_shop:10257867374887",
+    "brand": "Cambridge",
+    "title": "CREW NECK T-SHIRT",
+    "price": 1595,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/banyan.webp?v=1782198532",
+    "url": "https://thecambridgeshop.com/products/inner-crew-neck-white-ucr26-01",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "the_cambridge_shop:10249574842663",
+    "brand": "Cambridge",
+    "title": "CHIKANKARI KURTA",
+    "price": 10995,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/DSC00140copy.jpg?v=1783936685",
+    "url": "https://thecambridgeshop.com/products/chikankari-kurta-akc2606-black",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "the_cambridge_shop:10263922573607",
+    "brand": "Cambridge",
+    "title": "BASIC FANCY SHALWAR SUIT",
+    "price": 9995,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/SkyBlue.jpg?v=1784798695",
+    "url": "https://thecambridgeshop.com/products/basic-summer-fancy-shalwar-suit-wwsf2617-light-blue",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "the_cambridge_shop:9983661146407",
+    "brand": "Cambridge",
+    "title": "BASIC SHALWAR KAMEEZ",
+    "price": 9196,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/1_57409eda-6873-4275-ac3d-f860e78acd49.jpg?v=1761820742",
+    "url": "https://thecambridgeshop.com/products/basic-winter-wwb-2518",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "the_cambridge_shop:9037449986343",
+    "brand": "Cambridge",
+    "title": "Cotton Soul Shalwar Suit",
+    "price": 10426,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "cotton",
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/IMG_5644_821896cf-b13e-42ec-8d22-2c7b0f14f2fa.jpg?v=1754545163",
+    "url": "https://thecambridgeshop.com/products/basic-summer-cotton-soul-asps2402",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "the_cambridge_shop:10197523267879",
+    "brand": "Cambridge",
+    "title": "LATHA",
+    "price": 6995,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "latha",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/N9A3084.jpg?v=1779192858",
+    "url": "https://thecambridgeshop.com/products/unstitch-kapass-ulat2602",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "the_cambridge_shop:10308517789991",
+    "brand": "Cambridge",
+    "title": "FORMAL WAISTCOAT",
+    "price": 14995,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/1_3b6aa851-2e79-4316-8f02-6b5de5707f83.jpg?v=1784793747",
+    "url": "https://thecambridgeshop.com/products/check-krandi-formal-waist-coat-wfor2602-off-white",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "the_cambridge_shop:9968148414759",
+    "brand": "Cambridge",
+    "title": "FANCY WAISTCOAT - CHARCOAL",
+    "price": 7696,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/01_f3dbd9bd-4217-4a34-b5d4-8acc7c71eecc.jpg?v=1761129955",
+    "url": "https://thecambridgeshop.com/products/fancy-blended-waistcoat-awf2517",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "the_cambridge_shop:9968148381991",
+    "brand": "Cambridge",
+    "title": "FANCY WAISTCOAT - BLUE",
+    "price": 9096,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0283/5510/0758/files/01_c6432623-57c2-443b-a291-b6ddd3305fad.jpg?v=1761129907",
+    "url": "https://thecambridgeshop.com/products/fancy-blended-waistcoat-awf2516",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "charcoal:9262597144802",
+    "brand": "Charcoal",
+    "title": "DOUBLE-BREASTED BLAZER BROWN",
+    "price": 25596,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC08114.webp?v=1783943250",
+    "url": "https://charcoal.com.pk/products/casual-coat-brown-15",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "charcoal:9262597570786",
+    "brand": "Charcoal",
+    "title": "DOUBLE-BREASTED BLAZER NAVY",
+    "price": 25596,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC08154.webp?v=1783943449",
+    "url": "https://charcoal.com.pk/products/casual-coat-navy-21",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "charcoal:9262598127842",
+    "brand": "Charcoal",
+    "title": "DOUBLE-BREASTED BLAZER OFF WHITE",
+    "price": 25596,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC08138_ff6292cd-7eb7-48a0-a9ae-fa15a3bb9da0.webp?v=1783943797",
+    "url": "https://charcoal.com.pk/products/casual-coat-off-white",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "charcoal:9319579287778",
+    "brand": "Charcoal",
+    "title": "CREW NECK  GRAPHIC T SHIRT LIGHT GREEN",
+    "price": 2446,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06527_8a52cc97-0eb3-4617-a76e-6c5c3a13e385.webp?v=1787995412",
+    "url": "https://charcoal.com.pk/products/crew-neck-graphic-t-shirt-light-green",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "charcoal:9319554515170",
+    "brand": "Charcoal",
+    "title": "CREW NECK GRAPHIC T SHIRT BEIGE",
+    "price": 2586,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06704_3ee661b5-0df6-42f6-ba99-0ba8c1372c75.webp?v=1787991206",
+    "url": "https://charcoal.com.pk/products/crew-neck-graphic-t-shirt-beige",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "charcoal:9319551664354",
+    "brand": "Charcoal",
+    "title": "SHORT SLEEEVE GRAPHIC T SHIRT HEATHER GREY",
+    "price": 2516,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06767_2f3e3765-87ec-42c4-ba60-2a6eef5697c0.webp?v=1787990765",
+    "url": "https://charcoal.com.pk/products/short-sleeeve-graphic-t-shirt-heather-grey",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "charcoal:9310097146082",
+    "brand": "Charcoal",
+    "title": "SELF TEXTURED KURTA PAJAMA - PREMIUM COLLECTION BLACK",
+    "price": 11495,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/26KP005-BLKUPLOAD.webp?v=1787661844",
+    "url": "https://charcoal.com.pk/products/self-textured-kurta-pajama-premium-collection-black",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "charcoal:9125170151650",
+    "brand": "Charcoal",
+    "title": "TEXTURED BLENDED KAMEEZ SHALWAR - SIGNATURE COLLECTION BLACK",
+    "price": 7696,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC079599_2181709e-7567-4c6d-9d10-90e78c2501c5.webp?v=1788501840",
+    "url": "https://charcoal.com.pk/products/textured-blended-kameez-shalwar-signature-collection-black-4",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "charcoal:9309984030946",
+    "brand": "Charcoal",
+    "title": "TWILL BLENDED KAMEEZ SHALWAR - SIGNATURE COLLECTION NAVY",
+    "price": 13995,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06963_33e6ccba-71c2-4e0f-9519-63cea8a02b68.webp?v=1787661892",
+    "url": "https://charcoal.com.pk/products/twill-blended-kameez-shalwar-signature-collection-navy-1",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "charcoal:9309945888994",
+    "brand": "Charcoal",
+    "title": "TWILL BLENDED KAMEEZ SHALWAR - SIGNATURE COLLECTION WHITE",
+    "price": 13995,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06934_6826ff31-763e-4c33-a8b7-082de80b6411.webp?v=1787661962",
+    "url": "https://charcoal.com.pk/products/twill-blended-kameez-shalwar-signature-collection-chocolate-white",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "charcoal:9308986540258",
+    "brand": "Charcoal",
+    "title": "EMBROIDERED KARANDI PRINCE COAT | FESTIVE COLLECTION BLUE",
+    "price": 39995,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC07086_6443d1b3-f0fb-48db-b9ea-ab7f3245668a.webp?v=1787662708",
+    "url": "https://charcoal.com.pk/products/embroidered-karandi-prince-coat-festive-collection-navy",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "charcoal:9267928367330",
+    "brand": "Charcoal",
+    "title": "PRINCE COAT MAROON",
+    "price": 20996,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC025822.webp?v=1784184041",
+    "url": "https://charcoal.com.pk/products/prince-coat-maroon",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "charcoal:9267915292898",
+    "brand": "Charcoal",
+    "title": "PRINCE COAT BLACK",
+    "price": 20996,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC02574.webp?v=1784183325",
+    "url": "https://charcoal.com.pk/products/prince-coat-black-1",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "charcoal:9311054856418",
+    "brand": "Charcoal",
+    "title": "TWILL - COTTON LINEN WAISTCOAT | SIGNATURE COLLECTION GREEN",
+    "price": 10995,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "cotton",
+      "eid",
+      "festive",
+      "formal",
+      "linen",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06915_e8710100-ab0a-4e1c-9cc5-0847936c5a8b.webp?v=1787661348",
+    "url": "https://charcoal.com.pk/products/twill-cotton-linen-waistcoat-signature-collection-green",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "charcoal:9311050563810",
+    "brand": "Charcoal",
+    "title": "TWILL - COTTON LINEN WAISTCOAT | SIGNATURE COLLECTION CREAM",
+    "price": 10995,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "cotton",
+      "eid",
+      "festive",
+      "formal",
+      "linen",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC06875_98ba2137-7a2d-46e7-bd42-54fa14de9359.webp?v=1787661474",
+    "url": "https://charcoal.com.pk/products/twill-cotton-linen-waistcoat-signature-collection-cream",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "charcoal:9311061770466",
+    "brand": "Charcoal",
+    "title": "JACQUARD TEXTURED WAISTCOAT | SIGNATURE COLLECTION BLACK",
+    "price": 11495,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0419/6171/7922/files/26WC009-BLKUPLOAD.webp?v=1787660846",
+    "url": "https://charcoal.com.pk/products/jacquard-textured-waistcoat-signature-collection-black-1",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "diners:8729486852392",
+    "brand": "Diners",
+    "title": "Pink Check Blazer for Men",
+    "price": 11495,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/CF4022-PINK-01.webp?v=1698128642",
+    "url": "https://diners.com.pk/products/cf4022-pink",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "diners:9479015661864",
+    "brand": "Diners",
+    "title": "Fawn Textured Blazer",
+    "price": 9990,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/CG4037-FAWN-03.webp?v=1730119119",
+    "url": "https://diners.com.pk/products/cg4037-fawn",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "diners:10418409013544",
+    "brand": "Diners",
+    "title": "Printed Shirt",
+    "price": 3983,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/WKL2269-Peach-01.jpg?v=1788528670",
+    "url": "https://diners.com.pk/products/wkl2269-shirt-peach",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "diners:10322410111272",
+    "brand": "Diners",
+    "title": "Multicolor Pinstripes Formal Shirt",
+    "price": 2723,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/AD41539-Multi-01.webp?v=1783164354",
+    "url": "https://diners.com.pk/products/ad41539-multi",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "diners:10305683292456",
+    "brand": "Diners",
+    "title": "White Check Formal Shirt (Half Sleeves)",
+    "price": 2513,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/AB41459-White-01.webp?v=1781531533",
+    "url": "https://diners.com.pk/products/ab41459-white",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "diners:9697297203496",
+    "brand": "Diners",
+    "title": "Dark Purple Wash & Wear Kurta Pajama",
+    "price": 4494,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3675-D-Purple-02.webp?v=1754117454",
+    "url": "https://diners.com.pk/products/eg3675-d-purple",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "diners:9609095217448",
+    "brand": "Diners",
+    "title": "Light Brown Wash & Wear Kurta Pajama",
+    "price": 5394,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3644-L-BROWN-02.webp?v=1744980482",
+    "url": "https://diners.com.pk/products/eg3644-l-brown",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "diners:9595354939688",
+    "brand": "Diners",
+    "title": "Dark Grey Wash & Wear Kurta Pajama",
+    "price": 4494,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3623-D-Grey-02.webp?v=1743242050",
+    "url": "https://diners.com.pk/products/eg3623-d-grey",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "diners:9728594641192",
+    "brand": "Diners",
+    "title": "Brown Wash & Wear Shalwar Kameez",
+    "price": 5094,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3710-01.webp?v=1754907419",
+    "url": "https://diners.com.pk/products/eg3710-brown",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "diners:9316971839784",
+    "brand": "Diners",
+    "title": "White Wash & Wear Shalwar Kameez",
+    "price": 3290,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3482WHITERS7990-02.webp?v=1721480540",
+    "url": "https://diners.com.pk/products/eg3482-white",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "diners:8466922996008",
+    "brand": "Diners",
+    "title": "White Cotton Shalwar Kameez",
+    "price": 4615,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "cotton",
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EG3301-White-Rs-8990-02.webp?v=1691671265",
+    "url": "https://diners.com.pk/products/eg3301-white-cotton-shalwar-kameez",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "diners:9401960497448",
+    "brand": "Diners",
+    "title": "Light Purple Embroidered 2PC Unstitched",
+    "price": 2845,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/WUT0634-L-PURPLE-01.webp?v=1788409156",
+    "url": "https://diners.com.pk/products/wut0634-l-purple",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "diners:10027249533224",
+    "brand": "Diners",
+    "title": "Embroidered Unstitched 2PC",
+    "price": 7990,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/WU31914-OFFWHITE-01_c6a0d4a1-1ebf-427e-8f30-e8cdf8f82f9d.webp?v=1788406868",
+    "url": "https://diners.com.pk/products/wu31914-2pc-offwhite",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "diners:9528435802408",
+    "brand": "Diners",
+    "title": "Printed Unstitched 2PC",
+    "price": 2890,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/WUT0648-GREEN-01.webp?v=1788408245",
+    "url": "https://diners.com.pk/products/wut0648-green",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "diners:10372608950568",
+    "brand": "Diners",
+    "title": "Rust Waistcoat",
+    "price": 1990,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/GA3348-RUST-01.webp?v=1787569715",
+    "url": "https://diners.com.pk/products/ga3348-rust",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "diners:10371237904680",
+    "brand": "Diners",
+    "title": "Navy Blue Waistcoat",
+    "price": 6293,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/GA4091-N-BLUE-01.webp?v=1785928858",
+    "url": "https://diners.com.pk/products/ga4091-n-blue",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "diners:9530642039080",
+    "brand": "Diners",
+    "title": "Cream Shalwar Kameez with Waistcoat",
+    "price": 9995,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/EGW0025-Cream-01.webp?v=1737376571",
+    "url": "https://diners.com.pk/products/egw0025-cream",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "edenrobe:11206663438609",
+    "brand": "Edenrobe",
+    "title": "Icon Checkered Shirt - EMTSI6-50861",
+    "price": 4000,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/0N9A3426EMTSI6-50861.webp?v=1788608373",
+    "url": "https://edenrobe.com/products/business-striped-shirt-emtsi6-50861",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "edenrobe:11206663536913",
+    "brand": "Edenrobe",
+    "title": "Icon Checkered Shirt - EMTSI6-50880",
+    "price": 4000,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/0N9A3411EMTSI6-50880.webp?v=1788608133",
+    "url": "https://edenrobe.com/products/business-striped-shirt-emtsi6-50880",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "edenrobe:11202995945745",
+    "brand": "Edenrobe",
+    "title": "Icon Striped Shirt - EMTSI6-50868",
+    "price": 4000,
+    "gender": "men",
+    "category": "casual",
+    "tags": [
+      "casual",
+      "eid",
+      "formal",
+      "men",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/0N9A3220EMTSI6-50868.webp?v=1788607954",
+    "url": "https://edenrobe.com/products/business-checkered-shirt-emtsi6-50868",
+    "badge": "Smart Casual"
+  },
+  {
+    "id": "edenrobe:11164033614097",
+    "brand": "Edenrobe",
+    "title": "Blended Kurta Pajama - EBTKP6-041",
+    "price": 5000,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EBTKP6-041-_1_-thumbnail.jpg?v=1788007361",
+    "url": "https://edenrobe.com/products/blended-kurta-pajama-ebtkp6-041",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "edenrobe:11139114991889",
+    "brand": "Edenrobe",
+    "title": "Blended Kurta Pajama - EBTKP6-040",
+    "price": 5000,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EBTKP6-040-_1_-thumbnail.jpg?v=1786595447",
+    "url": "https://edenrobe.com/products/blended-kurta-pajama-ebtkp6-040",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "edenrobe:11123031441681",
+    "brand": "Edenrobe",
+    "title": "Blended Kurta Pajama - EMTKPT6-111",
+    "price": 7000,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EMTKPT6-111-_3_-thumbnail.jpg?v=1786453394",
+    "url": "https://edenrobe.com/products/blended-kurta-pajama-emtkpt6-111",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "edenrobe:11145232941329",
+    "brand": "Edenrobe",
+    "title": "Dobby Shalwar Kameez - EBTKS6-4137",
+    "price": 5000,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EBTKS6-4137_1_thumbnail.webp?v=1788434759",
+    "url": "https://edenrobe.com/products/dobby-shalwar-kameez-ebtks6-4137",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "edenrobe:11160690229521",
+    "brand": "Edenrobe",
+    "title": "Embroidered Blended Shalwar Kameez - EBTKS6-4136",
+    "price": 5000,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EBTKS6-4136_1_thumbnail.webp?v=1788433540",
+    "url": "https://edenrobe.com/products/embroidered-blended-shalwar-kameez-ebtks6-4136",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "edenrobe:11161835077905",
+    "brand": "Edenrobe",
+    "title": "Embroidered Dobby Shalwar Kameez - EBTKS6-4135",
+    "price": 5000,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EBTKS6-4135_3_thumbnail.webp?v=1788433327",
+    "url": "https://edenrobe.com/products/embroidered-dobby-shalwar-kameez-ebtks6-4135",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "edenrobe:11164033712401",
+    "brand": "Edenrobe",
+    "title": "Embroidered Silk Sherwani - ECBTSS5-003",
+    "price": 19000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "silk",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/ECBTSS5-003_3_thumbnail.webp?v=1788435294",
+    "url": "https://edenrobe.com/products/embroidered-silk-sherwani-ecbtss5-003",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "edenrobe:10229768257809",
+    "brand": "Edenrobe",
+    "title": "Prince Coat - EMTPC24-035",
+    "price": 10000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/EMTPC24-035-_11.jpg?v=1786537421",
+    "url": "https://edenrobe.com/products/mens-black-prince-coat-emtpc24-035",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "edenrobe:11159781638417",
+    "brand": "Edenrobe",
+    "title": "Silk Prince Coat - ECMTPC6-041",
+    "price": 18000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "silk",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/ECMTPC6-041-_13.jpg?v=1786425486",
+    "url": "https://edenrobe.com/products/silk-prince-coat-ecmtpc6-041",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "edenrobe:11185153016081",
+    "brand": "Edenrobe",
+    "title": "Embroidered Blended Waistcoat Suit - ECBTWCS5-078",
+    "price": 14000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/ECBTWCS5-078-_1.jpg?v=1788002923",
+    "url": "https://edenrobe.com/products/embroidered-blended-waistcoat-suit-ecbtwcs5-078",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "edenrobe:11165438771473",
+    "brand": "Edenrobe",
+    "title": "Embroidered Khaddar Waistcoat Suit - ECBTWCS5-072",
+    "price": 12000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/ECBTWCS5-072-_1_thumbnail.jpg?v=1787982725",
+    "url": "https://edenrobe.com/products/embroidered-khaddar-waistcoat-suit-ecbtwcs5-072",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "edenrobe:11158869344529",
+    "brand": "Edenrobe",
+    "title": "Embroidered Jamawar Waistcoat Suit - ECBTWCS6-103",
+    "price": 14000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0841/3796/7889/files/ECBTWCS6-103-_2_-thumbnail.jpg?v=1787633752",
+    "url": "https://edenrobe.com/products/embroidered-jamawar-waistcoat-suit-ecbtwcs6-103",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "ismail_farid:8425008693439",
+    "brand": "Ismail Farid",
+    "title": "BROWN TWO BUTTONS BLAZER",
+    "price": 88500,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_1c3e6773-ea60-4384-83bb-745575d3669b.jpg?v=1777721981",
+    "url": "https://ismailfarid.com/products/brown-two-buttons-blazer-jkt326",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "ismail_farid:7404453855423",
+    "brand": "Ismail Farid",
+    "title": "BEIGE CLASSIC TWO BUTTONS BLAZER",
+    "price": 78000,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/products/main_-_wst156_b_2__6.jpg?v=1669798110",
+    "url": "https://ismailfarid.com/products/beige-classic-two-buttons-blazer-jkt156b",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "ismail_farid:7404450611391",
+    "brand": "Ismail Farid",
+    "title": "BURGUNDY TWO BUTTONS FRONT MONOGRAM BLAZER",
+    "price": 78000,
+    "gender": "men",
+    "category": "blazer",
+    "tags": [
+      "blazer",
+      "casual",
+      "formal",
+      "men",
+      "wedding",
+      "western"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/products/main---jkt121_6.jpg?v=1669798035",
+    "url": "https://ismailfarid.com/products/burgundy-two-buttons-front-monogram-blazer-jkt111",
+    "badge": "Tailored Blazer"
+  },
+  {
+    "id": "ismail_farid:8214845456575",
+    "brand": "Ismail Farid",
+    "title": "SAGE GREEN KURTA PAJAMA",
+    "price": 22500,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/DLRT157_1.jpg?v=1760524154",
+    "url": "https://ismailfarid.com/products/sage-green-kurta-pajama-dkrt157",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "ismail_farid:8423104348351",
+    "brand": "Ismail Farid",
+    "title": "BLACK TEXTURED KURTA PAJAMA",
+    "price": 24500,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_7852192f-d25b-4511-be85-3c4adfa38ff6.jpg?v=1777538041",
+    "url": "https://ismailfarid.com/products/black-textured-kurta-pajama-dkrt174",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "ismail_farid:8423104446655",
+    "brand": "Ismail Farid",
+    "title": "GRAY  TEXTURED LOOSE FIT KURTA PAJAMA",
+    "price": 18500,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_902baf20-4e99-4242-9f26-a56e71d46d9d.jpg?v=1777538066",
+    "url": "https://ismailfarid.com/products/gray-textured-loose-fit-kurta-pajama-dkrt176",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "ismail_farid:8423104020671",
+    "brand": "Ismail Farid",
+    "title": "BLUE KAMEEZ SHALWAR",
+    "price": 24500,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_4513c758-59d0-4f4b-a25c-53680863f8f7.jpg?v=1777537976",
+    "url": "https://ismailfarid.com/products/blue-kameez-shalwar-shk2530",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "ismail_farid:8423104053439",
+    "brand": "Ismail Farid",
+    "title": "BROWN KAMEEZ SHALWAR",
+    "price": 24500,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_2243d50f-98bf-4a1e-a68e-c996dbcea39a.jpg?v=1777537985",
+    "url": "https://ismailfarid.com/products/brown-kameez-shalwar-shk2531",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "ismail_farid:8423104086207",
+    "brand": "Ismail Farid",
+    "title": "BLACK LIMITED EDITION KAMEEZ SHALWAR",
+    "price": 38500,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_1ac9a880-e68c-4fe6-b679-54ae2ecddb14.jpg?v=1777537994",
+    "url": "https://ismailfarid.com/products/black-limited-edition-kameez-shalwar-shk2532",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "ismail_farid:8212315930815",
+    "brand": "Ismail Farid",
+    "title": "BLACK SELF EMBROIDERED PRINCE COAT",
+    "price": 95000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/JKT318_1.jpg?v=1760130763",
+    "url": "https://ismailfarid.com/products/black-self-embroidered-prince-coat-jkt318",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "ismail_farid:8212315898047",
+    "brand": "Ismail Farid",
+    "title": "LIGHT BEIGE SELF EMBROIDERED PRINCE COAT",
+    "price": 95000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/JKT317_1.jpg?v=1760130756",
+    "url": "https://ismailfarid.com/products/light-beige-self-embroidered-prince-coat-jkt317",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "ismail_farid:8212315865279",
+    "brand": "Ismail Farid",
+    "title": "BEIGE EMBROIDERED PRINCE COAT",
+    "price": 95000,
+    "gender": "men",
+    "category": "sherwani",
+    "tags": [
+      "festive",
+      "formal",
+      "men",
+      "sherwani",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/JKT316_1.jpg?v=1760130749",
+    "url": "https://ismailfarid.com/products/beige-embroidered-prince-coat-jkt316",
+    "badge": "Festive Sherwani"
+  },
+  {
+    "id": "ismail_farid:8322622619839",
+    "brand": "Ismail Farid",
+    "title": "OFF-WHITE WAISTCOAT",
+    "price": 65000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/WST511.jpg?v=1772196705",
+    "url": "https://ismailfarid.com/products/off-white-waistcoat-wst511",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "ismail_farid:8212512637119",
+    "brand": "Ismail Farid",
+    "title": "SAGE GREEN EMBROIDERED WAISTCOAT",
+    "price": 42000,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/WST491_1.jpg?v=1760169516",
+    "url": "https://ismailfarid.com/products/sage-green-embroidered-waistcoat-wst491",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "ismail_farid:8281618612415",
+    "brand": "Ismail Farid",
+    "title": "BLACK DESIGNER WAISTCOAT",
+    "price": 42500,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0508/0675/1423/files/1_97be2e2a-e193-44bd-b319-512f638ec517.jpg?v=1768805227",
+    "url": "https://ismailfarid.com/products/black-designer-waistcoat-wst509",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "junaid_jamshed:15798703947936",
+    "brand": "J. Junaid Jamshed",
+    "title": "Navy Blue Semi-Formal Bunnat Cotton Kurta",
+    "price": 4490,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "cotton",
+      "eid",
+      "festive",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJK-60204_2.jpg?v=1786962439",
+    "url": "https://www.junaidjamshed.com/products/navy-blue-semi-formal-bunnat-cotton-kurta-jjks60204",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "junaid_jamshed:15686580437152",
+    "brand": "J. Junaid Jamshed",
+    "title": "Burgundy Cotton Semi-Formal Jacquard Kurta",
+    "price": 4990,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "cotton",
+      "eid",
+      "festive",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJK-60075_4.jpg?v=1784705268",
+    "url": "https://www.junaidjamshed.com/products/burgundy-cotton-semi-formal-jacquard-kurta-jjks60075",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "junaid_jamshed:15686579454112",
+    "brand": "J. Junaid Jamshed",
+    "title": "Mustard Semi-Formal Kurta Trousers",
+    "price": 8490,
+    "gender": "men",
+    "category": "kurta",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "kurta",
+      "men",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/60138_2_d1e81df4-965b-4538-99a7-41272d6bd7ca.jpg?v=1788334065",
+    "url": "https://www.junaidjamshed.com/products/mustard-semi-formal-kurta-trousers-jjkpa60138",
+    "badge": "Men's Kurta"
+  },
+  {
+    "id": "junaid_jamshed:15798705717408",
+    "brand": "J. Junaid Jamshed",
+    "title": "Cream Formal Kameez Shalwar",
+    "price": 8490,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJKS-50656_3.jpg?v=1788157513",
+    "url": "https://www.junaidjamshed.com/products/cream-formal-kameez-shalwar-jjksa50656",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "junaid_jamshed:15798705684640",
+    "brand": "J. Junaid Jamshed",
+    "title": "Fawn Formal Kameez Shalwar",
+    "price": 8490,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJKS-50655_1.jpg?v=1788157531",
+    "url": "https://www.junaidjamshed.com/products/fawn-formal-kameez-shalwar-jjksa50655",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "junaid_jamshed:15798705422496",
+    "brand": "J. Junaid Jamshed",
+    "title": "Black Formal Kameez Shalwar",
+    "price": 11990,
+    "gender": "men",
+    "category": "shalwar-kameez",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "shalwar-kameez",
+      "traditional",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJKS-48484-SIG_3.jpg?v=1788157468",
+    "url": "https://www.junaidjamshed.com/products/black-formal-kameez-shalwar-jjksa48484sig",
+    "badge": "Men's Kameez Shalwar"
+  },
+  {
+    "id": "junaid_jamshed:15817571172512",
+    "brand": "J. Junaid Jamshed",
+    "title": "Black Unstitched Suit",
+    "price": 4990,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJMS-4926.jpg?v=1786615697",
+    "url": "https://www.junaidjamshed.com/products/black-unstitched-suit-jjms4926jj11292",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "junaid_jamshed:15798727737504",
+    "brand": "J. Junaid Jamshed",
+    "title": "Green Unstitched Fabric",
+    "price": 4990,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJMS-4237.jpg?v=1786613684",
+    "url": "https://www.junaidjamshed.com/products/green-unstitched-fabric-jjms4237jj11292",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "junaid_jamshed:15798727671968",
+    "brand": "J. Junaid Jamshed",
+    "title": "Steel Blue Unstitched Fabric",
+    "price": 4990,
+    "gender": "men",
+    "category": "unstitched",
+    "tags": [
+      "eid",
+      "formal",
+      "men",
+      "unstitched"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJMS-4236.jpg?v=1786613678",
+    "url": "https://www.junaidjamshed.com/products/steel-blue-unstitched-fabric-jjms4236jj11292",
+    "badge": "Latha & Boski Fabric"
+  },
+  {
+    "id": "junaid_jamshed:15686617268384",
+    "brand": "J. Junaid Jamshed",
+    "title": "Black Plain Waistcoat",
+    "price": 8990,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJVC-48453_2_-Copy.jpg?v=1788516353",
+    "url": "https://www.junaidjamshed.com/products/black-plain-waistcoat-jjvca48453",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "junaid_jamshed:15686617235616",
+    "brand": "J. Junaid Jamshed",
+    "title": "Maroon Plain Waistcoat",
+    "price": 8990,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJVC-48452_1.jpg?v=1788516296",
+    "url": "https://www.junaidjamshed.com/products/maroon-plain-waistcoat-jjvca48452",
+    "badge": "Men's Waistcoat"
+  },
+  {
+    "id": "junaid_jamshed:15686616219808",
+    "brand": "J. Junaid Jamshed",
+    "title": "Brown Formal Waistcoat",
+    "price": 9490,
+    "gender": "men",
+    "category": "waistcoat",
+    "tags": [
+      "eid",
+      "festive",
+      "formal",
+      "men",
+      "waistcoat",
+      "wedding"
+    ],
+    "image": "https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJVC-48422_2.jpg?v=1788516291",
+    "url": "https://www.junaidjamshed.com/products/brown-formal-waistcoat-jjvca48422",
+    "badge": "Men's Waistcoat"
+  }
+];
+
+      var META_MAP = {
+        all: {
+          title: "Men's Collection",
+          eyebrow: "Pakistani Menswear Directory",
+          desc: "Discover premium Pakistani men's fashion: Shalwar Kameez suits, festive Kurtas, unstitched Latha & Boski fabrics, tailored waistcoats, sherwanis, and blazers from J. Junaid Jamshed, Amir Adnan, Ismail Farid, Diners, Charcoal, Edenrobe, and Cambridge."
+        },
+        "shalwar-kameez": {
+          title: "Men's Kameez Shalwar Suits",
+          eyebrow: "Iconic Pakistani Silhouette",
+          desc: "Authentic 2-piece Shalwar Kameez suits crafted in pure Egyptian cotton, premium Latha, and wrinkle-resistant wash & wear."
+        },
+        kurta: {
+          title: "Men's Kurtas & Tunics",
+          eyebrow: "Artisanal Tailoring",
+          desc: "Contemporary and heritage Pakistani kurtas featuring mandarin collars, chest embroidery, and breathable cotton textures."
+        },
+        waistcoat: {
+          title: "Men's Tailored Waistcoats",
+          eyebrow: "Festive & Formal Layers",
+          desc: "Sophisticated waistcoats in raw silk, tropical wool, and jacquard weaves to elevate any kameez shalwar ensemble."
+        },
+        unstitched: {
+          title: "Unstitched Latha & Boski Fabrics",
+          eyebrow: "Master Tailor Ready",
+          desc: "Pure white cotton latha, authentic boski silk, and premium wash & wear suit lengths ready for bespoke custom stitching."
+        },
+        sherwani: {
+          title: "Sherwanis & Prince Coats",
+          eyebrow: "Heritage Groomswear",
+          desc: "Royal hand-embroidered sherwanis, bandhgala prince coats, and groom ensembles from Amir Adnan, Edenrobe, and Ismail Farid."
+        },
+        blazer: {
+          title: "Men's Tailored Blazers",
+          eyebrow: "Modern Sartorial",
+          desc: "Structured blazers, textured sports jackets, and bespoke suits tailored for Pakistani professional and evening wear."
+        },
+        eid: {
+          title: "Men's Eid Festive Edit 2026",
+          eyebrow: "Celebratory Menswear",
+          desc: "Polished festive ensembles for Eid: celebratory white latha suits, embroidered festive kurtas, and contrast waistcoats."
+        },
+        wedding: {
+          title: "Wedding & Groomswear Atelier",
+          eyebrow: "Occasion Elegance",
+          desc: "Opulent groom sherwanis, embroidered raw silk waistcoats, and formal banquet kurtas for baraat, walima, and mehendi."
+        },
+        casual: {
+          title: "Smart Casual Shirts & Polos",
+          eyebrow: "Everyday Ease",
+          desc: "Tailored casual cotton shirts, structured polos, and contemporary smart-casual separates for effortless daily wear."
+        }
+      };
+
+      var grid = document.getElementById('lb-catalog-grid');
+      var countEl = document.getElementById('lb-product-count');
+      var titleEl = document.getElementById('lb-cat-title');
+      var descEl = document.getElementById('lb-cat-desc');
+      var eyebrowEl = document.getElementById('lb-cat-eyebrow');
+      var bcActiveEl = document.getElementById('lb-bc-active');
+      var sortSelect = document.getElementById('lb-sort-select');
+      var clearBtn = document.getElementById('lb-clear-filters');
+      var quickPills = document.querySelectorAll('.lb-quick-pill[data-cat]');
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var activeCat = urlParams.get('cat') || 'all';
+
+      function updateMeta(cat) {
+        var meta = META_MAP[cat] || META_MAP['all'];
+        if (titleEl) titleEl.textContent = meta.title;
+        if (eyebrowEl) eyebrowEl.textContent = meta.eyebrow;
+        if (descEl) descEl.textContent = meta.desc;
+        if (bcActiveEl) bcActiveEl.textContent = meta.title;
+        document.title = meta.title + " — Pakistani Menswear Directory | LibasAI";
+      }
+
+      function renderProducts() {
+        var filtered = PRODUCTS.slice();
+
+        // Active Quick Pill / Category
+        if (activeCat && activeCat !== 'all') {
+          filtered = filtered.filter(function(p) {
+            return p.category === activeCat || (p.tags && p.tags.indexOf(activeCat) !== -1);
+          });
+        }
+
+        // Wardrobe Type Radio
+        var checkedWardrobe = document.querySelector('input[name="filter-wardrobe"]:checked');
+        if (checkedWardrobe && checkedWardrobe.value !== 'all') {
+          var wVal = checkedWardrobe.value;
+          filtered = filtered.filter(function(p) {
+            return p.tags && p.tags.indexOf(wVal) !== -1;
+          });
+        }
+
+        // Style Checkboxes
+        var checkedStyles = Array.from(document.querySelectorAll('input[name="filter-style"]:checked')).map(function(c) { return c.value; });
+        if (checkedStyles.length > 0) {
+          filtered = filtered.filter(function(p) {
+            return checkedStyles.some(function(s) { return p.category === s || (p.tags && p.tags.indexOf(s) !== -1); });
+          });
+        }
+
+        // Occasion Checkboxes
+        var checkedOccasions = Array.from(document.querySelectorAll('input[name="filter-occasion"]:checked')).map(function(c) { return c.value; });
+        if (checkedOccasions.length > 0) {
+          filtered = filtered.filter(function(p) {
+            return checkedOccasions.some(function(o) { return p.tags && p.tags.indexOf(o) !== -1; });
+          });
+        }
+
+        // Brand Checkboxes
+        var checkedBrands = Array.from(document.querySelectorAll('input[name="filter-brand"]:checked')).map(function(c) { return c.value; });
+        if (checkedBrands.length > 0) {
+          filtered = filtered.filter(function(p) {
+            return checkedBrands.indexOf(p.brand) !== -1;
+          });
+        }
+
+        // Fabric Checkboxes
+        var checkedFabrics = Array.from(document.querySelectorAll('input[name="filter-fabric"]:checked')).map(function(c) { return c.value; });
+        if (checkedFabrics.length > 0) {
+          filtered = filtered.filter(function(p) {
+            return checkedFabrics.some(function(f) { return p.tags && p.tags.indexOf(f) !== -1; });
+          });
+        }
+
+        // Sorting
+        var sortVal = sortSelect ? sortSelect.value : 'featured';
+        if (sortVal === 'price-asc') {
+          filtered.sort(function(a, b) { return a.price - b.price; });
+        } else if (sortVal === 'price-desc') {
+          filtered.sort(function(a, b) { return b.price - a.price; });
+        }
+
+        if (countEl) {
+          var uniqueBrands = new Set(filtered.map(function(p){ return p.brand; })).size;
+          countEl.textContent = "Showing " + filtered.length + " pieces across " + uniqueBrands + " Pakistani brands";
+        }
+
+        if (!grid) return;
+        grid.innerHTML = "";
+
+        if (filtered.length === 0) {
+          grid.innerHTML = "<div style='grid-column:1/-1; text-align:center; padding:60px 20px;'>" +
+            "<h3 style='font-family:Playfair Display,serif; font-size:22px; color:#191412;'>No products found</h3>" +
+            "<p style='color:rgba(25,20,18,0.6);'>Try relaxing your filter selections to see more menswear designs.</p>" +
+            "</div>";
+          return;
+        }
+
+        filtered.forEach(function(p) {
+          var card = document.createElement('article');
+          card.className = 'lb-card';
+          card.innerHTML = 
+            "<div class='lb-card__img-wrap'>" +
+              "<span class='lb-card__badge lb-card__badge--men'>" + (p.badge || "Men's Wear") + "</span>" +
+              "<button type='button' class='lb-card__wish' aria-label='Save to Wishlist'>" +
+                "<svg style='width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;'><use href='#lb-i-heart'></use></svg>" +
+              "</button>" +
+              "<img src='" + p.image + "' alt='" + p.title.replace(/'/g, "") + "' loading='lazy'>" +
+            "</div>" +
+            "<div class='lb-card__body'>" +
+              "<span class='lb-card__brand' style='color:#840E34; font-weight:700;'>" + p.brand + "</span>" +
+              "<h3 class='lb-card__title'>" + p.title + "</h3>" +
+              "<div class='lb-card__price'>PKR " + Number(p.price).toLocaleString() + "</div>" +
+              "<div class='lb-card__actions'>" +
+                "<a href='" + p.url + "' target='_blank' rel='noopener' class='lb-card__store-btn'>" +
+                  "<span>Shop On Brand</span>" +
+                  "<svg viewBox='0 0 20 20' fill='none' style='width:12px;height:12px;'><path d='M4 10h12m-5-5l5 5-5 5' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>" +
+                "</a>" +
+                "<a href='/get-stitched.html' class='lb-card__stitch-btn'>Get Stitched</a>" +
+              "</div>" +
+            "</div>";
+
+          var wishBtn = card.querySelector('.lb-card__wish');
+          if (wishBtn) {
+            wishBtn.addEventListener('click', function(e) {
+              e.preventDefault();
+              wishBtn.classList.toggle('is-active');
+            });
+          }
+
+          grid.appendChild(card);
+        });
+      }
+
+      // Quick pill listener
+      quickPills.forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          quickPills.forEach(function(p) { p.classList.remove('is-active'); });
+          pill.classList.add('is-active');
+          activeCat = pill.getAttribute('data-cat');
+          updateMeta(activeCat);
+          renderProducts();
+        });
+      });
+
+      // Wardrobe radio listener
+      document.querySelectorAll('input[name="filter-wardrobe"]').forEach(function(radio) {
+        radio.addEventListener('change', renderProducts);
+      });
+
+      // Checkbox listeners
+      document.querySelectorAll('.lb-shop-sidebar input[type="checkbox"]').forEach(function(box) {
+        box.addEventListener('change', renderProducts);
+      });
+
+      // Sort change
+      if (sortSelect) {
+        sortSelect.addEventListener('change', renderProducts);
+      }
+
+      // Clear filters
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          activeCat = 'all';
+          quickPills.forEach(function(p) {
+            p.classList.toggle('is-active', p.getAttribute('data-cat') === 'all');
+          });
+          var rAll = document.querySelector('input[name="filter-wardrobe"][value="all"]');
+          if (rAll) rAll.checked = true;
+          document.querySelectorAll('.lb-shop-sidebar input[type="checkbox"]').forEach(function(box) {
+            box.checked = false;
+          });
+          updateMeta('all');
+          renderProducts();
+        });
+      }
+
+      // Initialize based on URL
+      if (activeCat && activeCat !== 'all') {
+        quickPills.forEach(function(p) {
+          p.classList.toggle('is-active', p.getAttribute('data-cat') === activeCat);
+        });
+      }
+
+      updateMeta(activeCat);
+      renderProducts();
+    })();
+  </script>
+</body>
+</html>
