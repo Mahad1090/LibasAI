@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../app_scope.dart';
 import '../data.dart';
+import '../generated_assets.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -105,7 +106,12 @@ class BrandProfileScreen extends StatelessWidget {
                 height: 150,
                 child: Stack(
                   children: [
-                    const Positioned.fill(child: StripePlaceholder()),
+                    Positioned.fill(
+                      child: AppAssets.brandCoverImage(
+                        fit: BoxFit.cover,
+                        fallback: const StripePlaceholder(),
+                      ),
+                    ),
                     Positioned(
                       top: kTopInset,
                       left: 16,

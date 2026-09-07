@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_scope.dart';
+import '../generated_assets.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -59,7 +60,13 @@ class OnboardingScreen extends StatelessWidget {
           flex: step == 3 ? 36 : 44,
           child: Stack(
             children: [
-              Positioned.fill(child: StripePlaceholder(label: data.$1)),
+              Positioned.fill(
+                child: AppAssets.onboardingImage(
+                  step,
+                  fit: BoxFit.cover,
+                  fallback: StripePlaceholder(label: data.$1),
+                ),
+              ),
               if (step != 3)
                 Positioned(
                   top: kTopInset,

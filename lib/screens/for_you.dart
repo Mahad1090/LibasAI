@@ -67,8 +67,21 @@ class _OutfitBoard extends StatelessWidget {
   const _OutfitBoard();
   @override
   Widget build(BuildContext context) {
-    final main = productById('p1');
-    final pieces = ['p11', 'p13', 'p14'].map(productById).toList();
+    final state = AppScope.of(context);
+    final main = productById(state.selectedProductId);
+    final pieces = kProducts
+        .where((p) =>
+            p.id != main.id &&
+            (p.brandId == main.brandId ||
+                p.category.toLowerCase() == 'dupatta' ||
+                p.category.toLowerCase() == 'bottoms' ||
+                p.category.toLowerCase() == 'accessories'))
+        .take(4)
+        .toList();
+    final displayPieces = pieces.length >= 2
+        ? pieces
+        : ['p11', 'p13', 'p14'].map(productById).toList();
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -84,7 +97,7 @@ class _OutfitBoard extends StatelessWidget {
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
             childAspectRatio: 0.62,
-            children: [for (final p in pieces) ProductCard(p)],
+            children: [for (final p in displayPieces) ProductCard(p)],
           ),
         ],
       ),

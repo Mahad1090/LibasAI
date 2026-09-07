@@ -196,6 +196,8 @@ class SavedLooksScreen extends StatelessWidget {
                                     margin: const EdgeInsets.only(right: 10),
                                     child: StripePlaceholder(
                                       label: productById(id).title,
+                                      imageUrl: productById(id).imageUrl,
+                                      decodeWidth: 200,
                                       radius: BorderRadius.circular(12),
                                     ),
                                   ),

@@ -29,6 +29,7 @@ class Product {
 
   bool get hasOldPrice => oldPrice.isNotEmpty;
   bool sizeAvailable(String s) => inStockSizes.isEmpty || inStockSizes.contains(s);
+  int get priceNumeric => int.tryParse(price.replaceAll(RegExp(r'[^\d]'), '')) ?? 0;
 }
 
 class Brand {
@@ -249,6 +250,213 @@ class SavedLook {
   SavedLook(this.id, this.title, this.productIds);
 }
 
+class TailorRate {
+  final String item;
+  final String price;
+  final String time;
+  const TailorRate(this.item, this.price, this.time);
+}
+
+class Tailor {
+  final String id;
+  final String name;
+  final String specialtyTitle;
+  final String city;
+  final String location;
+  final int experienceYears;
+  final double rating;
+  final int reviewCount;
+  final int startingPrice;
+  final int turnaroundDays;
+  final List<String> specialties;
+  final List<TailorRate> rateCard;
+  final String about;
+  final bool verified;
+  final String phone;
+
+  const Tailor({
+    required this.id,
+    required this.name,
+    required this.specialtyTitle,
+    required this.city,
+    required this.location,
+    required this.experienceYears,
+    required this.rating,
+    required this.reviewCount,
+    required this.startingPrice,
+    required this.turnaroundDays,
+    required this.specialties,
+    required this.rateCard,
+    required this.about,
+    this.verified = true,
+    required this.phone,
+  });
+}
+
+class StitchingRequest {
+  final String id;
+  final String outfitTitle;
+  final String gender;
+  final String fabricSource;
+  final String tailorName;
+  final String tailorCity;
+  final String status;
+  final int stageIndex;
+  final int price;
+  final String orderDate;
+  final String estimatedDelivery;
+  final String trackingCode;
+  final String measurementNotes;
+
+  StitchingRequest({
+    required this.id,
+    required this.outfitTitle,
+    required this.gender,
+    required this.fabricSource,
+    required this.tailorName,
+    required this.tailorCity,
+    required this.status,
+    required this.stageIndex,
+    required this.price,
+    required this.orderDate,
+    required this.estimatedDelivery,
+    required this.trackingCode,
+    this.measurementNotes = 'Reference suit pickup arranged',
+  });
+}
+
+const kTailors = <Tailor>[
+  Tailor(
+    id: 't1',
+    name: 'Master Rafiq & Sons',
+    specialtyTitle: 'Master Artisan in Men\'s Kurta & Boski Silk',
+    city: 'Lahore',
+    location: 'Gulberg III & Old Anarkali',
+    experienceYears: 24,
+    rating: 4.9,
+    reviewCount: 148,
+    startingPrice: 2800,
+    turnaroundDays: 4,
+    specialties: ['Men\'s Kurta Shalwar', 'Pure Boski', 'Embroidered Waistcoat', 'Reference Fit Copy'],
+    rateCard: [
+      TailorRate('Standard Kurta Shalwar', 'Rs. 2,800', '3-4 days'),
+      TailorRate('Pure Boski / Silk Suit', 'Rs. 3,500', '4-5 days'),
+      TailorRate('Bespoke Embroidered Waistcoat', 'Rs. 4,200', '5-6 days'),
+      TailorRate('Handcrafted Sherwani', 'Rs. 9,500', '7-10 days'),
+    ],
+    about: 'Master Rafiq has tailored for dignitaries, artists, and three generations of Lahore families. Known for razor-sharp collar finishes, hand-stitched buttonholes, and exact replication of your favorite reference suit.',
+    phone: '+92 300 4289122',
+  ),
+  Tailor(
+    id: 't2',
+    name: 'Noor Bridal & Couture Studio',
+    specialtyTitle: 'High-End Women\'s Pret & Formal Embellishment',
+    city: 'Karachi',
+    location: 'Clifton Block 4 & Tariq Road',
+    experienceYears: 16,
+    rating: 4.9,
+    reviewCount: 210,
+    startingPrice: 4500,
+    turnaroundDays: 6,
+    specialties: ['Luxury Lawn to Pret', 'Formal Gowns', 'Zari & Tilla Setting', 'Lining & Finishing'],
+    rateCard: [
+      TailorRate('3-Piece Formal Suit with Lining', 'Rs. 4,500', '5-6 days'),
+      TailorRate('Festive Kurti & Trouser', 'Rs. 3,800', '4 days'),
+      TailorRate('Bridal / Heavy Embroidered Suit', 'Rs. 8,500', '7-10 days'),
+      TailorRate('Organza / Net Dupatta Tassels', 'Rs. 1,500', '2 days'),
+    ],
+    about: 'Karachi\'s premier bespoke women\'s atelier specializing in transforming designer unstitched lawn, net, and chiffon cuts into pristine ready-to-wear silhouettes with custom piping, laces, and hand-tassels.',
+    phone: '+92 321 8294401',
+  ),
+  Tailor(
+    id: 't3',
+    name: 'Ustaad Aslam Master Cutter',
+    specialtyTitle: 'Specialist in Prince Coats & Bespoke Waistcoats',
+    city: 'Islamabad',
+    location: 'F-10 Markaz & Blue Area',
+    experienceYears: 28,
+    rating: 4.8,
+    reviewCount: 92,
+    startingPrice: 3200,
+    turnaroundDays: 3,
+    specialties: ['Prince Coats', 'Festive Waistcoats', 'Fine Egyptian Latha', 'Home Pickup'],
+    rateCard: [
+      TailorRate('Tailored Kurta Shalwar', 'Rs. 3,200', '3 days'),
+      TailorRate('Bespoke Waistcoat / Jawahar', 'Rs. 4,500', '4 days'),
+      TailorRate('Royal Prince Coat', 'Rs. 7,800', '5-6 days'),
+      TailorRate('Collar & Cuff Monogramming', 'Rs. 800', '1 day'),
+    ],
+    about: 'Trained under British bespoke tailoring standards with master expertise in Pakistani formal attire. Famous for anatomical shoulder cuts, structured chest canvas, and complimentary doorstep reference suit pickup in the twin cities.',
+    phone: '+92 333 5183392',
+  ),
+  Tailor(
+    id: 't4',
+    name: 'Gulberg Express Stitching',
+    specialtyTitle: 'Express 48-Hour Everyday & Workwear Pret',
+    city: 'Lahore',
+    location: 'MM Alam Road, Gulberg II',
+    experienceYears: 14,
+    rating: 4.7,
+    reviewCount: 184,
+    startingPrice: 2400,
+    turnaroundDays: 2,
+    specialties: ['48hr Express Delivery', 'Unstitched Lawn to Pret', 'Daily Casuals', 'Trouser Styling'],
+    rateCard: [
+      TailorRate('Express 2-Piece Lawn Suit', 'Rs. 2,400', '48 hours'),
+      TailorRate('3-Piece Printed/Embroidered Suit', 'Rs. 3,000', '2-3 days'),
+      TailorRate('Culottes / Tulip / Straight Pant', 'Rs. 1,200', '24 hours'),
+      TailorRate('Urgent 24h Rush Stitching', 'Rs. 3,800', '24 hours'),
+    ],
+    about: 'The ideal solution when Eid or an event is right around the corner. Clean modern cuts, computerized stitch tension, and guaranteed on-time delivery across Lahore within 48 hours of fabric receipt.',
+    phone: '+92 301 4928173',
+  ),
+  Tailor(
+    id: 't5',
+    name: 'Saddar Craftsmanship Guild',
+    specialtyTitle: 'Heritage Sherwanis & Traditional Formal Wear',
+    city: 'Rawalpindi',
+    location: 'Bank Road, Saddar Cantt',
+    experienceYears: 35,
+    rating: 5.0,
+    reviewCount: 68,
+    startingPrice: 5000,
+    turnaroundDays: 7,
+    specialties: ['Heritage Sherwani', 'Raw Silk Achkan', 'Groom Attire', 'Pure Karandi Suits'],
+    rateCard: [
+      TailorRate('Handmade Sherwani with Inner Suit', 'Rs. 12,000', '7-10 days'),
+      TailorRate('Pure Karandi / Wool Winter Suit', 'Rs. 4,500', '5 days'),
+      TailorRate('Embroidered Velvet Shawl Finish', 'Rs. 3,000', '3 days'),
+      TailorRate('Ceremonial Pagri / Turban Styling', 'Rs. 2,500', '2 days'),
+    ],
+    about: 'Decades of royal craft heritage in the historic Saddar cantonment. Specializes in luxury groom attire, heavily detailed pocket flaps, hand-sewn button loops, and pure raw silk creations.',
+    phone: '+92 345 5581900',
+  ),
+  Tailor(
+    id: 't6',
+    name: 'Al-Zahra Pret Lab',
+    specialtyTitle: 'Trendy Cuts, Lawn Finishes & Piping Artistry',
+    city: 'Faisalabad',
+    location: 'D-Ground, Peoples Colony',
+    experienceYears: 11,
+    rating: 4.8,
+    reviewCount: 76,
+    startingPrice: 2200,
+    turnaroundDays: 3,
+    specialties: ['Lawn Stitching', 'Contemporary Pakistani Cuts', 'Lace Finishing', 'Affordable Pret'],
+    rateCard: [
+      TailorRate('Standard 3-Piece Lawn Stitching', 'Rs. 2,200', '3 days'),
+      TailorRate('A-Line / Flared Kurti with Laces', 'Rs. 1,800', '2 days'),
+      TailorRate('Embroidered Trouser / Gharara Pant', 'Rs. 1,400', '2 days'),
+      TailorRate('Bulk Order (3+ suits, 15% off)', 'Rs. 5,600', '4 days'),
+    ],
+    about: 'A fresh, dynamic stitching studio located in the textile heart of Pakistan. They bring magazine lookbook designs to life with immaculate neckline finishes, hem inlays, and trendy sleeve cuts.',
+    phone: '+92 304 7716629',
+  ),
+];
+
+Tailor tailorById(String id) =>
+    kTailors.firstWhere((t) => t.id == id, orElse: () => kTailors.first);
+
 /// Single app-wide store.
 class AppState extends ChangeNotifier {
   final wished = <String, bool>{};
@@ -267,6 +475,7 @@ class AppState extends ChangeNotifier {
 
   String selectedProductId = 'p1';
   String selectedBrandId = 'malika';
+  String imageSearchRefId = 'p16';
 
   final prefCategories = <String>{};
   final prefStyles = <String>{};
@@ -276,6 +485,7 @@ class AppState extends ChangeNotifier {
   final prefSizes = <String>{};
 
   final filterCategories = <String>{};
+  final filterBudget = <String>{};
   final filterColors = <String>{};
   final filterSizes = <String>{};
   bool filterEmergingOnly = false;
@@ -284,6 +494,45 @@ class AppState extends ChangeNotifier {
   final savedLooks = <SavedLook>[
     SavedLook('look1', 'Wedding Guest, Maroon & Gold', ['p1', 'p11', 'p10']),
   ];
+  String selectedTailorId = 't1';
+  final stitchingRequests = <StitchingRequest>[
+    StitchingRequest(
+      id: 'REQ-8492',
+      outfitTitle: 'Festive Raw Silk Kurta Shalwar',
+      gender: 'Men',
+      fabricSource: 'J. Junaid Jamshed Pure Latha',
+      tailorName: 'Master Rafiq & Sons',
+      tailorCity: 'Lahore',
+      status: 'Hand & Machine Stitching',
+      stageIndex: 2,
+      price: 3500,
+      orderDate: 'Sep 4, 2026',
+      estimatedDelivery: 'Sep 10, 2026',
+      trackingCode: 'LBS-LHR-9823',
+      measurementNotes: 'Reference suit picked up from Gulberg III',
+    ),
+    StitchingRequest(
+      id: 'REQ-7911',
+      outfitTitle: '3-Piece Embroidered Lawn Suit with Organza Dupatta',
+      gender: 'Women',
+      fabricSource: 'Sana Safinaz Luxury Lawn 2026',
+      tailorName: 'Gulberg Express Stitching',
+      tailorCity: 'Lahore',
+      status: 'Cutting & Marking',
+      stageIndex: 1,
+      price: 4200,
+      orderDate: 'Sep 6, 2026',
+      estimatedDelivery: 'Sep 11, 2026',
+      trackingCode: 'LBS-LHR-7741',
+      measurementNotes: 'Standard Medium + 2 inches shirt length',
+    ),
+  ];
+
+  void addStitchingRequest(StitchingRequest req) {
+    stitchingRequests.insert(0, req);
+    notifyListeners();
+  }
+
   bool settingsNotif = true;
   bool resetSent = false;
 

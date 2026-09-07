@@ -63,6 +63,9 @@ IconData glyph(String name) {
       return Icons.sell_outlined;
     case 'home':
       return Icons.home_outlined;
+    case 'scissors':
+    case 'cut':
+      return Icons.content_cut_outlined;
     default:
       return Icons.circle_outlined;
   }
@@ -231,13 +234,20 @@ class PrimaryButton extends StatelessWidget {
           child: Container(
             height: 54,
             alignment: Alignment.center,
-            constraints: const BoxConstraints(minWidth: 150),
-            padding: const EdgeInsets.symmetric(horizontal: 28),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (icon != null) ...[Icon(icon, size: 18, color: AppColors.surface), const SizedBox(width: 8)],
-                Text(label, style: body(15, weight: FontWeight.w700, color: AppColors.surface)),
+                Flexible(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: body(15, weight: FontWeight.w700, color: AppColors.surface),
+                  ),
+                ),
               ],
             ),
           ),
@@ -260,7 +270,10 @@ class SecondaryButton extends StatelessWidget {
         side: BorderSide(color: AppColors.border, width: 1.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.button)),
       ),
-      child: Text(label, style: body(15, weight: FontWeight.w700, color: AppColors.ink)),
+      child: Text(label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: body(15, weight: FontWeight.w700, color: AppColors.ink)),
     );
   }
 }

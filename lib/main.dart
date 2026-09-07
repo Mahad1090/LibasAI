@@ -18,6 +18,7 @@ import 'screens/local.dart';
 import 'screens/saved.dart';
 import 'screens/account.dart';
 import 'screens/states.dart';
+import 'screens/tailors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,6 +78,10 @@ class LibasAIApp extends StatelessWidget {
     '/myPreferences': (_) => const MyPreferencesScreen(),
     '/settings': (_) => const SettingsScreen(),
     '/statesGallery': (_) => const StatesGalleryScreen(),
+    '/tailors': (_) => const TailorsDirectoryScreen(),
+    '/tailorProfile': (_) => const TailorProfileScreen(),
+    '/getStitched': (_) => const GetStitchedScreen(),
+    '/myRequests': (_) => const MyStitchingRequestsScreen(),
   };
 
   static const _darkScreens = {'/splash', '/aiProcessing', '/imageScanning', '/imageGallery'};

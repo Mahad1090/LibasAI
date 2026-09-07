@@ -48,10 +48,69 @@ class ImageSearchIntroScreen extends StatelessWidget {
                   style: body(13.5, color: AppColors.inkSecondary, height: 1.55),
                 ),
                 const SizedBox(height: 24),
+                Text('Try with Sample Outfits', style: body(13, weight: FontWeight.w700)),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 120,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (final sampleId in const ['p16', 'p2', 'p19', 'p35'])
+                        Builder(builder: (context) {
+                          final sp = productById(sampleId);
+                          final state = AppScope.of(context);
+                          return GestureDetector(
+                            onTap: () {
+                              state.set(() => state.imageSearchRefId = sampleId);
+                              go(context, '/imagePreview');
+                            },
+                            child: Container(
+                              width: 90,
+                              margin: const EdgeInsets.only(right: 12),
+                              decoration: BoxDecoration(
+                                color: AppColors.surface,
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(color: AppColors.border),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+                                      child: StripePlaceholder(
+                                        imageUrl: sp.imageUrl,
+                                        decodeWidth: 160,
+                                        label: sp.title,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(6),
+                                    child: Text(
+                                      sp.title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: body(10, weight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
                 GestureDetector(
-                  onTap: () => go(context, '/imagePreview'),
+                  onTap: () {
+                    AppScope.of(context).set(() => AppScope.of(context).imageSearchRefId = 'p16');
+                    go(context, '/imagePreview');
+                  },
                   child: Container(
-                    height: 220,
+                    height: 130,
                     decoration: BoxDecoration(
                       color: AppColors.surface,
                       borderRadius: BorderRadius.circular(20),
@@ -63,22 +122,28 @@ class ImageSearchIntroScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(glyph('upload'), size: 30, color: AppColors.accent),
-                        const SizedBox(height: 10),
+                        Icon(glyph('upload'), size: 28, color: AppColors.accent),
+                        const SizedBox(height: 8),
                         Text('Drop an image, or choose below',
                             style: body(13, weight: FontWeight.w600, color: AppColors.inkFaint)),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
                 Row(children: [
                   Expanded(
                     child: PrimaryButton('Take Photo',
-                        icon: glyph('camera'), onTap: () => go(context, '/imagePreview')),
+                        icon: glyph('camera'), onTap: () {
+                      AppScope.of(context).set(() => AppScope.of(context).imageSearchRefId = 'p16');
+                      go(context, '/imagePreview');
+                    }),
                   ),
                   const SizedBox(width: 12),
-                  Expanded(child: SecondaryButton('Gallery', onTap: () => go(context, '/imagePreview'))),
+                  Expanded(child: SecondaryButton('Gallery', onTap: () {
+                    AppScope.of(context).set(() => AppScope.of(context).imageSearchRefId = 'p2');
+                    go(context, '/imagePreview');
+                  })),
                 ]),
               ],
             ),
@@ -93,6 +158,8 @@ class ImagePreviewScreen extends StatelessWidget {
   const ImagePreviewScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final refProduct = productById(state.imageSearchRefId);
     return Column(
       children: [
         Padding(
@@ -101,7 +168,7 @@ class ImagePreviewScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _BackBtn(onTap: () => go(context, '/imageSearchIntro')),
-              Text('Preview', style: body(14.5, weight: FontWeight.w700)),
+              Text('Reference Preview', style: body(14.5, weight: FontWeight.w700)),
               const SizedBox(width: 36),
             ],
           ),
@@ -112,12 +179,21 @@ class ImagePreviewScreen extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: StripePlaceholder(
-                    label: 'UPLOADED PHOTO — your reference image',
-                    radius: BorderRadius.circular(20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: StripePlaceholder(
+                      label: refProduct.title,
+                      imageUrl: refProduct.imageUrl,
+                      decodeWidth: 480,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 12),
+                Text(refProduct.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: body(12.5, weight: FontWeight.w600, color: AppColors.inkSecondary)),
+                const SizedBox(height: 14),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -128,7 +204,7 @@ class ImagePreviewScreen extends StatelessWidget {
                     _tool(glyph('refresh'), 'Retake'),
                   ],
                 ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 20),
                 PrimaryButton('Find Similar Styles', onTap: () => go(context, '/imageScanning')),
               ],
             ),
@@ -182,6 +258,8 @@ class _ImageScanningScreenState extends State<ImageScanningScreen>
   @override
   Widget build(BuildContext context) {
     const cream = Color(0xFFF7EDDF);
+    final state = AppScope.of(context);
+    final refProduct = productById(state.imageSearchRefId);
     return Container(
       color: AppColors.ink,
       alignment: Alignment.center,
@@ -194,7 +272,15 @@ class _ImageScanningScreenState extends State<ImageScanningScreen>
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: StripePlaceholder(dark: true, radius: BorderRadius.circular(20)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: StripePlaceholder(
+                      dark: true,
+                      radius: BorderRadius.circular(20),
+                      imageUrl: refProduct.imageUrl,
+                      decodeWidth: 320,
+                    ),
+                  ),
                 ),
                 AnimatedBuilder(
                   animation: _c,
@@ -203,11 +289,11 @@ class _ImageScanningScreenState extends State<ImageScanningScreen>
                     left: 8,
                     right: 8,
                     child: Container(
-                      height: 2,
+                      height: 3,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                             colors: [Colors.transparent, cream, Colors.transparent]),
-                        boxShadow: [BoxShadow(color: cream.withValues(alpha: 0.5), blurRadius: 12)],
+                        boxShadow: [BoxShadow(color: cream.withValues(alpha: 0.7), blurRadius: 12)],
                       ),
                     ),
                   ),
@@ -216,8 +302,8 @@ class _ImageScanningScreenState extends State<ImageScanningScreen>
             ),
           ),
           const SizedBox(height: 26),
-          Text('Finding similar pieces…',
-              style: body(13.5, weight: FontWeight.w600, color: cream.withValues(alpha: 0.8))),
+          Text('Extracting fabric, pattern & color tones…',
+              style: body(13.5, weight: FontWeight.w600, color: cream.withValues(alpha: 0.85))),
         ],
       ),
     );
@@ -228,7 +314,18 @@ class ImageResultsScreen extends StatelessWidget {
   const ImageResultsScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final items = [2, 4, 7, 0, 9, 11].map((i) => kProducts[i]).toList();
+    final state = AppScope.of(context);
+    final refProduct = productById(state.imageSearchRefId);
+    final matched = kProducts
+        .where((p) =>
+            p.id != refProduct.id &&
+            (p.category == refProduct.category ||
+                p.brandId == refProduct.brandId ||
+                p.occasion == refProduct.occasion))
+        .take(6)
+        .toList();
+    final items = matched.length >= 4 ? matched : kProducts.take(6).toList();
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, kTopInset, 20, 30),
       children: [
@@ -238,10 +335,26 @@ class ImageResultsScreen extends StatelessWidget {
           SizedBox(
             width: 44,
             height: 44,
-            child: StripePlaceholder(radius: BorderRadius.circular(12)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: StripePlaceholder(
+                radius: BorderRadius.circular(12),
+                imageUrl: refProduct.imageUrl,
+                decodeWidth: 100,
+              ),
+            ),
           ),
           const SizedBox(width: 10),
-          Expanded(child: Text('Styles similar to your image', style: heading(17))),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Visually Similar Pieces', style: heading(16)),
+                Text('Matched against your reference photo',
+                    style: body(11, color: AppColors.inkSecondary)),
+              ],
+            ),
+          ),
         ]),
         const SizedBox(height: 16),
         GridView.count(

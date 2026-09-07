@@ -10,6 +10,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const menu = [
       ('My Preferences', 'sparkle', '/myPreferences'),
+      ('My Stitching Orders', 'scissors', '/myRequests'),
+      ('Find Master Tailors (Darzi)', 'cut', '/tailors'),
       ('Wishlist', 'heart', '/wishlist'),
       ('Saved Looks', 'star', '/savedLooks'),
       ('Search History', 'clock', '/searchHistory'),

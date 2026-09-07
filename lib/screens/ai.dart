@@ -24,13 +24,219 @@ void _sendMessage(BuildContext context, AppState state, String text) {
   if (ModalRoute.of(context)?.settings.name != '/aiChat') {
     Navigator.of(context).pushNamed('/aiChat');
   }
-  Future.delayed(const Duration(milliseconds: 1800), () {
+
+  Future.delayed(const Duration(milliseconds: 1300), () {
+    final lower = text.toLowerCase();
+    String replyText = '';
+    List<String> matchedIds = [];
+
+    if (lower.contains('compare these') || lower == 'compare') {
+      final prevBot = state.chatMessages.reversed.firstWhere(
+        (m) => !m.isUser && m.productIds.isNotEmpty,
+        orElse: () => ChatMessage(isUser: false, text: '', productIds: ['p1', 'p2', 'p6']),
+      );
+      state.set(() {
+        state.compareIds.clear();
+        state.compareIds.addAll(prevBot.productIds.take(4));
+        state.compareMode = true;
+      });
+      replyText =
+          'I have added these ${state.compareIds.length} items to your comparison table. You can review them side-by-side or ask me to highlight key differences.';
+      matchedIds = List.from(state.compareIds);
+    } else if (lower.contains('show cheaper') ||
+        lower.contains('budget') ||
+        lower.contains('affordable')) {
+      final cheaper = kProducts
+          .where((p) => p.priceNumeric > 0 && p.priceNumeric < 5000)
+          .toList()
+        ..sort((a, b) => a.priceNumeric.compareTo(b.priceNumeric));
+      matchedIds = cheaper.take(4).map((p) => p.id).toList();
+      replyText =
+          'Here are budget-friendly options under Rs. 5,000 without compromising on fabric quality and styling.';
+    } else if (lower.contains('show local') ||
+        lower.contains('emerging') ||
+        lower.contains('independent')) {
+      final emerging = kProducts.where((p) => p.emerging).toList();
+      matchedIds = emerging.take(4).map((p) => p.id).toList();
+      final brandNames = emerging.take(3).map((p) => p.brand).toSet().join(', ');
+      replyText =
+          'Highlighting independent Pakistani designer labels ($brandNames). These emerging brands offer unique embroidery and tailored cuts.';
+    } else if (lower.contains('more formal') ||
+        lower.contains('luxury') ||
+        lower.contains('party') ||
+        lower.contains('wedding')) {
+      final formal = kProducts
+          .where((p) =>
+              p.occasion.toLowerCase() == 'eid' ||
+              (p.category.toLowerCase() == 'pret' && p.priceNumeric > 8000))
+          .toList()
+        ..sort((a, b) => b.priceNumeric.compareTo(a.priceNumeric));
+      matchedIds = formal.take(4).map((p) => p.id).toList();
+      replyText =
+          'Here are elevated formal and festive selections featuring intricate embroidery and luxury fabric blends.';
+    } else if (lower.contains('change color') || lower.contains('color')) {
+      final colorsList = [
+        kProducts.firstWhere(
+            (p) =>
+                p.title.toLowerCase().contains('green') ||
+                p.imgLabel.toLowerCase().contains('green'),
+            orElse: () => kProducts[15]),
+        kProducts.firstWhere(
+            (p) =>
+                p.title.toLowerCase().contains('blue') ||
+                p.imgLabel.toLowerCase().contains('blue'),
+            orElse: () => kProducts[17]),
+        kProducts.firstWhere(
+            (p) =>
+                p.title.toLowerCase().contains('pink') ||
+                p.imgLabel.toLowerCase().contains('pink'),
+            orElse: () => kProducts[8]),
+        kProducts.firstWhere(
+            (p) =>
+                p.title.toLowerCase().contains('black') ||
+                p.imgLabel.toLowerCase().contains('black'),
+            orElse: () => kProducts[18]),
+      ];
+      matchedIds = colorsList.map((p) => p.id).toList();
+      replyText =
+          'Here are versatile options across contrasting colorways including rich emerald, rose pink, and deep navy.';
+    } else {
+      // General semantic & catalog search
+      int? maxBudget;
+      final kMatch = RegExp(r'(\d+)\s*k\b').firstMatch(lower);
+      if (kMatch != null) {
+        maxBudget = (int.tryParse(kMatch.group(1)!) ?? 0) * 1000;
+      } else {
+        final numMatch =
+            RegExp(r'(?:under|below|rs\.?|less than)\s*(\d{4,6})').firstMatch(lower);
+        if (numMatch != null) {
+          maxBudget = int.tryParse(numMatch.group(1)!);
+        }
+      }
+
+      final colorKeywords = [
+        'black',
+        'maroon',
+        'green',
+        'blue',
+        'pink',
+        'white',
+        'gold',
+        'navy',
+        'cream',
+        'rose',
+        'brown',
+        'purple',
+        'yellow',
+        'emerald',
+        'teal'
+      ];
+      final detectedColors = colorKeywords.where((c) => lower.contains(c)).toList();
+
+      final isMen = lower.contains('men') || lower.contains('man') || lower.contains('boy');
+      final isEid = lower.contains('eid') || lower.contains('festive');
+      final isUnstitched = lower.contains('unstitched');
+      final isKurta = lower.contains('kurta');
+      final isLawn = lower.contains('lawn');
+
+      // Score products
+      final scored = kProducts.map((p) {
+        int score = 0;
+        final title = p.title.toLowerCase();
+        final brand = p.brand.toLowerCase();
+        final cat = p.category.toLowerCase();
+        final occ = p.occasion.toLowerCase();
+        final imgLabel = p.imgLabel.toLowerCase();
+        final url = p.productUrl.toLowerCase();
+
+        // 1. Color matching (text + hex RGB)
+        if (detectedColors.isNotEmpty) {
+          for (final c in detectedColors) {
+            final inText = title.contains(c) || imgLabel.contains(c) || url.contains(c);
+            if (inText) {
+              score += 10;
+            } else {
+              final isHexMatch = p.colors.any((col) {
+                final r = (col >> 16) & 0xFF;
+                final g = (col >> 8) & 0xFF;
+                final b = col & 0xFF;
+                if (c == 'black') return r < 55 && g < 55 && b < 55;
+                if (c == 'green' || c == 'emerald' || c == 'teal') return g > r && g > b;
+                if (c == 'blue' || c == 'navy') return b > r && b > g;
+                if (c == 'maroon') return r > 90 && g < 50 && b < 60;
+                if (c == 'pink' || c == 'rose') return r > 180 && b > 130;
+                if (c == 'white' || c == 'cream') return r > 215 && g > 205 && b > 195;
+                return false;
+              });
+              if (isHexMatch) {
+                score += 7;
+              } else {
+                score -= 3;
+              }
+            }
+          }
+        }
+
+        // 2. Budget constraint
+        if (maxBudget != null && p.priceNumeric > 0) {
+          if (p.priceNumeric <= maxBudget) {
+            score += 5;
+          } else {
+            score -= 6;
+          }
+        }
+
+        // 3. Gender / Men
+        if (isMen) {
+          if (title.contains('men') || cat.contains('men') || url.contains('men') || imgLabel.contains('men')) {
+            score += 8;
+          } else {
+            score -= 5;
+          }
+        }
+
+        // 4. Occasion & category
+        if (isEid && (occ.contains('eid') || occ.contains('festive') || title.contains('festive'))) score += 4;
+        if (isUnstitched && (cat.contains('unstitched') || title.contains('unstitched') || url.contains('unstitched'))) {
+          score += 5;
+        }
+        if (isKurta && (cat.contains('kurta') || title.contains('kurta') || title.contains('shirt'))) {
+          score += 4;
+        }
+        if (isLawn && (title.contains('lawn') || occ.contains('lawn') || url.contains('lawn'))) score += 4;
+
+        // 5. General term matching
+        for (final word in lower.split(RegExp(r'\s+'))) {
+          if (word.length > 2) {
+            if (title.contains(word)) score += 3;
+            if (brand.contains(word)) score += 4;
+            if (cat.contains(word)) score += 2;
+            if (imgLabel.contains(word)) score += 2;
+          }
+        }
+        return MapEntry(p, score);
+      }).toList();
+
+      scored.sort((a, b) => b.value.compareTo(a.value));
+      final top = scored.where((e) => e.value > 0).take(4).map((e) => e.key).toList();
+      final results = top.isNotEmpty ? top : kProducts.take(4).toList();
+      matchedIds = results.map((p) => p.id).toList();
+
+      final brands = results.map((p) => p.brand).toSet().join(' & ');
+      final budgetStr = maxBudget != null
+          ? ' within Rs. ${maxBudget.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]},')}'
+          : '';
+      final colorStr = detectedColors.isNotEmpty ? ' ${detectedColors.join('/')}' : '';
+      replyText =
+          'Found ${results.length}$colorStr styles from $brands$budgetStr tailored to your query. Each item can be viewed in detail or compared side-by-side.';
+    }
+
     state.set(() {
       state.thinking = false;
       state.chatMessages.add(ChatMessage(
         isUser: false,
-        text: 'I found a few options that fit your budget and occasion.',
-        productIds: ['p2', 'p4', 'p8', 'p12'],
+        text: replyText,
+        productIds: matchedIds,
       ));
     });
   });

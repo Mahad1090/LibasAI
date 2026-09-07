@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../app_scope.dart';
 import '../data.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
-void _showExitModal(BuildContext context, String brandName) {
+void _showExitModal(BuildContext context, String brandName, {String? targetUrl}) {
+  final url = (targetUrl != null && targetUrl.isNotEmpty)
+      ? targetUrl
+      : 'https://www.google.com/search?q=$brandName';
   showDialog(
     context: context,
     barrierColor: AppColors.ink.withValues(alpha: 0.5),
@@ -24,7 +28,16 @@ void _showExitModal(BuildContext context, String brandName) {
             SizedBox(
               width: double.infinity,
               child: FilledButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  final uri = Uri.parse(url);
+                  try {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  } catch (_) {
+                    // Fallback to platform default if external app fails
+                    await launchUrl(uri);
+                  }
+                },
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.accent,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -221,7 +234,30 @@ class ProductDetailScreen extends StatelessWidget {
                     ]),
                     const SizedBox(height: 24),
                     PrimaryButton('Visit Brand Website',
-                        onTap: () => _showExitModal(context, p.brand)),
+                        onTap: () => _showExitModal(context, p.brand, targetUrl: p.productUrl)),
+                    const SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () => go(context, '/getStitched'),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 13),
+                        decoration: BoxDecoration(
+                          color: AppColors.sand,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.accent.withValues(alpha: 0.3)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.content_cut_outlined, size: 15, color: AppColors.accent),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Get Stitched by Master Tailor (Darzi) ✂',
+                              style: body(12.5, weight: FontWeight.w700, color: AppColors.accent),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 30),
                     Text('Similar Products', style: heading(17)),
                     const SizedBox(height: 12),
@@ -277,13 +313,21 @@ class ImageGalleryScreen extends StatelessWidget {
       child: Stack(
         children: [
           Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Text('${p.imgLabel} — full screen view',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontFamily: 'monospace', fontSize: 11, color: Color(0x80F7EDDF))),
-            ),
+            child: p.imageUrl.isNotEmpty
+                ? InteractiveViewer(
+                    child: Image.network(
+                      p.imageUrl,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => StripePlaceholder(
+                        label: p.imgLabel,
+                        radius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  )
+                : StripePlaceholder(
+                    label: p.imgLabel,
+                    radius: BorderRadius.circular(16),
+                  ),
           ),
           Positioned(
             top: kTopInset,
@@ -332,18 +376,44 @@ class ProductComparisonScreen extends StatelessWidget {
     return AnimatedBuilder(
       animation: state,
       builder: (context, _) {
-        final ids = state.compareIds.isNotEmpty ? state.compareIds : ['p1', 'p2', 'p6'];
-        final items = ids.map(productById).toList();
+        final items = state.compareIds.map(productById).toList();
+        if (items.isEmpty) {
+          return Container(
+            color: AppColors.surface,
+            child: Column(
+              children: [
+                const ScreenHeader('Compare Products'),
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(glyph('compare'), size: 40, color: AppColors.inkFaint),
+                        const SizedBox(height: 12),
+                        Text('No products selected for comparison',
+                            style: body(14, weight: FontWeight.w600)),
+                        const SizedBox(height: 6),
+                        Text('Select up to 4 items from search or product pages to compare.',
+                            style: body(12, color: AppColors.inkSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
         return Container(
           color: AppColors.surface,
           child: Column(
             children: [
-              const ScreenHeader('Compare'),
+              ScreenHeader('Compare (${items.length})',
+                  trailingText: 'Clear', onTrailing: () => state.clearCompare()),
               Expanded(
                 child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -360,7 +430,9 @@ class ProductComparisonScreen extends StatelessWidget {
                                     child: AspectRatio(
                                       aspectRatio: 3 / 4,
                                       child: StripePlaceholder(
-                                          radius: BorderRadius.circular(12)),
+                                          radius: BorderRadius.circular(12),
+                                          imageUrl: p.imageUrl,
+                                          decodeWidth: 240),
                                     ),
                                   ),
                                   const SizedBox(height: 8),
@@ -403,7 +475,7 @@ class ProductComparisonScreen extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: FilledButton(
-                      onPressed: () => _showExitModal(context, items.first.brand),
+                      onPressed: () => _showExitModal(context, items.first.brand, targetUrl: items.first.productUrl),
                       style: FilledButton.styleFrom(
                         backgroundColor: AppColors.accent,
                         minimumSize: const Size.fromHeight(50),

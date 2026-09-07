@@ -136,6 +136,80 @@ class _SearchScreenState extends State<SearchScreen> {
       );
 }
 
+List<Product> filterAndSortProducts(AppState state) {
+  final q = state.searchQuery.trim().toLowerCase();
+
+  var list = kProducts.where((p) {
+    // 1. Text Query
+    if (q.isNotEmpty) {
+      final inTitle = p.title.toLowerCase().contains(q);
+      final inBrand = p.brand.toLowerCase().contains(q);
+      final inCat = p.category.toLowerCase().contains(q);
+      final inOcc = p.occasion.toLowerCase().contains(q);
+      if (!inTitle && !inBrand && !inCat && !inOcc) return false;
+    }
+
+    // 2. Emerging
+    if (state.filterEmergingOnly && !p.emerging) {
+      return false;
+    }
+
+    // 3. Category
+    if (state.filterCategories.isNotEmpty) {
+      final matchesCategory = state.filterCategories.any((cat) {
+        final cl = cat.toLowerCase();
+        if (cl == 'women') return !p.title.toLowerCase().contains('men');
+        if (cl == 'men') return p.title.toLowerCase().contains('men') || p.category.toLowerCase().contains('men');
+        return p.category.toLowerCase().contains(cl) ||
+            p.occasion.toLowerCase().contains(cl) ||
+            p.title.toLowerCase().contains(cl);
+      });
+      if (!matchesCategory) return false;
+    }
+
+    // 4. Budget
+    if (state.filterBudget.isNotEmpty) {
+      final price = p.priceNumeric;
+      final matchesBudget = state.filterBudget.any((b) {
+        if (b == 'Under Rs. 5k') return price < 5000;
+        if (b == 'Rs. 5k–10k') return price >= 5000 && price <= 10000;
+        if (b == 'Rs. 10k–20k') return price > 10000 && price <= 20000;
+        if (b == 'Rs. 20k+') return price > 20000;
+        return true;
+      });
+      if (!matchesBudget) return false;
+    }
+
+    // 5. Sizes
+    if (state.filterSizes.isNotEmpty) {
+      final matchesSize = state.filterSizes.any((sz) => p.sizes.any((s) => s.toLowerCase().contains(sz.toLowerCase())));
+      if (!matchesSize) return false;
+    }
+
+    // 6. Colors
+    if (state.filterColors.isNotEmpty) {
+      final matchesColor = state.filterColors.any((c) {
+        final cl = c.toLowerCase();
+        return p.title.toLowerCase().contains(cl) || p.imgLabel.toLowerCase().contains(cl);
+      });
+      if (!matchesColor) return false;
+    }
+
+    return true;
+  }).toList();
+
+  // Sort
+  if (state.sortOption == 'Price: Low to High') {
+    list.sort((a, b) => a.priceNumeric.compareTo(b.priceNumeric));
+  } else if (state.sortOption == 'Price: High to Low') {
+    list.sort((a, b) => b.priceNumeric.compareTo(a.priceNumeric));
+  } else if (state.sortOption == 'Popular' || state.sortOption == 'Newest') {
+    list = list.reversed.toList();
+  }
+
+  return list;
+}
+
 class SearchResultsScreen extends StatelessWidget {
   const SearchResultsScreen({super.key});
   @override
@@ -147,6 +221,7 @@ class SearchResultsScreen extends StatelessWidget {
         final label = state.searchQuery.trim().isEmpty
             ? 'All Products'
             : 'Results for "${state.searchQuery.trim()}"';
+        final results = filterAndSortProducts(state);
         return Column(
           children: [
             Expanded(
@@ -176,7 +251,8 @@ class SearchResultsScreen extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: body(15, weight: FontWeight.w700)),
-                          Text('86 results', style: body(11.5, color: AppColors.inkSecondary)),
+                          Text('${results.length} results',
+                              style: body(11.5, color: AppColors.inkSecondary)),
                         ],
                       ),
                     ),
@@ -184,17 +260,52 @@ class SearchResultsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   const ProductGridToolbar(),
                   const SizedBox(height: 16),
-                  GridView.count(
-                    crossAxisCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 14,
-                    childAspectRatio: 0.56,
-                    // cap the eager (shrink-wrapped) grid - rendering all 160
-                    // cards + images at once is the main source of scroll jank
-                    children: [for (final p in kProducts.take(30)) ProductCard(p)],
-                  ),
+                  if (results.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Icon(glyph('search'), size: 40, color: AppColors.inkFaint),
+                            const SizedBox(height: 12),
+                            Text('No matching products found',
+                                style: body(14, weight: FontWeight.w700)),
+                            const SizedBox(height: 6),
+                            Text('Try adjusting your search terms or clearing filters.',
+                                style: body(12, color: AppColors.inkSecondary)),
+                            const SizedBox(height: 16),
+                            OutlinedButton(
+                              onPressed: () => state.set(() {
+                                state.searchQuery = '';
+                                state.filterCategories.clear();
+                                state.filterBudget.clear();
+                                state.filterColors.clear();
+                                state.filterSizes.clear();
+                                state.filterEmergingOnly = false;
+                              }),
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(color: AppColors.border),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                              ),
+                              child: Text('Reset All Filters',
+                                  style: body(12.5,
+                                      weight: FontWeight.w600, color: AppColors.accent)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  else
+                    GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 14,
+                      childAspectRatio: 0.56,
+                      children: [for (final p in results.take(40)) ProductCard(p)],
+                    ),
                 ],
               ),
             ),
@@ -223,6 +334,7 @@ class FiltersScreen extends StatelessWidget {
                   trailingText: 'Clear All',
                   onTrailing: () => state.set(() {
                         state.filterCategories.clear();
+                        state.filterBudget.clear();
                         state.filterColors.clear();
                         state.filterSizes.clear();
                         state.filterEmergingOnly = false;
@@ -243,8 +355,8 @@ class FiltersScreen extends StatelessWidget {
                     Wrap(spacing: 8, runSpacing: 8, children: [
                       for (final b in kBudgetOptions)
                         SelectChip(b,
-                            active: state.filterCategories.contains(b),
-                            onTap: () => state.toggleSetMember(state.filterCategories, b)),
+                            active: state.filterBudget.contains(b),
+                            onTap: () => state.toggleSetMember(state.filterBudget, b)),
                     ]),
                     const SizedBox(height: 24),
                     _h('Color'),
