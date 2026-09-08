@@ -381,3 +381,14 @@ def click_brand(brand_name: str) -> dict[str, Any]:
     return {"status": "recorded", "clicks": db.get_brand_clicks().get(brand_name, 1)}
 
 
+@app.get("/fairness")
+def get_fairness() -> dict[str, Any]:
+    return db.get_fairness_config()
+
+
+@app.post("/fairness")
+def post_fairness(body: dict[str, Any]) -> dict[str, Any]:
+    return db.save_fairness_config(body)
+
+
+

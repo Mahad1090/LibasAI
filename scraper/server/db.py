@@ -92,6 +92,11 @@ CREATE TABLE IF NOT EXISTS search_queries (
     count      INTEGER NOT NULL DEFAULT 1,
     category   TEXT NOT NULL DEFAULT 'General'
 );
+
+CREATE TABLE IF NOT EXISTS fairness_config (
+    key   TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
 """
 
 
@@ -541,4 +546,37 @@ def log_search_query(query: str, category: str = "General") -> None:
             conn.execute("UPDATE search_queries SET count = count + 1 WHERE id = ?", (row["id"],))
         else:
             conn.execute("INSERT INTO search_queries (query, count, category) VALUES (?, 1, ?)", (query, category))
+
+
+def get_fairness_config() -> dict[str, Any]:
+    with get_conn() as conn:
+        rows = conn.execute("SELECT key, value FROM fairness_config").fetchall()
+        data = {r["key"]: r["value"] for r in rows}
+    if not data:
+        return {
+            "lambda": 0.25,
+            "relevanceThreshold": 0.90,
+            "topK": 10,
+            "coldStartEpsilon": 0.15,
+            "relevanceRetained": 0.934,
+            "smallBrandLift": 0.320,
+            "lastUpdated": "Live Database",
+        }
+    return {
+        "lambda": float(data.get("lambda", 0.25)),
+        "relevanceThreshold": float(data.get("relevanceThreshold", 0.90)),
+        "topK": int(data.get("topK", 10)),
+        "coldStartEpsilon": float(data.get("coldStartEpsilon", 0.15)),
+        "relevanceRetained": float(data.get("relevanceRetained", 0.934)),
+        "smallBrandLift": float(data.get("smallBrandLift", 0.320)),
+        "lastUpdated": data.get("lastUpdated", "Just now"),
+    }
+
+
+def save_fairness_config(config: dict[str, Any]) -> dict[str, Any]:
+    with get_conn() as conn:
+        for k, v in config.items():
+            conn.execute("INSERT OR REPLACE INTO fairness_config (key, value) VALUES (?, ?)", (str(k), str(v)))
+    return get_fairness_config()
+
 

@@ -247,7 +247,8 @@
       '/about': 'about.html',
       '/contact': 'contact.html',
       '/terms': 'terms.html',
-      '/privacy': 'privacy.html'
+      '/privacy': 'privacy.html',
+      '/404': '404.html'
     };
 
     document.querySelectorAll('a[href]').forEach(function (a) {

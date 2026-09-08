@@ -570,12 +570,14 @@ class ApiClient {
     String? brand,
     String? gender,
     String? category,
+    int? limit,
   }) async {
     try {
       final params = <String, String>{};
       if (query != null && query.isNotEmpty) params['q'] = query;
       if (brand != null && brand.isNotEmpty && brand != 'All') params['brand'] = brand;
       if (gender != null && gender.isNotEmpty && gender != 'All') params['gender'] = gender;
+      if (limit != null) params['limit'] = limit.toString();
       final uri = _u('/catalog').replace(queryParameters: params);
       final r = await http.get(uri).timeout(const Duration(seconds: 2));
       _checkOk(r);
@@ -617,6 +619,58 @@ class ApiClient {
     } catch (_) {
       return _seedTaxonomy;
     }
+  }
+
+  static Map<String, dynamic> _fairnessConfig = {
+    'lambda': 0.25,
+    'relevanceThreshold': 0.90,
+    'topK': 10,
+    'coldStartEpsilon': 0.15,
+    'relevanceRetained': 0.934,
+    'smallBrandLift': 0.320,
+    'lastUpdated': 'Live Session',
+  };
+
+  Future<Map<String, dynamic>> fetchFairnessConfig() async {
+    try {
+      final r = await http.get(_u('/fairness')).timeout(const Duration(seconds: 2));
+      _checkOk(r);
+      final data = jsonDecode(r.body) as Map<String, dynamic>;
+      _fairnessConfig = Map<String, dynamic>.from(data);
+      return _fairnessConfig;
+    } catch (_) {
+      return Map<String, dynamic>.from(_fairnessConfig);
+    }
+  }
+
+  Future<void> saveFairnessConfig(Map<String, dynamic> config) async {
+    _fairnessConfig = Map<String, dynamic>.from(config);
+    try {
+      final r = await http.post(
+        _u('/fairness'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(config),
+      ).timeout(const Duration(seconds: 2));
+      _checkOk(r);
+    } catch (_) {}
+  }
+
+  Future<void> addTaxonomyTerm(TaxonomyTerm term) async {
+    _seedTaxonomy.insert(0, term);
+    try {
+      final r = await http.post(
+        _u('/taxonomy'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'id': term.id,
+          'alias': term.alias,
+          'canonical': term.canonical,
+          'category': term.category,
+          'weight': term.weight,
+        }),
+      ).timeout(const Duration(seconds: 2));
+      _checkOk(r);
+    } catch (_) {}
   }
 }
 
