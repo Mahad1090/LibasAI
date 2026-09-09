@@ -19,15 +19,38 @@
     .lb-me-day-badge { margin-left:auto; font-size:10.5px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lb-burgundy); border:1px solid var(--lb-burgundy); border-radius:999px; padding:5px 12px; white-space:nowrap; }
 
     .lb-me-step { margin-bottom:32px; }
-    .lb-me-step__label { display:flex; align-items:center; gap:9px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:14px; }
+    .lb-me-step__label { display:flex; align-items:center; gap:9px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:14px; flex-wrap:wrap; }
     .lb-me-step__num { width:20px; height:20px; border-radius:50%; background:var(--lb-tint); color:var(--lb-burgundy); font-size:11px; display:inline-flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+    
+    /* ===== Open-Meteo Live Weather Bar ===== */
+    .lb-me-weather-bar { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:6px; padding:12px 18px; margin-bottom:16px; box-shadow:0 4px 18px rgba(25,20,18,0.03); }
+    .lb-me-weather-bar__left { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .lb-me-live-pill { display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#1b633d; background:rgba(46,125,50,0.1); border:1px solid rgba(46,125,50,0.22); border-radius:999px; padding:4px 10px; white-space:nowrap; }
+    .lb-me-live-dot { width:7px; height:7px; border-radius:50%; background:#2e7d32; box-shadow:0 0 0 0 rgba(46,125,50,0.6); animation:lbPulse 2s infinite; flex-shrink:0; }
+    @keyframes lbPulse { 0% { transform:scale(0.95); box-shadow:0 0 0 0 rgba(46,125,50,0.6); } 70% { transform:scale(1); box-shadow:0 0 0 6px rgba(46,125,50,0); } 100% { transform:scale(0.95); box-shadow:0 0 0 0 rgba(46,125,50,0); } }
+    .lb-me-city-wrap { position:relative; display:inline-flex; align-items:center; }
+    .lb-me-loc-icon { position:absolute; left:9px; width:14px; height:14px; color:var(--lb-burgundy); pointer-events:none; }
+    .lb-me-city-select { font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--lb-charcoal); background:var(--lb-tint); border:1px solid var(--lb-hairline); border-radius:4px; padding:5px 10px 5px 28px; cursor:pointer; outline:none; transition:border-color 150ms ease; }
+    .lb-me-city-select:focus { border-color:var(--lb-burgundy); }
+    .lb-me-geoloc-btn { display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--lb-hairline); border-radius:4px; padding:5px 11px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:var(--lb-charcoal); cursor:pointer; transition:background 160ms ease, border-color 160ms ease, color 160ms ease; white-space:nowrap; }
+    .lb-me-geoloc-btn svg { width:13px; height:13px; color:var(--lb-burgundy); flex-shrink:0; }
+    .lb-me-geoloc-btn:hover { background:rgba(132,14,52,0.06); border-color:var(--lb-burgundy); color:var(--lb-burgundy); }
+    .lb-me-geoloc-btn.is-loading svg { animation:spin 1s linear infinite; }
+    @keyframes spin { 100% { transform:rotate(360deg); } }
+    .lb-me-weather-bar__right { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:12px; margin-left:auto; }
+    .lb-me-weather-temp { font-family:'Playfair Display',serif; font-size:17px; font-weight:700; color:var(--lb-burgundy); white-space:nowrap; }
+    .lb-me-weather-desc { color:rgba(25,20,18,0.7); font-weight:600; font-size:12px; }
+    .lb-me-weather-source { font-size:9.5px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:rgba(25,20,18,0.45); background:var(--lb-paper); padding:3px 7px; border-radius:3px; white-space:nowrap; }
+
     .lb-me-choices { display:flex; gap:12px; flex-wrap:wrap; }
-    .lb-me-choice { display:flex; flex-direction:column; align-items:center; gap:8px; width:136px; padding:18px 12px; background:var(--lb-white); border:1.5px solid var(--lb-hairline); border-radius:6px; cursor:pointer; text-align:center; font-family:'Manrope',sans-serif; transition:border-color 180ms ease, transform 180ms var(--lb-ease), background 180ms ease; }
+    .lb-me-choice { position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; width:136px; padding:18px 12px; background:var(--lb-white); border:1.5px solid var(--lb-hairline); border-radius:6px; cursor:pointer; text-align:center; font-family:'Manrope',sans-serif; transition:border-color 180ms ease, transform 180ms var(--lb-ease), background 180ms ease; }
     .lb-me-choice:hover { border-color:var(--lb-rose); transform:translateY(-2px); }
     .lb-me-choice.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.06); }
     .lb-me-choice svg { width:22px; height:22px; color:var(--lb-burgundy); }
     .lb-me-choice strong { font-size:12.5px; font-weight:700; color:var(--lb-charcoal); }
     .lb-me-choice small { font-size:10.5px; color:rgba(25,20,18,0.5); line-height:1.3; }
+    .lb-me-auto-badge { position:absolute; top:-9px; background:#1b633d; color:#FFFDF9; font-size:9px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; padding:2px 8px; border-radius:999px; box-shadow:0 2px 6px rgba(27,99,61,0.25); pointer-events:none; white-space:nowrap; animation:fadeInBadge 200ms ease; }
+    @keyframes fadeInBadge { from { opacity:0; transform:translateY(-3px); } to { opacity:1; transform:translateY(0); } }
 
     .lb-me-reveal-cta[disabled] { opacity:0.38; cursor:not-allowed; pointer-events:none; }
 
@@ -563,7 +586,31 @@
       </div>
 
       <div class="lb-me-step">
-        <div class="lb-me-step__label"><span class="lb-me-step__num">1</span> What's it like outside right now?</div>
+        <div class="lb-me-step__label">
+          <span class="lb-me-step__num">1</span> What's it like outside right now?
+          <span id="me-weather-auto-note" style="margin-left:auto; font-size:11px; font-weight:600; text-transform:none; color:var(--lb-mauve); letter-spacing:normal;"></span>
+        </div>
+
+        <!-- Live Open-Meteo Weather Bar -->
+        <div class="lb-me-weather-bar" id="me-weather-bar">
+          <div class="lb-me-weather-bar__left">
+            <span class="lb-me-live-pill"><span class="lb-me-live-dot"></span> Live Forecast</span>
+            <div class="lb-me-city-wrap">
+              <svg class="lb-me-loc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <select id="me-city-select" aria-label="Select Pakistani city" class="lb-me-city-select"></select>
+            </div>
+            <button type="button" id="me-geoloc-btn" class="lb-me-geoloc-btn" title="Auto-detect my location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              <span>Auto-Detect</span>
+            </button>
+          </div>
+          <div class="lb-me-weather-bar__right" id="me-weather-status">
+            <span class="lb-me-weather-temp" id="me-weather-temp">--°C</span>
+            <span class="lb-me-weather-desc" id="me-weather-desc">Reading live conditions…</span>
+            <span class="lb-me-weather-source" title="Powered by Open-Meteo free API">Open-Meteo</span>
+          </div>
+        </div>
+
         <div class="lb-me-choices" id="me-weather-choices" role="group" aria-label="Weather"></div>
       </div>
 
@@ -838,8 +885,18 @@
           btn.setAttribute('data-key', key);
           btn.innerHTML = iconSvg(def.icon) + '<strong>' + def.label + '</strong><small>' + def.desc + '</small>';
           btn.addEventListener('click', function () {
-            host.querySelectorAll('.lb-me-choice').forEach(function (b) { b.classList.remove('is-active'); });
+            host.querySelectorAll('.lb-me-choice').forEach(function (b) {
+              b.classList.remove('is-active');
+              var badge = b.querySelector('.lb-me-auto-badge');
+              if (badge) badge.remove();
+            });
             btn.classList.add('is-active');
+            if (containerId === 'me-weather-choices') {
+              var noteEl = document.getElementById('me-weather-auto-note');
+              if (noteEl) {
+                noteEl.textContent = 'Manual choice: ' + def.label + ' (tap another or switch city)';
+              }
+            }
             onPick(key);
           });
           host.appendChild(btn);
@@ -848,6 +905,217 @@
       function updateRevealButton() {
         var btn = document.getElementById('me-reveal-btn');
         btn.disabled = !(selectedWeather && selectedOccasion);
+      }
+
+      // ---------- Open-Meteo & Pakistani Cities Integration ----------
+      var PAKISTAN_CITIES = [
+        { key: 'lahore', name: 'Lahore', lat: 31.5204, lon: 74.3587, region: 'Punjab' },
+        { key: 'karachi', name: 'Karachi', lat: 24.8607, lon: 67.0011, region: 'Sindh' },
+        { key: 'islamabad', name: 'Islamabad', lat: 33.6844, lon: 73.0479, region: 'Federal Capital' },
+        { key: 'rawalpindi', name: 'Rawalpindi', lat: 33.5651, lon: 73.0169, region: 'Punjab' },
+        { key: 'faisalabad', name: 'Faisalabad', lat: 31.4504, lon: 73.1350, region: 'Punjab' },
+        { key: 'multan', name: 'Multan', lat: 30.1575, lon: 71.5249, region: 'Punjab' },
+        { key: 'peshawar', name: 'Peshawar', lat: 34.0151, lon: 71.5249, region: 'KPK' },
+        { key: 'quetta', name: 'Quetta', lat: 30.1798, lon: 66.9750, region: 'Balochistan' },
+        { key: 'sialkot', name: 'Sialkot', lat: 32.4945, lon: 74.5229, region: 'Punjab' },
+        { key: 'gujranwala', name: 'Gujranwala', lat: 32.1877, lon: 74.1945, region: 'Punjab' },
+        { key: 'hyderabad', name: 'Hyderabad', lat: 25.3960, lon: 68.3578, region: 'Sindh' },
+        { key: 'abbottabad', name: 'Abbottabad', lat: 34.1688, lon: 73.2215, region: 'KPK' }
+      ];
+
+      function findNearestCity(lat, lon) {
+        var toRad = function (deg) { return deg * Math.PI / 180; };
+        var R = 6371; // Earth radius in km
+        var nearest = PAKISTAN_CITIES[0];
+        var minDist = Infinity;
+        PAKISTAN_CITIES.forEach(function (city) {
+          var dLat = toRad(city.lat - lat);
+          var dLon = toRad(city.lon - lon);
+          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(toRad(lat)) * Math.cos(toRad(city.lat)) *
+                  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          var d = R * c;
+          if (d < minDist) {
+            minDist = d;
+            nearest = city;
+          }
+        });
+        return nearest;
+      }
+
+      function describeWmoCode(code) {
+        if (code === 0) return 'Clear Sky';
+        if (code === 1) return 'Mainly Clear';
+        if (code === 2) return 'Partly Cloudy';
+        if (code === 3) return 'Overcast';
+        if (code === 45 || code === 48) return 'Haze / Fog';
+        if (code >= 51 && code <= 55) return 'Light Drizzle';
+        if (code >= 56 && code <= 57) return 'Freezing Drizzle';
+        if (code >= 61 && code <= 65) return 'Rain';
+        if (code === 66 || code === 67) return 'Freezing Rain';
+        if (code >= 71 && code <= 77) return 'Chilly / Snow';
+        if (code >= 80 && code <= 82) return 'Rain Showers';
+        if (code >= 85 && code <= 86) return 'Snow Showers';
+        if (code >= 95 && code <= 99) return 'Thunderstorm';
+        return 'Breezy';
+      }
+
+      function mapWeatherToCategory(temp, apparentTemp, wmoCode, precipitation, humidity) {
+        var isRain = (wmoCode >= 51 && wmoCode <= 67) ||
+                     (wmoCode >= 80 && wmoCode <= 82) ||
+                     (wmoCode >= 95 && wmoCode <= 99) ||
+                     (precipitation && precipitation > 0.5) ||
+                     (humidity >= 85 && (wmoCode === 2 || wmoCode === 3));
+
+        if (isRain) {
+          return { category: 'rain', reason: 'High humidity or rain detected — prioritizing carefree cotton' };
+        }
+
+        var effectiveTemp = apparentTemp !== undefined ? apparentTemp : temp;
+
+        if (effectiveTemp <= 18 || (wmoCode >= 71 && wmoCode <= 77)) {
+          return { category: 'cold', reason: 'Cooler morning (' + Math.round(temp) + '°C) — recommending blazers & structured layers' };
+        }
+
+        if (effectiveTemp >= 30) {
+          return { category: 'hot', reason: 'Warm sunshine (' + Math.round(temp) + '°C) — prioritizing breathable lawn & soft cotton' };
+        }
+
+        return { category: 'mild', reason: 'Pleasant weather (' + Math.round(temp) + '°C) — ideal for effortless shalwar-kameez' };
+      }
+
+      function selectWeather(key, isAuto, detailText) {
+        selectedWeather = key;
+        var host = document.getElementById('me-weather-choices');
+        if (host) {
+          host.querySelectorAll('.lb-me-choice').forEach(function (b) {
+            b.classList.remove('is-active');
+            var existingBadge = b.querySelector('.lb-me-auto-badge');
+            if (existingBadge) existingBadge.remove();
+            if (b.getAttribute('data-key') === key) {
+              b.classList.add('is-active');
+              if (isAuto) {
+                var badge = document.createElement('span');
+                badge.className = 'lb-me-auto-badge';
+                badge.textContent = 'Live Pick';
+                b.appendChild(badge);
+              }
+            }
+          });
+        }
+        var noteEl = document.getElementById('me-weather-auto-note');
+        if (noteEl && detailText) {
+          noteEl.textContent = detailText;
+        }
+        updateRevealButton();
+      }
+
+      function fetchLiveWeather(cityKey, isGeolocated) {
+        var city = PAKISTAN_CITIES.find(function (c) { return c.key === cityKey; }) || PAKISTAN_CITIES[0];
+        var tempEl = document.getElementById('me-weather-temp');
+        var descEl = document.getElementById('me-weather-desc');
+        var selEl = document.getElementById('me-city-select');
+        if (selEl && selEl.value !== city.key) {
+          selEl.value = city.key;
+        }
+
+        if (descEl) descEl.textContent = 'Syncing ' + city.name + ' forecast…';
+        localStorage.setItem('lb-subah-city', city.key);
+
+        var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + city.lat +
+                  '&longitude=' + city.lon +
+                  '&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&timezone=auto';
+
+        fetch(url)
+          .then(function (res) {
+            if (!res.ok) throw new Error('Weather API status ' + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            if (!data || !data.current) throw new Error('Invalid weather payload');
+            var cur = data.current;
+            var temp = cur.temperature_2m;
+            var apparent = cur.apparent_temperature;
+            var code = cur.weather_code;
+            var precip = cur.precipitation;
+            var humidity = cur.relative_humidity_2m;
+
+            if (tempEl) tempEl.textContent = Math.round(temp) + '°C';
+            if (descEl) {
+              descEl.textContent = city.name + ' · ' + describeWmoCode(code) + ' (Feels ' + Math.round(apparent) + '°C)';
+            }
+
+            var mapping = mapWeatherToCategory(temp, apparent, code, precip, humidity);
+            var note = (isGeolocated ? '📍 Auto-detected for ' : 'Live forecast for ') +
+                       city.name + ' (' + Math.round(temp) + '°C, ' + describeWmoCode(code) + ') — ' + mapping.reason;
+
+            selectWeather(mapping.category, true, note);
+          })
+          .catch(function (err) {
+            console.warn('Open-Meteo live weather fetch error:', err);
+            if (descEl) {
+              descEl.textContent = city.name + ' · Standard seasonal climate ready';
+            }
+            if (tempEl) tempEl.textContent = '28°C';
+            if (!selectedWeather) {
+              selectWeather('mild', true, 'Standard pleasant morning selected for ' + city.name + ' — tap to change');
+            }
+          });
+      }
+
+      function initWeatherAutoDetection() {
+        var sel = document.getElementById('me-city-select');
+        if (!sel) return;
+        sel.innerHTML = '';
+        PAKISTAN_CITIES.forEach(function (c) {
+          var opt = document.createElement('option');
+          opt.value = c.key;
+          opt.textContent = c.name + (c.region ? ' (' + c.region + ')' : '');
+          sel.appendChild(opt);
+        });
+
+        var savedCity = localStorage.getItem('lb-subah-city') || 'lahore';
+        sel.value = savedCity;
+
+        sel.addEventListener('change', function () {
+          fetchLiveWeather(sel.value, false);
+        });
+
+        var geolocBtn = document.getElementById('me-geoloc-btn');
+        if (geolocBtn) {
+          geolocBtn.addEventListener('click', function () {
+            if (!navigator.geolocation) {
+              alert('Geolocation is not supported by your browser.');
+              return;
+            }
+            geolocBtn.classList.add('is-loading');
+            var btnText = geolocBtn.querySelector('span');
+            if (btnText) btnText.textContent = 'Detecting…';
+
+            navigator.geolocation.getCurrentPosition(
+              function (pos) {
+                geolocBtn.classList.remove('is-loading');
+                if (btnText) btnText.textContent = 'Auto-Detect';
+                var nearest = findNearestCity(pos.coords.latitude, pos.coords.longitude);
+                sel.value = nearest.key;
+                fetchLiveWeather(nearest.key, true);
+              },
+              function (err) {
+                geolocBtn.classList.remove('is-loading');
+                if (btnText) btnText.textContent = 'Auto-Detect';
+                var noteEl = document.getElementById('me-weather-auto-note');
+                if (noteEl) {
+                  noteEl.textContent = 'Location detection declined/unavailable — using ' + sel.options[sel.selectedIndex].text;
+                }
+              },
+              { timeout: 8000 }
+            );
+          });
+        }
+
+        // Automatic live fetch for initial city to automate daily ritual
+        fetchLiveWeather(savedCity, false);
       }
 
       // ---------- Scoring ----------
@@ -1084,6 +1352,7 @@
         renderGreeting();
         renderChoices('me-weather-choices', WEATHER, function (key) { selectedWeather = key; updateRevealButton(); });
         renderChoices('me-occasion-choices', OCCASION, function (key) { selectedOccasion = key; updateRevealButton(); });
+        initWeatherAutoDetection();
         renderSaved();
         renderWardrobeBar();
 
