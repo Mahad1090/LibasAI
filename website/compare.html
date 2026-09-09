@@ -34,7 +34,7 @@
 
     /* 1. EDITORIAL PAGE HEADER */
     .lb-cmp-head-section {
-      padding: clamp(32px, 4vw, 48px) clamp(20px, 5vw, 72px) 24px;
+      padding: clamp(14px, 1.8vw, 20px) clamp(20px, 5vw, 72px) 12px;
       border-bottom: 1px solid var(--lb-hairline);
       background: var(--lb-bg);
     }
@@ -48,34 +48,34 @@
       gap: 20px;
     }
     .lb-cmp-eyebrow {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--lb-burgundy);
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 6px;
+      margin-bottom: 5px;
     }
     .lb-cmp-eyebrow::before {
       content: '';
-      width: 18px;
+      width: 14px;
       height: 1.5px;
       background: var(--lb-burgundy);
       display: inline-block;
     }
     .lb-cmp-hero-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(32px, 4vw, 54px);
+      font-size: clamp(19px, 2vw, 25px);
       font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.02;
-      margin: 0 0 10px;
+      line-height: 1.1;
+      margin: 0 0 4px;
       color: var(--lb-charcoal);
     }
     .lb-cmp-context {
-      font-size: 14.5px;
+      font-size: 12px;
       color: rgba(25, 20, 18, 0.68);
     }
     .lb-cmp-context em {
@@ -90,18 +90,18 @@
     }
     .lb-cmp-action-btn {
       font-family: 'Manrope', sans-serif;
-      font-size: 12px;
+      font-size: 10.5px;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 10px 18px;
+      padding: 7px 13px;
       border: 1px solid var(--lb-hairline);
       background: transparent;
       color: var(--lb-charcoal);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
     }
     .lb-cmp-action-btn:hover {
@@ -120,9 +120,90 @@
       border-color: #5E1727;
     }
 
+    /* HIGHLY RECOMMENDED — computed, always visible without scrolling */
+    .lb-cmp-recommend {
+      max-width: 1400px;
+      margin: 0 auto 14px;
+      padding: clamp(8px, 1vw, 10px) clamp(12px, 2vw, 16px);
+      background: #FFFFFF;
+      border: 1px solid var(--lb-hairline);
+      border-left: 3px solid var(--lb-burgundy);
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 1.4vw, 14px);
+      flex-wrap: wrap;
+      box-shadow: 0 8px 20px rgba(25, 20, 18, 0.05);
+    }
+    .lb-cmp-recommend__img {
+      width: 38px;
+      height: 47px;
+      object-fit: contain;
+      background: var(--lb-paper);
+      flex-shrink: 0;
+    }
+    .lb-cmp-recommend__body {
+      flex: 1 1 260px;
+      min-width: 220px;
+    }
+    .lb-cmp-recommend__eyebrow {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lb-burgundy);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 3px;
+    }
+    .lb-cmp-recommend__name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(13px, 1.1vw, 14.5px);
+      font-weight: 800;
+      margin: 0 0 2px;
+      color: var(--lb-charcoal);
+      line-height: 1.2;
+    }
+    .lb-cmp-recommend__reason {
+      font-size: 11px;
+      line-height: 1.4;
+      color: rgba(25, 20, 18, 0.68);
+      max-width: 560px;
+      margin: 0;
+    }
+    .lb-cmp-recommend__stats {
+      display: flex;
+      gap: clamp(12px, 1.4vw, 18px);
+      flex-shrink: 0;
+    }
+    .lb-cmp-recommend__stat strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--lb-burgundy);
+      line-height: 1.15;
+    }
+    .lb-cmp-recommend__stat span {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(25, 20, 18, 0.5);
+    }
+    .lb-cmp-recommend__cta {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      font-size: 9.5px;
+    }
+    @media (max-width: 760px) {
+      .lb-cmp-recommend { flex-direction: column; align-items: flex-start; }
+      .lb-cmp-recommend__cta { width: 100%; justify-content: center; }
+    }
+
     /* 2 & 3. UNIFIED COMPARISON CANVAS */
     .lb-cmp-matrix-section {
-      padding: 0 clamp(20px, 5vw, 72px) clamp(64px, 7vw, 100px);
+      padding: 0 clamp(20px, 5vw, 72px) clamp(36px, 4vw, 56px);
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -138,28 +219,28 @@
     /* The Unified Comparison Grid */
     .lb-cmp-grid {
       display: grid;
-      grid-template-columns: 200px repeat(var(--col-count, 3), minmax(280px, 1fr));
+      grid-template-columns: 100px repeat(var(--col-count, 3), minmax(125px, 1fr));
       width: 100%;
-      min-width: 960px;
+      min-width: 500px;
       border-bottom: 1px solid var(--lb-hairline);
     }
     @media (max-width: 900px) {
       .lb-cmp-grid {
-        min-width: 820px;
-        grid-template-columns: 140px repeat(var(--col-count, 3), minmax(240px, 1fr));
+        min-width: 440px;
+        grid-template-columns: 80px repeat(var(--col-count, 3), minmax(112px, 1fr));
       }
     }
 
     /* Row Label Column (Left Spine) */
     .lb-cmp-label-col {
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: rgba(25, 20, 18, 0.55);
       display: flex;
       align-items: center;
-      padding: 16px 20px 16px 0;
+      padding: 7px 10px 7px 0;
       border-right: 1px solid var(--lb-hairline);
       border-bottom: 1px solid var(--lb-hairline);
       background: var(--lb-bg);
@@ -169,13 +250,13 @@
     }
     .lb-cmp-label-col--top {
       align-items: flex-start;
-      padding-top: 32px;
+      padding-top: 12px;
       border-bottom: 1px solid var(--lb-hairline);
     }
 
     /* Top Product Header Cells */
     .lb-cmp-prod-cell {
-      padding: 32px 24px 24px;
+      padding: 9px 8px 8px;
       border-right: 1px solid var(--lb-hairline);
       border-bottom: 1px solid var(--lb-hairline);
       display: flex;
@@ -188,19 +269,24 @@
     .lb-cmp-prod-cell:last-child {
       border-right: none;
     }
+    .lb-cmp-prod-cell--best {
+      box-shadow: inset 0 3px 0 var(--lb-burgundy);
+      background: #FFFDF9;
+    }
 
-    /* Large 4:5 Product Imagery */
+    /* Product Imagery */
     .lb-cmp-img-wrap {
       position: relative;
+      width: 100%;
       aspect-ratio: 4/5;
       overflow: hidden;
       background: var(--lb-paper);
-      margin-bottom: 18px;
+      margin-bottom: 8px;
     }
     .lb-cmp-img-wrap img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
       transition: transform 260ms var(--lb-ease);
     }
@@ -234,30 +320,31 @@
 
     /* Product Meta */
     .lb-cmp-brand {
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--lb-rose);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .lb-cmp-name {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 18px;
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--lb-charcoal);
-      margin: 0 0 10px;
+      margin: 0 0 5px;
       line-height: 1.25;
     }
     .lb-cmp-price-row {
       display: flex;
       align-items: baseline;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
     }
     .lb-cmp-price {
       font-family: 'Playfair Display', serif;
-      font-size: 24px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--lb-burgundy);
     }
@@ -266,12 +353,12 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      padding: 11px 16px;
+      padding: 6px 12px;
       background: var(--lb-burgundy);
       color: #FFFDF9;
-      font-size: 11.5px;
+      font-size: 9.5px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
       box-sizing: border-box;
@@ -283,11 +370,11 @@
 
     /* 4. COMPARISON DATA ROWS */
     .lb-cmp-cell {
-      padding: 16px 24px;
+      padding: 7px 10px;
       border-right: 1px solid var(--lb-hairline);
       border-bottom: 1px solid var(--lb-hairline);
-      font-size: 13.5px;
-      line-height: 1.5;
+      font-size: 11px;
+      line-height: 1.4;
       color: var(--lb-charcoal);
       display: flex;
       align-items: center;
@@ -307,12 +394,12 @@
     .lb-cmp-pill {
       display: inline-block;
       font-family: 'Manrope', sans-serif;
-      font-size: 10px;
+      font-size: 8.5px;
       font-weight: 800;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 3px 8px;
-      margin-left: 8px;
+      padding: 2px 6px;
+      margin-left: 6px;
       vertical-align: middle;
     }
     .lb-cmp-pill--lowest {
@@ -335,82 +422,70 @@
       border: 1px solid rgba(25, 20, 18, 0.2);
     }
 
-    /* 7. LIBASAI VERDICT (ONE Large Editorial Section) */
+    /* 7. LIBASAI VERDICT — compact, three distinct picks with thumbnails.
+       The headline/copy live only in the top "Highly Recommends" banner now. */
     .lb-cmp-verdict-section {
       max-width: 1400px;
-      margin: 48px auto 0;
+      margin: 16px auto 0;
       background: #FFFFFF;
       border: 1px solid var(--lb-hairline);
-      padding: clamp(36px, 5vw, 64px);
-      box-shadow: 0 16px 44px rgba(25, 20, 18, 0.05);
-    }
-    .lb-cmp-verdict-head {
-      border-bottom: 1px solid var(--lb-hairline);
-      padding-bottom: 24px;
-      margin-bottom: 32px;
+      padding: clamp(14px, 1.8vw, 20px);
+      box-shadow: 0 12px 32px rgba(25, 20, 18, 0.05);
     }
     .lb-cmp-verdict-label {
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 800;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--lb-burgundy);
-      display: flex;
-      align-items: center;
-      gap: 8px;
       margin-bottom: 12px;
-    }
-    .lb-cmp-verdict-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(28px, 3.4vw, 44px);
-      font-weight: 800;
-      color: var(--lb-charcoal);
-      margin: 0 0 14px;
-      line-height: 1.1;
-    }
-    .lb-cmp-verdict-copy {
-      font-size: 16px;
-      line-height: 1.7;
-      color: rgba(25, 20, 18, 0.75);
-      max-width: 780px;
-      margin: 0;
     }
 
     /* 3 Concise Verdict Outcomes */
     .lb-cmp-outcomes-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
+      gap: 14px;
     }
     @media (max-width: 860px) {
       .lb-cmp-outcomes-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 12px;
       }
     }
     .lb-cmp-outcome-item {
+      display: flex;
+      gap: 8px;
       border-left: 2px solid var(--lb-burgundy);
-      padding-left: 18px;
+      padding-left: 10px;
+    }
+    .lb-cmp-outcome-img {
+      width: 38px;
+      height: 48px;
+      object-fit: contain;
+      flex-shrink: 0;
+      background: var(--lb-paper);
     }
     .lb-cmp-outcome-tag {
-      font-size: 10.5px;
+      font-size: 8.5px;
       font-weight: 800;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--lb-burgundy);
-      margin-bottom: 6px;
+      margin-bottom: 2px;
       display: block;
     }
     .lb-cmp-outcome-name {
       font-family: 'Playfair Display', serif;
-      font-size: 19px;
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--lb-charcoal);
-      margin: 0 0 6px;
+      margin: 0 0 3px;
+      line-height: 1.25;
     }
     .lb-cmp-outcome-desc {
-      font-size: 13px;
-      line-height: 1.55;
+      font-size: 10.5px;
+      line-height: 1.4;
       color: rgba(25, 20, 18, 0.65);
       margin: 0;
     }
@@ -418,13 +493,13 @@
     /* 8. ASK LIBASAI INTERACTION AREA */
     .lb-cmp-ask-section {
       max-width: 1400px;
-      margin: 36px auto 0;
+      margin: 12px auto 0;
       background: var(--lb-burgundy);
       color: #FFFDF9;
-      padding: clamp(36px, 5vw, 56px);
+      padding: clamp(14px, 1.8vw, 20px);
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-      gap: clamp(32px, 4vw, 56px);
+      gap: clamp(14px, 2vw, 24px);
       align-items: center;
     }
     @media (max-width: 900px) {
@@ -434,30 +509,30 @@
     }
     .lb-cmp-ask-heading {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 3.2vw, 40px);
+      font-size: clamp(16px, 1.6vw, 19px);
       color: var(--lb-bg);
-      margin: 0 0 10px;
+      margin: 0 0 5px;
     }
     .lb-cmp-ask-sub {
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 11.5px;
+      line-height: 1.5;
       color: rgba(247, 237, 223, 0.72);
-      margin: 0 0 24px;
+      margin: 0 0 10px;
     }
     .lb-cmp-ask-main-btn {
       font-family: 'Manrope', sans-serif;
-      font-size: 12px;
+      font-size: 10.5px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 14px 26px;
+      padding: 10px 18px;
       background: var(--lb-bg);
       color: var(--lb-burgundy);
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-decoration: none;
       transition: background 180ms ease, transform 180ms ease;
     }
@@ -466,27 +541,27 @@
       transform: translateY(-2px);
     }
     .lb-cmp-prompts-title {
-      font-size: 11px;
+      font-size: 9.5px;
       font-weight: 800;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--lb-rose);
-      margin-bottom: 14px;
+      margin-bottom: 9px;
       display: block;
     }
     .lb-cmp-prompts-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 7px;
     }
     .lb-cmp-prompt-chip {
       font-family: 'Manrope', sans-serif;
-      font-size: 12.5px;
+      font-size: 11px;
       font-weight: 600;
       background: rgba(247, 237, 223, 0.08);
       border: 1px solid rgba(247, 237, 223, 0.2);
       color: var(--lb-bg);
-      padding: 8px 16px;
+      padding: 6px 12px;
       cursor: pointer;
       transition: background 180ms ease, border-color 180ms ease;
     }
@@ -614,7 +689,8 @@
     .lb-catalog-img {
       width: 60px;
       height: 75px;
-      object-fit: cover;
+      object-fit: contain;
+      background: var(--lb-paper);
       flex-shrink: 0;
     }
     .lb-catalog-info {
@@ -694,13 +770,10 @@
             For You
           </button>
           <a href="/ai-features.html" id="lb-features-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-features">
-            AI Features
+            Features
           </a>
-          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">
-            Find Tailors
-          </a>
-          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson); font-weight:700;">
-            Get Stitched
+          <a href="/tailors.html" id="lb-tailors-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-tailors">
+            Tailors
           </a>
         </nav>
 
@@ -733,136 +806,209 @@
           <div class="lb-mega-stack">
 
                                     <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
-              <div class="lb-mega-inner">
-                <div>
+              <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
+                <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Discover</h3>
-                  <div class="lb-mega-links">
-                    <a href="/discover/new-arrivals">New Arrivals</a>
-                    <a href="/discover/trending">Trending</a>
-                    <a href="/for-you">For You</a>
-                    <a href="/discover/eid">Eid Collection</a>
-                    <a href="/discover/wedding">Wedding Edit</a>
-                    <a href="/discover/formal">Formal Wear</a>
-                    <a href="/discover/casual">Casual Pret</a>
-                  </div>
                 </div>
-                <div>
-                  <div class="lb-mega-subhead">Shop by category</div>
-                  <div class="lb-mega-categories">
-                    <a href="/shop/women">Women</a>
-                    <a href="/shop/men">Men</a>
-                    <a href="/shop/pret">Pret</a>
-                    <a href="/shop/unstitched">Unstitched</a>
-                    <a href="/shop/kurta">Kurta</a>
-                    <a href="/shop/shalwar-kameez">Shalwar Kameez</a>
-                    <a href="/shop/lawn">Lawn</a>
-                    <a href="/shop/accessories">Accessories</a>
-                  </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/discover/new-arrivals" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>New Arrivals</span>
+                  </a>
+                  <a href="/discover/trending" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="">
+                    <span>Trending</span>
+                  </a>
+                  <a href="/discover/eid" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt="">
+                    <span>Eid Collection</span>
+                  </a>
+                  <a href="/discover/wedding" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Wedding Edit</span>
+                  </a>
+                  <a href="/discover/formal" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Formal Wear</span>
+                  </a>
+                  <a href="/discover/casual" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
+                    <span>Casual Pret</span>
+                  </a>
+                  <a href="/shop/women" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770" alt="">
+                    <span>Women</span>
+                  </a>
+                  <a href="/shop/men" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/0002_DSC00024.png?v=1750335693" alt="">
+                    <span>Men</span>
+                  </a>
+                  <a href="/shop/kurta" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Kurta</span>
+                  </a>
+                  <a href="/shop/lawn" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Lawn</span>
+                  </a>
                 </div>
-                <div>
-                  <div class="lb-mega-visual"><image-slot id="menu-discover-visual" shape="rect" placeholder="Editorial: contemporary Pakistani outfit, warm studio light" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot></div>
-                  <div class="lb-mega-feature-card">
-                    <strong>Ask LibasAI to find your look</strong>
-                    <a href="/ai/ask">Start AI Search →</a>
-                  </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/ai/ask" class="lb-cta">Ask LibasAI to find your look</a>
                 </div>
               </div>
             </div>
 
             <div id="lb-menu-brands" class="lb-mega-panel" role="group" aria-label="Brands">
-              <div class="lb-mega-inner">
-                <div>
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Brands</h3>
-                  <div class="lb-mega-links">
-                    <a href="/brands.html">All Brands (80+)</a>
-                    <a href="/brands.html?tab=popular">Popular Brands</a>
-                    <a href="/brands.html?tab=emerging">Emerging Brands</a>
-                    <a href="/brands.html?tab=local">Discover Local</a>
-                  </div>
                 </div>
-                <div>
-                  <div class="lb-mega-subhead">Featured Pakistani labels</div>
-                  <div class="lb-brand-list">
-                    <a href="/brands.html?brand=sana-safinaz" class="lb-brand-row"><span>Sana Safinaz</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=gul-ahmed" class="lb-brand-row"><span>Gul Ahmed</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=zellbury" class="lb-brand-row"><span>Zellbury</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=beechtree" class="lb-brand-row"><span>Beechtree</span><span class="lb-brand-row__arrow">→</span></a>
-                  </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/brands.html" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>All Brands (80+)</span>
+                  </a>
+                  <a href="/brands.html?tab=popular" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="">
+                    <span>Popular Brands</span>
+                  </a>
+                  <a href="/brands.html?tab=emerging" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Emerging Brands</span>
+                  </a>
+                  <a href="/brands.html?tab=local" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Discover Local</span>
+                  </a>
+                  <a href="/brands.html?brand=sana-safinaz" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
+                    <span>Sana Safinaz</span>
+                  </a>
+                  <a href="/brands.html?brand=gul-ahmed" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Gul Ahmed</span>
+                  </a>
+                  <a href="/brands.html?brand=zellbury" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Zellbury</span>
+                  </a>
+                  <a href="/brands.html?brand=beechtree" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="">
+                    <span>Beechtree</span>
+                  </a>
                 </div>
-                <div class="lb-spotlight">
-                  <h4>Discover Local</h4>
-                  <p>Meet emerging Pakistani labels worth discovering.</p>
-                  <a href="/brands.html?tab=local">Explore Local Brands →</a>
+                <div class="lb-mega-cards-foot">
+                  <a href="/brands.html?tab=local" class="lb-cta lb-cta--ghost">Explore Local Brands</a>
                 </div>
               </div>
             </div>
 
             <div id="lb-menu-foryou" class="lb-mega-panel" role="group" aria-label="For You">
-              <div class="lb-mega-inner">
-                <div>
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
                   <div class="lb-mega-eyebrow">Personalized AI</div>
                   <h3 class="lb-mega-heading">Curated For You</h3>
-                  <div class="lb-mega-links">
-                    <a href="/for-you/picks">Personalized Picks</a>
-                    <a href="/for-you/recently-viewed">Recently Viewed</a>
-                    <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
-                    <a href="/for-you/budget">Within Your Budget</a>
-                    <a href="/for-you" style="color:var(--lb-burgundy); font-weight:800; margin-top:6px;">Your Style Feed &rarr;</a>
-                  </div>
                 </div>
-                <div>
-                  <div class="lb-mega-subhead">Explore by your preferences</div>
-                  <div class="lb-brand-list">
-                    <a href="/for-you/picks" class="lb-brand-row"><span>Lawn &amp; Summer Pret</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/for-you/picks" class="lb-brand-row"><span>Festive &amp; Formal Edit</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/for-you/budget" class="lb-brand-row"><span>Under PKR 12,000</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/get-stitched.html" class="lb-brand-row"><span>Bespoke Tailoring Picks</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                  </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="">
+                    <span>Personalized Picks</span>
+                  </a>
+                  <a href="/for-you/recently-viewed" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>Recently Viewed</span>
+                  </a>
+                  <a href="/for-you/wishlist-inspired" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt="">
+                    <span>Inspired by Wishlist</span>
+                  </a>
+                  <a href="/for-you/budget" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Within Your Budget</span>
+                  </a>
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Lawn &amp; Summer Pret</span>
+                  </a>
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Festive &amp; Formal Edit</span>
+                  </a>
+                  <a href="/for-you/budget" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt="">
+                    <span>Under PKR 12,000</span>
+                  </a>
+                  <a href="/get-stitched.html" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Bespoke Tailoring</span>
+                  </a>
                 </div>
-                <div>
-                  <div class="lb-mega-visual">
-                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Curated For You" style="width:100%; height:100%; object-fit:cover; display:block;">
-                  </div>
-                  <div class="lb-mega-feature-card">
-                    <strong>Trained on your taste &amp; fit</strong>
-                    <a href="/for-you">Open Your Style Radar &rarr;</a>
-                  </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/wardrobe.html" class="lb-cta lb-cta--ghost">My Wardrobe</a>
+                  <a href="/for-you" class="lb-cta">Your Style Feed</a>
                 </div>
               </div>
             </div>
 
-            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="AI Features">
-              <div class="lb-mega-inner lb-mega-inner--features">
-                <div class="lb-features-head">
-                  <div class="lb-mega-eyebrow" style="text-align:center;">AI Features</div>
+            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="Features">
+              <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
+                <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
                 </div>
-                <div class="lb-features-grid">
-                  <a href="/ai/ask" class="lb-feature-card">
-                    <span class="lb-feature-num">01</span>
-                    <strong>Ask LibasAI</strong>
-                    <p>Natural-language conversational fashion search.</p>
+                <div class="lb-mega-card-grid">
+                  <a href="/ai/ask" class="lb-mega-card-tile">
+                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <span>Ask LibasAI</span>
                   </a>
-                  <a href="/ai/image-search" class="lb-feature-card">
-                    <span class="lb-feature-num">02</span>
-                    <strong>Image Search</strong>
-                    <p>Upload a look photo and find visually similar pieces.</p>
+                  <a href="/ai/image-search" class="lb-mega-card-tile">
+                    <img src="assets/feature-image-search.jpg" alt="">
+                    <span>Image Search</span>
                   </a>
-                  <a href="/ai/compare" class="lb-feature-card">
-                    <span class="lb-feature-num">03</span>
-                    <strong>Compare</strong>
-                    <p>Compare cuts, fabrics, and prices across brands.</p>
+                  <a href="/ai/compare" class="lb-mega-card-tile">
+                    <img src="assets/feature-compare.jpg" alt="">
+                    <span>Compare</span>
                   </a>
-                  <a href="/ai/outfit-builder" class="lb-feature-card">
-                    <span class="lb-feature-num">04</span>
-                    <strong>Outfit Builder</strong>
-                    <p>Coordinate complete looks with AI color harmony.</p>
+                  <a href="/ai/outfit-builder" class="lb-mega-card-tile">
+                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <span>Outfit Builder</span>
+                  </a>
+                  <a href="/ai/morning-edit" class="lb-mega-card-tile">
+                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <span>Subah Edit</span>
                   </a>
                 </div>
-                <a href="/ai" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">
-                  <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
-                  Explore All AI Features →
-                </a>
+                <div class="lb-mega-cards-foot">
+                  <a href="/ai-features.html" class="lb-cta">Explore All Features</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-tailors" class="lb-mega-panel" role="group" aria-label="Tailors">
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
+                  <h3 class="lb-mega-heading">Tailors</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/tailors.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <span>Find Master Tailors</span>
+                  </a>
+                  <a href="/get-stitched.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <span>Get Stitched</span>
+                  </a>
+                  <a href="/my-requests.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-shears.jpg" alt="">
+                    <span>My Stitching Requests</span>
+                  </a>
+                  <a href="/tailor-portal.html" class="lb-mega-card-tile">
+                    <img src="assets/flagship-studio.jpg" alt="">
+                    <span>Tailor Partner Portal</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/get-stitched.html" class="lb-cta">Start a Stitching Order</a>
+                </div>
               </div>
             </div>
 
@@ -980,19 +1126,24 @@
         <a href="/for-you" class="lb-mobile__simple">For You</a>
 
         <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
-          AI Features Suite
+          Features Suite
           <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
         </a>
 
-        <a href="/tailors.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
-          Find Tailors
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
-
-        <a href="/get-stitched.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-crimson); display:flex; justify-content:space-between; align-items:center;">
-          Get Stitched
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Tailors
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/tailors.html">Find Master Tailors</a>
+              <a href="/get-stitched.html">Get Stitched</a>
+              <a href="/my-requests.html">My Stitching Requests</a>
+              <a href="/tailor-portal.html">Tailor Partner Portal</a>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="lb-mobile__footer">
         <a href="/ai/ask" class="lb-cta lb-cta--wide">
@@ -1023,6 +1174,24 @@
       </div>
     </div>
   </header>
+
+  <!-- HIGHLY RECOMMENDED — computed from the active comparison set, shown before the matrix so it's visible at a glance -->
+  <section class="lb-cmp-recommend" id="lb-cmp-recommend" aria-label="LibasAI's recommended pick">
+    <img class="lb-cmp-recommend__img" id="rec-img" src="" alt="">
+    <div class="lb-cmp-recommend__body">
+      <div class="lb-cmp-recommend__eyebrow">
+        <svg style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8;"><use href="#lb-i-sparkles"></use></svg>
+        LibasAI Highly Recommends
+      </div>
+      <h2 class="lb-cmp-recommend__name" id="rec-name"></h2>
+      <p class="lb-cmp-recommend__reason" id="rec-reason"></p>
+    </div>
+    <div class="lb-cmp-recommend__stats">
+      <div class="lb-cmp-recommend__stat"><strong id="rec-score"></strong><span>AI Match</span></div>
+      <div class="lb-cmp-recommend__stat"><strong id="rec-price"></strong><span>Price</span></div>
+    </div>
+    <a href="#" id="rec-cta" target="_blank" rel="noopener" class="lb-cmp-action-btn lb-cmp-action-btn--primary lb-cmp-recommend__cta">Visit Brand &rarr;</a>
+  </section>
 
   <!-- 2, 3 & 4. UNIFIED COMPARISON MATRIX SECTION -->
   <main class="lb-cmp-matrix-section">
@@ -1169,34 +1338,36 @@
       </div>
     </div>
 
-    <!-- 7. LIBASAI VERDICT (ONE LARGE EDITORIAL SECTION) -->
+    <!-- 7. LIBASAI VERDICT — the headline/copy now lives only in the top
+         "Highly Recommends" banner; this section stays as three distinct,
+         compact picks (each with its own thumbnail) rather than repeating it. -->
     <section class="lb-cmp-verdict-section" aria-label="LibasAI Synthesis Verdict">
-      <div class="lb-cmp-verdict-head">
-        <div class="lb-cmp-verdict-label">LibasAI Comparison Agent Verdict</div>
-        <h2 class="lb-cmp-verdict-title" id="verdict-headline">
-          Beechtree Raw Silk Suit is the strongest overall match.
-        </h2>
-        <p class="lb-cmp-verdict-copy" id="verdict-copy">
-          It balances formal detailing, structured drape, and your preferred evening Eid style. Zellbury offers the best value if budget matters most, delivering a complete 3-piece embroidered suit for less than half the competitor price.
-        </p>
-      </div>
+      <div class="lb-cmp-verdict-label">Three Ways To Decide</div>
 
-      <!-- 3 Concise Outcomes -->
       <div class="lb-cmp-outcomes-grid">
         <div class="lb-cmp-outcome-item">
-          <span class="lb-cmp-outcome-tag">Best Overall Match</span>
-          <h4 class="lb-cmp-outcome-name" id="verdict-best-overall">Beechtree Raw Silk</h4>
-          <p class="lb-cmp-outcome-desc">Pure raw silk luster with organza cutwork, ideal for modern formal indoor receptions.</p>
+          <img class="lb-cmp-outcome-img" id="verdict-best-overall-img" src="" alt="">
+          <div>
+            <span class="lb-cmp-outcome-tag">Best Overall Match</span>
+            <h4 class="lb-cmp-outcome-name" id="verdict-best-overall">Beechtree Raw Silk</h4>
+            <p class="lb-cmp-outcome-desc" id="verdict-best-overall-desc">Pure raw silk luster with organza cutwork, ideal for modern formal indoor receptions.</p>
+          </div>
         </div>
         <div class="lb-cmp-outcome-item">
-          <span class="lb-cmp-outcome-tag">Best Value Pick</span>
-          <h4 class="lb-cmp-outcome-name" id="verdict-best-value">Zellbury 3-Piece</h4>
-          <p class="lb-cmp-outcome-desc">Complete 3-piece embroidered suit at Rs. 4,490 with breathable combed lawn weave.</p>
+          <img class="lb-cmp-outcome-img" id="verdict-best-value-img" src="" alt="">
+          <div>
+            <span class="lb-cmp-outcome-tag">Best Value Pick</span>
+            <h4 class="lb-cmp-outcome-name" id="verdict-best-value">Zellbury 3-Piece</h4>
+            <p class="lb-cmp-outcome-desc" id="verdict-best-value-desc">Complete 3-piece embroidered suit at Rs. 4,490 with breathable combed lawn weave.</p>
+          </div>
         </div>
         <div class="lb-cmp-outcome-item">
-          <span class="lb-cmp-outcome-tag">Most Balanced Choice</span>
-          <h4 class="lb-cmp-outcome-name" id="verdict-most-balanced">Sana Safinaz Festive</h4>
-          <p class="lb-cmp-outcome-desc">Designer house pedigree and fine zari embroidery with chiffon dupatta elegance.</p>
+          <img class="lb-cmp-outcome-img" id="verdict-most-balanced-img" src="" alt="">
+          <div>
+            <span class="lb-cmp-outcome-tag">Most Balanced Choice</span>
+            <h4 class="lb-cmp-outcome-name" id="verdict-most-balanced">Sana Safinaz Festive</h4>
+            <p class="lb-cmp-outcome-desc" id="verdict-most-balanced-desc">Designer house pedigree and fine zari embroidery with chiffon dupatta elegance.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -1314,7 +1485,7 @@
         <a href="/discover/formal">Formal Wear</a>
       </div>
       <div class="lb-footer__col">
-        <h4>AI Features</h4>
+        <h4>Features</h4>
         <a href="/ai/ask">Ask LibasAI</a>
         <a href="/image-search.html">Visual Image Search</a>
         <a href="/compare.html">Multi-Brand Compare</a>
@@ -1361,6 +1532,7 @@
         colors: "Mint, Rust Ochre, Noir Black",
         avail: "In Stock (Dispatches in 3–5 Business Days)",
         brandType: "Sana Safinaz (Top Designer Prestige)",
+        score: 88,
         matchScore: "Strong Match (88%)",
         matchSub: "Matches formal Eid brief & zari embellishment preferences.",
         bestFor: "Balanced Festive Look"
@@ -1381,6 +1553,7 @@
         colors: "Mint Green, Navy Blue, Dusty Peach",
         avail: "In Stock (Express Dispatch in 2–4 Days)",
         brandType: "Zellbury (Mass Pret Value Leader)",
+        score: 92,
         matchScore: "Best Value Match (92%)",
         matchSub: "Unbeatable 3-piece inclusions at 56% below price ceiling.",
         bestFor: "Best Budget Efficiency"
@@ -1401,6 +1574,7 @@
         colors: "Sea Green, Dark Plum, Royal Teal",
         avail: "Low Stock (Dispatches in 5–7 Days with Hand-finishing)",
         brandType: "Beechtree (Contemporary Formal Specialist)",
+        score: 95,
         matchScore: "Best Overall Match (95%)",
         matchSub: "Highest luxury silk rating & superior resham cutwork structure.",
         bestFor: "Elevated Evening Dressing"
@@ -1421,6 +1595,7 @@
         colors: "Mint Foliage, Mustard, Crimson",
         avail: "In Stock (Ships in 3–4 Days)",
         brandType: "Gul Ahmed (Heritage Cotton Pioneer)",
+        score: 86,
         matchScore: "Good Match (86%)",
         matchSub: "Legendary lawn durability with personal tailoring control.",
         bestFor: "Custom Tailored Fit"
@@ -1441,6 +1616,7 @@
         colors: "Purple, Dusty Rose, Mint",
         avail: "In Stock (Ships in 3–5 Days)",
         brandType: "Zeen (Contemporary Pret)",
+        score: 90,
         matchScore: "Strong Match (90%)",
         matchSub: "Understated minimalist luxury with premium silk feel.",
         bestFor: "Modern Minimalist Elegance"
@@ -1461,6 +1637,7 @@
         colors: "Burgundy, Mint Emerald, Ochre",
         avail: "Ships in 6–8 Days",
         brandType: "Mushq (Haute Couture Label)",
+        score: 89,
         matchScore: "Strong Match (89%)",
         matchSub: "Dramatic statement couture for large festive gatherings.",
         bestFor: "Grand Statement Celebrations"
@@ -1481,6 +1658,7 @@
         colors: "Sage Mint, Sand, Black",
         avail: "In Stock (2–3 Days)",
         brandType: "Sana Safinaz",
+        score: 87,
         matchScore: "Good Match (87%)",
         matchSub: "Designer label look at the lowest price entry point.",
         bestFor: "Casual Daywear Rotation"
@@ -1488,6 +1666,49 @@
     };
 
     var activeProductIds = ["p1", "p2", "p3"];
+
+    // ---- Recommendation engine: computed fresh from whatever is currently
+    // active, never hand-baked per product, so it stays correct through any
+    // add/remove combination. ----
+    function parsePrice(str) {
+      return parseInt(String(str).replace(/[^0-9]/g, ''), 10) || 0;
+    }
+    function getRecommendation() {
+      var list = activeProductIds.map(function (id) { return productDatabase[id]; }).filter(Boolean);
+      if (!list.length) return null;
+      var bestMatch = list.reduce(function (a, b) { return b.score > a.score ? b : a; });
+      var bestValue = list.reduce(function (a, b) { return parsePrice(b.price) < parsePrice(a.price) ? b : a; });
+      return { bestMatch: bestMatch, bestValue: bestValue, list: list };
+    }
+
+    // The "Highly Recommended" banner — shown before the matrix so the pick
+    // is visible at a glance, no scrolling required.
+    function renderRecommendation() {
+      var rec = getRecommendation();
+      var section = document.getElementById('lb-cmp-recommend');
+      if (!section) return;
+      if (!rec) { section.style.display = 'none'; return; }
+      section.style.display = '';
+
+      var best = rec.bestMatch, value = rec.bestValue;
+      document.getElementById('rec-img').src = best.img;
+      document.getElementById('rec-img').alt = best.brand + ' ' + best.name;
+      document.getElementById('rec-name').textContent = best.brand + ' — ' + best.name;
+      document.getElementById('rec-score').textContent = best.score + '%';
+      document.getElementById('rec-price').textContent = best.price;
+      document.getElementById('rec-cta').href = best.link;
+
+      var reason = best.matchSub;
+      if (value.id !== best.id) {
+        var pctCheaper = Math.round((1 - parsePrice(value.price) / parsePrice(best.price)) * 100);
+        if (pctCheaper > 0) {
+          reason += ' If budget matters more, ' + value.brand + ' is ' + pctCheaper + '% less.';
+        }
+      } else if (rec.list.length > 1) {
+        reason += ' It also happens to be the most affordable pick in this comparison.';
+      }
+      document.getElementById('rec-reason').textContent = reason;
+    }
 
     // Render the sticky bar items
     function updateStickyBar() {
@@ -1546,17 +1767,16 @@
       });
 
       setTimeout(function() {
-        if (headerCell) headerCell.remove();
-        cells.forEach(function(cell) { cell.remove(); });
-
         var index = activeProductIds.indexOf(id);
         if (index > -1) activeProductIds.splice(index, 1);
 
-        var grid = document.getElementById("lb-cmp-grid");
-        if (grid) grid.style.setProperty("--col-count", activeProductIds.length);
-
+        // Re-render from data rather than just deleting cells in place — the
+        // recommended pick and its pill can shift to a different column once
+        // this product is gone.
+        renderFullGrid();
         updateStickyBar();
         recalculateVerdict();
+        renderRecommendation();
       }, 240);
     }
 
@@ -1583,6 +1803,7 @@
       closeCatalogDrawer();
       updateStickyBar();
       recalculateVerdict();
+      renderRecommendation();
     }
 
     // Full Grid Renderer for Dynamic Add/Remove and Reordering
@@ -1591,8 +1812,20 @@
       if (!grid) return;
       grid.style.setProperty("--col-count", activeProductIds.length);
 
+      var rec = getRecommendation();
+      var bestId = rec ? rec.bestMatch.id : null;
+      var valueId = rec ? rec.bestValue.id : null;
+
       var rows = [
-        { key: "PRICE", label: "Price", fn: function(p) { return '<strong>' + p.price + '</strong>'; } },
+        { key: "PRICE", label: "Price", fn: function(p) {
+          var isValue = p.id === valueId;
+          var html = '<strong' + (isValue ? ' style="color:var(--lb-burgundy);"' : '') + '>' + p.price + '</strong>';
+          if (isValue && valueId !== bestId && rec.bestMatch) {
+            var pct = Math.round((1 - parsePrice(p.price) / parsePrice(rec.bestMatch.price)) * 100);
+            if (pct > 0) html += ' <span class="lb-cmp-pill lb-cmp-pill--lowest">' + pct + '% Cost Advantage</span>';
+          }
+          return html;
+        } },
         { key: "FABRIC", label: "Fabric", fn: function(p) { return p.fabric; } },
         { key: "EMBROIDERY", label: "Embroidery", fn: function(p) { return p.emb; } },
         { key: "STYLE", label: "Style", fn: function(p) { return p.style; } },
@@ -1602,23 +1835,31 @@
         { key: "AVAILABILITY", label: "Availability", fn: function(p) { return p.avail; } },
         { key: "BRAND", label: "Brand", fn: function(p) { return p.brandType; } },
         { key: "AIMATCH", label: "AI Match", fn: function(p) {
-          return '<div><strong>' + p.matchScore + '</strong><div style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:2px;">' + p.matchSub + '</div></div>';
+          var isBest = p.id === bestId;
+          return '<div><strong' + (isBest ? ' style="color:var(--lb-burgundy);"' : '') + '>' + (isBest ? '🏆 ' : '') + p.matchScore + '</strong><div style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:2px;">' + p.matchSub + '</div></div>';
         }},
         { key: "BESTFOR", label: "Best For", fn: function(p) { return '<strong>' + p.bestFor + '</strong>'; } }
       ];
 
       var html = '<div class="lb-cmp-label-col lb-cmp-label-col--top"><span>Product Overview</span></div>';
 
-      // Header cells
+      // Header cells — the pill here is COMPUTED against the active set, not
+      // hand-assigned per product, so it stays correct through any add/remove.
       activeProductIds.forEach(function(id) {
         var p = productDatabase[id];
-        html += '<div class="lb-cmp-prod-cell" id="prod-col-' + p.id + '" data-prod-id="' + p.id + '">' +
+        var pill = '';
+        if (p.id === bestId) {
+          pill = '<span class="lb-cmp-pill lb-cmp-pill--best">🏆 Highly Recommended</span>';
+        } else if (p.id === valueId) {
+          pill = '<span class="lb-cmp-pill lb-cmp-pill--lowest">Lowest Price</span>';
+        }
+        html += '<div class="lb-cmp-prod-cell' + (p.id === bestId ? ' lb-cmp-prod-cell--best' : '') + '" id="prod-col-' + p.id + '" data-prod-id="' + p.id + '">' +
           '<button type="button" class="lb-cmp-remove-btn" onclick="removeProduct(\'' + p.id + '\')">&times; Remove</button>' +
           '<div>' +
           '<div class="lb-cmp-img-wrap"><img src="' + p.img + '" alt="' + p.brand + '"></div>' +
           '<div class="lb-cmp-brand">' + p.brand + '</div>' +
           '<h3 class="lb-cmp-name">' + p.name + '</h3>' +
-          '<div class="lb-cmp-price-row"><div class="lb-cmp-price">' + p.price + '</div></div>' +
+          '<div class="lb-cmp-price-row"><div class="lb-cmp-price">' + p.price + '</div>' + pill + '</div>' +
           '</div>' +
           '<a href="' + p.link + '" target="_blank" rel="noopener" class="lb-cmp-visit-btn">Visit Brand &rarr;</a>' +
           '</div>';
@@ -1637,33 +1878,30 @@
       grid.innerHTML = html;
     }
 
-    // Dynamic Recalculation of Verdict based on remaining active products
+    // Dynamic Recalculation of Verdict — driven entirely by getRecommendation(),
+    // so it's correct for ANY combination of active products, not just the
+    // default three.
     function recalculateVerdict() {
-      var headline = document.getElementById("verdict-headline");
-      var copy = document.getElementById("verdict-copy");
-      var bestOverall = document.getElementById("verdict-best-overall");
-      var bestValue = document.getElementById("verdict-best-value");
-      var mostBalanced = document.getElementById("verdict-most-balanced");
+      var rec = getRecommendation();
+      if (!rec) return;
 
-      if (activeProductIds.indexOf("p3") > -1) {
-        if (headline) headline.textContent = "Beechtree Raw Silk Suit is the strongest overall match.";
-        if (copy) copy.textContent = "It balances formal detailing, structure, and your preferred evening style. Zellbury offers the best value if budget matters most, delivering a complete 3-piece embroidered suit for less than half the competitor price.";
-        if (bestOverall) bestOverall.textContent = "Beechtree Raw Silk";
-      } else if (activeProductIds.indexOf("p1") > -1) {
-        if (headline) headline.textContent = "Sana Safinaz Festive 2PC is the leading choice.";
-        if (copy) copy.textContent = "Celebrated for its signature embroidery detailing and chiffon drape. It represents luxury designer pedigree for your Eid celebration.";
-        if (bestOverall) bestOverall.textContent = "Sana Safinaz Festive";
-      } else if (activeProductIds.length > 0) {
-        var first = productDatabase[activeProductIds[0]];
-        if (headline) headline.textContent = first.brand + " " + first.name + " leads your selection.";
-        if (bestOverall) bestOverall.textContent = first.brand;
-      }
+      var best = rec.bestMatch, value = rec.bestValue;
+      var rest = rec.list.filter(function (p) { return p.id !== best.id && p.id !== value.id; })
+        .sort(function (a, b) { return b.score - a.score; });
+      var balanced = rest[0] || (value.id !== best.id ? value : best);
 
-      if (activeProductIds.indexOf("p2") > -1) {
-        if (bestValue) bestValue.textContent = "Zellbury 3-Piece (Rs. 4,490)";
-      } else {
-        if (bestValue) bestValue.textContent = "Competitive Market Alternative";
-      }
+      setOutcome("best-overall", best);
+      setOutcome("best-value", value);
+      setOutcome("most-balanced", balanced);
+    }
+
+    function setOutcome(key, p) {
+      var nameEl = document.getElementById("verdict-" + key);
+      var descEl = document.getElementById("verdict-" + key + "-desc");
+      var imgEl = document.getElementById("verdict-" + key + "-img");
+      if (nameEl) nameEl.textContent = p.brand + " — " + p.name;
+      if (descEl) descEl.textContent = p.matchSub;
+      if (imgEl) { imgEl.src = p.img; imgEl.alt = p.brand + " " + p.name; }
     }
 
     // Catalog Drawer Open/Close
@@ -1693,9 +1931,14 @@
       window.location.href = "/ai/ask?q=" + encodeURIComponent(promptText + " for Sana Safinaz vs Zellbury vs Beechtree comparison");
     }
 
-    // Initialize sticky items on load
+    // Initialize on load — render the matrix, verdict, and recommendation
+    // banner from data so there's one source of truth (no hand-authored
+    // markup to keep in sync with the computed pills).
     document.addEventListener("DOMContentLoaded", function() {
+      renderFullGrid();
       updateStickyBar();
+      recalculateVerdict();
+      renderRecommendation();
     });
   </script>
 </body>

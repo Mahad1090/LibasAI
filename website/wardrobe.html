@@ -3,152 +3,65 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Stitching Requests — LibasAI Bespoke Studio</title>
-  <meta name="description" content="Track your bespoke tailoring orders, view master tailor progress, measurements used, and delivery timelines on LibasAI.">
+  <title>My Wardrobe | LibasAI</title>
+  <meta name="description" content="Catalog what you already own — stitched, still just fabric, or with a tailor — so Subah Edit can reach for it before suggesting anything new.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
   <style>
-    .lb-orders-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: clamp(36px, 5vw, 64px) 20px 80px;
-    }
-    .lb-status-tab-bar {
-      display: flex;
-      gap: 10px;
-      border-bottom: 1px solid var(--lb-hairline);
-      padding-bottom: 16px;
-      margin-bottom: 32px;
-      overflow-x: auto;
-    }
-    .lb-tab-btn {
-      background: none;
-      border: 1px solid transparent;
-      border-radius: 20px;
-      padding: 8px 18px;
-      font-family: 'Manrope', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(25,20,18,0.65);
-      cursor: pointer;
-      transition: all 180ms ease;
-      white-space: nowrap;
-    }
-    .lb-tab-btn:hover {
-      color: var(--lb-charcoal);
-      background: rgba(25,20,18,0.05);
-    }
-    .lb-tab-btn.is-active {
-      background: var(--lb-burgundy);
-      color: var(--lb-cream);
-    }
-    .lb-order-card {
-      background: #FFF;
-      border: 1px solid var(--lb-hairline);
-      border-radius: 6px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(25,20,18,0.03);
-      transition: transform 200ms ease, box-shadow 200ms ease;
-    }
-    .lb-order-card:hover {
-      box-shadow: 0 10px 28px rgba(25,20,18,0.07);
-    }
-    .lb-order-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(25,20,18,0.06);
-    }
-    .lb-progress-track {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      margin: 22px 0;
-      position: relative;
-    }
-    .lb-track-step {
-      text-align: center;
-      position: relative;
-    }
-    .lb-track-bar {
-      height: 6px;
-      background: rgba(25,20,18,0.08);
-      border-radius: 3px;
-      margin-bottom: 8px;
-      transition: background 250ms ease;
-    }
-    .lb-track-step.is-done .lb-track-bar {
-      background: #10B981;
-    }
-    .lb-track-step.is-current .lb-track-bar {
-      background: var(--lb-burgundy);
-    }
-    .lb-track-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: rgba(25,20,18,0.5);
-    }
-    .lb-track-step.is-done .lb-track-label { color: #047857; }
-    .lb-track-step.is-current .lb-track-label { color: var(--lb-burgundy); }
+    /* ===== My Wardrobe ===== */
+    .lb-wd-layout { display:grid; grid-template-columns:minmax(280px,340px) minmax(0,1fr); gap:40px; align-items:start; }
+    @media (max-width:860px) { .lb-wd-layout { grid-template-columns:1fr; } }
 
-    .lb-badge-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    .lb-wd-form { background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:8px; padding:26px; position:sticky; top:100px; }
+    .lb-wd-form h3 { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; margin:0 0 18px; color:var(--lb-charcoal); }
+    .lb-wd-field { margin-bottom:18px; }
+    .lb-wd-field label { display:block; font-size:10.5px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:rgba(25,20,18,0.5); margin-bottom:8px; }
+    .lb-wd-field input[type="text"], .lb-wd-field input[type="date"], .lb-wd-field select {
+      width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid var(--lb-hairline); border-radius:4px;
+      font-family:'Manrope',sans-serif; font-size:13.5px; background:var(--lb-white); color:var(--lb-charcoal);
     }
-    .status-Pending { background: #FEF3C7; color: #92400E; }
-    .status-Accepted { background: #E0E7FF; color: #3730A3; }
-    .status-InProgress { background: #FDE8E8; color: var(--lb-burgundy); }
-    .status-Ready { background: #D1FAE5; color: #065F46; }
-    .status-Completed { background: #DCFCE7; color: #166534; }
-    .status-Declined { background: #FEE2E2; color: #991B1B; }
+    .lb-wd-photo-drop {
+      border:1.5px dashed var(--lb-hairline); border-radius:6px; height:150px; position:relative; overflow:hidden;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; cursor:pointer;
+      color:rgba(25,20,18,0.45); text-align:center; font-size:12px; background:var(--lb-tint); transition:border-color 180ms ease;
+    }
+    .lb-wd-photo-drop:hover { border-color:var(--lb-rose); }
+    .lb-wd-photo-drop svg { width:22px; height:22px; }
+    .lb-wd-photo-drop img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .lb-wd-tags { display:flex; flex-wrap:wrap; gap:8px; }
+    .lb-wd-tag-chip { font-size:11.5px; font-weight:650; padding:6px 12px; border:1px solid var(--lb-hairline); border-radius:999px; cursor:pointer; color:var(--lb-charcoal); background:var(--lb-white); }
+    .lb-wd-tag-chip.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.08); color:var(--lb-burgundy); }
+    .lb-wd-status-options { display:flex; flex-direction:column; gap:8px; }
+    .lb-wd-status-option { display:flex; align-items:flex-start; gap:10px; padding:11px 12px; border:1.5px solid var(--lb-hairline); border-radius:6px; cursor:pointer; font-size:12.5px; color:var(--lb-charcoal); line-height:1.4; }
+    .lb-wd-status-option.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.05); }
+    .lb-wd-status-option small { display:block; color:rgba(25,20,18,0.5); font-size:11px; margin-top:2px; }
+    .lb-wd-tailor-extra { display:none; gap:10px; margin-top:10px; flex-wrap:wrap; }
+    .lb-wd-tailor-extra.is-visible { display:flex; }
+    .lb-wd-tailor-extra input { flex:1; min-width:130px; }
 
-    /* Detail Modal */
-    .lb-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(23,21,21,0.65);
-      backdrop-filter: blur(4px);
-      z-index: 100;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .lb-modal-overlay.is-open {
-      display: flex;
-    }
-    .lb-modal-card {
-      background: #FFF;
-      border-radius: 8px;
-      max-width: 680px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 32px;
-      position: relative;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
-    }
+    .lb-wd-count { font-size:13px; color:rgba(25,20,18,0.55); margin-bottom:20px; }
+    .lb-wd-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:20px; }
+    .lb-wd-card { background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:8px; overflow:hidden; display:flex; flex-direction:column; }
+    .lb-wd-card__img { aspect-ratio:4/5; background:var(--lb-tint); position:relative; }
+    .lb-wd-card__img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .lb-wd-card__status { position:absolute; top:10px; left:10px; font-size:9.5px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; padding:5px 9px; border-radius:999px; color:#fff; }
+    .lb-wd-card__status--ready { background:#1A7A38; }
+    .lb-wd-card__status--needs { background:#A11F37; }
+    .lb-wd-card__status--with { background:#8A6A1E; }
+    .lb-wd-card__body { padding:14px 14px 16px; display:flex; flex-direction:column; gap:5px; flex:1; }
+    .lb-wd-card__name { font-size:13.5px; font-weight:700; color:var(--lb-charcoal); line-height:1.3; }
+    .lb-wd-card__meta { font-size:11px; color:rgba(25,20,18,0.5); }
+    .lb-wd-card__actions { display:flex; gap:8px; margin-top:auto; padding-top:12px; flex-wrap:wrap; }
+    .lb-wd-card__actions button, .lb-wd-card__actions a { flex:1; text-align:center; font-size:10.5px; padding:8px 6px; white-space:nowrap; }
+    .lb-wd-empty { text-align:center; padding:64px 20px; color:rgba(25,20,18,0.5); background:var(--lb-white); border:1px dashed var(--lb-hairline); border-radius:8px; }
+    .lb-wd-empty svg { width:32px; height:32px; margin-bottom:12px; opacity:0.4; }
   </style>
 </head>
 <body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
 
-    <!-- SVG SPRITE -->
+  <!-- SVG SPRITE -->
   <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
     <defs>
       <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
@@ -159,11 +72,8 @@
       <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
       <symbol id="lb-i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
       <symbol id="lb-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-      <symbol id="lb-i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
       <symbol id="lb-i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
       <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
-      <symbol id="lb-i-sparkles" viewBox="0 0 24 24"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/></symbol>
-      <symbol id="lb-i-sliders" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
       <symbol id="lb-i-hanger" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8L2.4 16.2A2 2 0 0 0 4 19h16a2 2 0 0 0 1.6-2.8L14.4 6.8c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3z"/><circle cx="12" cy="19" r="1"/></symbol>
       <symbol id="lb-i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
       <symbol id="lb-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
@@ -201,7 +111,7 @@
           <button type="button" id="lb-search-trigger" class="lb-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lb-search-overlay" aria-label="Search">
             <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
           </button>
-          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Stitching Requests" style="color:var(--lb-burgundy);">
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Stitching Requests">
             <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
           </a>
           <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
@@ -225,7 +135,7 @@
         <div class="lb-collapse-inner">
           <div class="lb-mega-stack">
 
-                                    <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
+            <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
               <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
                 <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Discover</h3>
@@ -528,22 +438,8 @@
           </div>
         </div>
 
-        <div class="lb-accordion">
-          <button type="button" class="lb-accordion__head" aria-expanded="false">
-            Brands
-            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
-          </button>
-          <div class="lb-collapse lb-accordion__panel">
-            <div class="lb-collapse-inner">
-              <a href="/brands.html">All Brands</a>
-              <a href="/brands.html?tab=popular">Popular Brands</a>
-              <a href="/brands.html?tab=emerging">Emerging Brands</a>
-              <a href="/brands.html?tab=local">Discover Local</a>
-            </div>
-          </div>
-        </div>
-
         <a href="/for-you" class="lb-mobile__simple">For You</a>
+        <a href="/wardrobe.html" class="lb-mobile__simple">My Wardrobe</a>
 
         <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
           Features Suite
@@ -574,364 +470,362 @@
     </div>
   </div>
 
-<div class="lb-orders-wrap">
-    
-    <!-- SUCCESS ALERT IF REDIRECTED FROM WIZARD -->
-    <div id="success-banner" style="display:none; background:#ECFDF5; border:1px solid #10B981; border-radius:6px; padding:20px 24px; margin-bottom:32px; animation:fadeIn 300ms ease;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div style="display:flex; gap:16px;">
-          <div style="font-size:30px;">🎉</div>
-          <div>
-            <strong style="font-size:17px; color:#065F46; display:block;">Stitching Request Submitted Successfully!</strong>
-            <p style="font-size:13.5px; color:#047857; margin:4px 0 0;">
-              Your bespoke stitching request <strong id="new-req-id">REQ-8492</strong> has been delivered to the master tailor's workbench. You will receive notification as soon as cutting begins.
-            </p>
+  <div class="lb-page-head" style="padding: clamp(40px, 5vw, 64px) clamp(20px, 5vw, 72px) 0;">
+    <div class="lb-wrap">
+      <div class="lb-breadcrumb" style="display:flex; gap:8px; align-items:center; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:16px;">
+        <a href="/" style="color:rgba(25,20,18,0.5);">Home</a><span>/</span><a href="/ai/morning-edit" style="color:rgba(25,20,18,0.5);">Subah Edit</a><span>/</span><span style="color:var(--lb-burgundy);">My Wardrobe</span>
+      </div>
+      <div class="lb-listing-head" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div class="lb-eyebrow" style="color:var(--lb-rose); margin-bottom:6px;">Wear What You Own</div>
+          <h1 class="lb-h1" style="font-size:clamp(28px,3.4vw,44px);">My Wardrobe</h1>
+        </div>
+        <div class="lb-listing-count">
+          <span class="lb-tag">Feeds Subah Edit</span>
+        </div>
+      </div>
+      <p class="lb-body" style="max-width:660px; margin-top:12px;">
+        Catalog what you already own — stitched and ready, still just fabric, or off with a tailor. Subah Edit reaches for a piece from here before it ever suggests something to buy, and it'll nudge you toward <a href="/get-stitched.html">Get Stitched</a> when the best match is still unstitched.
+      </p>
+    </div>
+  </div>
+
+  <section class="lb-section" style="padding-top:28px;">
+    <div class="lb-wrap lb-wd-layout">
+
+      <!-- ADD FORM -->
+      <div class="lb-wd-form">
+        <h3>Add a piece</h3>
+        <form id="wd-form">
+          <div class="lb-wd-field">
+            <label>Photo (optional)</label>
+            <div class="lb-wd-photo-drop" id="wd-photo-drop">
+              <svg style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg>
+              <span id="wd-photo-label">Click to add a photo</span>
+              <img id="wd-photo-preview" alt="" hidden>
+              <input type="file" id="wd-photo-input" accept="image/*" hidden>
+            </div>
           </div>
-        </div>
-        <button onclick="document.getElementById('success-banner').style.display='none'" style="background:none; border:none; cursor:pointer; color:#047857; font-size:20px;">×</button>
-      </div>
-    </div>
 
-    <!-- PAGE HEADER -->
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; margin-bottom:28px;">
+          <div class="lb-wd-field">
+            <label for="wd-name">Name</label>
+            <input type="text" id="wd-name" placeholder="e.g. Rust embroidered cotton kurta" required>
+          </div>
+
+          <div class="lb-wd-field">
+            <label for="wd-category">Category</label>
+            <select id="wd-category">
+              <option value="kurta">Kurta</option>
+              <option value="shalwar-kameez">Shalwar Kameez</option>
+              <option value="blazer">Blazer</option>
+              <option value="waistcoat">Waistcoat</option>
+              <option value="sherwani">Sherwani</option>
+              <option value="casual">Casual / Western</option>
+              <option value="unstitched">Unstitched Fabric</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="lb-wd-field">
+            <label>Fabric &amp; occasion tags</label>
+            <div class="lb-wd-tags" id="wd-tags"></div>
+          </div>
+
+          <div class="lb-wd-field">
+            <label>Wearable status</label>
+            <div class="lb-wd-status-options" id="wd-status-options"></div>
+            <div class="lb-wd-tailor-extra" id="wd-tailor-extra">
+              <input type="text" id="wd-tailor-name" placeholder="Tailor name (optional)">
+              <input type="date" id="wd-tailor-eta">
+            </div>
+          </div>
+
+          <button type="submit" class="lb-cta lb-cta--wide">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-plus"></use></svg>
+            Add to Wardrobe
+          </button>
+        </form>
+      </div>
+
+      <!-- GRID -->
       <div>
-        <div class="lb-eyebrow">Customer Dashboard</div>
-        <h1 class="lb-h1" style="font-size:clamp(30px, 4vw, 44px);">My Stitching Requests</h1>
-        <p class="lb-body" style="font-size:15px; margin-top:8px;">
-          Track live stitching milestones, review submitted measurements, and view artisan progress updates.
-        </p>
-      </div>
-      <div>
-        <a href="/get-stitched.html" class="lb-cta">
-          <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
-          Request Another Stitching
-        </a>
+        <p class="lb-wd-count" id="wd-count"></p>
+        <div class="lb-wd-grid" id="wd-grid"></div>
+        <div class="lb-wd-empty" id="wd-empty" hidden>
+          <svg style="fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-hanger"></use></svg>
+          <p style="margin:0 0 4px; font-weight:700; color:var(--lb-charcoal);">Your wardrobe is empty</p>
+          <p style="margin:0; font-size:13px;">Add your first piece and Subah Edit will start reaching for it.</p>
+        </div>
       </div>
     </div>
-
-    <!-- STATUS FILTER TABS -->
-    <div class="lb-status-tab-bar">
-      <button class="lb-tab-btn is-active" onclick="filterOrders('all', this)">All Requests (<span id="count-all">3</span>)</button>
-      <button class="lb-tab-btn" onclick="filterOrders('active', this)">Active / In Progress (<span id="count-active">2</span>)</button>
-      <button class="lb-tab-btn" onclick="filterOrders('pending', this)">Pending Tailor Review (<span id="count-pending">1</span>)</button>
-      <button class="lb-tab-btn" onclick="filterOrders('completed', this)">Completed & Delivered (<span id="count-completed">1</span>)</button>
-    </div>
-
-    <!-- ORDER LIST CONTAINER -->
-    <div id="orders-container">
-      <!-- Injected via JavaScript -->
-    </div>
-
-  </div>
-
-  <!-- ORDER DETAIL MODAL -->
-  <div id="order-modal" class="lb-modal-overlay">
-    <div class="lb-modal-card">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
-        <div>
-          <span id="modal-req-id" class="lb-tag" style="background:var(--lb-paper);">REQ-8492</span>
-          <h2 id="modal-title" class="lb-h2" style="font-size:22px; margin-top:6px;">Olive Raw Silk Traditional Kurta</h2>
-        </div>
-        <button onclick="closeModal()" style="background:none; border:none; cursor:pointer; padding:6px;">
-          <svg style="width:20px;height:20px;stroke:var(--lb-charcoal);stroke-width:2;"><use href="#lb-i-close"></use></svg>
-        </button>
-      </div>
-
-      <div style="display:flex; gap:16px; align-items:center; background:#FAF6F0; padding:14px 18px; border-radius:6px; margin-bottom:20px;">
-        <img id="modal-img" src="" style="width:60px; height:60px; object-fit:cover; border-radius:4px;" alt="">
-        <div>
-          <strong id="modal-tailor-name" style="font-size:14px; display:block;">Master Rafiq & Sons</strong>
-          <span id="modal-status-pill" class="lb-badge-status status-InProgress" style="font-size:11px; padding:2px 8px; margin-top:4px;">In Progress</span>
-        </div>
-      </div>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; font-size:13px; margin-bottom:20px;">
-        <div>
-          <span style="color:rgba(25,20,18,0.55); font-size:11px; text-transform:uppercase;">Garment & Fit</span>
-          <strong id="modal-garment" style="display:block;">Men's Shalwar Kameez · Regular</strong>
-        </div>
-        <div>
-          <span style="color:rgba(25,20,18,0.55); font-size:11px; text-transform:uppercase;">Delivery Deadline</span>
-          <strong id="modal-date" style="display:block;">15 September 2026</strong>
-        </div>
-        <div>
-          <span style="color:rgba(25,20,18,0.55); font-size:11px; text-transform:uppercase;">Collar & Cuffs</span>
-          <strong id="modal-collar-cuff" style="display:block;">Sherwani Band · Straight Hem</strong>
-        </div>
-        <div>
-          <span style="color:rgba(25,20,18,0.55); font-size:11px; text-transform:uppercase;">Estimated Cost</span>
-          <strong id="modal-price" style="display:block; color:var(--lb-burgundy);">PKR 2,650</strong>
-        </div>
-      </div>
-
-      <!-- MEASUREMENTS BREAKDOWN -->
-      <div style="margin-bottom:20px;">
-        <span style="color:rgba(25,20,18,0.55); font-size:11px; text-transform:uppercase; display:block; margin-bottom:8px;">Custom Measurements Recorded</span>
-        <div id="modal-meas-chips" style="display:flex; flex-wrap:wrap; gap:6px;">
-          <!-- JS filled -->
-        </div>
-      </div>
-
-      <!-- SPECIAL NOTES -->
-      <div style="margin-bottom:24px; background:var(--lb-paper); border-radius:4px; padding:12px 14px;">
-        <span style="color:rgba(25,20,18,0.55); font-size:11px; text-transform:uppercase; display:block; margin-bottom:4px;">Special Tailoring Instructions</span>
-        <p id="modal-notes" style="font-size:13px; margin:0; color:rgba(25,20,18,0.8); line-height:1.5;"></p>
-      </div>
-
-      <!-- ACTIONS -->
-      <div style="display:flex; gap:10px; justify-content:flex-end;">
-        <button onclick="closeModal()" class="lb-cta lb-cta--ghost">Close</button>
-        <button onclick="alert('Connecting to Master Tailor workbench on WhatsApp... (+92 300 1234567)')" class="lb-cta">
-          💬 Message Master Tailor
-        </button>
-      </div>
-    </div>
-  </div>
+  </section>
 
   <!-- FOOTER -->
   <footer class="lb-footer">
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
-        <p>An AI-powered shopping assistant and bespoke tailoring network for Pakistani fashion.</p>
+        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
       </div>
       <div class="lb-footer__col">
-        <h4>Tailor Network</h4>
-        <a href="/tailors.html">Find a Tailor</a>
-        <a href="/get-stitched.html">Get Your Suit Stitched</a>
-        <a href="/my-requests.html">My Stitching Orders</a>
-        <a href="/tailor-portal.html">Tailor Partner Portal</a>
+        <h4>Discover</h4>
+        <a href="/discover/new-arrivals">New Arrivals</a>
+        <a href="/discover/wedding">Wedding Edit</a>
+        <a href="/discover/formal">Formal Wear</a>
       </div>
       <div class="lb-footer__col">
         <h4>Features</h4>
-        <a href="/ai-features.html">Features Hub</a>
-        <a href="/image-search.html">Visual Image Search</a>
-        <a href="/compare.html">Multi-Brand Compare</a>
-        <a href="/outfit-builder.html">AI Outfit Builder</a>
+        <a href="/ai/ask">Ask LibasAI</a>
+        <a href="/ai/image-search">Visual Image Search</a>
+        <a href="/ai/compare">Multi-Brand Compare</a>
+        <a href="/ai/outfit-builder">AI Outfit Builder</a>
+        <a href="/ai/morning-edit">Subah Edit</a>
+        <a href="/wardrobe.html">My Wardrobe</a>
       </div>
       <div class="lb-footer__col">
         <h4>Company</h4>
-        <a href="/about.html">About LibasAI</a>
-        <a href="/contact.html">Contact Us</a>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
+        <a href="/brands">Brands Directory</a>
+        <a href="/brands/local">Discover Local</a>
+        <a href="/about">About LibasAI</a>
       </div>
     </div>
     <div class="lb-footer__bottom">
       <span>FAST-NUCES Final Year Project · 2026–2027</span>
       <div class="lb-footer__legal">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-        <a href="/contact.html">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/contact">Contact</a>
       </div>
     </div>
   </footer>
 
   <script src="./nav.js"></script>
   <script>
-    var seedOrders = [
-      {
-        id: "REQ-7104",
-        dateSubmitted: "28 Aug 2026",
-        status: "In Progress",
-        tailorName: "Master Rafiq & Sons Bespoke Atelier",
-        designTitle: "Festive Embroidered Raw Silk Kameez",
-        designImg: "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102",
-        garment: "Men's Shalwar Kameez",
-        fit: "Regular Fit",
-        collar: "Sherwani Band Collar",
-        sleeve: "Straight Hem",
-        buttons: "Concealed Placket",
-        daman: "Round Daman",
-        requiredDate: "2026-09-10",
-        estimatedPrice: "PKR 2,650",
-        notes: "Please double-stitch side seams for longevity and press collar with crisp stiff interfacing.",
-        measurements: {
-          shoulder: "18.5",
-          chest: "41.0",
-          waist: "36.0",
-          hips: "43.0",
-          neck: "16.0",
-          sleeve: "24.5",
-          shirtLength: "41.5",
-          trouserLength: "39.0"
-        }
-      },
-      {
-        id: "REQ-6821",
-        dateSubmitted: "14 Aug 2026",
-        status: "Completed",
-        tailorName: "Gulberg Express Stitching",
-        designTitle: "Zellbury Printed Lawn 3-Piece Suite",
-        designImg: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440",
-        garment: "Women's 3-Piece Suit (Lawn/Silk)",
-        fit: "Slim Fit",
-        collar: "V-Notch Contemporary Neckline",
-        sleeve: "Button Cuffs (1.5 inch)",
-        buttons: "Covered Fabric Buttons",
-        daman: "Square Straight Daman",
-        requiredDate: "2026-08-18",
-        estimatedPrice: "PKR 2,350",
-        notes: "Dupatta pico finish in matching lemon thread. Completed and verified.",
-        measurements: {
-          shoulder: "15.0",
-          chest: "36.0",
-          waist: "30.0",
-          hips: "38.0",
-          neck: "14.5",
-          sleeve: "22.0",
-          shirtLength: "38.0",
-          trouserLength: "37.0"
-        }
+    (function () {
+      var STORAGE_KEY = 'lb-wardrobe-items';
+      var TAGS = ['cotton', 'linen', 'silk', 'formal', 'casual', 'festive', 'wedding', 'eid', 'traditional', 'western'];
+      var STATUS_DEFS = {
+        stitched:    { label: 'Stitched & ready to wear', hint: 'You can wear this today.', badge: 'Ready', cls: 'ready' },
+        unstitched:  { label: 'Just fabric — needs a tailor', hint: "Hasn't been stitched into a garment yet.", badge: 'Needs Tailor', cls: 'needs' },
+        with_tailor: { label: 'With a tailor right now', hint: 'Currently out for stitching or alteration.', badge: 'With Tailor', cls: 'with' }
+      };
+
+      var selectedTags = {};
+      var selectedStatus = 'stitched';
+      var photoDataUrl = null;
+
+      function readItems() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') || []; } catch (e) { return []; }
       }
-    ];
-
-    var allOrders = [];
-
-    function initOrders() {
-      var saved = [];
-      try {
-        saved = JSON.parse(localStorage.getItem('libasai_stitching_requests') || '[]');
-      } catch (e) {}
-
-      allOrders = saved.concat(seedOrders);
-      updateCounts();
-      renderOrders(allOrders);
-
-      // Check query for newly submitted order
-      var params = new URLSearchParams(window.location.search);
-      if (params.get('new') === '1') {
-        var banner = document.getElementById('success-banner');
-        if (banner) banner.style.display = 'block';
-        var idSpan = document.getElementById('new-req-id');
-        if (idSpan) idSpan.innerText = params.get('id') || 'REQ-NEW';
-      }
-    }
-
-    function updateCounts() {
-      document.getElementById('count-all').innerText = allOrders.length;
-      var active = allOrders.filter(function(o) { return o.status === 'In Progress' || o.status === 'Accepted' || o.status === 'Ready'; });
-      var pending = allOrders.filter(function(o) { return o.status === 'Pending'; });
-      var completed = allOrders.filter(function(o) { return o.status === 'Completed'; });
-
-      document.getElementById('count-active').innerText = active.length;
-      document.getElementById('count-pending').innerText = pending.length;
-      document.getElementById('count-completed').innerText = completed.length;
-    }
-
-    function renderOrders(list) {
-      var container = document.getElementById('orders-container');
-      if (!list.length) {
-        container.innerHTML = '<div style="background:#FFF; padding:60px 20px; text-align:center; border-radius:6px; border:1px solid var(--lb-hairline);">' +
-          '<div style="font-size:36px; margin-bottom:12px;">🧵</div>' +
-          '<h3 class="lb-h2" style="font-size:20px;">No stitching requests in this view</h3>' +
-          '<p class="lb-body" style="font-size:14px; margin-top:6px;">Start your first custom tailoring order with a verified Pakistani tailor.</p>' +
-          '<a href="/get-stitched.html" class="lb-cta" style="margin-top:16px; display:inline-flex;">Get Your Suit Stitched →</a>' +
-          '</div>';
-        return;
+      function writeItems(list) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch (e) {}
       }
 
-      var steps = ['Pending', 'Accepted', 'In Progress', 'Ready', 'Completed'];
+      function placeholderImg(label) {
+        var initial = ((label || '?').trim()[0] || '?').toUpperCase();
+        var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500">' +
+          '<rect width="400" height="500" fill="#F2E4D2"/>' +
+          '<text x="200" y="290" font-family="Georgia, serif" font-size="160" fill="#C98F82" text-anchor="middle">' + initial + '</text></svg>';
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+      }
 
-      container.innerHTML = list.map(function(order) {
-        var statusClass = 'status-' + order.status.replace(/\s+/g, '');
-        var currentIdx = steps.indexOf(order.status);
-        if (currentIdx === -1) currentIdx = 0;
+      // ---------- Tag chips ----------
+      function renderTags() {
+        var host = document.getElementById('wd-tags');
+        host.innerHTML = '';
+        TAGS.forEach(function (tag) {
+          var chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'lb-wd-tag-chip';
+          chip.textContent = tag;
+          chip.addEventListener('click', function () {
+            selectedTags[tag] = !selectedTags[tag];
+            chip.classList.toggle('is-active', !!selectedTags[tag]);
+          });
+          host.appendChild(chip);
+        });
+      }
 
-        var trackHtml = steps.map(function(st, idx) {
-          var cls = '';
-          if (idx < currentIdx) cls = 'is-done';
-          else if (idx === currentIdx) cls = 'is-current';
-          return '<div class="lb-track-step ' + cls + '">' +
-            '<div class="lb-track-bar"></div>' +
-            '<span class="lb-track-label">' + st + '</span>' +
+      // ---------- Status options ----------
+      function renderStatusOptions() {
+        var host = document.getElementById('wd-status-options');
+        host.innerHTML = '';
+        Object.keys(STATUS_DEFS).forEach(function (key) {
+          var def = STATUS_DEFS[key];
+          var opt = document.createElement('div');
+          opt.className = 'lb-wd-status-option' + (key === selectedStatus ? ' is-active' : '');
+          opt.setAttribute('data-status', key);
+          opt.innerHTML = '<div><strong>' + def.label + '</strong><small>' + def.hint + '</small></div>';
+          opt.addEventListener('click', function () {
+            selectedStatus = key;
+            host.querySelectorAll('.lb-wd-status-option').forEach(function (o) { o.classList.remove('is-active'); });
+            opt.classList.add('is-active');
+            document.getElementById('wd-tailor-extra').classList.toggle('is-visible', key === 'with_tailor');
+          });
+          host.appendChild(opt);
+        });
+        document.getElementById('wd-tailor-extra').classList.toggle('is-visible', selectedStatus === 'with_tailor');
+      }
+
+      // category -> sensible default status (unstitched fabric obviously isn't ready)
+      document.addEventListener('DOMContentLoaded', function () {
+        var catSelect = document.getElementById('wd-category');
+        catSelect.addEventListener('change', function () {
+          if (catSelect.value === 'unstitched') {
+            selectedStatus = 'unstitched';
+            renderStatusOptions();
+          }
+        });
+      });
+
+      // ---------- Photo upload (resized to keep localStorage small) ----------
+      function initPhotoDrop() {
+        var drop = document.getElementById('wd-photo-drop');
+        var input = document.getElementById('wd-photo-input');
+        var preview = document.getElementById('wd-photo-preview');
+        var label = document.getElementById('wd-photo-label');
+
+        drop.addEventListener('click', function () { input.click(); });
+        input.addEventListener('change', function () {
+          var file = input.files && input.files[0];
+          if (!file) return;
+          var img = new Image();
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            img.onload = function () {
+              var maxDim = 640;
+              var scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+              var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+              var canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+              photoDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+              preview.src = photoDataUrl;
+              preview.hidden = false;
+              label.hidden = true;
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // ---------- Rendering the grid ----------
+      function money(n) { return n ? 'Rs. ' + Number(n).toLocaleString() : ''; }
+      function formatDate(iso) {
+        if (!iso) return '';
+        try { return new Date(iso + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) { return iso; }
+      }
+
+      function renderGrid() {
+        var items = readItems();
+        var grid = document.getElementById('wd-grid');
+        var empty = document.getElementById('wd-empty');
+        var count = document.getElementById('wd-count');
+        count.textContent = items.length + ' piece' + (items.length === 1 ? '' : 's') + ' in your wardrobe';
+        grid.innerHTML = '';
+        empty.hidden = items.length > 0;
+
+        items.slice().reverse().forEach(function (item) {
+          var def = STATUS_DEFS[item.status] || STATUS_DEFS.stitched;
+          var card = document.createElement('div');
+          card.className = 'lb-wd-card';
+
+          var statusText = def.badge;
+          if (item.status === 'with_tailor' && item.tailorEta) statusText += ' · ' + formatDate(item.tailorEta);
+
+          var actionsHtml = '';
+          if (item.status !== 'stitched') {
+            actionsHtml += '<button type="button" class="lb-cta lb-cta--ghost" data-act="ready" data-id="' + item.id + '"><svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-check"></use></svg>Mark Ready</button>';
+          }
+          if (item.status === 'unstitched') {
+            actionsHtml += '<a href="/get-stitched.html" class="lb-cta">Send to Tailor</a>';
+          } else if (item.status === 'with_tailor') {
+            actionsHtml += '<a href="/my-requests.html" class="lb-cta lb-cta--ghost">Check Status</a>';
+          }
+          actionsHtml += '<button type="button" class="lb-cta lb-cta--ghost" data-act="remove" data-id="' + item.id + '" aria-label="Remove"><svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-close"></use></svg></button>';
+
+          card.innerHTML =
+            '<div class="lb-wd-card__img">' +
+              '<span class="lb-wd-card__status lb-wd-card__status--' + def.cls + '">' + statusText + '</span>' +
+              '<img src="' + (item.image || placeholderImg(item.name)) + '" alt="' + item.name + '">' +
+            '</div>' +
+            '<div class="lb-wd-card__body">' +
+              '<div class="lb-wd-card__name">' + item.name + '</div>' +
+              '<div class="lb-wd-card__meta">' + item.category + (item.tags && item.tags.length ? ' · ' + item.tags.join(', ') : '') + '</div>' +
+              '<div class="lb-wd-card__actions">' + actionsHtml + '</div>' +
             '</div>';
-        }).join('');
+          grid.appendChild(card);
+        });
 
-        return '<div class="lb-order-card">' +
-          '<div class="lb-order-top">' +
-            '<div style="display:flex; gap:16px; align-items:center;">' +
-              '<img src="' + (order.designImg || 'assets/libasai-logo.png') + '" style="width:68px; height:68px; object-fit:cover; border-radius:4px; border:1px solid rgba(25,20,18,0.1);" alt="">' +
-              '<div>' +
-                '<span class="lb-tag" style="background:var(--lb-paper); margin-bottom:4px;">' + order.id + '</span>' +
-                '<h3 class="lb-h2" style="font-size:18px; margin:2px 0 4px;">' + order.designTitle + '</h3>' +
-                '<div style="font-size:12.5px; color:rgba(25,20,18,0.65);">' + order.tailorName + ' · Submitted ' + order.dateSubmitted + '</div>' +
-              '</div>' +
-            '</div>' +
-            '<div style="text-align:right;">' +
-              '<span class="lb-badge-status ' + statusClass + '">' + order.status + '</span>' +
-              '<div style="font-size:13.5px; font-weight:700; color:var(--lb-burgundy); margin-top:8px;">' + order.estimatedPrice + '</div>' +
-            '</div>' +
-          '</div>' +
-          
-          '<div class="lb-progress-track">' + trackHtml + '</div>' +
-
-          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:13px; padding-top:12px; border-top:1px solid rgba(25,20,18,0.06);">' +
-            '<div>' +
-              '<span style="color:rgba(25,20,18,0.6);">Target Delivery: </span>' +
-              '<strong>' + order.requiredDate + '</strong>' +
-              '<span style="margin:0 8px; color:rgba(25,20,18,0.2);">|</span>' +
-              '<span style="color:rgba(25,20,18,0.6);">Garment: </span>' +
-              '<strong>' + order.garment + '</strong>' +
-            '</div>' +
-            '<div style="display:flex; gap:8px;">' +
-              '<button class="lb-cta lb-cta--ghost" style="padding:6px 14px; font-size:12px;" onclick="openDetailModal(\'' + order.id + '\')">View Details & Measurements</button>' +
-              '<a href="/tailor-portal.html" class="lb-cta" style="padding:6px 14px; font-size:12px; background:#840E34;">Tailor View ↗</a>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
-      }).join('');
-    }
-
-    function filterOrders(filter, btn) {
-      document.querySelectorAll('.lb-tab-btn').forEach(function(b) { b.classList.remove('is-active'); });
-      if (btn) btn.classList.add('is-active');
-
-      if (filter === 'all') {
-        renderOrders(allOrders);
-      } else if (filter === 'active') {
-        renderOrders(allOrders.filter(function(o) {
-          return o.status === 'In Progress' || o.status === 'Accepted' || o.status === 'Ready';
-        }));
-      } else if (filter === 'pending') {
-        renderOrders(allOrders.filter(function(o) { return o.status === 'Pending'; }));
-      } else if (filter === 'completed') {
-        renderOrders(allOrders.filter(function(o) { return o.status === 'Completed'; }));
+        grid.querySelectorAll('[data-act="ready"]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var list = readItems();
+            var it = list.find(function (i) { return i.id === btn.getAttribute('data-id'); });
+            if (it) { it.status = 'stitched'; it.tailorEta = null; writeItems(list); renderGrid(); }
+          });
+        });
+        grid.querySelectorAll('[data-act="remove"]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var list = readItems().filter(function (i) { return i.id !== btn.getAttribute('data-id'); });
+            writeItems(list);
+            renderGrid();
+          });
+        });
       }
-    }
 
-    function openDetailModal(id) {
-      var o = allOrders.find(function(item) { return item.id === id; });
-      if (!o) return;
+      // ---------- Form submit ----------
+      function initForm() {
+        document.getElementById('wd-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+          var name = document.getElementById('wd-name').value.trim();
+          if (!name) return;
+          var category = document.getElementById('wd-category').value;
+          var tags = Object.keys(selectedTags).filter(function (t) { return selectedTags[t]; });
 
-      document.getElementById('modal-req-id').innerText = o.id;
-      document.getElementById('modal-title').innerText = o.designTitle;
-      document.getElementById('modal-img').src = o.designImg || '';
-      document.getElementById('modal-tailor-name').innerText = o.tailorName;
-      
-      var pill = document.getElementById('modal-status-pill');
-      pill.className = 'lb-badge-status status-' + o.status.replace(/\s+/g, '');
-      pill.innerText = o.status;
+          var item = {
+            id: 'wardrobe:' + Date.now() + ':' + Math.floor(Math.random() * 1e6),
+            name: name,
+            category: category,
+            tags: tags,
+            image: photoDataUrl,
+            status: selectedStatus,
+            tailorName: selectedStatus === 'with_tailor' ? document.getElementById('wd-tailor-name').value.trim() : null,
+            tailorEta: selectedStatus === 'with_tailor' ? document.getElementById('wd-tailor-eta').value : null,
+            createdAt: Date.now()
+          };
 
-      document.getElementById('modal-garment').innerText = o.garment + ' · ' + (o.fit || 'Regular Fit');
-      document.getElementById('modal-date').innerText = o.requiredDate;
-      document.getElementById('modal-collar-cuff').innerText = (o.collar || 'Standard') + ' · ' + (o.sleeve || 'Straight');
-      document.getElementById('modal-price').innerText = o.estimatedPrice;
-      document.getElementById('modal-notes').innerText = o.notes || 'None specified';
+          var list = readItems();
+          list.push(item);
+          writeItems(list);
 
-      var measChips = document.getElementById('modal-meas-chips');
-      measChips.innerHTML = Object.keys(o.measurements || {}).map(function(k) {
-        return '<span class="lb-tag" style="background:#FFF; font-weight:700; text-transform:none;">' + k + ': ' + o.measurements[k] + '"</span>';
-      }).join('');
+          // reset form
+          e.target.reset();
+          photoDataUrl = null;
+          document.getElementById('wd-photo-preview').hidden = true;
+          document.getElementById('wd-photo-label').hidden = false;
+          selectedTags = {};
+          selectedStatus = 'stitched';
+          renderTags();
+          renderStatusOptions();
+          renderGrid();
+        });
+      }
 
-      document.getElementById('order-modal').classList.add('is-open');
-    }
+      function boot() {
+        renderTags();
+        renderStatusOptions();
+        initPhotoDrop();
+        initForm();
+        renderGrid();
+      }
 
-    function closeModal() {
-      document.getElementById('order-modal').classList.remove('is-open');
-    }
-
-    window.addEventListener('DOMContentLoaded', initOrders);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+      } else {
+        boot();
+      }
+    })();
   </script>
 </body>
 </html>

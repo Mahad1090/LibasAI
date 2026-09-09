@@ -15,6 +15,7 @@
     var btnDiscover = document.getElementById('lb-discover-trigger');
     var btnBrands = document.getElementById('lb-brands-trigger');
     var btnFeatures = document.getElementById('lb-features-trigger');
+    var btnTailors = document.getElementById('lb-tailors-trigger');
     var btnForYou = document.getElementById('lb-foryou-trigger');
     var btnSearch = document.getElementById('lb-search-trigger');
     var btnBurger = document.getElementById('lb-burger-btn');
@@ -24,6 +25,7 @@
     var panelDiscover = document.getElementById('lb-menu-discover');
     var panelBrands = document.getElementById('lb-menu-brands');
     var panelFeatures = document.getElementById('lb-menu-features');
+    var panelTailors = document.getElementById('lb-menu-tailors');
     var panelForYou = document.getElementById('lb-menu-foryou');
 
     var activeMenu = null;
@@ -37,6 +39,7 @@
       var hasMegaPanel = (name === 'discover' && !!panelDiscover) ||
                          (name === 'brands' && !!panelBrands) ||
                          (name === 'features' && !!panelFeatures) ||
+                         (name === 'tailors' && !!panelTailors) ||
                          (name === 'foryou' && !!panelForYou && panelForYou.classList.contains('lb-mega-panel'));
 
       if (megaHost) megaHost.classList.toggle('is-open', hasMegaPanel);
@@ -47,11 +50,13 @@
       if (btnDiscover) btnDiscover.setAttribute('aria-expanded', name === 'discover');
       if (btnBrands) btnBrands.setAttribute('aria-expanded', name === 'brands');
       if (btnFeatures) btnFeatures.setAttribute('aria-expanded', name === 'features');
+      if (btnTailors) btnTailors.setAttribute('aria-expanded', name === 'tailors');
       if (btnForYou) btnForYou.setAttribute('aria-expanded', name === 'foryou');
 
       if (panelDiscover) panelDiscover.classList.toggle('is-active', name === 'discover');
       if (panelBrands) panelBrands.classList.toggle('is-active', name === 'brands');
       if (panelFeatures) panelFeatures.classList.toggle('is-active', name === 'features');
+      if (panelTailors) panelTailors.classList.toggle('is-active', name === 'tailors');
       if (panelForYou && panelForYou.classList.contains('lb-mega-panel')) {
         panelForYou.classList.toggle('is-active', name === 'foryou');
       }
@@ -67,11 +72,13 @@
       if (btnDiscover) btnDiscover.setAttribute('aria-expanded', 'false');
       if (btnBrands) btnBrands.setAttribute('aria-expanded', 'false');
       if (btnFeatures) btnFeatures.setAttribute('aria-expanded', 'false');
+      if (btnTailors) btnTailors.setAttribute('aria-expanded', 'false');
       if (btnForYou) btnForYou.setAttribute('aria-expanded', 'false');
 
       if (panelDiscover) panelDiscover.classList.remove('is-active');
       if (panelBrands) panelBrands.classList.remove('is-active');
       if (panelFeatures) panelFeatures.classList.remove('is-active');
+      if (panelTailors) panelTailors.classList.remove('is-active');
       if (panelForYou && panelForYou.classList.contains('lb-mega-panel')) {
         panelForYou.classList.remove('is-active');
       }
@@ -104,8 +111,15 @@
     if (btnFeatures) {
       btnFeatures.addEventListener('mouseenter', function () { openMenu('features'); });
       btnFeatures.addEventListener('click', function (e) {
-        // Directly redirect to dedicated AI Features page
+        // Directly redirect to dedicated Features page
         window.location.href = '/ai-features.html';
+      });
+    }
+    if (btnTailors) {
+      btnTailors.addEventListener('mouseenter', function () { openMenu('tailors'); });
+      btnTailors.addEventListener('click', function (e) {
+        // Directly redirect to Find Tailors page
+        window.location.href = '/tailors.html';
       });
     }
     if (btnForYou) {
@@ -205,6 +219,9 @@
       '/ai/image-search': 'image-search.html',
       '/ai/compare': 'compare.html',
       '/ai/outfit-builder': 'outfit-builder.html',
+      '/ai/morning-edit': 'morning-edit.html',
+      '/wardrobe': 'wardrobe.html',
+      '/my-wardrobe': 'wardrobe.html',
       '/ai': 'ai-features.html',
       '/ai-features': 'ai-features.html',
       '/brands': 'brands.html',

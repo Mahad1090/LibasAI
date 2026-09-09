@@ -55,13 +55,10 @@
             For You
           </button>
           <a href="/ai-features.html" id="lb-features-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-features">
-            AI Features
+            Features
           </a>
-          <a href="/tailors.html" class="lb-nav__link" style="color:var(--lb-burgundy); font-weight:700;">
-            Find Tailors
-          </a>
-          <a href="/get-stitched.html" class="lb-nav__link" style="color:var(--lb-crimson); font-weight:700;">
-            Get Stitched
+          <a href="/tailors.html" id="lb-tailors-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-tailors">
+            Tailors
           </a>
         </nav>
 
@@ -94,136 +91,209 @@
           <div class="lb-mega-stack">
 
                                     <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
-              <div class="lb-mega-inner">
-                <div>
+              <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
+                <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Discover</h3>
-                  <div class="lb-mega-links">
-                    <a href="/discover/new-arrivals">New Arrivals</a>
-                    <a href="/discover/trending">Trending</a>
-                    <a href="/for-you">For You</a>
-                    <a href="/discover/eid">Eid Collection</a>
-                    <a href="/discover/wedding">Wedding Edit</a>
-                    <a href="/discover/formal">Formal Wear</a>
-                    <a href="/discover/casual">Casual Pret</a>
-                  </div>
                 </div>
-                <div>
-                  <div class="lb-mega-subhead">Shop by category</div>
-                  <div class="lb-mega-categories">
-                    <a href="/shop/women">Women</a>
-                    <a href="/shop/men">Men</a>
-                    <a href="/shop/pret">Pret</a>
-                    <a href="/shop/unstitched">Unstitched</a>
-                    <a href="/shop/kurta">Kurta</a>
-                    <a href="/shop/shalwar-kameez">Shalwar Kameez</a>
-                    <a href="/shop/lawn">Lawn</a>
-                    <a href="/shop/accessories">Accessories</a>
-                  </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/discover/new-arrivals" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>New Arrivals</span>
+                  </a>
+                  <a href="/discover/trending" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="">
+                    <span>Trending</span>
+                  </a>
+                  <a href="/discover/eid" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt="">
+                    <span>Eid Collection</span>
+                  </a>
+                  <a href="/discover/wedding" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Wedding Edit</span>
+                  </a>
+                  <a href="/discover/formal" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Formal Wear</span>
+                  </a>
+                  <a href="/discover/casual" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
+                    <span>Casual Pret</span>
+                  </a>
+                  <a href="/shop/women" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770" alt="">
+                    <span>Women</span>
+                  </a>
+                  <a href="/shop/men" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/0002_DSC00024.png?v=1750335693" alt="">
+                    <span>Men</span>
+                  </a>
+                  <a href="/shop/kurta" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Kurta</span>
+                  </a>
+                  <a href="/shop/lawn" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Lawn</span>
+                  </a>
                 </div>
-                <div>
-                  <div class="lb-mega-visual"><image-slot id="menu-discover-visual" shape="rect" placeholder="Editorial: contemporary Pakistani outfit, warm studio light" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765"></image-slot></div>
-                  <div class="lb-mega-feature-card">
-                    <strong>Ask LibasAI to find your look</strong>
-                    <a href="/ai/ask">Start AI Search →</a>
-                  </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/ai/ask" class="lb-cta">Ask LibasAI to find your look</a>
                 </div>
               </div>
             </div>
 
             <div id="lb-menu-brands" class="lb-mega-panel" role="group" aria-label="Brands">
-              <div class="lb-mega-inner">
-                <div>
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Brands</h3>
-                  <div class="lb-mega-links">
-                    <a href="/brands.html">All Brands (80+)</a>
-                    <a href="/brands.html?tab=popular">Popular Brands</a>
-                    <a href="/brands.html?tab=emerging">Emerging Brands</a>
-                    <a href="/brands.html?tab=local">Discover Local</a>
-                  </div>
                 </div>
-                <div>
-                  <div class="lb-mega-subhead">Featured Pakistani labels</div>
-                  <div class="lb-brand-list">
-                    <a href="/brands.html?brand=sana-safinaz" class="lb-brand-row"><span>Sana Safinaz</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=gul-ahmed" class="lb-brand-row"><span>Gul Ahmed</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=zellbury" class="lb-brand-row"><span>Zellbury</span><span class="lb-brand-row__arrow">→</span></a>
-                    <a href="/brands.html?brand=beechtree" class="lb-brand-row"><span>Beechtree</span><span class="lb-brand-row__arrow">→</span></a>
-                  </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/brands.html" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>All Brands (80+)</span>
+                  </a>
+                  <a href="/brands.html?tab=popular" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="">
+                    <span>Popular Brands</span>
+                  </a>
+                  <a href="/brands.html?tab=emerging" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Emerging Brands</span>
+                  </a>
+                  <a href="/brands.html?tab=local" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Discover Local</span>
+                  </a>
+                  <a href="/brands.html?brand=sana-safinaz" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
+                    <span>Sana Safinaz</span>
+                  </a>
+                  <a href="/brands.html?brand=gul-ahmed" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Gul Ahmed</span>
+                  </a>
+                  <a href="/brands.html?brand=zellbury" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Zellbury</span>
+                  </a>
+                  <a href="/brands.html?brand=beechtree" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="">
+                    <span>Beechtree</span>
+                  </a>
                 </div>
-                <div class="lb-spotlight">
-                  <h4>Discover Local</h4>
-                  <p>Meet emerging Pakistani labels worth discovering.</p>
-                  <a href="/brands.html?tab=local">Explore Local Brands →</a>
+                <div class="lb-mega-cards-foot">
+                  <a href="/brands.html?tab=local" class="lb-cta lb-cta--ghost">Explore Local Brands</a>
                 </div>
               </div>
             </div>
 
             <div id="lb-menu-foryou" class="lb-mega-panel" role="group" aria-label="For You">
-              <div class="lb-mega-inner">
-                <div>
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
                   <div class="lb-mega-eyebrow">Personalized AI</div>
                   <h3 class="lb-mega-heading">Curated For You</h3>
-                  <div class="lb-mega-links">
-                    <a href="/for-you/picks">Personalized Picks</a>
-                    <a href="/for-you/recently-viewed">Recently Viewed</a>
-                    <a href="/for-you/wishlist-inspired">Inspired by Wishlist</a>
-                    <a href="/for-you/budget">Within Your Budget</a>
-                    <a href="/for-you" style="color:var(--lb-burgundy); font-weight:800; margin-top:6px;">Your Style Feed &rarr;</a>
-                  </div>
                 </div>
-                <div>
-                  <div class="lb-mega-subhead">Explore by your preferences</div>
-                  <div class="lb-brand-list">
-                    <a href="/for-you/picks" class="lb-brand-row"><span>Lawn &amp; Summer Pret</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/for-you/picks" class="lb-brand-row"><span>Festive &amp; Formal Edit</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/for-you/budget" class="lb-brand-row"><span>Under PKR 12,000</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                    <a href="/get-stitched.html" class="lb-brand-row"><span>Bespoke Tailoring Picks</span><span class="lb-brand-row__arrow">&rarr;</span></a>
-                  </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="">
+                    <span>Personalized Picks</span>
+                  </a>
+                  <a href="/for-you/recently-viewed" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>Recently Viewed</span>
+                  </a>
+                  <a href="/for-you/wishlist-inspired" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt="">
+                    <span>Inspired by Wishlist</span>
+                  </a>
+                  <a href="/for-you/budget" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Within Your Budget</span>
+                  </a>
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Lawn &amp; Summer Pret</span>
+                  </a>
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Festive &amp; Formal Edit</span>
+                  </a>
+                  <a href="/for-you/budget" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt="">
+                    <span>Under PKR 12,000</span>
+                  </a>
+                  <a href="/get-stitched.html" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Bespoke Tailoring</span>
+                  </a>
                 </div>
-                <div>
-                  <div class="lb-mega-visual">
-                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Curated For You" style="width:100%; height:100%; object-fit:cover; display:block;">
-                  </div>
-                  <div class="lb-mega-feature-card">
-                    <strong>Trained on your taste &amp; fit</strong>
-                    <a href="/for-you">Open Your Style Radar &rarr;</a>
-                  </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/wardrobe.html" class="lb-cta lb-cta--ghost">My Wardrobe</a>
+                  <a href="/for-you" class="lb-cta">Your Style Feed</a>
                 </div>
               </div>
             </div>
 
-            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="AI Features">
-              <div class="lb-mega-inner lb-mega-inner--features">
-                <div class="lb-features-head">
-                  <div class="lb-mega-eyebrow" style="text-align:center;">AI Features</div>
+            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="Features">
+              <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
+                <div class="lb-mega-cards-head">
                   <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
                 </div>
-                <div class="lb-features-grid">
-                  <a href="/ai/ask" class="lb-feature-card">
-                    <span class="lb-feature-num">01</span>
-                    <strong>Ask LibasAI</strong>
-                    <p>Natural-language conversational fashion search.</p>
+                <div class="lb-mega-card-grid">
+                  <a href="/ai/ask" class="lb-mega-card-tile">
+                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <span>Ask LibasAI</span>
                   </a>
-                  <a href="/ai/image-search" class="lb-feature-card">
-                    <span class="lb-feature-num">02</span>
-                    <strong>Image Search</strong>
-                    <p>Upload a look photo and find visually similar pieces.</p>
+                  <a href="/ai/image-search" class="lb-mega-card-tile">
+                    <img src="assets/feature-image-search.jpg" alt="">
+                    <span>Image Search</span>
                   </a>
-                  <a href="/ai/compare" class="lb-feature-card">
-                    <span class="lb-feature-num">03</span>
-                    <strong>Compare</strong>
-                    <p>Compare cuts, fabrics, and prices across brands.</p>
+                  <a href="/ai/compare" class="lb-mega-card-tile">
+                    <img src="assets/feature-compare.jpg" alt="">
+                    <span>Compare</span>
                   </a>
-                  <a href="/ai/outfit-builder" class="lb-feature-card">
-                    <span class="lb-feature-num">04</span>
-                    <strong>Outfit Builder</strong>
-                    <p>Coordinate complete looks with AI color harmony.</p>
+                  <a href="/ai/outfit-builder" class="lb-mega-card-tile">
+                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <span>Outfit Builder</span>
+                  </a>
+                  <a href="/ai/morning-edit" class="lb-mega-card-tile">
+                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <span>Subah Edit</span>
                   </a>
                 </div>
-                <a href="/ai" class="lb-cta lb-cta--wide" style="width:auto; display:inline-flex;">
-                  <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
-                  Explore All AI Features →
-                </a>
+                <div class="lb-mega-cards-foot">
+                  <a href="/ai-features.html" class="lb-cta">Explore All Features</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-tailors" class="lb-mega-panel" role="group" aria-label="Tailors">
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
+                  <h3 class="lb-mega-heading">Tailors</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/tailors.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <span>Find Master Tailors</span>
+                  </a>
+                  <a href="/get-stitched.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <span>Get Stitched</span>
+                  </a>
+                  <a href="/my-requests.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-shears.jpg" alt="">
+                    <span>My Stitching Requests</span>
+                  </a>
+                  <a href="/tailor-portal.html" class="lb-mega-card-tile">
+                    <img src="assets/flagship-studio.jpg" alt="">
+                    <span>Tailor Partner Portal</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/get-stitched.html" class="lb-cta">Start a Stitching Order</a>
+                </div>
               </div>
             </div>
 
@@ -341,19 +411,24 @@
         <a href="/for-you" class="lb-mobile__simple">For You</a>
 
         <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
-          AI Features Suite
+          Features Suite
           <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
         </a>
 
-        <a href="/tailors.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
-          Find Tailors
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
-
-        <a href="/get-stitched.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-crimson); display:flex; justify-content:space-between; align-items:center;">
-          Get Stitched
-          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
-        </a>
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Tailors
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/tailors.html">Find Master Tailors</a>
+              <a href="/get-stitched.html">Get Stitched</a>
+              <a href="/my-requests.html">My Stitching Requests</a>
+              <a href="/tailor-portal.html">Tailor Partner Portal</a>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="lb-mobile__footer">
         <a href="/ai/ask" class="lb-cta lb-cta--wide">
@@ -411,8 +486,8 @@
         <a href="/tailor-portal.html">Tailor Partner Portal</a>
       </div>
       <div class="lb-footer__col">
-        <h4>AI Features</h4>
-        <a href="/ai-features.html">AI Features Hub</a>
+        <h4>Features</h4>
+        <a href="/ai-features.html">Features Hub</a>
         <a href="/image-search.html">Visual Image Search</a>
         <a href="/compare.html">Multi-Brand Compare</a>
         <a href="/outfit-builder.html">AI Outfit Builder</a>

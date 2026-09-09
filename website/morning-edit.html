@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subah Edit — What Should I Wear This Morning? | LibasAI</title>
+  <meta name="description" content="LibasAI's Subah Edit reads today's weather, your morning plans, and what you've already worn this week to pull one real outfit from 80+ Pakistani labels — a fresh pick every morning.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./theme.css">
+  <style>
+    /* ===== Subah Edit — morning outfit ritual ===== */
+    .lb-me-hero-banner { display:flex; align-items:center; gap:14px; background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:6px; padding:16px 20px; margin-bottom:32px; box-shadow:0 10px 30px rgba(25,20,18,0.05); }
+    .lb-me-hero-banner__icon { width:42px; height:42px; border-radius:50%; background:var(--lb-tint); display:flex; align-items:center; justify-content:center; color:var(--lb-burgundy); flex-shrink:0; }
+    .lb-me-hero-banner__icon svg { width:20px; height:20px; }
+    .lb-me-hero-banner strong { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--lb-charcoal); }
+    .lb-me-hero-banner span { display:block; font-size:12.5px; color:rgba(25,20,18,0.55); margin-top:2px; }
+    .lb-me-day-badge { margin-left:auto; font-size:10.5px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lb-burgundy); border:1px solid var(--lb-burgundy); border-radius:999px; padding:5px 12px; white-space:nowrap; }
+
+    .lb-me-step { margin-bottom:32px; }
+    .lb-me-step__label { display:flex; align-items:center; gap:9px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:14px; }
+    .lb-me-step__num { width:20px; height:20px; border-radius:50%; background:var(--lb-tint); color:var(--lb-burgundy); font-size:11px; display:inline-flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+    .lb-me-choices { display:flex; gap:12px; flex-wrap:wrap; }
+    .lb-me-choice { display:flex; flex-direction:column; align-items:center; gap:8px; width:136px; padding:18px 12px; background:var(--lb-white); border:1.5px solid var(--lb-hairline); border-radius:6px; cursor:pointer; text-align:center; font-family:'Manrope',sans-serif; transition:border-color 180ms ease, transform 180ms var(--lb-ease), background 180ms ease; }
+    .lb-me-choice:hover { border-color:var(--lb-rose); transform:translateY(-2px); }
+    .lb-me-choice.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.06); }
+    .lb-me-choice svg { width:22px; height:22px; color:var(--lb-burgundy); }
+    .lb-me-choice strong { font-size:12.5px; font-weight:700; color:var(--lb-charcoal); }
+    .lb-me-choice small { font-size:10.5px; color:rgba(25,20,18,0.5); line-height:1.3; }
+
+    .lb-me-reveal-cta[disabled] { opacity:0.38; cursor:not-allowed; pointer-events:none; }
+
+    .lb-me-reveal { display:none; margin-top:52px; padding-top:44px; border-top:1px solid var(--lb-hairline); }
+    .lb-me-reveal.is-visible { display:block; }
+    .lb-me-why { display:flex; gap:14px; align-items:flex-start; background:var(--lb-tint); border-radius:6px; padding:20px 24px; margin-bottom:32px; }
+    .lb-me-why svg { flex-shrink:0; color:var(--lb-burgundy); margin-top:2px; width:20px; height:20px; }
+    .lb-me-why p { margin:0; font-size:14.5px; line-height:1.65; color:var(--lb-charcoal); }
+    .lb-me-why strong { color:var(--lb-burgundy); }
+
+    .lb-me-wardrobe-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12.5px; color:rgba(25,20,18,0.6); background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:6px; padding:12px 18px; margin-bottom:28px; }
+    .lb-me-wardrobe-bar a { font-weight:800; color:var(--lb-burgundy); white-space:nowrap; }
+
+    .lb-me-nudge { display:flex; gap:14px; align-items:flex-start; background:#FBF1E6; border:1px solid var(--lb-hairline); border-left:3px solid #8A6A1E; border-radius:6px; padding:18px 22px; margin-bottom:32px; }
+    .lb-me-nudge[hidden] { display:none; }
+    .lb-me-nudge svg { flex-shrink:0; color:#8A6A1E; margin-top:2px; width:20px; height:20px; }
+    .lb-me-nudge p { margin:0 0 10px; font-size:14px; line-height:1.6; color:var(--lb-charcoal); }
+
+    .lb-me-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:40px; align-items:start; }
+    @media (max-width:900px) { .lb-me-grid { grid-template-columns:1fr; } }
+
+    .lb-me-hero-card { position:relative; background:var(--lb-white); border-radius:8px; overflow:hidden; box-shadow:0 24px 50px rgba(25,20,18,0.12); }
+    .lb-me-hero-card__img { width:100%; height:340px; overflow:hidden; background:var(--lb-tint); }
+    .lb-me-hero-card__img img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; transition:transform 500ms var(--lb-ease-slow); }
+    .lb-me-hero-card:hover .lb-me-hero-card__img img { transform:scale(1.03); }
+    .lb-me-hero-card__body { padding:22px 24px 26px; }
+    .lb-me-hero-card__badge { position:absolute; top:14px; left:14px; background:var(--lb-burgundy); color:var(--lb-cream); font-size:10.5px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; padding:6px 12px; border-radius:999px; z-index:2; }
+    .lb-me-hero-card__wish { position:absolute; top:12px; right:12px; width:38px; height:38px; border-radius:50%; border:none; background:rgba(255,253,249,0.9); display:flex; align-items:center; justify-content:center; color:var(--lb-charcoal); cursor:pointer; z-index:2; transition:color 180ms ease, transform 180ms ease; }
+    .lb-me-hero-card__wish svg { width:17px; height:17px; }
+    .lb-me-hero-card__wish:hover { transform:scale(1.08); }
+    .lb-me-hero-card__wish.is-active { color:var(--lb-burgundy); }
+    .lb-me-hero-card__brand { font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lb-mauve); }
+    .lb-me-hero-card__title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin:6px 0 10px; color:var(--lb-charcoal); line-height:1.25; }
+    .lb-me-hero-card__price { font-size:20px; font-weight:800; color:var(--lb-burgundy); margin-bottom:18px; }
+    .lb-me-hero-card__actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .lb-me-hero-card__actions .lb-cta { flex:1; justify-content:center; min-width:150px; }
+
+    .lb-me-closet-note { display:flex; align-items:center; gap:8px; font-size:12.5px; color:rgba(25,20,18,0.5); margin-top:12px; }
+    .lb-me-closet-note[hidden] { display:none; }
+    .lb-me-closet-note svg { width:14px; height:14px; flex-shrink:0; }
+
+    .lb-me-alts { display:flex; flex-direction:column; gap:16px; }
+    .lb-me-panel { background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:8px; padding:22px; }
+    .lb-me-panel h3 { font-family:'Playfair Display',serif; font-size:15px; font-weight:700; margin:0 0 14px; color:var(--lb-charcoal); }
+    .lb-me-alt-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--lb-hairline); }
+    .lb-me-alt-row:last-child { border-bottom:none; padding-bottom:0; }
+    .lb-me-alt-row:first-child { padding-top:0; }
+    .lb-me-alt-thumb { width:56px; height:56px; border-radius:4px; overflow:hidden; flex-shrink:0; background:var(--lb-tint); }
+    .lb-me-alt-thumb img { width:100%; height:100%; object-fit:cover; }
+    .lb-me-alt-meta { flex:1; min-width:0; }
+    .lb-me-alt-brand { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--lb-mauve); }
+    .lb-me-alt-title { font-size:13px; font-weight:650; color:var(--lb-charcoal); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .lb-me-alt-price { font-size:12.5px; font-weight:700; color:var(--lb-burgundy); }
+    .lb-me-alt-row a.lb-me-alt-link { flex-shrink:0; font-size:11px; font-weight:800; color:var(--lb-burgundy); text-transform:uppercase; letter-spacing:0.04em; }
+
+    .lb-me-saved-strip { margin-top:44px; padding-top:32px; border-top:1px solid var(--lb-hairline); }
+    .lb-me-saved-strip__list { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+    .lb-me-saved-chip { display:flex; align-items:center; gap:8px; background:var(--lb-white); border:1px solid var(--lb-hairline); border-radius:999px; padding:6px 14px 6px 6px; font-size:12px; font-weight:650; color:var(--lb-charcoal); }
+    .lb-me-saved-chip img { width:28px; height:28px; border-radius:50%; object-fit:cover; }
+    .lb-me-saved-chip button { border:none; background:none; color:rgba(25,20,18,0.4); cursor:pointer; font-size:15px; line-height:1; padding:0 0 0 2px; }
+    .lb-me-saved-chip button:hover { color:var(--lb-burgundy); }
+    .lb-me-saved-empty { font-size:13px; color:rgba(25,20,18,0.5); margin-top:14px; }
+  </style>
+</head>
+<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+
+  <!-- SVG SPRITE -->
+  <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
+    <defs>
+      <symbol id="lb-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></symbol>
+      <symbol id="lb-i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-10-9.3C.5 7 2 3.5 5.6 3c2.1-.3 4 .8 6.4 3.4C14.4 3.8 16.3 2.7 18.4 3c3.6.5 5.1 4 3.6 7.7C19.5 15.4 12 20 12 20z"/></symbol>
+      <symbol id="lb-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+      <symbol id="lb-i-mark" viewBox="0 0 24 24"><path d="M12 4v16M5 8l14 8M19 8L5 16"/></symbol>
+      <symbol id="lb-i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+      <symbol id="lb-i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="lb-i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="lb-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="lb-i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="lb-i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></symbol>
+      <symbol id="lb-i-sparkles" viewBox="0 0 24 24"><path d="m12 3 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/></symbol>
+      <symbol id="lb-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+      <symbol id="lb-i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2 12h2.4M19.6 12H22M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></symbol>
+      <symbol id="lb-i-cloud" viewBox="0 0 24 24"><path d="M6.5 18a4.5 4.5 0 0 1-.7-8.94A5.5 5.5 0 0 1 16.3 8.03 4 4 0 0 1 17.5 16H6.5z"/></symbol>
+      <symbol id="lb-i-cloud-rain" viewBox="0 0 24 24"><path d="M6.5 15a4.5 4.5 0 0 1-.7-8.94A5.5 5.5 0 0 1 16.3 5.03 4 4 0 0 1 17.5 13H6.5z"/><line x1="8" y1="18" x2="8" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="16" y1="18" x2="16" y2="21"/></symbol>
+      <symbol id="lb-i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 8 12 14 22 8 12 2"/><polyline points="2 13 12 19 22 13"/><polyline points="2 18 12 24 22 18"/></symbol>
+      <symbol id="lb-i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="2" y1="12" x2="22" y2="12"/></symbol>
+      <symbol id="lb-i-hanger" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3c0 .7.2 1.3.6 1.8L2.4 16.2A2 2 0 0 0 4 19h16a2 2 0 0 0 1.6-2.8L14.4 6.8c.4-.5.6-1.1.6-1.8a3 3 0 0 0-3-3z"/><circle cx="12" cy="19" r="1"/></symbol>
+      <symbol id="lb-i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 6 3-6M12 9l-3 12M12 9l3 12"/></symbol>
+      <symbol id="lb-i-dumbbell" viewBox="0 0 24 24"><path d="M6 7v10M18 7v10M2 10v4M22 10v4M6 12h12"/></symbol>
+      <symbol id="lb-i-shuffle" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <div id="lb-nav-root" class="lb-nav-root">
+    <div class="lb-nav">
+      <div class="lb-nav__bar">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+
+        <nav class="lb-nav__center" aria-label="Primary">
+          <button type="button" id="lb-discover-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-discover">
+            Discover
+          </button>
+          <a href="/brands.html" id="lb-brands-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-brands">
+            Brands
+          </a>
+          <button type="button" id="lb-foryou-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-foryou">
+            For You
+          </button>
+          <a href="/ai-features.html" id="lb-features-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-features">
+            Features
+          </a>
+          <a href="/tailors.html" id="lb-tailors-trigger" class="lb-nav__trigger" aria-haspopup="true" aria-expanded="false" aria-controls="lb-menu-tailors">
+            Tailors
+          </a>
+        </nav>
+
+        <div class="lb-nav__right">
+          <button type="button" id="lb-search-trigger" class="lb-icon-btn" aria-haspopup="true" aria-expanded="false" aria-controls="lb-search-overlay" aria-label="Search">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+          </button>
+          <a href="/my-requests.html" class="lb-icon-btn lb-nav__right-desktop" title="My Stitching Requests">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
+          </a>
+          <a href="/wishlist.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Wishlist">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+          </a>
+          <a href="/account.html" class="lb-icon-btn lb-nav__right-desktop" aria-label="Profile">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+          </a>
+          <a href="/ai/ask" class="lb-cta lb-nav__right-desktop">
+            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            Ask LibasAI
+          </a>
+          <button type="button" id="lb-burger-btn" class="lb-burger" aria-label="Open menu">
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-menu"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mega menu -->
+      <div class="lb-collapse lb-mega-host">
+        <div class="lb-collapse-inner">
+          <div class="lb-mega-stack">
+
+            <div id="lb-menu-discover" class="lb-mega-panel" role="group" aria-label="Discover">
+              <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
+                <div class="lb-mega-cards-head">
+                  <h3 class="lb-mega-heading">Discover</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/discover/new-arrivals" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>New Arrivals</span>
+                  </a>
+                  <a href="/discover/trending" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="">
+                    <span>Trending</span>
+                  </a>
+                  <a href="/discover/eid" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt="">
+                    <span>Eid Collection</span>
+                  </a>
+                  <a href="/discover/wedding" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Wedding Edit</span>
+                  </a>
+                  <a href="/discover/formal" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Formal Wear</span>
+                  </a>
+                  <a href="/discover/casual" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
+                    <span>Casual Pret</span>
+                  </a>
+                  <a href="/shop/women" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770" alt="">
+                    <span>Women</span>
+                  </a>
+                  <a href="/shop/men" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/0002_DSC00024.png?v=1750335693" alt="">
+                    <span>Men</span>
+                  </a>
+                  <a href="/shop/kurta" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Kurta</span>
+                  </a>
+                  <a href="/shop/lawn" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Lawn</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/ai/ask" class="lb-cta">Ask LibasAI to find your look</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-brands" class="lb-mega-panel" role="group" aria-label="Brands">
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
+                  <h3 class="lb-mega-heading">Brands</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/brands.html" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>All Brands (80+)</span>
+                  </a>
+                  <a href="/brands.html?tab=popular" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="">
+                    <span>Popular Brands</span>
+                  </a>
+                  <a href="/brands.html?tab=emerging" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Emerging Brands</span>
+                  </a>
+                  <a href="/brands.html?tab=local" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Discover Local</span>
+                  </a>
+                  <a href="/brands.html?brand=sana-safinaz" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
+                    <span>Sana Safinaz</span>
+                  </a>
+                  <a href="/brands.html?brand=gul-ahmed" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Gul Ahmed</span>
+                  </a>
+                  <a href="/brands.html?brand=zellbury" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Zellbury</span>
+                  </a>
+                  <a href="/brands.html?brand=beechtree" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="">
+                    <span>Beechtree</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/brands.html?tab=local" class="lb-cta lb-cta--ghost">Explore Local Brands</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-foryou" class="lb-mega-panel" role="group" aria-label="For You">
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
+                  <div class="lb-mega-eyebrow">Personalized AI</div>
+                  <h3 class="lb-mega-heading">Curated For You</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="">
+                    <span>Personalized Picks</span>
+                  </a>
+                  <a href="/for-you/recently-viewed" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="">
+                    <span>Recently Viewed</span>
+                  </a>
+                  <a href="/for-you/wishlist-inspired" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt="">
+                    <span>Inspired by Wishlist</span>
+                  </a>
+                  <a href="/for-you/budget" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="">
+                    <span>Within Your Budget</span>
+                  </a>
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="">
+                    <span>Lawn &amp; Summer Pret</span>
+                  </a>
+                  <a href="/for-you/picks" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Noemie_1_a63a4d7f-879c-444e-ad94-7a08c98739fe.jpg?v=1765873670" alt="">
+                    <span>Festive &amp; Formal Edit</span>
+                  </a>
+                  <a href="/for-you/budget" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt="">
+                    <span>Under PKR 12,000</span>
+                  </a>
+                  <a href="/get-stitched.html" class="lb-mega-card-tile">
+                    <img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt="">
+                    <span>Bespoke Tailoring</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/wardrobe.html" class="lb-cta lb-cta--ghost">My Wardrobe</a>
+                  <a href="/for-you" class="lb-cta">Your Style Feed</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-features" class="lb-mega-panel" role="group" aria-label="Features">
+              <div class="lb-mega-inner lb-mega-inner--cards lb-mega-inner--cards-wide">
+                <div class="lb-mega-cards-head">
+                  <h3 class="lb-mega-heading">Shop Smarter With LibasAI</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/ai/ask" class="lb-mega-card-tile">
+                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <span>Ask LibasAI</span>
+                  </a>
+                  <a href="/ai/image-search" class="lb-mega-card-tile">
+                    <img src="assets/feature-image-search.jpg" alt="">
+                    <span>Image Search</span>
+                  </a>
+                  <a href="/ai/compare" class="lb-mega-card-tile">
+                    <img src="assets/feature-compare.jpg" alt="">
+                    <span>Compare</span>
+                  </a>
+                  <a href="/ai/outfit-builder" class="lb-mega-card-tile">
+                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <span>Outfit Builder</span>
+                  </a>
+                  <a href="/ai/morning-edit" class="lb-mega-card-tile">
+                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <span>Subah Edit</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/ai-features.html" class="lb-cta">Explore All Features</a>
+                </div>
+              </div>
+            </div>
+
+            <div id="lb-menu-tailors" class="lb-mega-panel" role="group" aria-label="Tailors">
+              <div class="lb-mega-inner lb-mega-inner--cards">
+                <div class="lb-mega-cards-head">
+                  <h3 class="lb-mega-heading">Tailors</h3>
+                </div>
+                <div class="lb-mega-card-grid">
+                  <a href="/tailors.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <span>Find Master Tailors</span>
+                  </a>
+                  <a href="/get-stitched.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <span>Get Stitched</span>
+                  </a>
+                  <a href="/my-requests.html" class="lb-mega-card-tile">
+                    <img src="assets/tailor-shears.jpg" alt="">
+                    <span>My Stitching Requests</span>
+                  </a>
+                  <a href="/tailor-portal.html" class="lb-mega-card-tile">
+                    <img src="assets/flagship-studio.jpg" alt="">
+                    <span>Tailor Partner Portal</span>
+                  </a>
+                </div>
+                <div class="lb-mega-cards-foot">
+                  <a href="/get-stitched.html" class="lb-cta">Start a Stitching Order</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Search overlay -->
+      <div id="lb-search-overlay" class="lb-collapse lb-search-overlay" role="search" aria-label="Site search">
+        <div class="lb-collapse-inner">
+          <div class="lb-search-inner">
+            <h2 class="lb-search-label">What are you looking for?</h2>
+            <form action="/ai/ask" method="GET" class="lb-search-field" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(document.getElementById('lb-search-input').value);">
+              <svg class="lb-icon" style="width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+              <input id="lb-search-input" type="text" placeholder="Try: rust embroidered kurta under Rs. 6,000" aria-label="Search LibasAI">
+              <a href="/ai/image-search" class="lb-icon-btn" aria-label="Search by image">
+                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg>
+              </a>
+              <button type="submit" class="lb-icon-btn" aria-label="Search">
+                <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+              </button>
+            </form>
+            <div class="lb-search-cols">
+              <div class="lb-search-col">
+                <h4>Recent Searches</h4>
+                <a href="/ai/ask?q=rust+kurta+wedding">Rust kurta for wedding</a>
+                <a href="/ai/ask?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
+                <a href="/ai/ask?q=formal+shalwar+kameez">Formal shalwar kameez</a>
+              </div>
+              <div class="lb-search-col">
+                <h4>Trending Searches</h4>
+                <a href="/ai/ask?q=eid+collection+2026">Eid collection 2026</a>
+                <a href="/ai/ask?q=embroidered+kurta">Embroidered lawn kurta</a>
+                <a href="/ai/ask?q=velvet+shawl+formal">Velvet formal shawl</a>
+              </div>
+              <div class="lb-search-col">
+                <h4>Suggested Categories</h4>
+                <div class="lb-search-chips">
+                  <a href="/shop/kurta" class="lb-search-chip">Kurta</a>
+                  <a href="/shop/lawn" class="lb-search-chip">Lawn</a>
+                  <a href="/discover/wedding" class="lb-search-chip">Wedding</a>
+                  <a href="/discover/formal" class="lb-search-chip">Formal</a>
+                  <a href="/shop/unstitched" class="lb-search-chip">Unstitched</a>
+                  <a href="/shop/accessories" class="lb-search-chip">Accessories</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="lb-mobile__top">
+        <a href="/" class="lb-logo">
+          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <span>LibasAI</span>
+        </a>
+        <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
+          <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-close"></use></svg>
+        </button>
+      </div>
+      <div class="lb-mobile__body">
+        <div class="lb-mobile__icons">
+          <a href="/ai/ask">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-search"></use></svg>
+            Search
+          </a>
+          <a href="/wishlist">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+            Wishlist
+          </a>
+          <a href="/account">
+            <svg class="lb-icon" style="width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-user"></use></svg>
+            Profile
+          </a>
+        </div>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Discover
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/discover/new-arrivals">New Arrivals</a>
+              <a href="/discover/trending">Trending</a>
+              <a href="/for-you">For You</a>
+              <a href="/discover/eid">Eid</a>
+              <a href="/discover/wedding">Wedding</a>
+              <a href="/discover/formal">Formal</a>
+              <a href="/discover/casual">Casual</a>
+              <a href="/shop/women">Women</a>
+              <a href="/shop/men">Men</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Brands
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/brands.html">All Brands</a>
+              <a href="/brands.html?tab=popular">Popular Brands</a>
+              <a href="/brands.html?tab=emerging">Emerging Brands</a>
+              <a href="/brands.html?tab=local">Discover Local</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="/for-you" class="lb-mobile__simple">For You</a>
+
+        <a href="/ai-features.html" class="lb-mobile__simple" style="font-weight:700; color:var(--lb-burgundy); display:flex; justify-content:space-between; align-items:center;">
+          Features Suite
+          <svg class="lb-icon" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-arrow-right"></use></svg>
+        </a>
+
+        <div class="lb-accordion">
+          <button type="button" class="lb-accordion__head" aria-expanded="false">
+            Tailors
+            <svg class="lb-icon" style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-plus"></use></svg>
+          </button>
+          <div class="lb-collapse lb-accordion__panel">
+            <div class="lb-collapse-inner">
+              <a href="/tailors.html">Find Master Tailors</a>
+              <a href="/get-stitched.html">Get Stitched</a>
+              <a href="/my-requests.html">My Stitching Requests</a>
+              <a href="/tailor-portal.html">Tailor Partner Portal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lb-mobile__footer">
+        <a href="/ai/ask" class="lb-cta lb-cta--wide">
+          <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          Ask LibasAI
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lb-page-head" style="padding: clamp(40px, 5vw, 64px) clamp(20px, 5vw, 72px) 0;">
+    <div class="lb-wrap">
+      <div class="lb-breadcrumb" style="display:flex; gap:8px; align-items:center; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:16px;">
+        <a href="/" style="color:rgba(25,20,18,0.5);">Home</a><span>/</span><a href="/ai-features.html" style="color:rgba(25,20,18,0.5);">Features</a><span>/</span><span style="color:var(--lb-burgundy);">Subah Edit</span>
+      </div>
+      <div class="lb-listing-head" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div class="lb-eyebrow" style="color:var(--lb-rose); margin-bottom:6px;">Your Daily AI Ritual</div>
+          <h1 class="lb-h1" style="font-size:clamp(30px,3.8vw,52px);">Subah Edit — what should I wear this morning?</h1>
+        </div>
+        <div class="lb-listing-count">
+          <span class="lb-tag">Weather + Occasion + Closet Aware</span>
+        </div>
+      </div>
+      <p class="lb-body" style="max-width:660px; margin-top:12px;">
+        Two taps and LibasAI reads today's weather, where your morning is headed, and what you've already been shown this week — then reaches for something from <strong>your own wardrobe</strong> first, and only suggests something to buy if nothing you own fits the brief.
+      </p>
+    </div>
+  </div>
+
+  <section class="lb-section" style="padding-top:28px;">
+    <div class="lb-wrap" style="max-width:920px;">
+
+      <div class="lb-me-wardrobe-bar">
+        <span id="me-wardrobe-count">Loading your wardrobe…</span>
+        <a href="/wardrobe.html">Manage My Wardrobe →</a>
+      </div>
+
+      <div class="lb-me-hero-banner">
+        <div class="lb-me-hero-banner__icon"><svg style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-clock"></use></svg></div>
+        <div>
+          <strong id="me-greeting">Good morning.</strong>
+          <span id="me-datetime">Reading today's date…</span>
+        </div>
+        <span class="lb-me-day-badge" id="me-day-badge"></span>
+      </div>
+
+      <div class="lb-me-step">
+        <div class="lb-me-step__label"><span class="lb-me-step__num">1</span> What's it like outside right now?</div>
+        <div class="lb-me-choices" id="me-weather-choices" role="group" aria-label="Weather"></div>
+      </div>
+
+      <div class="lb-me-step">
+        <div class="lb-me-step__label"><span class="lb-me-step__num">2</span> Where's this morning taking you?</div>
+        <div class="lb-me-choices" id="me-occasion-choices" role="group" aria-label="Occasion"></div>
+      </div>
+
+      <button type="button" id="me-reveal-btn" class="lb-cta lb-me-reveal-cta" disabled>
+        <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-sparkles"></use></svg>
+        Reveal My Subah Edit
+      </button>
+
+      <!-- REVEAL -->
+      <div class="lb-me-reveal" id="me-reveal">
+        <div class="lb-me-why">
+          <svg style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-sparkles"></use></svg>
+          <p id="me-why-text"></p>
+        </div>
+
+        <div class="lb-me-nudge" id="me-nudge" hidden>
+          <svg style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-scissors"></use></svg>
+          <div>
+            <p id="me-nudge-text"></p>
+            <a href="#" id="me-nudge-cta" class="lb-cta lb-cta--ghost"></a>
+          </div>
+        </div>
+
+        <div class="lb-me-grid">
+          <div>
+            <div class="lb-me-hero-card" id="me-hero-card">
+              <span class="lb-me-hero-card__badge" id="me-hero-badge">Today's Pick</span>
+              <button type="button" class="lb-me-hero-card__wish" id="me-hero-wish" aria-label="Save this piece" aria-pressed="false">
+                <svg style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-heart"></use></svg>
+              </button>
+              <div class="lb-me-hero-card__img"><img id="me-hero-img" src="" alt=""></div>
+              <div class="lb-me-hero-card__body">
+                <div class="lb-me-hero-card__brand" id="me-hero-brand"></div>
+                <div class="lb-me-hero-card__title" id="me-hero-title"></div>
+                <div class="lb-me-hero-card__price" id="me-hero-price"></div>
+                <div class="lb-me-hero-card__actions">
+                  <a href="#" id="me-hero-buy" target="_blank" rel="noopener" class="lb-cta">
+                    <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+                    Shop this piece
+                  </a>
+                  <button type="button" class="lb-cta lb-cta--ghost" id="me-shuffle-btn">
+                    <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-shuffle"></use></svg>
+                    Shuffle another
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="lb-me-closet-note" id="me-closet-note" hidden>
+              <svg style="fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-clock"></use></svg>
+              <span id="me-closet-text"></span>
+            </div>
+          </div>
+
+          <div class="lb-me-alts">
+            <div class="lb-me-panel">
+              <h3 id="me-alt-heading">Also works this morning</h3>
+              <div id="me-alt-rows"></div>
+            </div>
+            <a href="#" id="me-shop-more" class="lb-cta lb-cta--ghost" style="justify-content:center; text-align:center;">
+              Shop the full weather-ready edit →
+            </a>
+          </div>
+        </div>
+
+        <div class="lb-me-saved-strip">
+          <div class="lb-me-step__label" style="margin-bottom:0;"><span class="lb-me-step__num">♥</span> Saved from your mornings</div>
+          <div class="lb-me-saved-strip__list" id="me-saved-list"></div>
+          <p class="lb-me-saved-empty" id="me-saved-empty">Nothing saved yet — tap the heart on a pick to keep it here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lb-footer">
+    <div class="lb-footer__top">
+      <div class="lb-footer__brand">
+        <div class="lb-logo"><img src="assets/libasai-logo.png" alt="LibasAI Logo"><span>LibasAI</span></div>
+        <p>An AI-powered shopping assistant for Pakistani fashion: discovery and redirect, never inventory or checkout.</p>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Discover</h4>
+        <a href="/discover/new-arrivals">New Arrivals</a>
+        <a href="/discover/wedding">Wedding Edit</a>
+        <a href="/discover/formal">Formal Wear</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Features</h4>
+        <a href="/ai/ask">Ask LibasAI</a>
+        <a href="/ai/image-search">Visual Image Search</a>
+        <a href="/ai/compare">Multi-Brand Compare</a>
+        <a href="/ai/outfit-builder">AI Outfit Builder</a>
+        <a href="/ai/morning-edit">Subah Edit</a>
+        <a href="/wardrobe.html">My Wardrobe</a>
+      </div>
+      <div class="lb-footer__col">
+        <h4>Company</h4>
+        <a href="/brands">Brands Directory</a>
+        <a href="/brands/local">Discover Local</a>
+        <a href="/about">About LibasAI</a>
+      </div>
+    </div>
+    <div class="lb-footer__bottom">
+      <span>FAST-NUCES Final Year Project · 2026–2027</span>
+      <div class="lb-footer__legal">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./nav.js"></script>
+  <script>
+    (function () {
+      // ---------- Small fallback catalog (used only if the JSON fetch fails) ----------
+      var FALLBACK_PRODUCTS = [
+        { id:'fallback:1', brand:'Zellbury', title:'Rust Embroidered Cotton Kurta', price:4490, category:'kurta', tags:['kurta','casual','cotton','eid','traditional'], image:'https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102', url:'https://www.zellbury.com', badge:'Everyday Kurta' },
+        { id:'fallback:2', brand:'Amir Adnan', title:'PV Navy Blazer Slim Fit Suit', price:9000, category:'blazer', tags:['blazer','formal','wedding','western'], image:'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747', url:'https://amiradnan.com', badge:'Tailored Blazer' },
+        { id:'fallback:3', brand:'Gul Ahmed', title:'Digital Printed Organza Dupatta Suit', price:5450, category:'shalwar-kameez', tags:['shalwar-kameez','formal','festive'], image:'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440', url:'https://gulahmedshop.com', badge:'Festive Formal' },
+        { id:'fallback:4', brand:'Zeen Man', title:'Waistcoat Two Piece Set', price:6900, category:'waistcoat', tags:['waistcoat','formal','wedding'], image:'https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802', url:'https://zeen.com', badge:'Occasion Waistcoat' }
+      ];
+
+      // ---------- Rule tables ----------
+      var WEATHER = {
+        hot:  { label:'Hot & Sunny', desc:'Light layers, low fuss', icon:'lb-i-sun', boostTags:['cotton','linen'], boostCats:['casual','kurta','unstitched'], penalizeCats:['blazer','sherwani','waistcoat'], sentence:'hot, sun-out morning', fabric:'breathable cotton and linen weaves' },
+        mild: { label:'Mild & Breezy', desc:'Everyday comfort', icon:'lb-i-cloud', boostTags:['cotton','shalwar-kameez'], boostCats:['shalwar-kameez','kurta'], penalizeCats:[], sentence:'mild, breezy morning', fabric:'easy shalwar-kameez silhouettes' },
+        cold: { label:'Cold & Layered', desc:'Time to layer up', icon:'lb-i-layers', boostTags:[], boostCats:['blazer','sherwani','waistcoat'], penalizeCats:['unstitched'], sentence:'cold morning that calls for layers', fabric:'blazers and waistcoats you can layer' },
+        rain: { label:'Rainy & Humid', desc:'Nothing precious', icon:'lb-i-cloud-rain', boostTags:['cotton'], boostCats:['casual','kurta'], penalizeCats:['sherwani','waistcoat'], sentence:'rainy, humid morning', fabric:'low-fuss cotton that won’t sulk about weather' }
+      };
+      var OCCASION = {
+        office:  { label:'Office / Desk Formal', desc:'Sharp & presentable', icon:'lb-i-briefcase', boostTags:['formal'], boostCats:['blazer','shalwar-kameez','waistcoat'], penalizeTags:[], sentence:'a formal desk day', vibe:'sharp, presentable tailoring' },
+        casual:  { label:'Casual Errands', desc:'Relaxed & easy', icon:'lb-i-hanger', boostTags:['casual','western'], boostCats:['casual'], penalizeTags:[], sentence:'casual errands', vibe:'relaxed, no-fuss styling' },
+        festive: { label:'Jummah / Festive', desc:'Traditional morning', icon:'lb-i-sparkles', boostTags:['festive','traditional','eid'], boostCats:[], penalizeTags:[], sentence:'a Jummah or festive morning', vibe:'traditional festive detailing' },
+        wedding: { label:'Wedding / Big Event', desc:'Celebration ready', icon:'lb-i-gem', boostTags:['wedding','festive'], boostCats:['sherwani'], penalizeTags:[], sentence:'a wedding or big event', vibe:'celebration-ready embellishment' },
+        gym:     { label:'Gym / Lounge Day', desc:'Stripped back', icon:'lb-i-dumbbell', boostTags:['casual'], boostCats:['casual'], penalizeTags:['formal','wedding'], sentence:'a gym or lounge day', vibe:'the most stripped-back pieces in the edit' }
+      };
+      var WEEKDAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+      function dayNudge(date) {
+        var d = date.getDay();
+        if (d === 5) return { tags:['festive','traditional'], label:'Jummah morning' };
+        if (d === 0 || d === 6) return { tags:['casual','western'], label:'Weekend pace' };
+        return { tags:['formal'], label:'Weekday rhythm' };
+      }
+
+      // ---------- State ----------
+      var products = [];
+      var selectedWeather = null;
+      var selectedOccasion = null;
+      var currentHero = null;
+      var currentAlts = [];
+      var RECENT_KEY = 'lb-subah-recent';
+      var SAVED_KEY = 'lb-subah-saved';
+      var WARDROBE_KEY = 'lb-wardrobe-items';
+      var RECENT_DAYS = 7;
+      var RECENT_MAX = 18;
+      var WARDROBE_MATCH_THRESHOLD = 4; // a wardrobe piece needs at least this good a fit to lead over the shop
+      var NUDGE_THRESHOLD = 3; // how good an unready wardrobe match has to be before we nudge toward the tailor
+
+      function placeholderImg(label) {
+        var initial = ((label || '?').trim()[0] || '?').toUpperCase();
+        var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500">' +
+          '<rect width="400" height="500" fill="#F2E4D2"/>' +
+          '<text x="200" y="290" font-family="Georgia, serif" font-size="160" fill="#C98F82" text-anchor="middle">' + initial + '</text></svg>';
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+      }
+      function getWardrobe() {
+        try { return JSON.parse(localStorage.getItem(WARDROBE_KEY) || '[]') || []; } catch (e) { return []; }
+      }
+      function normalizeWardrobeItem(item) {
+        return {
+          id: item.id, brand: 'Your Closet', title: item.name, price: null,
+          category: item.category, tags: Array.isArray(item.tags) ? item.tags : [],
+          image: item.image || placeholderImg(item.name), url: null,
+          source: 'wardrobe', status: item.status || 'stitched',
+          tailorEta: item.tailorEta, tailorName: item.tailorName
+        };
+      }
+      function formatDate(iso) {
+        if (!iso) return '';
+        try { return new Date(iso + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (e) { return iso; }
+      }
+      function renderWardrobeBar() {
+        var count = getWardrobe().length;
+        var el = document.getElementById('me-wardrobe-count');
+        el.textContent = count > 0
+          ? count + ' piece' + (count === 1 ? '' : 's') + ' in your wardrobe — checked first, every morning.'
+          : "No wardrobe yet — add your own clothes and we'll check them before suggesting anything to buy.";
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var v = JSON.parse(localStorage.getItem(key) || 'null');
+          return v || fallback;
+        } catch (e) { return fallback; }
+      }
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+      }
+      function getRecent() {
+        var list = readJSON(RECENT_KEY, []);
+        var cutoff = Date.now() - RECENT_DAYS * 24 * 60 * 60 * 1000;
+        return list.filter(function (e) { return e.ts >= cutoff; });
+      }
+      function pushRecent(ids) {
+        var list = getRecent();
+        var now = Date.now();
+        ids.forEach(function (id) { list.push({ id: id, ts: now }); });
+        if (list.length > RECENT_MAX) list = list.slice(list.length - RECENT_MAX);
+        writeJSON(RECENT_KEY, list);
+      }
+      function getSaved() { return readJSON(SAVED_KEY, []); }
+      function setSaved(list) { writeJSON(SAVED_KEY, list); }
+      function isSaved(id) { return getSaved().some(function (p) { return p.id === id; }); }
+      function toggleSaved(product) {
+        var list = getSaved();
+        var idx = list.findIndex(function (p) { return p.id === product.id; });
+        if (idx > -1) { list.splice(idx, 1); } else { list.push(product); }
+        setSaved(list);
+        renderSaved();
+      }
+
+      // ---------- Greeting banner ----------
+      function renderGreeting() {
+        var now = new Date();
+        var hour = now.getHours();
+        var greeting = hour < 12 ? 'Good morning.' : (hour < 17 ? 'Good afternoon.' : 'Good evening.');
+        document.getElementById('me-greeting').textContent = greeting;
+        var dateStr = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+        document.getElementById('me-datetime').textContent = dateStr + ' · planning today’s Subah Edit';
+        document.getElementById('me-day-badge').textContent = dayNudge(now).label;
+      }
+
+      // ---------- Quiz rendering ----------
+      function iconSvg(id) {
+        return '<svg style="fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;"><use href="#' + id + '"></use></svg>';
+      }
+      function renderChoices(containerId, table, onPick) {
+        var host = document.getElementById(containerId);
+        host.innerHTML = '';
+        Object.keys(table).forEach(function (key) {
+          var def = table[key];
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'lb-me-choice';
+          btn.setAttribute('data-key', key);
+          btn.innerHTML = iconSvg(def.icon) + '<strong>' + def.label + '</strong><small>' + def.desc + '</small>';
+          btn.addEventListener('click', function () {
+            host.querySelectorAll('.lb-me-choice').forEach(function (b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            onPick(key);
+          });
+          host.appendChild(btn);
+        });
+      }
+      function updateRevealButton() {
+        var btn = document.getElementById('me-reveal-btn');
+        btn.disabled = !(selectedWeather && selectedOccasion);
+      }
+
+      // ---------- Scoring ----------
+      function scoreProduct(p, weatherKey, occKey, day, recentIds) {
+        var w = WEATHER[weatherKey], o = OCCASION[occKey];
+        var s = 0;
+        var tags = p.tags || [];
+        (w.boostTags || []).forEach(function (t) { if (tags.indexOf(t) > -1) s += 2; });
+        (w.boostCats || []).forEach(function (c) { if (p.category === c) s += 2; });
+        (w.penalizeCats || []).forEach(function (c) { if (p.category === c) s -= 3; });
+        (o.boostTags || []).forEach(function (t) { if (tags.indexOf(t) > -1) s += 3; });
+        (o.boostCats || []).forEach(function (c) { if (p.category === c) s += 3; });
+        (o.penalizeTags || []).forEach(function (t) { if (tags.indexOf(t) > -1) s -= 3; });
+        (day.tags || []).forEach(function (t) { if (tags.indexOf(t) > -1) s += 1; });
+        if (recentIds.indexOf(p.id) > -1) s -= 50;
+        s += Math.random() * 0.75;
+        return s;
+      }
+
+      function pickEdit(excludeId) {
+        var day = dayNudge(new Date());
+        var recent = getRecent().map(function (e) { return e.id; });
+        var pool = excludeId ? products.filter(function (p) { return p.id !== excludeId; }) : products.slice();
+
+        var ranked = pool.map(function (p) {
+          return { p: p, s: scoreProduct(p, selectedWeather, selectedOccasion, day, recent) };
+        }).sort(function (a, b) { return b.s - a.s; });
+
+        // "closet memory": how many of the naturally top-ranked pieces (ignoring
+        // recency) were skipped because they'd already been shown this week
+        var rankedIgnoringRecency = pool.map(function (p) {
+          return { p: p, s: scoreProduct(p, selectedWeather, selectedOccasion, day, []) };
+        }).sort(function (a, b) { return b.s - a.s; }).slice(0, 12);
+        var skipped = rankedIgnoringRecency.filter(function (r) { return recent.indexOf(r.p.id) > -1; }).length;
+
+        // ---- Wardrobe: checked first. Only a STITCHED (actually wearable) piece
+        // can lead; fabric that's unstitched or still with a tailor can't be worn
+        // today no matter how well it scores.
+        var wardrobeAll = getWardrobe().map(normalizeWardrobeItem)
+          .filter(function (w) { return w.id !== excludeId; });
+        var wardrobeReady = wardrobeAll.filter(function (w) { return w.status === 'stitched'; });
+        var rankedWardrobeReady = wardrobeReady.map(function (w) {
+          return { p: w, s: scoreProduct(w, selectedWeather, selectedOccasion, day, recent) };
+        }).sort(function (a, b) { return b.s - a.s; });
+        // ignoring recency + status, to find the best-matching piece overall —
+        // used only to power the "you own something that would've worked" nudge
+        var rankedWardrobeAny = wardrobeAll.map(function (w) {
+          return { p: w, s: scoreProduct(w, selectedWeather, selectedOccasion, day, []) };
+        }).sort(function (a, b) { return b.s - a.s; });
+
+        var hero, alts;
+        if (rankedWardrobeReady[0] && rankedWardrobeReady[0].s >= WARDROBE_MATCH_THRESHOLD) {
+          hero = rankedWardrobeReady[0].p;
+          alts = ranked.slice(0, 2).map(function (r) { return r.p; });
+        } else {
+          hero = ranked[0] ? ranked[0].p : null;
+          alts = ranked.slice(1, 3).map(function (r) { return r.p; });
+        }
+
+        // "almost had you": the best-scoring wardrobe piece that ISN'T today's
+        // hero and isn't actually wearable yet — worth nudging toward a tailor.
+        var nudge = null;
+        for (var i = 0; i < rankedWardrobeAny.length; i++) {
+          var cand = rankedWardrobeAny[i];
+          if (cand.p.status === 'stitched') continue;
+          if (hero && cand.p.id === hero.id) continue;
+          if (cand.s >= NUDGE_THRESHOLD) { nudge = cand; break; }
+        }
+
+        return { hero: hero, alts: alts, skipped: skipped, day: day, nudge: nudge, wardrobeCount: wardrobeAll.length };
+      }
+
+      // ---------- Rendering the reveal ----------
+      function money(n) { return 'Rs. ' + Number(n || 0).toLocaleString(); }
+
+      function renderWish(product) {
+        var btn = document.getElementById('me-hero-wish');
+        var active = isSaved(product.id);
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        btn.onclick = function () { toggleSaved(product); renderWish(product); };
+      }
+
+      function renderSaved() {
+        var saved = getSaved();
+        var host = document.getElementById('me-saved-list');
+        var empty = document.getElementById('me-saved-empty');
+        host.innerHTML = '';
+        empty.hidden = saved.length > 0;
+        saved.forEach(function (p) {
+          var chip = document.createElement('span');
+          chip.className = 'lb-me-saved-chip';
+          chip.innerHTML = '<img src="' + p.image + '" alt=""><span>' + p.title + '</span>';
+          var rm = document.createElement('button');
+          rm.type = 'button';
+          rm.setAttribute('aria-label', 'Remove ' + p.title);
+          rm.textContent = '×';
+          rm.addEventListener('click', function () {
+            toggleSaved(p);
+            if (currentHero && currentHero.id === p.id) renderWish(currentHero);
+          });
+          chip.appendChild(rm);
+          host.appendChild(chip);
+        });
+      }
+
+      function renderReveal(result) {
+        currentHero = result.hero;
+        currentAlts = result.alts;
+        if (!currentHero) return;
+
+        var w = WEATHER[selectedWeather], o = OCCASION[selectedOccasion];
+        var fromCloset = currentHero.source === 'wardrobe';
+        var whyText;
+        if (fromCloset) {
+          whyText = 'Good news — you already own something that works: it’s a <strong>' + w.sentence +
+            '</strong>, and for <strong>' + o.sentence + '</strong>, this piece from your closet fits perfectly. ' +
+            'We’ve paired it with a couple of shop picks to complete the look.';
+        } else {
+          whyText = 'It’s a <strong>' + w.sentence + '</strong>, and since you’re headed to <strong>' + o.sentence +
+            '</strong>, we leaned into ' + w.fabric + ' with ' + o.vibe + ' — and skipped anything you’ve already been shown this week.';
+          if (result.wardrobeCount === 0) {
+            whyText += ' Add your own <a href="/wardrobe.html" style="color:var(--lb-burgundy); font-weight:700;">wardrobe</a> and we’ll reach for what you already own before suggesting anything new.';
+          }
+        }
+        document.getElementById('me-why-text').innerHTML = whyText;
+
+        var buyBtn = document.getElementById('me-hero-buy');
+        document.getElementById('me-hero-img').src = currentHero.image;
+        document.getElementById('me-hero-img').alt = currentHero.title;
+        document.getElementById('me-hero-brand').textContent = currentHero.brand;
+        document.getElementById('me-hero-title').textContent = currentHero.title;
+        document.getElementById('me-hero-badge').textContent = fromCloset ? 'From Your Closet' : (currentHero.badge || 'Today’s Pick');
+        if (fromCloset) {
+          document.getElementById('me-hero-price').textContent = 'Already yours ✓';
+          buyBtn.href = '/wardrobe.html';
+          buyBtn.target = '_self';
+          buyBtn.removeAttribute('rel');
+          buyBtn.lastChild.textContent = ' Manage in Wardrobe';
+        } else {
+          document.getElementById('me-hero-price').textContent = money(currentHero.price);
+          buyBtn.href = currentHero.url || '#';
+          buyBtn.target = '_blank';
+          buyBtn.setAttribute('rel', 'noopener');
+          buyBtn.lastChild.textContent = ' Shop this piece';
+        }
+        renderWish(currentHero);
+
+        var nudgeEl = document.getElementById('me-nudge');
+        if (result.nudge) {
+          var n = result.nudge.p;
+          var statusPhrase = n.status === 'unstitched'
+            ? 'still just fabric — not stitched yet'
+            : (n.tailorEta ? ('with your tailor, expected back ' + formatDate(n.tailorEta)) : 'currently with your tailor');
+          var ctaText = n.status === 'unstitched' ? 'Send it to a tailor →' : 'Check tailoring status →';
+          var ctaHref = n.status === 'unstitched' ? '/get-stitched.html' : '/my-requests.html';
+          document.getElementById('me-nudge-text').innerHTML =
+            'Your <strong>' + n.title + '</strong> would’ve nailed today’s brief, but it’s ' + statusPhrase + '.';
+          var nudgeCta = document.getElementById('me-nudge-cta');
+          nudgeCta.textContent = ctaText;
+          nudgeCta.href = ctaHref;
+          nudgeEl.hidden = false;
+        } else {
+          nudgeEl.hidden = true;
+        }
+
+        var altHost = document.getElementById('me-alt-rows');
+        altHost.innerHTML = '';
+        if (currentAlts.length === 0) {
+          altHost.innerHTML = '<p style="font-size:13px; color:rgba(25,20,18,0.5); margin:0;">No close alternates in the catalog for this exact combination — shuffle for a different direction.</p>';
+        }
+        currentAlts.forEach(function (p) {
+          var row = document.createElement('div');
+          row.className = 'lb-me-alt-row';
+          row.innerHTML =
+            '<div class="lb-me-alt-thumb"><img src="' + p.image + '" alt=""></div>' +
+            '<div class="lb-me-alt-meta">' +
+              '<div class="lb-me-alt-brand">' + p.brand + '</div>' +
+              '<div class="lb-me-alt-title">' + p.title + '</div>' +
+              '<div class="lb-me-alt-price">' + money(p.price) + '</div>' +
+            '</div>';
+          var link = document.createElement('a');
+          link.href = p.url || '#';
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.className = 'lb-me-alt-link';
+          link.textContent = 'View';
+          row.appendChild(link);
+          altHost.appendChild(row);
+        });
+
+        document.getElementById('me-alt-heading').textContent = fromCloset ? 'Shop to complete the look' : ('Also works for ' + o.label.toLowerCase());
+        document.getElementById('me-shop-more').href = 'men.html?cat=' + encodeURIComponent(currentHero.category || '');
+
+        renderWardrobeBar();
+
+        var closetNote = document.getElementById('me-closet-note');
+        if (result.skipped > 0) {
+          closetNote.hidden = false;
+          document.getElementById('me-closet-text').textContent =
+            'We kept ' + result.skipped + ' piece' + (result.skipped === 1 ? '' : 's') + ' you’ve already seen this week out of today’s edit to keep it fresh.';
+        } else {
+          closetNote.hidden = true;
+        }
+
+        pushRecent([currentHero.id].concat(currentAlts.map(function (p) { return p.id; })));
+
+        var revealEl = document.getElementById('me-reveal');
+        if (!revealEl.classList.contains('is-visible')) {
+          revealEl.classList.add('is-visible');
+          revealEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      function reveal() {
+        if (!selectedWeather || !selectedOccasion || products.length === 0) return;
+        renderReveal(pickEdit(null));
+      }
+      function shuffle() {
+        if (!currentHero) { reveal(); return; }
+        renderReveal(pickEdit(currentHero.id));
+      }
+
+      // ---------- Boot ----------
+      function normalizeProduct(p) {
+        return {
+          id: p.id, brand: p.brand, title: p.title, price: p.price,
+          category: p.category, tags: Array.isArray(p.tags) ? p.tags : [],
+          image: p.image, url: p.url, badge: p.badge
+        };
+      }
+
+      function boot() {
+        renderGreeting();
+        renderChoices('me-weather-choices', WEATHER, function (key) { selectedWeather = key; updateRevealButton(); });
+        renderChoices('me-occasion-choices', OCCASION, function (key) { selectedOccasion = key; updateRevealButton(); });
+        renderSaved();
+        renderWardrobeBar();
+
+        document.getElementById('me-reveal-btn').addEventListener('click', reveal);
+        document.getElementById('me-shuffle-btn').addEventListener('click', shuffle);
+
+        fetch('curated_mens_products.json')
+          .then(function (r) { if (!r.ok) throw new Error('bad response'); return r.json(); })
+          .then(function (data) {
+            products = Array.isArray(data) && data.length ? data.map(normalizeProduct) : FALLBACK_PRODUCTS;
+          })
+          .catch(function () { products = FALLBACK_PRODUCTS; });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+      } else {
+        boot();
+      }
+    })();
+  </script>
+</body>
+</html>
