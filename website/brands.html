@@ -14,7 +14,7 @@
     /* Brands Directory Specific Styles */
     .lb-brands-hero {
       background: #F3E7D6;
-      border-bottom: 1px solid rgba(25, 20, 18, 0.08);
+      border-bottom: 1px solid rgba(25,20,18, 0.08);
       padding: clamp(36px, 5vw, 64px) 0 clamp(40px, 6vw, 72px);
       position: relative;
       overflow: hidden;
@@ -37,7 +37,7 @@
       background: #F7EDDF;
       border: 1px solid rgba(132, 14, 52, 0.12);
       border-radius: 6px;
-      box-shadow: 0 4px 20px rgba(25, 20, 18, 0.04);
+      box-shadow: 0 4px 20px rgba(25,20,18, 0.04);
     }
 
     .lb-brands-search {
@@ -54,7 +54,7 @@
       left: 14px;
       width: 16px;
       height: 16px;
-      color: rgba(25, 20, 18, 0.45);
+      color: rgba(25,20,18, 0.45);
       pointer-events: none;
     }
 
@@ -64,7 +64,7 @@
       font-family: 'Manrope', sans-serif;
       font-size: 13px;
       background: #fff;
-      border: 1px solid rgba(25, 20, 18, 0.15);
+      border: 1px solid rgba(25,20,18, 0.15);
       border-radius: 4px;
       color: #191412;
       outline: none;
@@ -84,8 +84,8 @@
 
     .lb-brand-tab {
       appearance: none;
-      background: rgba(25, 20, 18, 0.04);
-      border: 1px solid rgba(25, 20, 18, 0.08);
+      background: rgba(25,20,18, 0.04);
+      border: 1px solid rgba(25,20,18, 0.08);
       border-radius: 20px;
       padding: 8px 16px;
       font-family: 'Manrope', sans-serif;
@@ -108,22 +108,29 @@
       border-color: #840E34;
     }
 
-    /* Grid of Brands */
+    /* Grid of Brands — Compact, Elegant Directory */
     .lb-brands-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
-      padding: 48px 0 80px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+      padding: 28px 0 60px;
+    }
+
+    @media (max-width: 640px) {
+      .lb-brands-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
     }
 
     .lb-brand-card {
       background: #fff;
-      border: 1px solid rgba(25, 20, 18, 0.08);
+      border: 1px solid rgba(25,20,18, 0.08);
       border-radius: 6px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 16px rgba(25, 20, 18, 0.03);
+      box-shadow: 0 2px 10px rgba(25,20,18, 0.03);
       transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 240ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 200ms ease;
       text-decoration: none;
       color: inherit;
@@ -131,14 +138,14 @@
     }
 
     .lb-brand-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(132, 14, 52, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(132, 14, 52, 0.1);
       border-color: rgba(132, 14, 52, 0.25);
     }
 
     .lb-brand-card__media {
       position: relative;
-      height: 240px;
+      height: 145px;
       overflow: hidden;
       background: #F3E7D6;
     }
@@ -156,19 +163,19 @@
 
     .lb-brand-card__pill {
       position: absolute;
-      top: 14px;
-      left: 14px;
+      top: 8px;
+      left: 8px;
       background: #840E34;
       color: #F7EDDF;
       font-family: 'Manrope', sans-serif;
-      font-size: 9.5px;
+      font-size: 8px;
       font-weight: 800;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 5px 11px;
+      padding: 3px 8px;
       border-radius: 20px;
       z-index: 2;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     .lb-brand-card__pill--local {
@@ -180,7 +187,7 @@
     }
 
     .lb-brand-card__body {
-      padding: 22px 24px;
+      padding: 12px 14px 14px;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -190,15 +197,17 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 6px;
+      gap: 6px;
+      margin-bottom: 3px;
     }
 
     .lb-brand-card__name {
       font-family: 'Playfair Display', serif;
-      font-size: 21px;
+      font-size: 16px;
       font-weight: 700;
       color: #191412;
       margin: 0;
+      line-height: 1.25;
       transition: color 200ms ease;
     }
 
@@ -208,71 +217,79 @@
 
     .lb-brand-card__count {
       font-family: 'Manrope', sans-serif;
-      font-size: 11.5px;
+      font-size: 10.5px;
       font-weight: 600;
       color: #840E34;
+      white-space: nowrap;
     }
 
     .lb-brand-card__cat {
       font-family: 'Manrope', sans-serif;
-      font-size: 11px;
+      font-size: 9.5px;
       font-weight: 800;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(25, 20, 18, 0.48);
-      margin-bottom: 10px;
+      color: rgba(25,20,18, 0.5);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .lb-brand-card__desc {
       font-family: 'Manrope', sans-serif;
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: rgba(25, 20, 18, 0.75);
-      margin: 0 0 18px;
+      font-size: 11.5px;
+      line-height: 1.42;
+      color: rgba(25,20,18, 0.7);
+      margin: 0 0 10px;
       flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .lb-brand-card__foot {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 16px;
-      border-top: 1px solid rgba(25, 20, 18, 0.07);
+      padding-top: 9px;
+      border-top: 1px solid rgba(25,20,18, 0.07);
       margin-top: auto;
     }
 
     .lb-brand-card__action {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       font-family: 'Manrope', sans-serif;
-      font-size: 12px;
+      font-size: 10.5px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #840E34;
       text-decoration: none;
     }
 
     .lb-brand-card__action svg {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       transition: transform 200ms ease;
     }
 
     .lb-brand-card:hover .lb-brand-card__action svg {
-      transform: translateX(4px);
+      transform: translateX(3px);
     }
 
     .lb-brand-card__site-link {
       font-family: 'Manrope', sans-serif;
-      font-size: 11.5px;
+      font-size: 10.5px;
       font-weight: 600;
-      color: rgba(25, 20, 18, 0.55);
+      color: rgba(25,20,18, 0.55);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
 
     .lb-brand-card__site-link:hover {
@@ -319,7 +336,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -629,7 +646,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -1236,7 +1253,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>

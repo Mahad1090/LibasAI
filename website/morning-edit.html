@@ -34,7 +34,7 @@
     .lb-me-city-select:focus { border-color:var(--lb-burgundy); }
     .lb-me-geoloc-btn { display:inline-flex; align-items:center; gap:6px; background:none; border:1px solid var(--lb-hairline); border-radius:4px; padding:5px 11px; font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; color:var(--lb-charcoal); cursor:pointer; transition:background 160ms ease, border-color 160ms ease, color 160ms ease; white-space:nowrap; }
     .lb-me-geoloc-btn svg { width:13px; height:13px; color:var(--lb-burgundy); flex-shrink:0; }
-    .lb-me-geoloc-btn:hover { background:rgba(132,14,52,0.06); border-color:var(--lb-burgundy); color:var(--lb-burgundy); }
+    .lb-me-geoloc-btn:hover { background:rgba(132, 14, 52,0.06); border-color:var(--lb-burgundy); color:var(--lb-burgundy); }
     .lb-me-geoloc-btn.is-loading svg { animation:spin 1s linear infinite; }
     @keyframes spin { 100% { transform:rotate(360deg); } }
     .lb-me-weather-bar__right { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:12px; margin-left:auto; }
@@ -45,11 +45,11 @@
     .lb-me-choices { display:flex; gap:12px; flex-wrap:wrap; }
     .lb-me-choice { position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; width:136px; padding:18px 12px; background:var(--lb-white); border:1.5px solid var(--lb-hairline); border-radius:6px; cursor:pointer; text-align:center; font-family:'Manrope',sans-serif; transition:border-color 180ms ease, transform 180ms var(--lb-ease), background 180ms ease; }
     .lb-me-choice:hover { border-color:var(--lb-rose); transform:translateY(-2px); }
-    .lb-me-choice.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.06); }
+    .lb-me-choice.is-active { border-color:var(--lb-burgundy); background:rgba(132, 14, 52,0.06); }
     .lb-me-choice svg { width:22px; height:22px; color:var(--lb-burgundy); }
     .lb-me-choice strong { font-size:12.5px; font-weight:700; color:var(--lb-charcoal); }
     .lb-me-choice small { font-size:10.5px; color:rgba(25,20,18,0.5); line-height:1.3; }
-    .lb-me-auto-badge { position:absolute; top:-9px; background:#1b633d; color:#FFFDF9; font-size:9px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; padding:2px 8px; border-radius:999px; box-shadow:0 2px 6px rgba(27,99,61,0.25); pointer-events:none; white-space:nowrap; animation:fadeInBadge 200ms ease; }
+    .lb-me-auto-badge { position:absolute; top:-9px; background:#1b633d; color:#FFFFFF; font-size:9px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; padding:2px 8px; border-radius:999px; box-shadow:0 2px 6px rgba(27,99,61,0.25); pointer-events:none; white-space:nowrap; animation:fadeInBadge 200ms ease; }
     @keyframes fadeInBadge { from { opacity:0; transform:translateY(-3px); } to { opacity:1; transform:translateY(0); } }
 
     .lb-me-reveal-cta[disabled] { opacity:0.38; cursor:not-allowed; pointer-events:none; }
@@ -149,7 +149,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -459,7 +459,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -694,7 +694,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -799,7 +799,7 @@
       function placeholderImg(label) {
         var initial = ((label || '?').trim()[0] || '?').toUpperCase();
         var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500">' +
-          '<rect width="400" height="500" fill="#F2E4D2"/>' +
+          '<rect width="400" height="500" fill="#F3E7D6"/>' +
           '<text x="200" y="290" font-family="Georgia, serif" font-size="160" fill="#C98F82" text-anchor="middle">' + initial + '</text></svg>';
         return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
       }

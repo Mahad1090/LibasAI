@@ -32,10 +32,10 @@
     .lb-wd-photo-drop img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
     .lb-wd-tags { display:flex; flex-wrap:wrap; gap:8px; }
     .lb-wd-tag-chip { font-size:11.5px; font-weight:650; padding:6px 12px; border:1px solid var(--lb-hairline); border-radius:999px; cursor:pointer; color:var(--lb-charcoal); background:var(--lb-white); }
-    .lb-wd-tag-chip.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.08); color:var(--lb-burgundy); }
+    .lb-wd-tag-chip.is-active { border-color:var(--lb-burgundy); background:rgba(132, 14, 52,0.08); color:var(--lb-burgundy); }
     .lb-wd-status-options { display:flex; flex-direction:column; gap:8px; }
     .lb-wd-status-option { display:flex; align-items:flex-start; gap:10px; padding:11px 12px; border:1.5px solid var(--lb-hairline); border-radius:6px; cursor:pointer; font-size:12.5px; color:var(--lb-charcoal); line-height:1.4; }
-    .lb-wd-status-option.is-active { border-color:var(--lb-burgundy); background:rgba(132,14,52,0.05); }
+    .lb-wd-status-option.is-active { border-color:var(--lb-burgundy); background:rgba(132, 14, 52,0.05); }
     .lb-wd-status-option small { display:block; color:rgba(25,20,18,0.5); font-size:11px; margin-top:2px; }
     .lb-wd-tailor-extra { display:none; gap:10px; margin-top:10px; flex-wrap:wrap; }
     .lb-wd-tailor-extra.is-visible { display:flex; }
@@ -85,7 +85,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -395,7 +395,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -565,7 +565,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-logo.png" alt="LibasAI Logo">
+          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -644,7 +644,7 @@
       function placeholderImg(label) {
         var initial = ((label || '?').trim()[0] || '?').toUpperCase();
         var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500">' +
-          '<rect width="400" height="500" fill="#F2E4D2"/>' +
+          '<rect width="400" height="500" fill="#F3E7D6"/>' +
           '<text x="200" y="290" font-family="Georgia, serif" font-size="160" fill="#C98F82" text-anchor="middle">' + initial + '</text></svg>';
         return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
       }
