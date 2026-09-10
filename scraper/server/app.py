@@ -11,6 +11,7 @@ below is plain JSON and works fine from curl/Postman too.
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -25,7 +26,47 @@ from server import db
 from server.detect import detect_platform
 
 SCRAPER_DIR = Path(__file__).resolve().parent.parent
+if str(SCRAPER_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRAPER_DIR))
 PRODUCTS_PATH = SCRAPER_DIR / "data" / "products.jsonl"
+WEBSITE_DIR = SCRAPER_DIR.parent / "website"
+
+_CATALOG_CACHE: list[dict[str, Any]] = []
+
+
+def get_or_load_catalog(force_rebuild: bool = False) -> list[dict[str, Any]]:
+    global _CATALOG_CACHE
+    catalog_file = WEBSITE_DIR / "live_catalog.json"
+
+    if force_rebuild or not _CATALOG_CACHE:
+        if catalog_file.exists() and not force_rebuild:
+            try:
+                with catalog_file.open("r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if isinstance(data, list) and len(data) > 0:
+                        _CATALOG_CACHE = data
+            except Exception:
+                pass
+
+        if not _CATALOG_CACHE or force_rebuild:
+            try:
+                from export_live_catalog import build_catalog_items
+                _CATALOG_CACHE = build_catalog_items(per_brand=28)
+                catalog_file.parent.mkdir(parents=True, exist_ok=True)
+                with catalog_file.open("w", encoding="utf-8") as f:
+                    json.dump(_CATALOG_CACHE, f, indent=2, ensure_ascii=False)
+            except Exception as e:
+                print(f"Error building live catalog: {e}")
+
+    # Filter by currently enabled brands in SQLite DB
+    try:
+        active_brands = {b["name"].lower().strip() for b in db.list_brands(enabled_only=True)}
+        if active_brands:
+            return [x for x in _CATALOG_CACHE if x.get("brand", "").lower().strip() in active_brands]
+    except Exception:
+        pass
+
+    return _CATALOG_CACHE
 
 app = FastAPI(title="LibasAI Scraper Admin API")
 app.add_middleware(
@@ -89,7 +130,13 @@ def patch_brand(brand_id: str, body: BrandUpdate) -> dict[str, Any]:
     fields = {k: v for k, v in body.model_dump().items() if v is not None}
     if "type" in fields and fields["type"] not in (*ADAPTERS.keys(), "unknown"):
         raise HTTPException(400, "invalid type")
-    return db.update_brand(brand_id, **fields)
+    res = db.update_brand(brand_id, **fields)
+    if "enabled" in fields:
+        try:
+            get_or_load_catalog(force_rebuild=True)
+        except Exception as e:
+            print(f"Error rebuilding catalog on brand toggle: {e}")
+    return res
 
 
 @app.delete("/brands/{brand_id}")
@@ -97,6 +144,10 @@ def remove_brand(brand_id: str) -> dict[str, str]:
     if db.get_brand(brand_id) is None:
         raise HTTPException(404, "brand not found")
     db.delete_brand(brand_id)
+    try:
+        get_or_load_catalog(force_rebuild=True)
+    except Exception as e:
+        print(f"Error rebuilding catalog on brand removal: {e}")
     return {"status": "deleted"}
 
 
@@ -199,8 +250,8 @@ def get_job(job_id: int) -> dict[str, Any]:
 
 @app.post("/publish")
 def publish() -> dict[str, Any]:
-    """Run to_dart.py then scrape_logos.py against lib/data.dart, the same
-    two steps documented in scraper/README.md, now a single button."""
+    """Run to_dart.py then scrape_logos.py against lib/data.dart, and export
+    a live catalog snapshot for the marketing website."""
     results = {}
     for script in ("to_dart.py", "scrape_logos.py"):
         proc = subprocess.run(
@@ -217,6 +268,14 @@ def publish() -> dict[str, Any]:
         }
         if proc.returncode != 0:
             raise HTTPException(500, detail=results)
+
+    # Also export live catalog snapshot for website and update in-memory cache
+    try:
+        catalog_items = get_or_load_catalog(force_rebuild=True)
+        results["website_catalog_export"] = f"Exported {len(catalog_items)} items to live_catalog.json"
+    except Exception as e:
+        results["website_catalog_export"] = f"Warning: {e}"
+
     return results
 
 
@@ -286,60 +345,34 @@ def get_catalog(
     q: Optional[str] = None,
     brand: Optional[str] = None,
     gender: Optional[str] = None,
-    limit: int = 60,
+    category: Optional[str] = None,
+    limit: int = 600,
 ) -> list[dict[str, Any]]:
-    results: list[dict[str, Any]] = []
-    if not PRODUCTS_PATH.exists():
-        return results
+    items = get_or_load_catalog()
+    results = []
 
-    with PRODUCTS_PATH.open(encoding="utf-8") as fh:
-        for line in fh:
-            if not line.strip():
+    ql = q.lower().strip() if q else ""
+    bl = brand.lower().strip() if (brand and brand.lower() != "all") else ""
+    gl = gender.lower().strip() if (gender and gender.lower() != "all") else ""
+    cl = category.lower().strip() if (category and category.lower() != "all") else ""
+
+    for item in items:
+        if bl and bl not in item.get("brand", "").lower():
+            continue
+        if gl and item.get("gender", "").lower() != gl:
+            continue
+        if cl:
+            i_cat = item.get("category", "").lower()
+            i_tags = item.get("tags", [])
+            if cl != i_cat and cl not in i_tags:
                 continue
-            try:
-                rec = json.loads(line)
-            except Exception:
+        if ql:
+            haystack = f"{item.get('title','')} {item.get('brand','')} {' '.join(item.get('tags',[]))}".lower()
+            if ql not in haystack:
                 continue
-
-            title = rec.get("title", "")
-            b_name = rec.get("brand_name", "")
-            tags = " ".join(rec.get("tags", []))
-
-            # Query filter
-            if q:
-                ql = q.lower()
-                if ql not in title.lower() and ql not in b_name.lower() and ql not in tags.lower():
-                    continue
-
-            # Brand filter
-            if brand and brand.lower() != "all" and brand.lower() not in b_name.lower():
-                continue
-
-            # Gender heuristic
-            is_men = any(k in title.lower() or k in tags.lower() for k in ["men", "kurta", "waistcoat", "sherwani", "denim", "polo", "trouser", "shirt"])
-            item_gender = "Men" if is_men else "Women"
-            if gender and gender.lower() != "all" and item_gender.lower() != gender.lower():
-                continue
-
-            images = rec.get("images", [])
-            img_url = images[0] if images else ""
-
-            results.append({
-                "id": rec.get("product_uid", ""),
-                "title": title,
-                "brand": b_name,
-                "price": int(rec.get("price_min", 0)),
-                "original_price": int(rec.get("price_max", 0)),
-                "category": tags.split(",")[0] if tags else "General",
-                "gender": item_gender,
-                "occasion": "Casual",
-                "image_url": img_url,
-                "product_url": rec.get("url", ""),
-                "in_stock": rec.get("in_stock", True),
-            })
-
-            if len(results) >= limit:
-                break
+        results.append(item)
+        if len(results) >= limit:
+            break
 
     return results
 

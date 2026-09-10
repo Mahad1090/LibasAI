@@ -3125,6 +3125,69 @@
 
       updateMeta(activeCat);
       renderProducts();
+
+      // Real-Time Live Catalog Hydration for Menswear
+      function loadLiveCatalog() {
+        var apiBase = 'http://127.0.0.1:8000';
+        var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        var fetchPromise;
+
+        if (isLocal && window.location.protocol !== 'https:') {
+          var controller = window.AbortController ? new AbortController() : null;
+          var timeoutId = controller ? setTimeout(function() { controller.abort(); }, 2000) : null;
+
+          fetchPromise = fetch(apiBase + '/catalog?gender=men&limit=600', { signal: controller ? controller.signal : undefined })
+            .then(function(res) {
+              if (timeoutId) clearTimeout(timeoutId);
+              if (!res.ok) throw new Error('API returned status ' + res.status);
+              return res.json();
+            })
+            .catch(function(err) {
+              if (timeoutId) clearTimeout(timeoutId);
+              return fetch('live_catalog.json').then(function(r) { return r.json(); });
+            });
+        } else {
+          fetchPromise = fetch('live_catalog.json').then(function(r) { return r.json(); });
+        }
+
+        fetchPromise
+          .then(function(items) {
+            if (!Array.isArray(items) || items.length === 0) return;
+            var mensItems = items.filter(function(x) { return (x.gender || '').toLowerCase() === 'men'; });
+            if (mensItems.length === 0) return;
+
+            MENS_PRODUCTS = mensItems.map(function(item) {
+              return {
+                id: item.id || Math.random().toString(),
+                brand: item.brand || "Pakistani Label",
+                title: item.title,
+                price: Number(item.price || 0),
+                gender: "men",
+                category: (item.category || "kurta").toLowerCase(),
+                tags: item.tags || ["men"],
+                image: item.image || item.image_url,
+                url: item.url || item.product_url || "#",
+                badge: item.badge || "Men's Eastern"
+              };
+            });
+
+            var eyebrow = document.getElementById('lb-cat-eyebrow');
+            if (eyebrow && !document.getElementById('lb-live-catalog-badge')) {
+              var badge = document.createElement('span');
+              badge.id = 'lb-live-catalog-badge';
+              badge.style.cssText = 'display:inline-flex; align-items:center; gap:6px; background:rgba(132,14,52,0.1); border:1px solid rgba(132,14,52,0.25); border-radius:20px; padding:3px 10px; margin-left:12px; font-size:11px; font-weight:700; color:#840E34;';
+              badge.innerHTML = '<span style="width:6px; height:6px; border-radius:50%; background:#840E34; display:inline-block;"></span> Live Menswear Database (' + new Set(MENS_PRODUCTS.map(function(p){ return p.brand; })).size + ' Brands · ' + MENS_PRODUCTS.length + ' Pieces)';
+              eyebrow.appendChild(badge);
+            }
+
+            renderProducts();
+          })
+          .catch(function(err) {
+            console.log('Using static menswear catalog:', err);
+          });
+      }
+
+      loadLiveCatalog();
     })();
   </script>
 </body>

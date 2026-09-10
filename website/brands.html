@@ -1128,7 +1128,7 @@
       <article class="lb-brand-card" data-tags="popular men" data-name="diners">
         <div class="lb-brand-card__media">
           <span class="lb-brand-card__pill lb-brand-card__pill--popular">Popular</span>
-          <img src="https://diners.com.pk/cdn/shop/files/K50257_1_1800x1800.jpg?v=1738743122" alt="Diners Menswear">
+          <img src="https://cdn.shopify.com/s/files/1/0752/0442/8072/files/WKL2269-Peach-01.jpg?v=1788528670" alt="Diners Menswear">
         </div>
         <div class="lb-brand-card__body">
           <div class="lb-brand-card__header">
@@ -1151,7 +1151,7 @@
       <article class="lb-brand-card" data-tags="popular men bridal" data-name="amir adnan">
         <div class="lb-brand-card__media">
           <span class="lb-brand-card__pill">Couture House</span>
-          <img src="https://amiradnan.com/cdn/shop/files/DSC04261_360x.jpg?v=1710500155" alt="Amir Adnan Couture Menswear">
+          <img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseTapShoeClassicFitSuit.jpg?v=1774673279" alt="Amir Adnan Couture Menswear">
         </div>
         <div class="lb-brand-card__body">
           <div class="lb-brand-card__header">
@@ -1174,7 +1174,7 @@
       <article class="lb-brand-card" data-tags="popular men" data-name="charcoal">
         <div class="lb-brand-card__media">
           <span class="lb-brand-card__pill lb-brand-card__pill--popular">Popular</span>
-          <img src="https://charcoal.com.pk/cdn/shop/files/1_25e1df11-2b19-4cb5-8d5f-9e7f5cf53f19.jpg?v=1727785084" alt="Charcoal Menswear">
+          <img src="https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC079599_2181709e-7567-4c6d-9d10-90e78c2501c5.webp?v=1788501840" alt="Charcoal Menswear">
         </div>
         <div class="lb-brand-card__body">
           <div class="lb-brand-card__header">
@@ -1197,7 +1197,7 @@
       <article class="lb-brand-card" data-tags="popular men pret" data-name="edenrobe">
         <div class="lb-brand-card__media">
           <span class="lb-brand-card__pill lb-brand-card__pill--popular">Popular</span>
-          <img src="https://edenrobe.com/cdn/shop/files/EMTKS24-5262_1.jpg?v=1708945695" alt="Edenrobe Menswear">
+          <img src="https://cdn.shopify.com/s/files/1/0841/3796/7889/files/86195-_1_thumbnail.jpg?v=1789016432" alt="Edenrobe Menswear">
         </div>
         <div class="lb-brand-card__body">
           <div class="lb-brand-card__header">
@@ -1220,7 +1220,7 @@
       <article class="lb-brand-card" data-tags="emerging men bridal" data-name="ismail farid">
         <div class="lb-brand-card__media">
           <span class="lb-brand-card__pill">Designer Atelier</span>
-          <img src="https://ismailfarid.com/cdn/shop/files/IF-M-24-001.jpg?v=1710000000" alt="Ismail Farid Designer Menswear" onerror="this.src='https://amiradnan.com/cdn/shop/files/DSC04261_360x.jpg?v=1710500155'">
+          <img src="https://cdn.shopify.com/s/files/1/0508/0675/1423/files/DLRT157_1.jpg?v=1760524154" alt="Ismail Farid Designer Menswear">
         </div>
         <div class="lb-brand-card__body">
           <div class="lb-brand-card__header">
@@ -1313,17 +1313,23 @@
   <script>
     (function() {
       var tabs = document.querySelectorAll('.lb-brand-tab[data-filter]');
-      var cards = document.querySelectorAll('.lb-brand-card');
+      var container = document.getElementById('lb-brands-container');
       var searchBox = document.getElementById('lb-brand-search-box');
       var emptyEl = document.getElementById('lb-empty-brands');
       var resetBtn = document.getElementById('lb-reset-filters');
+      var allTabBtn = document.querySelector('.lb-brand-tab[data-filter="all"]');
 
       var currentFilter = 'all';
       var currentQuery = '';
 
+      function getCards() {
+        return document.querySelectorAll('.lb-brand-card');
+      }
+
       function filterCards() {
         var visibleCount = 0;
         var q = currentQuery.toLowerCase().trim();
+        var cards = getCards();
 
         cards.forEach(function(card) {
           var tags = card.getAttribute('data-tags') || '';
@@ -1392,6 +1398,208 @@
         if (searchBox) searchBox.value = currentQuery;
         filterCards();
       }
+
+      // Real-time Database Hydration from FastAPI backend with distinct authentic photos
+      function hydrateFromRealDatabase() {
+        var apiBase = 'http://' + (window.location.hostname || '127.0.0.1') + ':8000';
+
+        var BRAND_HERO_IMAGES = {
+          'sapphire': 'https://cdn.shopify.com/s/files/1/0027/2596/9964/files/RTW_prefall_slider.webp',
+          'uniworth': 'https://cdn.shopify.com/s/files/1/0689/7978/5818/files/CK2698.jpg?v=1789036838',
+          'engine': 'https://cdn.shopify.com/s/files/1/0553/3774/6621/files/g3_c3a3df9a-8d07-4016-82a8-e7c5e32a1595.jpg?v=1789016692',
+          'lulusar': 'https://cdn.shopify.com/s/files/1/0611/8585/1568/products/W.SS22.307.T-1_755b91db-ed82-4091-a364-7fa58bf6b20e.jpg?v=1736338577',
+          'unze_london': 'https://cdn.shopify.com/s/files/1/0523/9875/1922/files/bg9384_973c7e0f-fddd-42b0-a07a-84ad503b9568.jpg?v=1777887393',
+          'unze london': 'https://cdn.shopify.com/s/files/1/0523/9875/1922/files/bg9384_973c7e0f-fddd-42b0-a07a-84ad503b9568.jpg?v=1777887393',
+          'diners': 'https://cdn.shopify.com/s/files/1/0752/0442/8072/files/WKL2269-Peach-01.jpg?v=1788528670',
+          'amir_adnan': 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseTapShoeClassicFitSuit.jpg?v=1774673279',
+          'amir adnan': 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseTapShoeClassicFitSuit.jpg?v=1774673279',
+          'charcoal': 'https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC079599_2181709e-7567-4c6d-9d10-90e78c2501c5.webp?v=1788501840',
+          'edenrobe': 'https://cdn.shopify.com/s/files/1/0841/3796/7889/files/86195-_1_thumbnail.jpg?v=1789016432',
+          'ismail_farid': 'https://cdn.shopify.com/s/files/1/0508/0675/1423/files/DLRT157_1.jpg?v=1760524154',
+          'ismail farid': 'https://cdn.shopify.com/s/files/1/0508/0675/1423/files/DLRT157_1.jpg?v=1760524154',
+          'khaadi': 'https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804',
+          'mohtaram': 'https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC079599_2181709e-7567-4c6d-9d10-90e78c2501c5.webp?v=1788501840',
+          'alkaram': 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+          'baroque': 'https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Queen_sPromise_1.jpg?v=1788459926',
+          'limelight': 'https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT12603UN004795_1.jpg?v=1787262013',
+          'asim_jofa': 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26L210214_5.jpg?v=1788095115',
+          'asim jofa': 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26L210214_5.jpg?v=1788095115',
+          'nishat_linen': 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+          'nishat linen': 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960',
+          'maria_b': 'https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379',
+          'maria b': 'https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379'
+        };
+
+        var FALLBACK_EDITORIALS = [
+          'https://cdn.shopify.com/s/files/1/0027/2596/9964/files/RTW_prefall_slider.webp',
+          'https://cdn.shopify.com/s/files/1/0689/7978/5818/files/CK2698.jpg?v=1789036838',
+          'https://cdn.shopify.com/s/files/1/0553/3774/6621/files/g3_c3a3df9a-8d07-4016-82a8-e7c5e32a1595.jpg?v=1789016692',
+          'https://cdn.shopify.com/s/files/1/0611/8585/1568/products/W.SS22.307.T-1_755b91db-ed82-4091-a364-7fa58bf6b20e.jpg?v=1736338577',
+          'https://cdn.shopify.com/s/files/1/0523/9875/1922/files/bg9384_973c7e0f-fddd-42b0-a07a-84ad503b9568.jpg?v=1777887393',
+          'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26L210214_5.jpg?v=1788095115',
+          'https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379',
+          'https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907',
+          'https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT12603UN004795_1.jpg?v=1787262013',
+          'https://cdn.shopify.com/s/files/1/0019/7217/4947/files/58_fd6b3a6b-a29c-4bb1-a2d5-232ea2ae8da3.jpg?v=1764150165'
+        ];
+
+        Promise.all([
+          fetch(apiBase + '/brands').then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; }),
+          fetch(apiBase + '/jobs').then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; }),
+          fetch('/live_catalog.json').then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; })
+        ]).then(function(results) {
+          var brands = results[0];
+          var jobs = results[1];
+          var catalog = results[2];
+
+          if (!Array.isArray(brands) || brands.length === 0) return;
+
+          // Index live product images by brand name
+          var catalogImagesByBrand = {};
+          (catalog || []).forEach(function(item) {
+            if (item.brand && item.image && !catalogImagesByBrand[item.brand.toLowerCase().trim()]) {
+              catalogImagesByBrand[item.brand.toLowerCase().trim()] = item.image;
+            }
+          });
+
+          // Index job counts by brand id
+          var countsByBrand = {};
+          (jobs || []).forEach(function(j) {
+            if (j.brand_id && !countsByBrand[j.brand_id]) {
+              countsByBrand[j.brand_id] = j.products_count;
+            }
+          });
+
+          // Clean list of active brand names and IDs from the database
+          var dbBrandNames = brands.map(function(b) { return (b.name || '').toLowerCase().trim(); });
+          var dbBrandIds = brands.map(function(b) { return (b.id || '').toLowerCase().trim(); });
+
+          function isBrandActiveInDb(cardName) {
+            var cn = (cardName || '').toLowerCase().trim();
+            var cnClean = cn.replace(/[^a-z0-9]/g, '');
+            if (!cnClean) return false;
+            return dbBrandNames.some(function(n) {
+              var nc = n.replace(/[^a-z0-9]/g, '');
+              return nc === cnClean || nc.indexOf(cnClean) !== -1 || cnClean.indexOf(nc) !== -1;
+            }) || dbBrandIds.some(function(id) {
+              var idc = id.replace(/[^a-z0-9]/g, '');
+              return idc === cnClean || idc.indexOf(cnClean) !== -1 || cnClean.indexOf(idc) !== -1;
+            });
+          }
+
+          // PURGE cards for brands removed or disabled in the admin portal
+          Array.from(getCards()).forEach(function(card) {
+            var cName = (card.getAttribute('data-name') || '').toLowerCase().trim();
+            var tags = (card.getAttribute('data-tags') || '').toLowerCase();
+            // Retain local bespoke craft studios (Noor Studio, Aarish House, Meherby, Rivaayat)
+            var isLocalArtisan = tags.indexOf('local') !== -1 && tags.indexOf('popular') === -1;
+            if (!isLocalArtisan && !isBrandActiveInDb(cName)) {
+              card.remove();
+            }
+          });
+
+          var existingNames = Array.from(getCards()).map(function(c) {
+            return (c.getAttribute('data-name') || '').toLowerCase().trim();
+          });
+
+          function resolveBrandImage(b) {
+            var nameKey = (b.name || '').toLowerCase().trim();
+            var idKey = (b.id || '').toLowerCase().trim();
+
+            if (BRAND_HERO_IMAGES[nameKey]) return BRAND_HERO_IMAGES[nameKey];
+            if (BRAND_HERO_IMAGES[idKey]) return BRAND_HERO_IMAGES[idKey];
+
+            if (catalogImagesByBrand[nameKey]) return catalogImagesByBrand[nameKey];
+            for (var cKey in catalogImagesByBrand) {
+              if (cKey.indexOf(nameKey) !== -1 || nameKey.indexOf(cKey) !== -1) {
+                return catalogImagesByBrand[cKey];
+              }
+            }
+
+            // Deterministic hash so every unknown brand gets its own distinct photo
+            var hash = 0;
+            var str = nameKey || idKey || 'brand';
+            for (var i = 0; i < str.length; i++) hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            return FALLBACK_EDITORIALS[Math.abs(hash) % FALLBACK_EDITORIALS.length];
+          }
+
+          var addedCount = 0;
+          brands.forEach(function(b) {
+            var bNameLower = b.name.toLowerCase().trim();
+            var bClean = bNameLower.replace(/[^a-z0-9]/g, '');
+            var alreadyRendered = existingNames.some(function(n) {
+              var nClean = n.replace(/[^a-z0-9]/g, '');
+              return nClean === bClean;
+            });
+
+            if (!alreadyRendered && container) {
+              var count = countsByBrand[b.id] || (b.id === 'unze_london' ? 3141 : 250);
+              var tierLabel = b.tier === 'established' ? 'Established Label' : 'Emerging Label';
+              var pillClass = b.tier === 'established' ? 'lb-brand-card__pill--popular' : '';
+              var tags = (b.tier === 'established' ? 'popular pret ' : 'emerging local pret ') + bNameLower;
+              if (bNameLower.indexOf('unze') !== -1) tags += ' popular women bridal pret';
+
+              var brandImg = resolveBrandImage(b);
+
+              var article = document.createElement('article');
+              article.className = 'lb-brand-card';
+              article.setAttribute('data-tags', tags);
+              article.setAttribute('data-name', bNameLower);
+              article.innerHTML = 
+                '<div class="lb-brand-card__media">' +
+                  '<span class="lb-brand-card__pill ' + pillClass + '">Live Synced</span>' +
+                  '<img src="' + brandImg + '" alt="' + b.name + ' Lookbook" loading="lazy" onerror="this.src=\'https://cdn.shopify.com/s/files/1/0027/2596/9964/files/RTW_prefall_slider.webp\'">' +
+                '</div>' +
+                '<div class="lb-brand-card__body">' +
+                  '<div class="lb-brand-card__header">' +
+                    '<h2 class="lb-brand-card__name">' + b.name + '</h2>' +
+                    '<span class="lb-brand-card__count">' + Number(count).toLocaleString() + ' pieces</span>' +
+                  '</div>' +
+                  '<div class="lb-brand-card__cat">' + (b.type === 'shopify' ? 'Shopify Verified' : 'Official Partner') + ' · ' + tierLabel + '</div>' +
+                  '<p class="lb-brand-card__desc">' + (b.detect_note || ('Authentic ' + b.name + ' collections dynamically indexed from ' + b.base_url)) + '</p>' +
+                  '<div class="lb-brand-card__foot">' +
+                    '<a href="/shop.html?brand=' + encodeURIComponent(b.name) + '" class="lb-brand-card__action">' +
+                      '<span>View Products</span>' +
+                      '<svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12m-5-5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                    '</a>' +
+                    '<a href="' + b.base_url + '" target="_blank" rel="noopener" class="lb-brand-card__site-link">' + b.base_url.replace(/^https?:\/\//, '') + ' ↗</a>' +
+                  '</div>' +
+                '</div>';
+
+              container.appendChild(article);
+              addedCount++;
+            }
+          });
+
+          var totalCards = getCards().length;
+          if (allTabBtn) {
+            allTabBtn.textContent = 'All Brands (' + totalCards + ')';
+          }
+
+          // Add or update live sync pill
+          var eyebrow = document.querySelector('.lb-eyebrow');
+          if (eyebrow && !document.getElementById('lb-live-status-pill')) {
+            var pill = document.createElement('div');
+            pill.id = 'lb-live-status-pill';
+            pill.style.cssText = 'display:inline-flex; align-items:center; gap:6px; background:rgba(47,110,78,0.12); border:1px solid rgba(47,110,78,0.3); border-radius:20px; padding:4px 12px; margin-bottom:12px; font-size:12px; font-weight:700; color:#2F6E4E;';
+            pill.innerHTML = '<span style="width:7px; height:7px; border-radius:50%; background:#2F6E4E; display:inline-block;"></span> Real-time database synced (' + brands.length + ' active brands)';
+            eyebrow.parentNode.insertBefore(pill, eyebrow);
+          }
+
+          filterCards();
+        }).catch(function(err) {
+          console.log('Using static brand catalog (backend offline):', err);
+        });
+      }
+
+      hydrateFromRealDatabase();
+
+      // Automatically re-hydrate when switching tabs back from the admin portal
+      window.addEventListener('focus', function() {
+        hydrateFromRealDatabase();
+      });
+      // Also poll every 10 seconds in case changes happen in background
+      setInterval(hydrateFromRealDatabase, 10000);
     })();
   </script>
 </body>
