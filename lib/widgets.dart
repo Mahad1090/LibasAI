@@ -66,6 +66,8 @@ IconData glyph(String name) {
     case 'scissors':
     case 'cut':
       return Icons.content_cut_outlined;
+    case 'hanger':
+      return Icons.checkroom_outlined;
     default:
       return Icons.circle_outlined;
   }

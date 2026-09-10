@@ -55,7 +55,34 @@ class WishlistScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, kTopInset, 20, 24),
                 children: [
-                  Text('Wishlist', style: heading(22)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Wishlist', style: heading(22)),
+                      GestureDetector(
+                        onTap: () => go(context, '/wardrobe'),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: AppColors.sand,
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(color: AppColors.accent.withValues(alpha: 0.2)),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(glyph('hanger'), size: 13, color: AppColors.accent),
+                              const SizedBox(width: 5),
+                              Text(
+                                'My Wardrobe (${state.wardrobeItems.length})',
+                                style: body(11, weight: FontWeight.w700, color: AppColors.accent),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 18),
                   if (items.isEmpty)
                     _EmptyState(

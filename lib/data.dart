@@ -325,6 +325,45 @@ class StitchingRequest {
   });
 }
 
+class WardrobeItem {
+  final String id;
+  final String name;
+  final String category;
+  final List<String> tags;
+  String status; // 'stitched' | 'unstitched' | 'with_tailor'
+  final String imageUrl;
+  String? tailorName;
+  String? tailorEta;
+  final DateTime createdAt;
+
+  WardrobeItem({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.tags,
+    required this.status,
+    this.imageUrl = '',
+    this.tailorName,
+    this.tailorEta,
+    DateTime? createdAt,
+  }) : createdAt = createdAt ?? DateTime.now();
+
+  bool get isStitched => status == 'stitched';
+  bool get isUnstitched => status == 'unstitched';
+  bool get isWithTailor => status == 'with_tailor';
+
+  String get statusBadge {
+    switch (status) {
+      case 'unstitched':
+        return 'Needs Tailor';
+      case 'with_tailor':
+        return 'With Tailor';
+      default:
+        return 'Ready';
+    }
+  }
+}
+
 const kTailors = <Tailor>[
   Tailor(
     id: 't1',
@@ -590,4 +629,83 @@ class AppState extends ChangeNotifier {
 
   List<Product> get wishedProducts => kProducts.where((p) => isWished(p.id)).toList();
   List<Product> get recentProducts => recentlyViewed.map(productById).toList();
+
+  final wardrobeItems = <WardrobeItem>[
+    WardrobeItem(
+      id: 'w1',
+      name: 'Rust Embroidered Cotton Kurta',
+      category: 'Kurta',
+      tags: ['cotton', 'casual', 'traditional'],
+      status: 'stitched',
+      imageUrl: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485',
+    ),
+    WardrobeItem(
+      id: 'w2',
+      name: '3-Piece Printed Lawn Suit (Fabric)',
+      category: 'Unstitched Fabric',
+      tags: ['lawn', 'festive', 'eid'],
+      status: 'unstitched',
+      imageUrl: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/H262-006B-2BS.jpg?v=1783410619',
+    ),
+    WardrobeItem(
+      id: 'w3',
+      name: 'Charcoal Raw Silk Kurta Shalwar',
+      category: 'Shalwar Kameez',
+      tags: ['silk', 'formal', 'wedding'],
+      status: 'with_tailor',
+      tailorName: 'Master Rafiq & Sons',
+      tailorEta: 'Sep 14, 2026',
+      imageUrl: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/Men-Suits-Color-Black-Blended-Regular-Fit-SK-WCS25-005-Half-Front.jpg?v=1764403213',
+    ),
+    WardrobeItem(
+      id: 'w4',
+      name: 'Pastel Organza Embroidered Dupatta',
+      category: 'Dupatta',
+      tags: ['silk', 'festive', 'eid'],
+      status: 'stitched',
+      imageUrl: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/Gemini_Generated_Image_bkaggybkaggybkag.jpg?v=1787229241',
+    ),
+    WardrobeItem(
+      id: 'w5',
+      name: 'Pure Karandi Winter Fabric',
+      category: 'Unstitched Fabric',
+      tags: ['traditional', 'formal'],
+      status: 'unstitched',
+      imageUrl: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCKhaddarEmbroideredSuitIPSTD-55085_front.jpg?v=1765865988',
+    ),
+  ];
+
+  void addWardrobeItem(WardrobeItem item) {
+    wardrobeItems.insert(0, item);
+    notifyListeners();
+  }
+
+  void removeWardrobeItem(String id) {
+    wardrobeItems.removeWhere((i) => i.id == id);
+    notifyListeners();
+  }
+
+  void markWardrobeItemReady(String id) {
+    final idx = wardrobeItems.indexWhere((i) => i.id == id);
+    if (idx != -1) {
+      wardrobeItems[idx].status = 'stitched';
+      wardrobeItems[idx].tailorName = null;
+      wardrobeItems[idx].tailorEta = null;
+      notifyListeners();
+    }
+  }
+
+  void updateWardrobeItemStatus(String id, String newStatus, {String? tailorName, String? tailorEta}) {
+    final idx = wardrobeItems.indexWhere((i) => i.id == id);
+    if (idx != -1) {
+      wardrobeItems[idx].status = newStatus;
+      if (tailorName != null) wardrobeItems[idx].tailorName = tailorName;
+      if (tailorEta != null) wardrobeItems[idx].tailorEta = tailorEta;
+      notifyListeners();
+    }
+  }
+
+  List<WardrobeItem> get readyWardrobeItems => wardrobeItems.where((i) => i.isStitched).toList();
+  List<WardrobeItem> get unstitchedWardrobeItems => wardrobeItems.where((i) => i.isUnstitched).toList();
+  List<WardrobeItem> get withTailorWardrobeItems => wardrobeItems.where((i) => i.isWithTailor).toList();
 }

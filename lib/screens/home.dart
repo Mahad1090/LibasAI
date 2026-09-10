@@ -77,6 +77,75 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                    child: GestureDetector(
+                      onTap: () => go(context, '/subahEdit'),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF8A102B), Color(0xFF650B20)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(18),
+                          boxShadow: AppShadows.soft,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Icon(Icons.wb_sunny_outlined, color: Colors.white, size: 22),
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'SUBAH EDIT',
+                                        style: overline(9.5, color: AppColors.sand),
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withValues(alpha: 0.2),
+                                          borderRadius: BorderRadius.circular(999),
+                                        ),
+                                        child: const Text(
+                                          'NEW',
+                                          style: TextStyle(fontSize: 8, fontWeight: FontWeight.w800, color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    'What should I wear this morning?',
+                                    style: heading(14.5, color: Colors.white),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    'Weather & occasion matching · Checks closet first',
+                                    style: body(11, color: Colors.white.withValues(alpha: 0.8)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 14),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   _row(context, 'For You', () => go(context, '/recommendations'),
                       [1, 3, 6, 9].map((i) => kProducts[i]).toList()),
                   const SizedBox(height: 28),
@@ -195,6 +264,50 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () => go(context, '/wardrobe'),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.hairline),
+                          boxShadow: AppShadows.soft,
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(11),
+                              decoration: BoxDecoration(
+                                color: AppColors.sand,
+                                borderRadius: BorderRadius.circular(13),
+                              ),
+                              child: Icon(glyph('hanger'), size: 20, color: AppColors.accent),
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('MY WARDROBE', style: overline(9.5, color: AppColors.accent)),
+                                  Text('Wear What You Own', style: heading(15)),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '${state.wardrobeItems.length} pieces cataloged · Feeds Subah Edit',
+                                    style: body(11.5, color: AppColors.inkSecondary),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(glyph('chevronRight'), size: 16, color: AppColors.inkFaint),
+                          ],
+                        ),
                       ),
                     ),
                   ),
