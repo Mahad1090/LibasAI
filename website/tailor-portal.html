@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/image-slot.js"></script>
   <style>
     .lb-portal-layout {
       display: grid;
@@ -152,7 +152,7 @@
   <header class="lb-portal-topbar">
     <div style="display:flex; align-items:center; gap:16px;">
       <a href="/" class="lb-logo" style="text-decoration:none;">
-        <img src="assets/libasai-emblem.png" alt="LibasAI">
+        <img src="/assets/libasai-mark.png" alt="LibasAI">
         <span>Tailor Studio</span>
       </a>
       <span class="lu-tag">Artisan Partner Workbench</span>
@@ -179,7 +179,7 @@
     <aside class="lb-portal-sidebar">
       <div>
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:28px; padding-bottom:18px; border-bottom:2px dotted var(--lu-dot);">
-          <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" style="width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid var(--lu-red);" alt="">
+          <img id="sidebar-avatar" src="/assets/tailor-sewing.jpg" style="width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid var(--lu-red);" alt="">
           <div>
             <strong id="sidebar-name" style="font-family:'Archivo',sans-serif; font-size:15px; font-weight:800; text-transform:uppercase; display:block; color:var(--lu-red);">Master Rafiq</strong>
             <span style="font-size:11px; color:#10B981; font-weight:800; text-transform:uppercase; letter-spacing:0.04em;">Online &amp; Accepting</span>
@@ -309,16 +309,16 @@
 
       if (currentTailorKey === 'rafiq') {
         nameEl.innerText = "Master Rafiq";
-        avatarEl.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80";
+        avatarEl.src = "/assets/tailor-sewing.jpg";
       } else if (currentTailorKey === 'noor') {
         nameEl.innerText = "Noor Bridal Studio";
-        avatarEl.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80";
+        avatarEl.src = "/assets/tailor-sewing.jpg";
       } else if (currentTailorKey === 'aslam') {
         nameEl.innerText = "Ustaad Aslam";
-        avatarEl.src = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80";
+        avatarEl.src = "/assets/tailor-sewing.jpg";
       } else if (currentTailorKey === 'gulberg') {
         nameEl.innerText = "Gulberg Express";
-        avatarEl.src = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80";
+        avatarEl.src = "/assets/tailor-sewing.jpg";
       }
 
       refreshPortalOrders();
@@ -344,7 +344,8 @@
         saved = [
           {
             id: "REQ-8492",
-            dateSubmitted: "Today",
+            dateSubmitted: "13 Feb 2026",
+            submittedAt: "13 Feb 2026 · 1:05 pm",
             status: "Pending",
             tailorKey: "rafiq",
             tailorName: "Master Rafiq & Sons Bespoke Atelier",
@@ -388,19 +389,28 @@
         if (item.status === 'In Progress') cardCls = 'is-inprogress';
         if (item.status === 'Ready' || item.status === 'Completed') cardCls = 'is-ready';
 
-        var m = item.measurements || {};
-        var measChips = Object.keys(m).map(function(k) {
-          return '<span class="lu-tag" style="background:#FFF; font-size:11px; text-transform:none; border:1.5px dotted var(--lu-dot);">' + k + ': <strong style="color:var(--lu-red);">' + m[k] + '"</strong></span>';
-        }).join('');
+        var stageBtn =
+          item.status === 'Pending' ?
+            '<button class="lb-cta" style="padding:8px 20px !important; font-size:11px !important;" onclick="event.stopPropagation(); updateOrderStatus(' + idx + ', \'Accepted\')">Accept</button>' +
+            '<button class="lb-cta lb-cta--ghost" style="padding:8px 18px !important; font-size:11px !important;" onclick="event.stopPropagation(); updateOrderStatus(' + idx + ', \'Declined\')">Decline</button>' :
+          item.status === 'Accepted' ?
+            '<button class="lb-cta" style="padding:8px 20px !important; font-size:11px !important;" onclick="event.stopPropagation(); updateOrderStatus(' + idx + ', \'In Progress\')">Start Cutting &amp; Stitching</button>' :
+          item.status === 'In Progress' ?
+            '<button class="lb-cta" style="padding:8px 20px !important; font-size:11px !important; background:#047857 !important; border-color:#047857 !important;" onclick="event.stopPropagation(); updateOrderStatus(' + idx + ', \'Ready\')">Mark Ready for Pickup</button>' :
+          item.status === 'Ready' ?
+            '<button class="lb-cta" style="padding:8px 20px !important; font-size:11px !important; background:#166534 !important; border-color:#166534 !important;" onclick="event.stopPropagation(); updateOrderStatus(' + idx + ', \'Completed\')">Mark Delivered &amp; Completed</button>' :
+            '<span style="color:#166534; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:0.06em;">Completed</span>';
 
-        return '<div class="lb-workbench-card ' + cardCls + '">' +
-          '<div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px;">' +
-            '<div style="display:flex; gap:16px; align-items:center;">' +
-              '<img src="' + (item.designImg || '') + '" style="width:68px; height:68px; object-fit:cover; border:2px dotted var(--lu-dot);" alt="">' +
+        return '<div class="lb-workbench-card ' + cardCls + '" style="cursor:pointer;" onclick="openReqModal(' + idx + ')">' +
+          '<div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">' +
+            '<div style="display:flex; gap:16px; align-items:flex-start;">' +
+              '<img src="' + (item.designImg || '') + '" style="width:72px; height:94px; object-fit:cover; object-position:top center; border:2px dotted var(--lu-dot); flex-shrink:0;" alt="">' +
               '<div>' +
                 '<span class="lu-tag" style="font-size:10px; margin-bottom:4px;">' + item.id + '</span>' +
                 '<h3 style="font-family:\'Archivo\',sans-serif; font-size:18px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:2px 0;">' + item.designTitle + '</h3>' +
-                '<div style="font-size:12px; color:rgba(25,20,18,0.7); font-weight:600;">' + item.garment + ' · ' + item.fit + ' · Target: <strong>' + item.requiredDate + '</strong></div>' +
+                '<div style="font-size:12px; color:rgba(25,20,18,0.7); font-weight:600;">' + item.garment + ' · ' + item.fit + '</div>' +
+                '<div style="font-size:12px; color:rgba(25,20,18,0.7); margin-top:6px;">Requested: <strong>' + (item.submittedAt || item.dateSubmitted || '—') + '</strong></div>' +
+                '<div style="font-size:12px; color:rgba(25,20,18,0.7);">Needed by: <strong>' + fmtReqDate(item.requiredDate) + '</strong></div>' +
               '</div>' +
             '</div>' +
             '<div style="text-align:right;">' +
@@ -409,41 +419,14 @@
             '</div>' +
           '</div>' +
 
-          '<div style="background:var(--lu-cream-2); border:1.5px dotted var(--lu-dot); padding:12px 16px; margin-bottom:14px; font-size:13px;">' +
-            '<div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:6px; font-size:12.5px;">' +
-              '<span>Collar: <strong style="color:var(--lu-red);">' + (item.collar || 'Standard') + '</strong></span>' +
-              '<span>Sleeve: <strong style="color:var(--lu-red);">' + (item.sleeve || 'Straight') + '</strong></span>' +
-              '<span>Buttons: <strong style="color:var(--lu-red);">' + (item.buttons || 'Concealed') + '</strong></span>' +
-              '<span>Daman: <strong style="color:var(--lu-red);">' + (item.daman || 'Round') + '</strong></span>' +
-            '</div>' +
-            '<div style="color:rgba(25,20,18,0.7); font-style:italic; font-size:12px;">Notes: "' + (item.notes || 'None') + '"</div>' +
-          '</div>' +
-
-          '<div style="margin-bottom:16px;">' +
-            '<span style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--lu-red); display:block; margin-bottom:6px;">Customer Measurements (Inches)</span>' +
-            '<div style="display:flex; flex-wrap:wrap; gap:6px;">' + measChips + '</div>' +
-          '</div>' +
-
-          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:14px; border-top:2px dotted var(--lu-dot);">' +
-            '<div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(25,20,18,0.6);">' +
-              'Action: Advance Production Stage' +
-            '</div>' +
-            '<div style="display:flex; gap:8px;">' +
-              (item.status === 'Pending' ? 
-                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important;" onclick="updateOrderStatus(' + idx + ', \'Accepted\')">Accept Order</button>' +
-                '<button class="lb-cta lb-cta--ghost" style="padding:7px 16px !important; font-size:11px !important;" onclick="updateOrderStatus(' + idx + ', \'Declined\')">Decline</button>' :
-               item.status === 'Accepted' ?
-                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important;" onclick="updateOrderStatus(' + idx + ', \'In Progress\')">Start Cutting &amp; Stitching</button>' :
-               item.status === 'In Progress' ?
-                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important; background:#047857 !important; border-color:#047857 !important;" onclick="updateOrderStatus(' + idx + ', \'Ready\')">Mark Ready for Pickup</button>' :
-               item.status === 'Ready' ?
-                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important; background:#166534 !important; border-color:#166534 !important;" onclick="updateOrderStatus(' + idx + ', \'Completed\')">Mark Delivered &amp; Completed</button>' :
-                '<span style="color:#166534; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:0.06em;">Completed</span>'
-              ) +
-            '</div>' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:14px; margin-top:14px; border-top:2px dotted var(--lu-dot);">' +
+            '<span style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(25,20,18,0.55);">Tap card to view what the customer sent</span>' +
+            '<div style="display:flex; gap:8px;">' + stageBtn + '</div>' +
           '</div>' +
         '</div>';
       }).join('');
+
+      window._reqData = saved;
 
       document.getElementById('stat-pending').innerText = pendingCount;
       document.getElementById('stat-active').innerText = activeCount;
@@ -465,7 +448,70 @@
       }
     }
 
+    function fmtReqDate(v) {
+      if (!v) return '—';
+      var d = new Date(v);
+      if (isNaN(d.getTime())) return v;
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function openReqModal(idx) {
+      var item = (window._reqData || [])[idx];
+      if (!item) return;
+      var m = item.measurements || {};
+      var measRows = Object.keys(m).map(function(k) {
+        var label = k.replace(/([A-Z])/g, ' $1').replace(/^./, function(s){ return s.toUpperCase(); });
+        return '<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dotted var(--lu-dot); font-size:13px;"><span style="color:rgba(25,20,18,0.7);">' + label + '</span><strong style="color:var(--lu-red);">' + m[k] + '"</strong></div>';
+      }).join('');
+
+      var detailRow = function(l, v) {
+        return '<div style="display:flex; justify-content:space-between; gap:16px; padding:8px 0; border-bottom:1px dotted var(--lu-dot); font-size:13px;"><span style="color:rgba(25,20,18,0.7);">' + l + '</span><strong style="color:var(--lu-red); text-align:right;">' + (v || '—') + '</strong></div>';
+      };
+
+      var actions = item.status === 'Pending' ?
+        '<button class="lb-cta" style="padding:10px 24px !important;" onclick="updateOrderStatus(' + idx + ', \'Accepted\'); closeReqModal();">Accept</button>' +
+        '<button class="lb-cta lb-cta--ghost" style="padding:10px 22px !important;" onclick="updateOrderStatus(' + idx + ', \'Declined\'); closeReqModal();">Decline</button>' : '';
+
+      document.getElementById('req-modal-body').innerHTML =
+        '<div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">' +
+          '<img src="' + (item.designImg || '') + '" style="width:150px; height:196px; object-fit:cover; object-position:top center; border:2px dotted var(--lu-dot); flex-shrink:0;" alt="">' +
+          '<div style="flex:1; min-width:200px;">' +
+            '<span class="lu-tag" style="font-size:10px;">' + item.id + '</span>' +
+            '<h2 style="font-family:\'Archivo\',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:8px 0 4px;">' + item.designTitle + '</h2>' +
+            '<div style="font-size:13px; color:rgba(25,20,18,0.7);">' + item.garment + ' · ' + item.fit + '</div>' +
+            '<div style="font-size:13px; color:rgba(25,20,18,0.7); margin-top:10px;">Requested: <strong>' + (item.submittedAt || item.dateSubmitted || '—') + '</strong></div>' +
+            '<div style="font-size:13px; color:rgba(25,20,18,0.7);">Needed by: <strong>' + fmtReqDate(item.requiredDate) + '</strong></div>' +
+            '<div style="font-family:\'Archivo\',sans-serif; font-size:18px; font-weight:800; color:var(--lu-red); margin-top:10px;">' + (item.estimatedPrice || '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<h4 style="font-family:\'Archivo\',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--lu-red); margin:18px 0 4px;">Stitching Details</h4>' +
+        detailRow('Collar', item.collar) + detailRow('Sleeve / Hem', item.sleeve) +
+        detailRow('Buttons', item.buttons) + detailRow('Daman', item.daman) + detailRow('Pockets', item.pockets) +
+        '<h4 style="font-family:\'Archivo\',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--lu-red); margin:18px 0 4px;">Customer Notes</h4>' +
+        '<p style="font-size:13px; color:rgba(25,20,18,0.8); font-style:italic; margin:4px 0 0;">"' + (item.notes || 'None') + '"</p>' +
+        '<h4 style="font-family:\'Archivo\',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--lu-red); margin:18px 0 4px;">Customer Measurements (inches)</h4>' +
+        measRows +
+        (actions ? '<div style="display:flex; gap:10px; margin-top:22px;">' + actions + '</div>' : '');
+
+      document.getElementById('req-modal').style.display = 'flex';
+    }
+
+    function closeReqModal() {
+      document.getElementById('req-modal').style.display = 'none';
+    }
+
     window.addEventListener('DOMContentLoaded', refreshPortalOrders);
   </script>
+
+  <!-- Incoming request detail modal -->
+  <div id="req-modal" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(25,20,18,0.55); align-items:flex-start; justify-content:center; padding:40px 16px; overflow-y:auto;" onclick="if(event.target===this) closeReqModal()">
+    <div style="background:var(--lu-cream, #F7EDDF); border:2px solid var(--lu-red, #840E34); max-width:560px; width:100%; padding:28px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-family:'Archivo',sans-serif; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--lu-red, #840E34);">What the customer sent</span>
+        <button onclick="closeReqModal()" style="background:none; border:none; cursor:pointer; font-size:22px; line-height:1; color:var(--lu-red, #840E34);">&times;</button>
+      </div>
+      <div id="req-modal-body"></div>
+    </div>
+  </div>
 </body>
 </html>

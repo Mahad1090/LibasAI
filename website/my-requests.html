@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/image-slot.js"></script>
   <style>
     .lb-orders-wrap {
       max-width: 1100px;
@@ -175,7 +175,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -377,23 +377,23 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/ai/ask" class="lb-mega-card-tile">
-                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <img src="/assets/feature-ask-libasai.jpg" alt="">
                     <span>Ask LibasAI</span>
                   </a>
                   <a href="/ai/image-search" class="lb-mega-card-tile">
-                    <img src="assets/feature-image-search.jpg" alt="">
+                    <img src="/assets/feature-image-search.jpg" alt="">
                     <span>Image Search</span>
                   </a>
                   <a href="/ai/compare" class="lb-mega-card-tile">
-                    <img src="assets/feature-compare.jpg" alt="">
+                    <img src="/assets/feature-compare.jpg" alt="">
                     <span>Compare</span>
                   </a>
                   <a href="/ai/outfit-builder" class="lb-mega-card-tile">
-                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <img src="/assets/feature-outfit-builder.jpg" alt="">
                     <span>Outfit Builder</span>
                   </a>
                   <a href="/ai/morning-edit" class="lb-mega-card-tile">
-                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <img src="/assets/feature-subah-edit.jpg" alt="">
                     <span>Subah Edit</span>
                   </a>
                 </div>
@@ -410,19 +410,19 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/tailors.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <img src="/assets/tailor-workshop.jpg" alt="">
                     <span>Find Master Tailors</span>
                   </a>
                   <a href="/get-stitched.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <img src="/assets/tailor-sewing.jpg" alt="">
                     <span>Get Stitched</span>
                   </a>
                   <a href="/my-requests.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-shears.jpg" alt="">
+                    <img src="/assets/tailor-shears.jpg" alt="">
                     <span>My Stitching Requests</span>
                   </a>
                   <a href="/tailor-portal.html" class="lb-mega-card-tile">
-                    <img src="assets/flagship-studio.jpg" alt="">
+                    <img src="/assets/flagship-studio.jpg" alt="">
                     <span>Tailor Partner Portal</span>
                   </a>
                 </div>
@@ -485,7 +485,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -580,7 +580,9 @@
     <div id="success-banner" style="display:none; background:#ECFDF5; border:1px solid #10B981; border-radius:6px; padding:20px 24px; margin-bottom:32px; animation:fadeIn 300ms ease;">
       <div style="display:flex; justify-content:space-between; align-items:flex-start;">
         <div style="display:flex; gap:16px;">
-          <div style="font-size:30px;">🎉</div>
+          <div style="width:34px; height:34px; border-radius:50%; background:#10B981; color:#FFF; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg style="width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;"><use href="#lb-i-check"></use></svg>
+          </div>
           <div>
             <strong style="font-size:17px; color:#065F46; display:block;">Stitching Request Submitted Successfully!</strong>
             <p style="font-size:13.5px; color:#047857; margin:4px 0 0;">
@@ -638,7 +640,7 @@
       </div>
 
       <div style="display:flex; gap:16px; align-items:center; background:#FAF6F0; padding:14px 18px; border-radius:6px; margin-bottom:20px;">
-        <img id="modal-img" src="" style="width:60px; height:60px; object-fit:cover; border-radius:4px;" alt="">
+        <img id="modal-img" src="" style="width:64px; height:84px; object-fit:cover; object-position:top center; border-radius:4px; flex-shrink:0;" alt="">
         <div>
           <strong id="modal-tailor-name" style="font-size:14px; display:block;">Master Rafiq & Sons</strong>
           <span id="modal-status-pill" class="lb-badge-status status-InProgress" style="font-size:11px; padding:2px 8px; margin-top:4px;">In Progress</span>
@@ -693,7 +695,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -747,7 +749,7 @@
     </div>
   </footer>
 
-  <script src="./nav.js"></script>
+  <script src="/nav.js"></script>
   <script>
     var seedOrders = [
       {
@@ -871,7 +873,7 @@
         return '<div class="lb-order-card">' +
           '<div class="lb-order-top">' +
             '<div style="display:flex; gap:16px; align-items:center;">' +
-              '<img src="' + (order.designImg || 'assets/libasai-emblem.png') + '" style="width:68px; height:68px; object-fit:cover; border-radius:4px; border:1px solid rgba(25,20,18,0.1);" alt="">' +
+              '<img src="' + (order.designImg || 'assets/libasai-mark.png') + '" style="width:68px; height:88px; object-fit:cover; object-position:top center; border-radius:4px; border:1px solid rgba(25,20,18,0.1); flex-shrink:0;" alt="">' +
               '<div>' +
                 '<span class="lb-tag" style="background:var(--lb-paper); margin-bottom:4px;">' + order.id + '</span>' +
                 '<h3 class="lb-h2" style="font-size:18px; margin:2px 0 4px;">' + order.designTitle + '</h3>' +
@@ -896,7 +898,6 @@
             '</div>' +
             '<div style="display:flex; gap:8px;">' +
               '<button class="lb-cta lb-cta--ghost" style="padding:6px 14px; font-size:12px;" onclick="openDetailModal(\'' + order.id + '\')">View Details & Measurements</button>' +
-              '<a href="/tailor-portal.html" class="lb-cta" style="padding:6px 14px; font-size:12px; background:#840E34;">Tailor View ↗</a>' +
             '</div>' +
           '</div>' +
         '</div>';

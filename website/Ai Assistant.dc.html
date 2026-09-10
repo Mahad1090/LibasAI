@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-<script src="./nav.js"></script>
+<script src="/support.js"></script>
+<script src="/nav.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="./image-slot.js"></script>
-  <link rel="stylesheet" href="./theme.css">
+  <script src="/image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
   <style>
     /* Prevent window jitter / shaking and enforce single viewport app */
     html, body {
@@ -487,6 +487,25 @@
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
+
+    /* Recommend-for-me + preference flow */
+    .lb-rec-cta, .lb-pref-retake {
+      font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.02em;
+      color: #840E34; background: #F7EDDF; border: 2px dotted rgba(132,14,52,0.5);
+      border-radius: 20px; padding: 9px 16px; cursor: pointer; transition: background 160ms ease;
+    }
+    .lb-rec-cta:hover, .lb-pref-retake:hover { background: #FFFFFF; }
+    .lb-rec-cta:disabled { opacity: 0.5; cursor: default; }
+    .lb-pref-retake { font-size: 11px; padding: 6px 12px; margin-top: 10px; }
+    .lb-pref-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+    .lb-pref-opt {
+      font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 12px; color: #840E34;
+      background: #FFFFFF; border: 1.5px solid rgba(132,14,52,0.3); border-radius: 18px;
+      padding: 8px 14px; cursor: pointer; transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+    }
+    .lb-pref-opt:hover:not(:disabled) { border-color: #840E34; background: #F7EDDF; }
+    .lb-pref-opt.is-picked { background: #840E34; color: #FFFFFF; border-color: #840E34; }
+    .lb-pref-opt:disabled { opacity: 0.55; cursor: default; }
   </style>
 </helmet>
 
@@ -512,7 +531,7 @@
     <div class="{{ navClass }}">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="">
+          <img src="/assets/libasai-mark.png" alt="">
           <span>LibasAI</span>
         </a>
 
@@ -687,15 +706,15 @@
           <div class="lb-search-cols">
             <div class="lb-search-col">
               <h4>Recent Searches</h4>
-              <a href="/search?q=rust+kurta+wedding">Rust kurta for wedding</a>
-              <a href="/search?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
-              <a href="/search?q=formal+shalwar+kameez">Formal shalwar kameez</a>
+              <a href="/ai/ask?q=rust+kurta+wedding">Rust kurta for wedding</a>
+              <a href="/ai/ask?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
+              <a href="/ai/ask?q=formal+shalwar+kameez">Formal shalwar kameez</a>
             </div>
             <div class="lb-search-col">
               <h4>Trending Searches</h4>
-              <a href="/search?q=eid+collection+2026">Eid collection 2026</a>
-              <a href="/search?q=bridal+lehenga">Bridal lehenga</a>
-              <a href="/search?q=embroidered+kurta">Embroidered kurta</a>
+              <a href="/ai/ask?q=eid+collection+2026">Eid collection 2026</a>
+              <a href="/ai/ask?q=bridal+lehenga">Bridal lehenga</a>
+              <a href="/ai/ask?q=embroidered+kurta">Embroidered kurta</a>
             </div>
             <div class="lb-search-col">
               <h4>Suggested Categories</h4>
@@ -718,7 +737,7 @@
   <div id="lb-mobile-nav" class="{{ mobileClass }}" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="lb-mobile__top">
       <a href="/" class="lb-logo">
-        <img src="assets/libasai-emblem.png" alt="">
+        <img src="/assets/libasai-mark.png" alt="">
         <span>LibasAI</span>
       </a>
       <button type="button" id="lb-mobile-close" class="lb-burger" style="display:inline-flex;" aria-label="Close menu" onClick="{{ closeMobile }}">
@@ -822,11 +841,11 @@
         <div class="lb-eyebrow" style="margin-bottom:4px;">Ask LibasAI</div>
         <h1 class="lb-h1" style="font-size:clamp(24px,2.8vw,38px); margin:0 0 14px;">Good evening.<br>What are you looking for?</h1>
         <div class="lb-chat__prompts">
-          <button type="button" class="lb-chat__prompt" data-prompt="Find an Eid look under Rs. 12,000">✨ Find an Eid look under Rs. 12,000</button>
-          <button type="button" class="lb-chat__prompt" data-prompt="Compare luxury lawn suits">✨ Compare luxury lawn suits</button>
-          <button type="button" class="lb-chat__prompt" data-prompt="Formal shalwar kameez for men">✨ Formal shalwar kameez for men</button>
-          <button type="button" class="lb-chat__prompt" data-prompt="Find me a rust-colored formal kurta under Rs. 6,000">✨ Rust wedding kurta under 6k</button>
-          <button type="button" id="lb-browse-pics-btn" class="lb-chat__prompt" style="border-style:dashed;">📷 Browse a picture &mdash; visual search</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Find an Eid look under Rs. 12,000">Find an Eid look under Rs. 12,000</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Compare luxury lawn suits">Compare luxury lawn suits</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Formal shalwar kameez for men">Formal shalwar kameez for men</button>
+          <button type="button" class="lb-chat__prompt" data-prompt="Find me a rust-colored formal kurta under Rs. 6,000">Rust wedding kurta under 6k</button>
+          <button type="button" id="lb-browse-pics-btn" class="lb-chat__prompt" style="border-style:dashed;">Browse a picture &mdash; visual search</button>
         </div>
       </div>
 
@@ -1197,9 +1216,64 @@ const PRODUCT_CATALOG = [
   }
 ];
 
+/* Demo mock: curated colour edits so a "black kurta" style query returns a clean, on-colour trio */
+const MOCK_COLOR_LOOKS = {
+  black: [
+    { brand: 'Charcoal', title: 'Textured Black Kameez Shalwar - Signature', category: 'kameez shalwar kurta formal black men', gender: 'men', color: 'black', price: 'PKR 7,696', priceNum: 7696, img: 'https://cdn.shopify.com/s/files/1/0419/6171/7922/files/DSC079599_2181709e-7567-4c6d-9d10-90e78c2501c5.webp?v=1', url: 'https://charcoal.com.pk/products/textured-blended-kameez-shalwar-signature-collection-black-2' },
+    { brand: 'J. Junaid Jamshed', title: 'Black Formal Kameez Shalwar', category: 'kameez shalwar kurta formal black men wedding', gender: 'men', color: 'black', price: 'PKR 11,990', priceNum: 11990, img: 'https://cdn.shopify.com/s/files/1/0702/2487/1584/files/JJKS-48484-SIG_3.jpg?v=1788157468', url: 'https://www.junaidjamshed.com/products/black-formal-kameez-shalwar-jjksa48484sig' },
+    { brand: 'Amir Adnan', title: 'Black Embroidered Shirt-Collar Kurta Suit', category: 'kurta shirt collar embroidered formal black men wedding', gender: 'men', color: 'black', price: 'PKR 20,000', priceNum: 20000, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackKameezShalwar.jpg?v=1784021153', url: 'https://amiradnan.com/products/slim-fit-emb-shirt-collar-suit' }
+  ]
+};
+
+/* Demo mock: hand-picked, visually distinct pool for the "Recommend for me" personalised edit */
+const MOCK_RECOMMEND = {
+  women: [
+    { brand: 'Zeen', title: 'Raw Silk Shirt Dupatta Suit', occ: 'formal everyday casual', price: 'PKR 10,490', priceNum: 10490, img: 'https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802', url: 'https://zeenwoman.com/products/printed-embroidered-raw-silk-stitched-shirt-dupatta-suit-wld26291-purple' },
+    { brand: 'Sana Safinaz', title: 'Embroidered Lawn 2-Piece', occ: 'formal eid everyday', price: 'PKR 10,299', priceNum: 10299, img: 'https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485', url: 'https://sanasafinaz.com/products/stitched-embroidered-lawn-shirt-shalwar-ss26ese427p2t' },
+    { brand: 'Gul Ahmed', title: '3PC Lawn Printed Suit', occ: 'casual everyday eid', price: 'PKR 4,893', priceNum: 4893, img: 'https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960', url: 'https://www.gulahmedshop.com/products/3pc-lawn-printed-suit-iustksd-2207' },
+    { brand: 'Zellbury', title: 'Embroidered 3PC Suite', occ: 'casual everyday formal', price: 'PKR 4,490', priceNum: 4490, img: 'https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804', url: 'https://zellbury.com/products/shirt-shalwar-dupatta-wus26e34112' },
+    { brand: 'Mushq', title: 'Naturally Me Festive Suit', occ: 'eid wedding formal', price: 'PKR 10,950', priceNum: 10950, img: 'https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379', url: 'https://mushq.com/products/naturally-me' },
+    { brand: 'Beechtree', title: 'Embroidered Raw Silk Suit', occ: 'formal eid wedding', price: 'PKR 10,194', priceNum: 10194, img: 'https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441', url: 'https://beechtree.pk/products/bt1260001lp2510aa-sea-green' },
+    { brand: 'Suffuse', title: 'Festive Organza Ensemble', occ: 'wedding eid formal', price: 'PKR 12,900', priceNum: 12900, img: 'https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770', url: 'https://suffuse.pk/products/mahveen' },
+    { brand: 'Vanya', title: 'Bridal Couture Lehenga', occ: 'wedding', price: 'PKR 38,000', priceNum: 38000, img: 'https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219', url: 'https://vanya.pk/search?q=bridal+couture+lehenga' }
+  ],
+  men: [
+    { brand: 'Amir Adnan', title: 'Navy Blazer Slim Fit Kameez Shalwar', occ: 'formal wedding eid', price: 'PKR 9,000', priceNum: 9000, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseNavyBlazerSlimFitSuit_5.jpg?v=1745494747', url: 'https://amiradnan.com/products/poly-viscose-navy-blazer-slim-fit-suit' },
+    { brand: 'Amir Adnan', title: 'Black Embroidered Shirt-Collar Kurta Suit', occ: 'wedding formal', price: 'PKR 20,000', priceNum: 20000, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackKameezShalwar.jpg?v=1784021153', url: 'https://amiradnan.com/products/slim-fit-emb-shirt-collar-suit' },
+    { brand: 'Amir Adnan', title: 'Maluki Navy Kurta Pajama', occ: 'eid casual formal', price: 'PKR 7,000', priceNum: 7000, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Untitled-1_0038_2489navyblazer_2.jpg?v=1705316202', url: 'https://amiradnan.com/products/basic-poly-viscose-maluki-navy-blazer-slim-fit-suit-1' },
+    { brand: 'Amir Adnan', title: 'Cotton Pique Polo Shirt', occ: 'casual everyday', price: 'PKR 3,660', priceNum: 3660, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/Men_sGreenCottonPoloT-Shirt.jpg?v=1783599865', url: 'https://amiradnan.com/products/basic-pique-vanilla-ice-polo-t-shirt' },
+    { brand: 'Amir Adnan', title: 'Ebony Classic Fit Black Kameez Shalwar', occ: 'formal everyday eid', price: 'PKR 8,900', priceNum: 8900, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseEbonyClassicFitSuit.png?v=1774672152', url: 'https://amiradnan.com/search?q=ebony+classic+fit+kameez+shalwar' },
+    { brand: 'Diners', title: 'Obsidian Black Textured Kurta', occ: 'eid casual formal', price: 'PKR 5,450', priceNum: 5450, img: 'https://cdn.shopify.com/s/files/1/0552/1339/1936/files/PolyViscoseTapShoeClassicFitSuit.jpg?v=1774673279', url: 'https://diners.com.pk/search?q=obsidian+black+textured+kurta' }
+  ]
+};
+
+/* Every result / comparison card must open that exact piece, never a brand
+   homepage. Turn any bare-domain URL into the brand's own search for the
+   product title (all these labels run Shopify, so /search?q= resolves). */
+(function normaliseProductUrls() {
+  const fix = (p) => {
+    if (!p || !p.url) return;
+    if (/\/products\//.test(p.url) || p.url.indexOf('?') > -1) return;
+    p.url = p.url.replace(/\/+$/, '') + '/search?q=' + encodeURIComponent(p.title || p.brand || '');
+  };
+  try { (PRODUCT_CATALOG || []).forEach(fix); } catch (e) {}
+  try { Object.keys(MOCK_COLOR_LOOKS).forEach(k => MOCK_COLOR_LOOKS[k].forEach(fix)); } catch (e) {}
+  try { Object.keys(MOCK_RECOMMEND).forEach(k => MOCK_RECOMMEND[k].forEach(fix)); } catch (e) {}
+  try { Object.keys(PRESET_CONVERSATIONS).forEach(k => (PRESET_CONVERSATIONS[k].messages || []).forEach(m => (m.products || []).forEach(fix))); } catch (e) {}
+})();
+
 function performCatalogSearch(query) {
   const q = query.toLowerCase();
   const words = q.split(/\s+/).filter(w => w.length > 1);
+
+  const COLOR_WORDS = ['black', 'white', 'ivory', 'red', 'maroon', 'navy', 'blue', 'green', 'olive', 'pink', 'rust', 'grey', 'gray', 'beige', 'gold'];
+  const cw = COLOR_WORDS.find(c => q.includes(c));
+  if (cw && MOCK_COLOR_LOOKS[cw]) {
+    return {
+      answer: `Found ${MOCK_COLOR_LOOKS[cw].length} ${cw} options across Pakistani brand archives matching "${query}". Filtered on colour, silhouette and official pricing:`,
+      products: MOCK_COLOR_LOOKS[cw]
+    };
+  }
 
   const scored = PRODUCT_CATALOG.map(p => {
     let score = 0;
@@ -1219,7 +1293,7 @@ function performCatalogSearch(query) {
 
   scored.sort((a, b) => b.score - a.score);
   const matched = scored.filter(s => s.score > 0).map(s => s.product);
-  const results = matched.length >= 3 ? matched.slice(0, 3) : PRODUCT_CATALOG.slice(0, 3);
+  const results = (matched.length ? matched : scored.map(s => s.product)).slice(0, 3);
 
   return {
     answer: `Found ${results.length} verified options across Pakistani brand archives matching "${query}". Filtered by fabric suitability, verified silhouettes, and official pricing:`,
@@ -1335,7 +1409,20 @@ class Component extends DCLogic {
             <span class="lb-ctx-item__link">View item &rarr;</span>
           </div>
         </a>
-      `).join('');
+      `).join('') + (products.length >= 2 ? `
+        <button type="button" id="lb-ctx-compare" style="width:100%; margin-top:12px; padding:11px 14px; border:1.5px dotted #840E34; background:#840E34; color:#FFF; font-family:'Archivo',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; border-radius:12px; cursor:pointer;">Compare these</button>
+      ` : '');
+      const cmpBtn = document.getElementById('lb-ctx-compare');
+      if (cmpBtn) {
+        cmpBtn.addEventListener('click', () => {
+          try {
+            sessionStorage.setItem('lb_compare_items', JSON.stringify(products.slice(0, 4).map(p => ({
+              brand: p.brand, title: p.title, price: p.price, img: p.img, url: p.url, color: p.color || ''
+            }))));
+          } catch (e) {}
+          window.location.href = '/compare';
+        });
+      }
     };
 
     const renderThread = (messages) => {
@@ -1418,8 +1505,23 @@ class Component extends DCLogic {
       renderContextCards(lastAiMsg ? lastAiMsg.products : []);
     };
 
-    // Load initial conversation
-    loadConversation('rust-kurta');
+    // Load initial conversation — or run the query passed in from search (?q=)
+    var _initQ = '';
+    try { _initQ = (new URLSearchParams(window.location.search).get('q') || '').trim(); } catch (e) {}
+    if (_initQ) {
+      if (welcomeEl) welcomeEl.style.display = 'none';
+      threadEl.innerHTML = '';
+      renderContextCards([]);
+      if (convListEl) convListEl.querySelectorAll('.lb-chat__history-item').forEach(it => it.classList.remove('is-active'));
+      if (inputEl) inputEl.value = _initQ;
+      try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
+      setTimeout(function () { executeSearch(_initQ); }, 150);
+    } else {
+      // no query -> clean slate, just the welcome screen (no pre-loaded demo conversation)
+      threadEl.innerHTML = '';
+      renderContextCards([]);
+      if (welcomeEl) welcomeEl.style.display = 'block';
+    }
 
     // Conversation switching
     if (convListEl) {
@@ -1453,7 +1555,7 @@ class Component extends DCLogic {
     const promptBtns = document.querySelectorAll('.lb-chat__prompt');
     promptBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const prompt = btn.getAttribute('data-prompt') || btn.textContent.replace('✨', '').trim();
+        const prompt = btn.getAttribute('data-prompt') || btn.textContent.trim();
         if (inputEl) inputEl.value = prompt;
         executeSearch(prompt);
       });
@@ -1462,7 +1564,7 @@ class Component extends DCLogic {
     // Voice Search Demo
     if (voiceBtn) {
       voiceBtn.addEventListener('click', () => {
-        showToast('🎙️ Listening... Speak your fashion search query');
+        showToast('Listening... Speak your fashion search query');
         setTimeout(() => {
           const sampleQuery = 'Find obsidian black kurta for men under 8000';
           if (inputEl) inputEl.value = sampleQuery;
@@ -1491,7 +1593,7 @@ class Component extends DCLogic {
 
     const executeVisualSearch = (dataUrl, fileName) => {
       if (welcomeEl) welcomeEl.style.display = 'none';
-      showToast('📷 Reading colour, silhouette and embroidery from your photo...');
+      showToast('Analyzing colour, silhouette and embroidery from your photo...');
 
       threadEl.insertAdjacentHTML('beforeend', `
         <div class="lb-chat-msg-row lb-chat-msg-row--user">
@@ -1556,6 +1658,7 @@ class Component extends DCLogic {
           </div>
         `);
         renderContextCards(res.products);
+        appendRecommendCta();
         if (mainEl) mainEl.scrollTop = mainEl.scrollHeight;
       }, 1400);
     };
@@ -1653,6 +1756,7 @@ class Component extends DCLogic {
         threadEl.insertAdjacentHTML('beforeend', aiMsgHtml);
 
         renderContextCards(aiMsg.products);
+        appendRecommendCta();
 
         const newConvId = 'conv-' + Date.now();
         PRESET_CONVERSATIONS[newConvId] = {
@@ -1680,12 +1784,143 @@ class Component extends DCLogic {
       }, 550);
     };
 
+    /* ================= "Recommend for me" + first-time preference flow (demo / mocked) ================= */
+    const PREF_KEY = 'lb_style_prefs';
+    const getPrefs = () => { try { return JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); } catch (e) { return null; } };
+    const savePrefs = (p) => { try { localStorage.setItem(PREF_KEY, JSON.stringify(p)); } catch (e) {} };
+    let _prefAnswers = {};
+
+    const PREF_QUESTIONS = [
+      { key: 'who',      q: 'Who are we styling?',          opts: ['Womenswear', 'Menswear'] },
+      { key: 'occasion', q: 'What is the occasion?',        opts: ['Wedding', 'Eid', 'Formal', 'Casual', 'Everyday'] },
+      { key: 'budget',   q: 'And your budget per outfit?',  opts: ['Under Rs. 5,000', 'Rs. 5,000 - 10,000', 'Rs. 10,000 - 20,000', 'Rs. 20,000+'] },
+      { key: 'fabric',   q: 'A fabric you gravitate to?',   opts: ['Lawn', 'Silk', 'Chiffon', 'Cotton', 'Surprise me'] }
+    ];
+    const BUDGET_MAX = { 'Under Rs. 5,000': 5000, 'Rs. 5,000 - 10,000': 10000, 'Rs. 10,000 - 20,000': 20000, 'Rs. 20,000+': 99999 };
+
+    const appendAi = (bodyHtml, tagLabel) => {
+      threadEl.insertAdjacentHTML('beforeend', `
+        <div class="lb-chat-msg-row lb-chat-msg-row--ai">
+          <div class="lb-chat-avatar-badge" title="LibasAI"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg></div>
+          <div class="lb-chat-bubble-ai">
+            <div class="lb-chat-ai-header"><strong>LibasAI Assistant</strong><span>${tagLabel || 'Recommendations'}</span></div>
+            ${bodyHtml}
+          </div>
+        </div>
+      `);
+      if (mainEl) setTimeout(() => { mainEl.scrollTop = mainEl.scrollHeight; }, 30);
+    };
+    const appendUser = (txt) => {
+      threadEl.insertAdjacentHTML('beforeend', `<div class="lb-chat-msg-row lb-chat-msg-row--user"><div class="lb-chat-bubble-user">${txt}</div></div>`);
+      if (mainEl) mainEl.scrollTop = mainEl.scrollHeight;
+    };
+
+    const appendRecommendCta = () => {
+      appendAi(`
+        <p style="margin:0 0 10px;font-size:13px;line-height:1.5;color:#191412;">Want me to go further and curate a personalised edit around your taste?</p>
+        <button type="button" class="lb-rec-cta">Recommend for me</button>
+      `, 'Personal Stylist');
+    };
+
+    const askPrefQuestion = (idx) => {
+      if (idx >= PREF_QUESTIONS.length) {
+        savePrefs(_prefAnswers);
+        appendAi(`<p style="margin:0;font-size:13px;line-height:1.5;color:#191412;">Perfect &mdash; taste profile saved. Building your edit now&hellip;</p>`, 'Personal Stylist');
+        setTimeout(() => deliverRecommendations(_prefAnswers, true), 750);
+        return;
+      }
+      const step = PREF_QUESTIONS[idx];
+      const intro = idx === 0 ? 'Looks like this is your first visit &mdash; four quick taps so I can learn your taste.' : '';
+      appendAi(`
+        ${intro ? `<p style="margin:0 0 8px;font-size:12.5px;line-height:1.5;color:rgba(25,20,18,0.7);">${intro}</p>` : ''}
+        <p style="margin:0 0 10px;font-size:13.5px;font-weight:700;color:#191412;">${step.q}</p>
+        <div class="lb-pref-opts">
+          ${step.opts.map(o => `<button type="button" class="lb-pref-opt" data-step="${idx}" data-key="${step.key}" data-val="${o}">${o}</button>`).join('')}
+        </div>
+      `, `Step ${idx + 1} of ${PREF_QUESTIONS.length}`);
+    };
+
+    const deliverRecommendations = (prefs, isFresh) => {
+      const budgetMax = BUDGET_MAX[prefs.budget] || 99999;
+      const fab = (prefs.fabric && prefs.fabric !== 'Surprise me') ? prefs.fabric.toLowerCase() : '';
+      const genderKey = prefs.who === 'Menswear' ? 'men' : 'women';
+      const occ = (prefs.occasion || '').toLowerCase();
+      let pool = (MOCK_RECOMMEND[genderKey] || []).filter(p => p.priceNum <= budgetMax + 6000);
+      if (pool.length < 3) pool = (MOCK_RECOMMEND[genderKey] || []).slice();
+      pool.sort((a, b) => (b.occ.indexOf(occ) > -1 ? 1 : 0) - (a.occ.indexOf(occ) > -1 ? 1 : 0));
+      const seen = {}, products = [];
+      for (const p of pool) { if (!seen[p.img]) { seen[p.img] = 1; products.push(p); } if (products.length === 3) break; }
+      const res = { products: products };
+      const line = isFresh
+        ? `Based on your taste &mdash; ${(prefs.who || 'womenswear').toLowerCase()}, ${(prefs.occasion || 'everyday').toLowerCase()}, ${fab || 'any fabric'}, ${prefs.budget || 'flexible budget'} &mdash; here is your personalised edit:`
+        : `Welcome back. A fresh pick for your ${(prefs.occasion || 'everyday').toLowerCase()} looks within ${prefs.budget || 'your budget'}:`;
+      appendAi(`
+        <div class="lb-chat__progress" style="margin-bottom:12px;">
+          ${['Reading your taste profile', 'Matching occasion &amp; budget', 'Balancing brands &amp; fairness', 'Edit ready'].map((s, i, a) => `<span class="lb-chat__step ${i < a.length - 1 ? 'is-done' : 'is-active'}"><span class="lb-chat__step-dot"></span>${s}</span>`).join('')}
+        </div>
+        <p style="margin:0 0 10px;font-size:13px;line-height:1.5;color:#191412;">${line}</p>
+        <div class="lb-ask-results">
+          ${res.products.map(p => `
+            <a href="${p.url}" target="_blank" rel="noopener" class="lb-ask-result-card">
+              <img src="${p.img}" alt="${p.brand}" class="lb-ask-result-card__img">
+              <div class="lb-ask-result-card__body">
+                <span class="lb-ask-result-card__brand">${p.brand}</span>
+                <span class="lb-ask-result-card__title">${p.title}</span>
+                <span class="lb-ask-result-card__price">${p.price}</span>
+                <span class="lb-ask-result-card__cta">View item &rarr;</span>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+        <button type="button" class="lb-pref-retake">Update my preferences</button>
+      `, 'Personal Stylist');
+      renderContextCards(res.products);
+    };
+
+    const startRecommendFlow = (forceAsk) => {
+      const prefs = getPrefs();
+      if (prefs && !forceAsk) {
+        appendAi(`<p style="margin:0;font-size:13px;line-height:1.5;color:#191412;">On it &mdash; using the taste profile you set earlier.</p>`, 'Personal Stylist');
+        setTimeout(() => deliverRecommendations(prefs, false), 650);
+      } else {
+        _prefAnswers = {};
+        askPrefQuestion(0);
+      }
+    };
+
+    threadEl.addEventListener('click', (e) => {
+      const rec = e.target.closest('.lb-rec-cta');
+      if (rec) { rec.disabled = true; appendUser('Recommend for me'); setTimeout(() => startRecommendFlow(false), 400); return; }
+      const opt = e.target.closest('.lb-pref-opt');
+      if (opt && !opt.disabled) {
+        const step = parseInt(opt.getAttribute('data-step'), 10);
+        _prefAnswers[opt.getAttribute('data-key')] = opt.getAttribute('data-val');
+        const box = opt.closest('.lb-pref-opts');
+        if (box) box.querySelectorAll('.lb-pref-opt').forEach(b => { b.disabled = true; if (b === opt) b.classList.add('is-picked'); });
+        appendUser(opt.getAttribute('data-val'));
+        setTimeout(() => askPrefQuestion(step + 1), 350);
+        return;
+      }
+      const retake = e.target.closest('.lb-pref-retake');
+      if (retake) { retake.disabled = true; appendUser('Update my preferences'); setTimeout(() => startRecommendFlow(true), 350); return; }
+    });
+
     if (formEl) {
       formEl.addEventListener('submit', (e) => {
         e.preventDefault();
         executeSearch();
       });
     }
+
+    // Auto-run a query passed from anywhere on the site (?q=...)
+    try {
+      const incomingQ = new URLSearchParams(window.location.search).get('q');
+      if (incomingQ && incomingQ.trim()) {
+        if (welcomeEl) welcomeEl.style.display = 'none';
+        if (inputEl) inputEl.value = incomingQ.trim();
+        setTimeout(() => executeSearch(incomingQ.trim()), 250);
+      }
+    } catch (e) {}
   };
 
   componentWillUnmount() {

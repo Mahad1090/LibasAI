@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/image-slot.js"></script>
 
   <style id="lb-modern-editorial">
   /* ===================================================================
@@ -68,7 +68,7 @@
   /* nav */
   .lb-nav{ background:var(--paper) !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-bottom:1px solid var(--line) !important; }
   .lb-logo{ display:flex; align-items:center; gap:8px; }
-  .lb-logo img{ width:30px !important; height:30px !important; object-fit:contain; border-radius:0 !important; mix-blend-mode:multiply; }
+  .lb-logo img{ width:64px !important; height:64px !important; object-fit:cover; border-radius:50% !important; mix-blend-mode:normal; }
   .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; font-size:18px !important; letter-spacing:0.14em !important; text-transform:uppercase; color:var(--lu-red) !important; }
   .lb-nav__trigger{ font-weight:700 !important; letter-spacing:0.04em !important; color:var(--ink) !important; }
   .lb-nav__trigger::after{ background:var(--accent) !important; }
@@ -804,7 +804,7 @@
   .lu-vrank figure:nth-child(1){ transform:rotate(-2.5deg); }
   .lu-vrank figure:nth-child(2){ transform:rotate(2deg); margin-top:4px; }
   .lu-vrank figure:nth-child(3){ transform:rotate(-1.5deg); }
-  .lu-vrank img{ display:block; width:100%; aspect-ratio:3/4; height:185px; object-fit:cover; }
+  .lu-vrank img{ display:block; width:100%; aspect-ratio:2/3; height:clamp(270px, 25vw, 330px); object-fit:cover; object-position:top center; background:#FFFFFF; }
   .lu-vrank__n{ position:absolute; top:-12px; left:-10px; width:28px; height:28px; border-radius:50%; background:var(--lu-cream); border:2px dotted var(--lu-dot); color:var(--lu-red); font-family:'Pacifico',cursive; font-size:13px; line-height:24px; text-align:center; }
   .lu-vrank figure:nth-child(1) .lu-vrank__n{ border-style:solid; background:var(--lu-red); color:var(--lu-cream); }
   .lu-vrank figcaption{ margin-top:7px; font-family:'Manrope',sans-serif; }
@@ -816,7 +816,7 @@
   .lu-vcmp figure{ position:relative; margin:0; background:var(--lu-cream); padding:8px 8px 10px; box-shadow:0 12px 26px rgba(44,17,22,0.16); }
   .lu-vcmp figure:nth-child(1){ transform:rotate(-2deg); }
   .lu-vcmp figure:nth-child(2){ transform:rotate(2deg); }
-  .lu-vcmp img{ display:block; width:100%; aspect-ratio:3/4; height:190px; object-fit:cover; }
+  .lu-vcmp img{ display:block; width:100%; aspect-ratio:2/3; height:clamp(270px, 25vw, 330px); object-fit:cover; object-position:top center; background:#FFFFFF; }
   .lu-vcmp figcaption{ margin-top:7px; font-family:'Manrope',sans-serif; }
   .lu-vcmp figcaption b{ display:block; font-size:10px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lu-ink); opacity:0.75; }
   .lu-vcmp figcaption s{ display:block; text-decoration:none; font-size:10.5px; letter-spacing:0.03em; text-transform:uppercase; color:var(--lu-ink); opacity:0.65; margin:1px 0 2px; }
@@ -855,27 +855,29 @@
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    background: var(--lu-red, #840E34) !important;
-    color: var(--lu-cream, #FAF4EE) !important;
-    border: 2px solid var(--lu-red, #840E34) !important;
-    padding: 9px 20px !important;
+    background: #840E34 !important;
+    color: #FAF4EE !important;
+    border: 2px solid #840E34 !important;
+    padding: 11px 24px !important;
     font-family: 'Manrope', sans-serif !important;
-    font-size: 11px !important;
+    font-size: 11.5px !important;
     font-weight: 800 !important;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 14px rgba(132, 14, 52, 0.22) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 14px rgba(132, 14, 52, 0.25) !important;
     transition: all 180ms ease !important;
     cursor: pointer !important;
-    margin-top: 14px;
+    margin-top: 16px;
     width: fit-content;
   }
   .lb-panel-btn:hover {
-    background: var(--lu-red-deep, #5E0A26) !important;
-    border-color: var(--lu-red-deep, #5E0A26) !important;
+    background: #5E0A26 !important;
+    border-color: #5E0A26 !important;
+    color: #FFFFFF !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(132, 14, 52, 0.32) !important;
+    box-shadow: 0 8px 22px rgba(132, 14, 52, 0.35) !important;
   }
 
   .lu-vmood{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(10px, 1.6vw, 18px); margin-top:14px; }
@@ -910,7 +912,7 @@
     z-index:10;
     box-shadow:0 18px 36px rgba(44,17,22,0.22);
   }
-  .lu-vmood img{ display:block; width:100%; aspect-ratio:3/4; height:152px; object-fit:cover; border: 1px solid rgba(25,20,18,0.08); }
+  .lu-vmood img{ display:block; width:100%; aspect-ratio:3/4; height:clamp(140px, 14vw, 168px); object-fit:cover; object-position:top center; background:#FFFFFF; border: 1px solid rgba(25,20,18,0.08); }
   .lu-vmood figcaption{
     margin-top:8px;
     font-family:'Manrope',sans-serif;
@@ -1003,7 +1005,7 @@
   .lb-nav{ background:transparent !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; border-bottom:2px dotted var(--lu-dot) !important; }
   .lb-nav.is-scrolled{ background:var(--lu-blush) !important; border-bottom-color:var(--lu-dot) !important; }
   .lb-logo{ gap:8px !important; }
-  .lb-logo img{ display:block !important; width:30px !important; height:30px !important; object-fit:contain !important; border-radius:0 !important; mix-blend-mode:multiply; }
+  .lb-logo img{ display:block !important; width:64px !important; height:64px !important; object-fit:cover !important; border-radius:50% !important; mix-blend-mode:normal; }
   .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; font-size:18px !important; letter-spacing:0.14em !important; text-transform:uppercase; color:var(--lu-red) !important; }
   .lb-nav__center{ gap:0 !important; }
   .lb-nav__trigger{ color:var(--lu-red) !important; font-weight:700 !important; letter-spacing:0.1em !important; font-size:11px !important; padding:12px clamp(12px,1.6vw,22px) !important; border-left:2px dotted var(--lu-dot); }
@@ -1038,6 +1040,10 @@
   .lu-sec::before{ content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
     background-image:radial-gradient(var(--lu-dot) 0.6px, transparent 0.7px); background-size:12px 12px; opacity:0.14; }
   .lu-sec--blush::before{ opacity:0.2; }
+  /* cart.jpg watermark behind the closing headline */
+  .lu-sec.lu-final::after{ content:''; position:absolute; left:50%; top:clamp(-190px,-17vw,-110px); transform:translateX(-50%);
+    width:min(660px,92vw); aspect-ratio:4/5; z-index:0; pointer-events:none;
+    background:url('/assets/cart.jpg') top center / contain no-repeat; opacity:0.2; mix-blend-mode:multiply; }
 
   /* ---------------- FULL-BLEED IMAGE COLLAGE BAND ---------------- */
   .lu-band{ position:relative; display:flex; gap:0; height:clamp(200px,26vw,340px); overflow:hidden; border-top:2px dotted var(--lu-dot); border-bottom:2px dotted var(--lu-dot); background:var(--lu-red); }
@@ -1256,7 +1262,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -1462,23 +1468,23 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/ai/ask" class="lb-mega-card-tile">
-                    <img src="assets/feature-ask-libasai.jpg" alt="Ask LibasAI">
+                    <img src="/assets/feature-ask-libasai.jpg" alt="Ask LibasAI">
                     <span>Ask LibasAI</span>
                   </a>
                   <a href="/ai/image-search" class="lb-mega-card-tile">
-                    <img src="assets/feature-image-search.jpg" alt="Image Search">
+                    <img src="/assets/feature-image-search.jpg" alt="Image Search">
                     <span>Image Search</span>
                   </a>
                   <a href="/ai/compare" class="lb-mega-card-tile">
-                    <img src="assets/feature-compare.jpg" alt="">
+                    <img src="/assets/feature-compare.jpg" alt="">
                     <span>Compare</span>
                   </a>
                   <a href="/ai/outfit-builder" class="lb-mega-card-tile">
-                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <img src="/assets/feature-outfit-builder.jpg" alt="">
                     <span>Style</span>
                   </a>
                   <a href="/ai/morning-edit" class="lb-mega-card-tile">
-                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <img src="/assets/feature-subah-edit.jpg" alt="">
                     <span>Subah Edit</span>
                   </a>
                 </div>
@@ -1495,19 +1501,19 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/tailors.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <img src="/assets/tailor-workshop.jpg" alt="">
                     <span>Find Master Tailors</span>
                   </a>
                   <a href="/get-stitched.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <img src="/assets/tailor-sewing.jpg" alt="">
                     <span>Get Stitched</span>
                   </a>
                   <a href="/my-requests.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-shears.jpg" alt="">
+                    <img src="/assets/tailor-shears.jpg" alt="">
                     <span>My Stitching Requests</span>
                   </a>
                   <a href="/tailor-portal.html" class="lb-mega-card-tile">
-                    <img src="assets/flagship-studio.jpg" alt="">
+                    <img src="/assets/flagship-studio.jpg" alt="">
                     <span>Tailor Partner Portal</span>
                   </a>
                 </div>
@@ -1570,7 +1576,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -1672,7 +1678,7 @@
         <!-- 3. Master Tailors & Bespoke Stitching Swatch Sticker -->
         <a href="/get-stitched.html" class="lu-sticker lu-sticker--tailor lu-hero__tailor" title="Bespoke Stitching Network">
           <div class="lu-washi lu-washi--corner"></div>
-          <img src="assets/tailor-shears.jpg" alt="Master Tailor">
+          <img src="/assets/tailor-shears.jpg" alt="Master Tailor">
           <div class="lu-sticker__body">
             <span class="lu-sticker__script">get it stitched</span>
             <span class="lu-sticker__tag">master tailors</span>
@@ -1717,7 +1723,7 @@
       </div>
       <p class="lu-hero__eyebrow">The AI shopping assistant for Pakistani fashion</p>
       <h2 class="lu-hero__headline">Search 80+ labels, style the whole look, get it stitched.</h2>
-      <form class="lu-hero__search" action="/shop.html" method="GET" onsubmit="event.preventDefault(); var val = this.querySelector('input').value.trim() || 'Black embroidered kurta under Rs. 8,000'; window.location.href='/shop.html?q=' + encodeURIComponent(val);">
+      <form class="lu-hero__search" action="/ai/ask" method="GET" onsubmit="event.preventDefault(); var val = this.querySelector('input').value.trim() || 'Black embroidered kurta under Rs. 8,000'; window.location.href='/ai/ask?q=' + encodeURIComponent(val);">
         <input type="text" placeholder="Black embroidered kurta under Rs. 8,000" aria-label="Ask LibasAI">
         <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </form>
@@ -1744,22 +1750,22 @@
       <div class="lu-feat">
         <a class="lu-feat__card" href="/ai/ask">
           <span class="lu-feat__n">1</span>
-          <div class="lu-feat__ph"><img src="assets/feature-ask-libasai.jpg" alt="Ask LibasAI"></div>
+          <div class="lu-feat__ph"><img src="/assets/feature-ask-libasai.jpg" alt="Ask LibasAI"></div>
           <span class="lu-feat__name">Ask LibasAI</span><span class="lu-feat__sub">Chat &amp; search</span>
         </a>
         <a class="lu-feat__card" href="/ai/image-search">
           <span class="lu-feat__n">2</span>
-          <div class="lu-feat__ph"><img src="assets/feature-image-search.jpg" alt="Image Search"></div>
+          <div class="lu-feat__ph"><img src="/assets/feature-image-search.jpg" alt="Image Search"></div>
           <span class="lu-feat__name">Image Search</span><span class="lu-feat__sub">Find from a photo</span>
         </a>
         <a class="lu-feat__card" href="/ai/compare">
           <span class="lu-feat__n">3</span>
-          <div class="lu-feat__ph"><img src="assets/feature-compare.jpg" alt="Compare"></div>
+          <div class="lu-feat__ph"><img src="/assets/feature-compare.jpg" alt="Compare"></div>
           <span class="lu-feat__name">Compare</span><span class="lu-feat__sub">Side by side</span>
         </a>
         <a class="lu-feat__card" href="/outfit-builder.html">
           <span class="lu-feat__n">4</span>
-          <div class="lu-feat__ph"><img src="assets/feature-outfit-builder.jpg" alt="Outfit Builder"></div>
+          <div class="lu-feat__ph"><img src="/assets/feature-outfit-builder.jpg" alt="Outfit Builder"></div>
           <span class="lu-feat__name">Outfit Builder</span><span class="lu-feat__sub">Style the look</span>
         </a>
         <a class="lu-feat__card" href="/morning-edit.html">
@@ -1814,50 +1820,56 @@
             </div>
             <div class="lu-vtags" style="margin-bottom:14px;"><span>Black</span><span>Embroidered</span><span>Kurta</span><span>&le; Rs. 8,000</span></div>
             <div class="lu-panel__grid">
-              <div class="lu-arch" style="aspect-ratio:3/4;height:190px;"><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
-              <div class="lu-arch" style="aspect-ratio:3/4;height:190px;"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
-              <div class="lu-arch" style="aspect-ratio:3/4;height:190px;"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+              <div class="lu-arch" style="aspect-ratio:3/4;height:240px;"><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>
+              <div class="lu-arch" style="aspect-ratio:3/4;height:240px;"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>
+              <div class="lu-arch" style="aspect-ratio:3/4;height:240px;"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>
             </div>
             <p style="display:flex;align-items:center;gap:6px;font-family:'Manrope',sans-serif;font-weight:800;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lu-red);margin-top:12px;">
               <svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-search"></use></svg>
               142 matches &middot; 18 brands &middot; ~280ms
             </p>
-            <a href="/shop.html?q=black+embroidered+kurta+under+8000" class="lb-panel-btn">Search Across 80+ Labels</a>
+            <div style="margin-top:16px; display:flex; align-items:center;">
+              <a href="/shop.html?q=black+embroidered+kurta+under+8000" class="lb-panel-btn" style="background:#840E34 !important; color:#FAF4EE !important; padding:11px 24px !important; font-size:11.5px !important; font-weight:800 !important; letter-spacing:0.08em !important; text-transform:uppercase !important; border-radius:4px !important; text-decoration:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; border:2px solid #840E34 !important; box-shadow:0 4px 14px rgba(132,14,52,0.25) !important;">Search Across 80+ Labels</a>
+            </div>
           </div>
 
           <!-- 02 RECOMMEND -->
           <div class="lu-panel" data-a="recommend" role="tabpanel">
             <div class="lu-vtags" style="margin-bottom:12px;"><span>Your wardrobe</span><span>Formal</span><span>Maroon</span><span>Rs. 10k&ndash;15k</span></div>
             <div class="lu-vrank">
-              <figure><span class="lu-vrank__n">1</span><img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt=""><figcaption><b>Zeen</b><em>Rs. 10,490</em><i>Echoes three saved pieces.</i></figcaption></figure>
-              <figure><span class="lu-vrank__n">2</span><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt=""><figcaption><b>Mushq</b><em>Rs. 10,950</em><i>Right formality, bolder palette.</i></figcaption></figure>
-              <figure><span class="lu-vrank__n">3</span><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""><figcaption><b>Beechtree</b><em>Rs. 10,194</em><i>Emerging label, fair boost.</i></figcaption></figure>
+              <figure><span class="lu-vrank__n">1</span><img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt="" style="object-position:top center;"><figcaption><b>Zeen</b><em>Rs. 10,490</em><i>Echoes three saved pieces.</i></figcaption></figure>
+              <figure><span class="lu-vrank__n">2</span><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt="" style="object-position:top center;"><figcaption><b>Mushq</b><em>Rs. 10,950</em><i>Right formality, bolder palette.</i></figcaption></figure>
+              <figure><span class="lu-vrank__n">3</span><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="" style="object-position:top center;"><figcaption><b>Beechtree</b><em>Rs. 10,194</em><i>Emerging label, fair boost.</i></figcaption></figure>
             </div>
-            <a href="/for-you" class="lb-panel-btn">Explore Your Recommendations</a>
+            <div style="margin-top:16px; display:flex; align-items:center;">
+              <a href="/for-you" class="lb-panel-btn" style="background:#840E34 !important; color:#FAF4EE !important; padding:11px 24px !important; font-size:11.5px !important; font-weight:800 !important; letter-spacing:0.08em !important; text-transform:uppercase !important; border-radius:4px !important; text-decoration:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; border:2px solid #840E34 !important; box-shadow:0 4px 14px rgba(132,14,52,0.25) !important;">Explore Your Recommendations</a>
+            </div>
           </div>
 
           <!-- 03 COMPARE -->
           <div class="lu-panel" data-a="compare" role="tabpanel">
             <div class="lu-vcmp">
-              <figure><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""><figcaption><b>Sana Safinaz</b><s>Lawn 2PC &middot; 2 pc</s><em>Rs. 10,299</em></figcaption></figure>
-              <figure><span class="lu-vcmp__win">LibasAI pick</span><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt=""><figcaption><b>Zellbury</b><s>3PC Suite &middot; 3 pc</s><em>Rs. 4,490</em></figcaption></figure>
+              <figure><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt="Sana Safinaz Lawn" style="object-position:top center;"><figcaption><b>Sana Safinaz</b><s>Lawn 2PC &middot; 2 pc</s><em>Rs. 10,299</em></figcaption></figure>
+              <figure><span class="lu-vcmp__win">LibasAI pick</span><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="Zellbury Suite" style="object-position:top center;"><figcaption><b>Zellbury</b><s>3PC Suite &middot; 3 pc</s><em>Rs. 4,490</em></figcaption></figure>
               <span class="lu-vcmp__mark">vs</span>
             </div>
             <p style="font-family:Georgia,serif;font-style:italic;font-size:13.5px;line-height:1.45;color:var(--lu-ink);margin:12px 0 0;">Same lawn weave, same embroidery. Zellbury is <b style="font-style:normal;color:var(--lu-red);">56% cheaper</b> with an extra piece.</p>
-            <a href="/compare.html" class="lb-panel-btn">Compare Your Outfits</a>
+            <div style="margin-top:16px; display:flex; align-items:center;">
+              <a href="/compare.html" class="lb-panel-btn" style="background:#840E34 !important; color:#FAF4EE !important; padding:11px 24px !important; font-size:11.5px !important; font-weight:800 !important; letter-spacing:0.08em !important; text-transform:uppercase !important; border-radius:4px !important; text-decoration:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; border:2px solid #840E34 !important; box-shadow:0 4px 14px rgba(132,14,52,0.25) !important;">Compare Your Outfits</a>
+            </div>
           </div>
 
           <!-- 04 STYLE -->
           <div class="lu-panel" data-a="style" role="tabpanel">
             <div class="lu-vmood">
-              <figure><span class="lu-tag">Capsule</span><img src="assets/building-blocks.jpg" alt="Building Blocks Capsule"><figcaption>Building Blocks <em>Rs. 5,490</em></figcaption></figure>
-              <figure><span class="lu-tag">Balanced</span><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt=""><figcaption>Silk Dupatta <em>Rs. 3,890</em></figcaption></figure>
-              <figure><span class="lu-tag">Footwear</span><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>Handmade Khussa <em>Rs. 3,200</em></figcaption></figure>
-              <figure><span class="lu-tag">Jewelry</span><img src="assets/jewellery.jpg" alt=""><figcaption>Kundan Jhumka <em>Rs. 1,800</em></figcaption></figure>
+              <figure><span class="lu-tag">Capsule</span><img src="/assets/building-blocks.jpg" alt="Building Blocks Capsule" style="object-position:top center;"><figcaption>Building Blocks <em>Rs. 5,490</em></figcaption></figure>
+              <figure><span class="lu-tag">Balanced</span><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="" style="object-position:top center;"><figcaption>Silk Dupatta <em>Rs. 3,890</em></figcaption></figure>
+              <figure><span class="lu-tag">Footwear</span><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt="" style="object-position:top center;"><figcaption>Handmade Khussa <em>Rs. 3,200</em></figcaption></figure>
+              <figure><span class="lu-tag">Jewelry</span><img src="/assets/jewellery.jpg" alt="" style="object-position:top center;"><figcaption>Kundan Jhumka <em>Rs. 1,800</em></figcaption></figure>
             </div>
             <div class="lu-vmood__foot">
               <span>Coordinated Look: <b>Rs. 14,380</b></span>
-              <a href="/outfit-builder.html" class="lb-panel-btn" style="margin-top:0;">Open in Outfit Builder</a>
+              <a href="/outfit-builder.html" class="lb-panel-btn" style="background:#840E34 !important; color:#FAF4EE !important; padding:11px 24px !important; font-size:11.5px !important; font-weight:800 !important; letter-spacing:0.08em !important; text-transform:uppercase !important; border-radius:4px !important; text-decoration:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; border:2px solid #840E34 !important; box-shadow:0 4px 14px rgba(132,14,52,0.25) !important; margin-top:0;">Open in Outfit Builder</a>
             </div>
           </div>
         </div>
@@ -1910,19 +1922,19 @@
       <h2 class="lu-kicker">How it works</h2>
       <div class="lu-how">
         <div class="lu-how__step">
-          <img class="lu-how__img" src="assets/how-it-works-step1.jpg" alt="Say it - Type a look or drop a photo">
+          <img class="lu-how__img" src="/assets/how-it-works-step1.jpg" alt="Say it - Type a look or drop a photo">
           <span class="lu-how__n">01</span>
           <span class="lu-how__t">Say it</span>
           <span class="lu-how__d">Type a look, drop a photo or set a budget.</span>
         </div>
         <div class="lu-how__step">
-          <img class="lu-how__img" src="assets/how-it-works-step2.jpg" alt="Skim it - Compare Pakistani designer labels">
+          <img class="lu-how__img" src="/assets/how-it-works-step2.jpg" alt="Skim it - Compare Pakistani designer labels">
           <span class="lu-how__n">02</span>
           <span class="lu-how__t">Skim it</span>
           <span class="lu-how__d">LibasAI ranks and compares across 80+ labels.</span>
         </div>
         <div class="lu-how__step">
-          <img class="lu-how__img" src="assets/tailor-sewing.jpg" alt="Get it - Buy direct or send to tailor">
+          <img class="lu-how__img" src="/assets/tailor-sewing.jpg" alt="Get it - Buy direct or send to tailor">
           <span class="lu-how__n">03</span>
           <span class="lu-how__t">Get it</span>
           <span class="lu-how__d">Buy direct from the brand, or send it to a tailor.</span>
@@ -2007,7 +2019,7 @@
     <div class="lu-wrap">
       <div class="lu-bespoke">
         <a href="/tailor-profile.html?id=rafiq" class="lu-oval lu-bespoke__photo" style="display:block;">
-          <img src="assets/tailor-shears.jpg" alt="Master tailor, Lahore">
+          <img src="/assets/tailor-shears.jpg" alt="Master tailor, Lahore">
         </a>
         <div class="lu-bespoke__body">
           <h2 class="lu-h">From first idea<br>to final stitch</h2>
@@ -2019,7 +2031,7 @@
           <a href="/get-stitched.html" class="lu-link">Get a suit stitched</a>
         </div>
         <div class="lu-bespoke__pod">
-          <div class="lu-duo"><img src="assets/tailor-sewing.jpg" alt=""></div>
+          <div class="lu-duo"><img src="/assets/tailor-sewing.jpg" alt=""></div>
           <div class="lu-bubble">stitched in<br>Pakistan</div>
         </div>
       </div>
@@ -2063,7 +2075,7 @@
 
   <!-- ============================= DRESSED FOR THE MOMENT ============================= -->
   <section class="lu-sec lu-sec--cream">
-    <figure class="lu-mp" aria-hidden="true" style="left:-26px;bottom:10%;width:120px;aspect-ratio:1;transform:rotate(-7deg);"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>khussa</figcaption></figure><figure class="lu-mp" aria-hidden="true" style="right:-24px;top:14%;width:110px;aspect-ratio:1;transform:rotate(5deg);"><img src="assets/jewellery.jpg" alt=""><figcaption>jhumka</figcaption></figure>
+    <figure class="lu-mp" aria-hidden="true" style="left:-26px;bottom:10%;width:120px;aspect-ratio:1;transform:rotate(-7deg);"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>khussa</figcaption></figure><figure class="lu-mp" aria-hidden="true" style="right:-24px;top:14%;width:110px;aspect-ratio:1;transform:rotate(5deg);"><img src="/assets/jewellery.jpg" alt=""><figcaption>jhumka</figcaption></figure>
     <div class="lu-wrap">
       <h2 class="lu-kicker">Dressed for<br>the moment</h2>
       <div class="lu-occ">
@@ -2090,13 +2102,13 @@
     <figure><img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackKameezShalwar.jpg?v=1784021153" alt=""><figcaption>menswear</figcaption></figure>
     <figure><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt=""><figcaption>formal</figcaption></figure>
     <figure><img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt=""><figcaption>festive</figcaption></figure>
-    <figure><img src="assets/tailor-shears.jpg" alt=""><figcaption>bespoke</figcaption></figure>
+    <figure><img src="/assets/tailor-shears.jpg" alt=""><figcaption>bespoke</figcaption></figure>
     <span class="lu-band__word">one search,<br>every label</span>
   </div>
 
   <!-- ============================= TESTIMONIAL ============================= -->
   <section class="lu-sec lu-sec--cream2">
-    <figure class="lu-mp" aria-hidden="true" style="right:6%;top:8%;width:120px;aspect-ratio:3/4;transform:rotate(6deg);"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""><figcaption>found via image search</figcaption></figure><figure class="lu-mp" aria-hidden="true" style="left:8%;bottom:6%;width:100px;aspect-ratio:1;transform:rotate(-6deg);"><img src="assets/tailor-sewing.jpg" alt=""><figcaption>stitched</figcaption></figure>
+    <figure class="lu-mp" aria-hidden="true" style="right:6%;top:8%;width:120px;aspect-ratio:3/4;transform:rotate(6deg);"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""><figcaption>found via image search</figcaption></figure><figure class="lu-mp" aria-hidden="true" style="left:8%;bottom:6%;width:100px;aspect-ratio:1;transform:rotate(-6deg);"><img src="/assets/tailor-sewing.jpg" alt=""><figcaption>stitched</figcaption></figure>
     <span class="lu-star" aria-hidden="true" style="right:8%;top:16%;font-size:34px;">&#10038;</span><span class="lu-star" aria-hidden="true" style="left:44%;bottom:10%;font-size:20px;">&#43;</span>
     <div class="lu-wrap">
       <div class="lu-quote">
@@ -2149,7 +2161,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -2229,6 +2241,6 @@
       });
     })();
   </script>
-  <script src="./nav.js"></script>
+  <script src="/nav.js"></script>
 </body>
 </html>

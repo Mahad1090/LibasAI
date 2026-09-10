@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/image-slot.js"></script>
   <style>
     /* Dedicated Outfit Builder Studio Styles */
     .lb-ob-grid {
@@ -37,6 +37,7 @@
       height: 480px;
       width: 100%;
     }
+    .lb-ob-card[hidden], .lb-item-row[hidden] { display: none !important; }
     .lb-ob-card {
       position: absolute;
       background: var(--lb-white);
@@ -196,7 +197,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -398,23 +399,23 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/ai/ask" class="lb-mega-card-tile">
-                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <img src="/assets/feature-ask-libasai.jpg" alt="">
                     <span>Ask LibasAI</span>
                   </a>
                   <a href="/ai/image-search" class="lb-mega-card-tile">
-                    <img src="assets/feature-image-search.jpg" alt="">
+                    <img src="/assets/feature-image-search.jpg" alt="">
                     <span>Image Search</span>
                   </a>
                   <a href="/ai/compare" class="lb-mega-card-tile">
-                    <img src="assets/feature-compare.jpg" alt="">
+                    <img src="/assets/feature-compare.jpg" alt="">
                     <span>Compare</span>
                   </a>
                   <a href="/ai/outfit-builder" class="lb-mega-card-tile">
-                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <img src="/assets/feature-outfit-builder.jpg" alt="">
                     <span>Outfit Builder</span>
                   </a>
                   <a href="/ai/morning-edit" class="lb-mega-card-tile">
-                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <img src="/assets/feature-subah-edit.jpg" alt="">
                     <span>Subah Edit</span>
                   </a>
                 </div>
@@ -431,19 +432,19 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/tailors.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <img src="/assets/tailor-workshop.jpg" alt="">
                     <span>Find Master Tailors</span>
                   </a>
                   <a href="/get-stitched.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <img src="/assets/tailor-sewing.jpg" alt="">
                     <span>Get Stitched</span>
                   </a>
                   <a href="/my-requests.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-shears.jpg" alt="">
+                    <img src="/assets/tailor-shears.jpg" alt="">
                     <span>My Stitching Requests</span>
                   </a>
                   <a href="/tailor-portal.html" class="lb-mega-card-tile">
-                    <img src="assets/flagship-studio.jpg" alt="">
+                    <img src="/assets/flagship-studio.jpg" alt="">
                     <span>Tailor Partner Portal</span>
                   </a>
                 </div>
@@ -506,7 +507,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -602,7 +603,6 @@
       </div>
       <div class="lb-listing-head" style="margin-bottom:0; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
         <div>
-          <div class="lb-eyebrow" style="color:var(--lb-rose); margin-bottom:6px;">Cross-Brand Ensemble Coordination</div>
           <h1 class="lb-h1" style="font-size:clamp(30px,3.8vw,52px);">Complete the look.</h1>
         </div>
         <div class="lb-listing-count">
@@ -613,13 +613,6 @@
         Pick a piece you love, and LibasAI pairs it with contrasting dupattas, matching trousers, handcrafted khussas, and artisanal jewellery from labels you wouldn't have thought to cross-shop.
       </p>
 
-      <!-- Occasion Presets -->
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:28px;">
-        <button type="button" class="lb-chip is-active" onclick="switchOutfit(0, this)">Eid Festive Morning Look</button>
-        <button type="button" class="lb-chip" onclick="switchOutfit(1, this)">Wedding Mehndi Celebration</button>
-        <button type="button" class="lb-chip" onclick="switchOutfit(2, this)">Formal Dinner / Evening Soirée</button>
-        <button type="button" class="lb-chip" onclick="switchOutfit(3, this)">Casual Smart Daywear</button>
-      </div>
     </div>
   </div>
 
@@ -640,6 +633,19 @@
             </button>
           </div>
 
+          <!-- Shown only when arriving from "Complete the Look" with a chosen piece -->
+          <div id="lb-look-prompt" hidden style="margin-bottom:20px; padding:16px 18px; border:2px dotted var(--lb-burgundy); border-radius:16px; background:var(--lb-paper);">
+            <p style="margin:0 0 12px; font-size:13.5px; font-weight:800; color:#191412; line-height:1.4;" id="lb-look-prompt-q">What would you like to style with this piece?</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button type="button" class="lb-chip" data-key="dupatta" onclick="lookAdd('dupatta', this)">Dupatta</button>
+              <button type="button" class="lb-chip" data-key="bottom" onclick="lookAdd('bottom', this)">Trousers / Bottoms</button>
+              <button type="button" class="lb-chip" data-key="jewel" onclick="lookAdd('jewel', this)">Jewellery</button>
+              <button type="button" class="lb-chip" data-key="shoes" onclick="lookAdd('shoes', this)">Footwear</button>
+              <button type="button" class="lb-chip" onclick="lookRevealAll()">Surprise me &mdash; full look</button>
+            </div>
+            <p style="margin:10px 0 0; font-size:11px; color:rgba(25,20,18,0.5);">Tap a piece to add it &mdash; tap again to remove.</p>
+          </div>
+
           <!-- The Floating Collage -->
           <div class="lb-ob-collage">
             <!-- 1. Hero Kurta -->
@@ -650,13 +656,13 @@
 
             <!-- 2. Dupatta -->
             <div class="lb-ob-card lb-ob-card--dupatta" title="Matching Dupatta" onclick="highlightItem('dupatta')">
-              <img id="ob-img-dupatta" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Dupatta">
+              <img id="ob-img-dupatta" src="https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.867.T-3.jpg?v=1787830425" alt="Dupatta">
               <div class="lb-ob-card-label">Coordinated Dupatta</div>
             </div>
 
             <!-- 3. Bottoms -->
             <div class="lb-ob-card lb-ob-card--bottom" title="Bottoms" onclick="highlightItem('bottom')">
-              <img id="ob-img-bottom" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" alt="Bottoms">
+              <img id="ob-img-bottom" src="https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.890.P-3.jpg?v=1788437937" alt="Bottoms">
               <div class="lb-ob-card-label">Tailored Bottoms</div>
             </div>
 
@@ -668,7 +674,7 @@
 
             <!-- 5. Jewellery -->
             <div class="lb-ob-card lb-ob-card--jewel" title="Jewellery" onclick="highlightItem('jewel')">
-              <img id="ob-img-jewel" src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" alt="Jewellery">
+              <img id="ob-img-jewel" src="/assets/jewellery.jpg" alt="Jewellery">
               <div class="lb-ob-card-label">Jewellery & Accents</div>
             </div>
           </div>
@@ -701,7 +707,7 @@
               <span style="font-size:11px; font-weight:800; text-transform:uppercase; color:var(--lb-mauve); display:block;">Total Ensemble Cost</span>
               <span style="font-family:'Playfair Display',serif; font-size:32px; font-weight:800; color:var(--lb-burgundy);" id="total-price">Rs. 14,830</span>
             </div>
-            <span style="font-size:12px; font-weight:650; color:rgba(25,20,18,0.5);">5 Pieces Across 4 Labels</span>
+            <span style="font-size:12px; font-weight:650; color:rgba(25,20,18,0.5);" id="piece-count">5 Pieces Across 4 Labels</span>
           </div>
 
           <!-- Itemized list -->
@@ -714,29 +720,29 @@
                 <div class="lb-item-title" id="title-kurta">Rust Embroidered Cotton Kurta</div>
                 <div class="lb-item-price" id="price-kurta">Rs. 4,490</div>
               </div>
-              <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+              <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy</a>
             </div>
 
             <!-- Dupatta -->
             <div class="lb-item-row" id="row-dupatta">
-              <div class="lb-item-thumb"><img id="thumb-dupatta" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt=""></div>
+              <div class="lb-item-thumb"><img id="thumb-dupatta" src="https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.867.T-3.jpg?v=1787830425" alt=""></div>
               <div class="lb-item-meta">
-                <span class="lb-item-brand" id="brand-dupatta">Gul Ahmed</span>
-                <div class="lb-item-title" id="title-dupatta">Digital Printed Organza Dupatta</div>
-                <div class="lb-item-price" id="price-dupatta">Rs. 2,450</div>
+                <span class="lb-item-brand" id="brand-dupatta">Lulusar</span>
+                <div class="lb-item-title" id="title-dupatta">Evora Organza Dupatta</div>
+                <div class="lb-item-price" id="price-dupatta">Rs. 1,750</div>
               </div>
-              <a href="https://www.gulahmedshop.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+              <a href="https://www.lulusar.com/products/evora-dupatta" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy</a>
             </div>
 
             <!-- Bottoms -->
             <div class="lb-item-row" id="row-bottom">
-              <div class="lb-item-thumb"><img id="thumb-bottom" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" alt=""></div>
+              <div class="lb-item-thumb"><img id="thumb-bottom" src="https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.890.P-3.jpg?v=1788437937" alt=""></div>
               <div class="lb-item-meta">
-                <span class="lb-item-brand" id="brand-bottom">Sana Safinaz</span>
-                <div class="lb-item-title" id="title-bottom">Embroidered Raw Silk Skinny Shalwar</div>
-                <div class="lb-item-price" id="price-bottom">Rs. 2,480</div>
+                <span class="lb-item-brand" id="brand-bottom">Lulusar</span>
+                <div class="lb-item-title" id="title-bottom">Lunelle Wide-Leg Trousers</div>
+                <div class="lb-item-price" id="price-bottom">Rs. 6,999</div>
               </div>
-              <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+              <a href="https://www.lulusar.com/products/lunelle-pants" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy</a>
             </div>
 
             <!-- Footwear -->
@@ -747,24 +753,24 @@
                 <div class="lb-item-title" id="title-shoes">Handcrafted Gold Tilla Khussa</div>
                 <div class="lb-item-price" id="price-shoes">Rs. 2,950</div>
               </div>
-              <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy &rarr;</a>
+              <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Buy</a>
             </div>
 
             <!-- Jewellery -->
             <div class="lb-item-row" id="row-jewel">
-              <div class="lb-item-thumb"><img id="thumb-jewel" src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" alt=""></div>
+              <div class="lb-item-thumb"><img id="thumb-jewel" src="/assets/jewellery.jpg" alt=""></div>
               <div class="lb-item-meta">
-                <span class="lb-item-brand" id="brand-jewel">Local Artisan Label</span>
-                <div class="lb-item-title" id="title-jewel">Filigree Kundan Chandbali Jhumkas</div>
-                <div class="lb-item-price" id="price-jewel">Rs. 2,460</div>
+                <span class="lb-item-brand" id="brand-jewel">Local Artisan</span>
+                <div class="lb-item-title" id="title-jewel">Kundan Jhumka &amp; Choker Set</div>
+                <div class="lb-item-price" id="price-jewel">Rs. 4,800</div>
               </div>
-              <a href="/brands/local" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Discover &rarr;</a>
+              <a href="/brands/local" class="lb-cta lb-cta--ghost" style="padding:6px 12px; font-size:10.5px;">Discover</a>
             </div>
           </div>
 
           <!-- Bottom Action Buttons -->
           <div style="display:flex; flex-direction:column; gap:10px; margin-top:28px;">
-            <a href="/ai/ask?q=Restyle+this+Eid+outfit+with+different+color+shoes+and+dupatta" class="lb-cta" style="justify-content:center;">Ask AI Stylist to Restyle &rarr;</a>
+            <a href="/ai/ask?q=Restyle+this+Eid+outfit+with+different+color+shoes+and+dupatta" class="lb-cta" style="justify-content:center;">Ask AI Stylist to Restyle</a>
             <button type="button" class="lb-cta lb-cta--ghost" style="justify-content:center;" onclick="alert('Ensemble saved to your LibasAI Wishlist!');">Save Complete Look to Wishlist</button>
           </div>
         </div>
@@ -777,7 +783,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -802,7 +808,7 @@
         <a href="/compare.html">Multi-Brand Compare</a>
         <a href="/outfit-builder.html">AI Outfit Builder</a>
         <a href="/morning-edit.html">Subah Edit</a>
-        <a href="/ai-features.html">All AI Features →</a>
+        <a href="/ai-features.html">All AI Features</a>
       </div>
       <div class="lb-footer__col">
         <h4>Tailor Network</h4>
@@ -831,7 +837,7 @@
     </div>
   </footer>
 
-  <script src="./nav.js"></script>
+  <script src="/nav.js"></script>
   <script>
     var outfitPresets = [
       {
@@ -839,46 +845,48 @@
         score: "97% Harmonious",
         total: "Rs. 14,830",
         kurta: { brand: "Zellbury", title: "Rust Embroidered Cotton Kurta", price: "Rs. 4,490", img: "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" },
-        dupatta: { brand: "Gul Ahmed", title: "Digital Printed Organza Dupatta", price: "Rs. 2,450", img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" },
-        bottom: { brand: "Sana Safinaz", title: "Embroidered Raw Silk Skinny Shalwar", price: "Rs. 2,480", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" },
+        dupatta: { brand: "Lulusar", title: "Evora Organza Dupatta", price: "Rs. 1,750", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.867.T-3.jpg?v=1787830425" },
+        bottom: { brand: "Lulusar", title: "Lunelle Wide-Leg Trousers", price: "Rs. 6,999", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.890.P-3.jpg?v=1788437937" },
         shoes: { brand: "Sana Safinaz", title: "Handcrafted Gold Tilla Khussa", price: "Rs. 2,950", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
-        jewel: { brand: "Local Artisan", title: "Filigree Kundan Chandbali Jhumkas", price: "Rs. 2,460", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+        jewel: { brand: "Local Artisan", title: "Kundan Jhumka & Choker Set", price: "Rs. 4,800", img: "/assets/jewellery.jpg" }
       },
       {
         name: "Wedding Mehndi Celebration",
         score: "95% Harmonious",
         total: "Rs. 18,940",
         kurta: { brand: "Beechtree", title: "Sea Green Embroidered Raw Silk", price: "Rs. 10,194", img: "https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" },
-        dupatta: { brand: "Mushq", title: "Embellished Net Dupatta in Pink", price: "Rs. 3,850", img: "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" },
-        bottom: { brand: "Zellbury", title: "Flared Silk Gharara Pants", price: "Rs. 2,196", img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" },
+        dupatta: { brand: "Mushq", title: "Embellished Net Dupatta in Pink", price: "Rs. 3,850", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.867.T-3.jpg?v=1787830425" },
+        bottom: { brand: "Lulusar", title: "Lunelle Wide-Leg Trousers", price: "Rs. 6,999", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.890.P-3.jpg?v=1788437937" },
         shoes: { brand: "Sana Safinaz", title: "Emerald Green Embellished Kolhapuri", price: "Rs. 1,800", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
-        jewel: { brand: "Zeen", title: "Antique Gold Floral Matha Patti", price: "Rs. 900", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+        jewel: { brand: "Zeen", title: "Antique Gold Floral Matha Patti", price: "Rs. 900", img: "/assets/jewellery.jpg" }
       },
       {
         name: "Formal Evening Soirée",
         score: "98% Harmonious",
         total: "Rs. 22,400",
         kurta: { brand: "Sana Safinaz", title: "Embroidered Lawn Festive 2PC", price: "Rs. 10,299", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" },
-        dupatta: { brand: "Gul Ahmed", title: "Jacquard Metallic Chiffon Wrap", price: "Rs. 4,200", img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" },
-        bottom: { brand: "Zeen", title: "Straight Raw Silk Trousers", price: "Rs. 3,200", img: "https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" },
+        dupatta: { brand: "Gul Ahmed", title: "Jacquard Metallic Chiffon Wrap", price: "Rs. 4,200", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.867.T-3.jpg?v=1787830425" },
+        bottom: { brand: "Lulusar", title: "Etoile Wide-Leg Trousers", price: "Rs. 6,999", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.890.P-3.jpg?v=1788437937" },
         shoes: { brand: "Beechtree", title: "Velvet Block Heels", price: "Rs. 2,900", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
-        jewel: { brand: "Suffuse", title: "Crystal Choker & Studs Set", price: "Rs. 1,801", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+        jewel: { brand: "Suffuse", title: "Crystal Choker & Studs Set", price: "Rs. 1,801", img: "/assets/jewellery.jpg" }
       },
       {
         name: "Casual Smart Daywear",
         score: "94% Harmonious",
         total: "Rs. 8,620",
         kurta: { brand: "Sana Safinaz", title: "Stitched Lawn Short Kurta", price: "Rs. 2,480", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702" },
-        dupatta: { brand: "Gul Ahmed", title: "Crinkle Chiffon Printed Scarf", price: "Rs. 1,450", img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" },
-        bottom: { brand: "Zellbury", title: "White Cotton Cigarette Pants", price: "Rs. 1,690", img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" },
+        dupatta: { brand: "Gul Ahmed", title: "Crinkle Chiffon Printed Scarf", price: "Rs. 1,450", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.867.T-3.jpg?v=1787830425" },
+        bottom: { brand: "Lulusar", title: "Noir Cigarette Pants", price: "Rs. 6,999", img: "https://cdn.shopify.com/s/files/1/0611/8585/1568/files/W.SS26.890.P-3.jpg?v=1788437937" },
         shoes: { brand: "Zellbury", title: "Daily Comfort Leather Slides", price: "Rs. 1,800", img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" },
-        jewel: { brand: "Local Artisan", title: "Handcrafted Threadwork Tassel Earrings", price: "Rs. 1,200", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26A9944_Pink_Cover1.png?v=1773939014" }
+        jewel: { brand: "Local Artisan", title: "Handcrafted Threadwork Tassel Earrings", price: "Rs. 1,200", img: "/assets/jewellery.jpg" }
       }
     ];
 
     function switchOutfit(idx, btn) {
-      document.querySelectorAll('.lb-chip').forEach(function(c) { c.classList.remove('is-active'); });
-      btn.classList.add('is-active');
+      if (btn) {
+        document.querySelectorAll('.lb-page-head .lb-chip').forEach(function(c) { c.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      }
       var p = outfitPresets[idx];
       document.getElementById('canvas-preset-name').textContent = p.name;
       document.getElementById('harmony-score').textContent = p.score;
@@ -904,10 +912,106 @@
     }
 
     function shuffleCurrentOutfit() {
+      if (lookMode) { lookRevealAll(); return; }
       var randomIdx = Math.floor(Math.random() * outfitPresets.length);
-      var chips = document.querySelectorAll('.lb-chip');
-      if (chips[randomIdx]) switchOutfit(randomIdx, chips[randomIdx]);
+      switchOutfit(randomIdx, null);
     }
+
+    // ---- "Complete the Look" build-up mode -----------------------------------
+    var LOOK_KEYS = ['dupatta', 'bottom', 'shoes', 'jewel'];
+    var lookMode = false;
+
+    function parseRs(str) { return parseInt(String(str || '').replace(/[^0-9]/g, ''), 10) || 0; }
+
+    function recomputeLookTotals() {
+      var total = 0, count = 0, brands = {};
+      ['kurta'].concat(LOOK_KEYS).forEach(function (k) {
+        var row = document.getElementById('row-' + k);
+        if (!row || row.hidden) return;
+        total += parseRs(document.getElementById('price-' + k).textContent);
+        count += 1;
+        brands[(document.getElementById('brand-' + k).textContent || '').trim()] = 1;
+      });
+      var tp = document.getElementById('total-price');
+      if (tp) tp.textContent = 'Rs. ' + total.toLocaleString('en-US');
+      var pc = document.getElementById('piece-count');
+      if (pc) pc.textContent = count + (count === 1 ? ' Piece' : ' Pieces') + ' Across ' + Object.keys(brands).length + (Object.keys(brands).length === 1 ? ' Label' : ' Labels');
+    }
+
+    // Show / hide one add-on piece (chip acts as a toggle so it can be undone).
+    function setLookItem(key, on) {
+      var card = document.querySelector('.lb-ob-card--' + key);
+      var row = document.getElementById('row-' + key);
+      if (card) card.hidden = !on;
+      if (row) row.hidden = !on;
+    }
+
+    function setChipState(btn, on) {
+      if (!btn) return;
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent.trim();
+      btn.classList.toggle('is-active', on);
+      btn.textContent = (on ? '✓ ' : '') + btn.dataset.label;
+    }
+
+    function lookAdd(key, btn) {
+      if (lookMode) {
+        var row = document.getElementById('row-' + key);
+        var turningOn = row ? row.hidden : true;
+        setLookItem(key, turningOn);
+        setChipState(btn, turningOn);
+        recomputeLookTotals();
+        if (turningOn) highlightItem(key);
+        return;
+      }
+      highlightItem(key);
+    }
+
+    function lookRevealAll() {
+      LOOK_KEYS.forEach(function (k) { setLookItem(k, true); });
+      recomputeLookTotals();
+      document.querySelectorAll('#lb-look-prompt .lb-chip[data-key]').forEach(function (c) { setChipState(c, true); });
+      var canvas = document.querySelector('.lb-ob-canvas');
+      if (canvas) canvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // If the shopper came from "Complete the Look" on the compare page, drop
+    // their chosen piece in as the hero and ask what to pair with it.
+    (function initLookFromCompare() {
+      var raw;
+      try { raw = sessionStorage.getItem('lb_look_base'); } catch (e) { return; }
+      if (!raw) return;
+      try { sessionStorage.removeItem('lb_look_base'); } catch (e) {}
+      var b;
+      try { b = JSON.parse(raw); } catch (e) { return; }
+      if (!b || !b.img) return;
+
+      lookMode = true;
+
+      var setImg = function (id, v) { var el = document.getElementById(id); if (el) el.src = v; };
+      var setTxt = function (id, v) { var el = document.getElementById(id); if (el && v != null) el.textContent = v; };
+      setImg('ob-img-kurta', b.img);
+      setImg('thumb-kurta', b.img);
+      setTxt('brand-kurta', b.brand || 'Your pick');
+      setTxt('title-kurta', b.name || b.title || 'Chosen piece');
+      setTxt('price-kurta', b.price || 'Rs. 0');
+      setTxt('canvas-preset-name', 'Styled around your pick');
+      var buyLink = document.querySelector('#row-kurta a');
+      if (buyLink && b.link) buyLink.href = b.link;
+
+      // Start with just the hero piece on the canvas; chips fill the rest in.
+      LOOK_KEYS.forEach(function (k) {
+        var card = document.querySelector('.lb-ob-card--' + k);
+        var row = document.getElementById('row-' + k);
+        if (card) card.hidden = true;
+        if (row) row.hidden = true;
+      });
+      recomputeLookTotals();
+
+      var q = document.getElementById('lb-look-prompt-q');
+      if (q) q.textContent = 'You picked the ' + (b.name || b.title || 'piece') + '. What would you like to style with it?';
+      var panel = document.getElementById('lb-look-prompt');
+      if (panel) panel.hidden = false;
+    })();
   </script>
 </body>
 </html>

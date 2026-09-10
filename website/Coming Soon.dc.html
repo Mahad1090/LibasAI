@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-<script src="./nav.js"></script>
+<script src="/support.js"></script>
+<script src="/nav.js"></script>
 </head>
 <body>
 <x-dc>
@@ -12,8 +12,8 @@
 <helmet>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="./image-slot.js"></script>
-  <link rel="stylesheet" href="./theme.css">
+  <script src="/image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
 </helmet>
 
 <div style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden;">
@@ -38,7 +38,7 @@
     <div class="{{ navClass }}">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="">
+          <img src="/assets/libasai-mark.png" alt="">
           <span>LibasAI</span>
         </a>
 
@@ -213,15 +213,15 @@
           <div class="lb-search-cols">
             <div class="lb-search-col">
               <h4>Recent Searches</h4>
-              <a href="/search?q=rust+kurta+wedding">Rust kurta for wedding</a>
-              <a href="/search?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
-              <a href="/search?q=formal+shalwar+kameez">Formal shalwar kameez</a>
+              <a href="/ai/ask?q=rust+kurta+wedding">Rust kurta for wedding</a>
+              <a href="/ai/ask?q=lawn+suits+under+5000">Lawn suits under Rs. 5,000</a>
+              <a href="/ai/ask?q=formal+shalwar+kameez">Formal shalwar kameez</a>
             </div>
             <div class="lb-search-col">
               <h4>Trending Searches</h4>
-              <a href="/search?q=eid+collection+2026">Eid collection 2026</a>
-              <a href="/search?q=bridal+lehenga">Bridal lehenga</a>
-              <a href="/search?q=embroidered+kurta">Embroidered kurta</a>
+              <a href="/ai/ask?q=eid+collection+2026">Eid collection 2026</a>
+              <a href="/ai/ask?q=bridal+lehenga">Bridal lehenga</a>
+              <a href="/ai/ask?q=embroidered+kurta">Embroidered kurta</a>
             </div>
             <div class="lb-search-col">
               <h4>Suggested Categories</h4>
@@ -244,7 +244,7 @@
   <div id="lb-mobile-nav" class="{{ mobileClass }}" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="lb-mobile__top">
       <a href="/" class="lb-logo">
-        <img src="assets/libasai-emblem.png" alt="">
+        <img src="/assets/libasai-mark.png" alt="">
         <span>LibasAI</span>
       </a>
       <button type="button" id="lb-mobile-close" class="lb-burger" style="display:inline-flex;" aria-label="Close menu" onClick="{{ closeMobile }}">
@@ -399,7 +399,7 @@
         <div class="lb-outfit-item lb-outfit-item--1"><image-slot id="outfit-kurta" shape="rect" placeholder="Kurta" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102"></image-slot></div>
         <div class="lb-outfit-item lb-outfit-item--2"><image-slot id="outfit-dupatta" shape="rect" placeholder="Dupatta" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440"></image-slot></div>
         <div class="lb-outfit-item lb-outfit-item--3"><image-slot id="outfit-shoes" shape="rect" placeholder="Footwear" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958"></image-slot></div>
-        <div class="lb-outfit-item lb-outfit-item--4"><image-slot id="outfit-jewel" shape="rect" placeholder="Jewellery" src="assets/jewellery.jpg"></image-slot></div>
+        <div class="lb-outfit-item lb-outfit-item--4"><image-slot id="outfit-jewel" shape="rect" placeholder="Jewellery" src="/assets/jewellery.jpg"></image-slot></div>
       </div>
     </div>
   </section>
@@ -446,7 +446,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>

@@ -49,7 +49,7 @@ body { background: var(--lb-cream); }
 .lb-nav.is-scrolled .lb-nav__bar { padding-top: 12px; padding-bottom: 12px; }
 
 .lb-logo { display: flex; align-items: center; gap: 8px; }
-.lb-logo img { width: 30px; height: 30px; object-fit: contain; border-radius: 0; display: block; }
+.lb-logo img { width: 64px; height: 64px; object-fit: cover; border-radius: 50%; display: block; }
 .lb-logo span { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lu-red); }
 
 .lb-nav__center { display: flex; align-items: center; gap: 6px; }
@@ -673,7 +673,7 @@ a{ color:var(--lu-red); } a:hover{ color:var(--lu-red-deep); }
 .lb-nav{ background:transparent !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
   border-bottom:2px dotted var(--lu-dot) !important; }
 .lb-nav.is-scrolled{ background:var(--lu-blush) !important; border-bottom-color:var(--lu-dot) !important; }
-.lb-logo img{ width:30px !important; height:30px !important; object-fit:contain; border-radius:0 !important; mix-blend-mode:multiply; }
+.lb-logo img{ width:64px !important; height:64px !important; object-fit:cover; border-radius:50% !important; mix-blend-mode:normal; }
 .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; font-size:18px !important;
   letter-spacing:0.14em !important; text-transform:uppercase; color:var(--lu-red) !important; }
 .lb-nav__center{ gap:0 !important; }
@@ -742,3 +742,33 @@ a{ color:var(--lu-red); } a:hover{ color:var(--lu-red-deep); }
 .lu-tag{ display:inline-block; background:var(--lu-cream); font-family:'Manrope',sans-serif; font-weight:800; font-size:9px; letter-spacing:0.08em;
   text-transform:uppercase; color:var(--lu-red); border:2px dotted var(--lu-dot); padding:4px 8px; }
 .lu-rule{ border:0; border-top:2px dotted var(--lu-dot); margin:0; }
+
+.lb-panel-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background: #840E34 !important;
+  color: #FAF4EE !important;
+  border: 2px solid #840E34 !important;
+  padding: 12px 24px !important;
+  font-family: 'Manrope', sans-serif !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 14px rgba(132, 14, 52, 0.25) !important;
+  transition: all 180ms ease !important;
+  cursor: pointer !important;
+  margin-top: 14px;
+}
+.lb-panel-btn:hover {
+  background: #5E0A26 !important;
+  border-color: #5E0A26 !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(132, 14, 52, 0.35) !important;
+}
+

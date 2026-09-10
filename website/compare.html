@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/image-slot.js"></script>
 
   <style>
     /* ==========================================================================
@@ -120,84 +120,99 @@
       border-color: #5E1727;
     }
 
-    /* HIGHLY RECOMMENDED — computed, always visible without scrolling */
+    /* HIGHLY RECOMMENDED — computed, prominent AI decision result */
     .lb-cmp-recommend {
-      max-width: 1400px;
-      margin: 0 auto 14px;
-      padding: clamp(8px, 1vw, 10px) clamp(12px, 2vw, 16px);
-      background: #FFFFFF;
-      border: 1px solid var(--lb-hairline);
-      border-left: 3px solid var(--lb-burgundy);
+      width: 100%;
+      margin: 0 auto 28px;
+      padding: clamp(16px, 2vw, 24px) clamp(18px, 2.5vw, 32px);
+      background: linear-gradient(135deg, #FFFFFF 0%, #FDF8F9 100%);
+      border: 1.5px solid rgba(132, 14, 52, 0.22);
+      border-left: 6px solid var(--lb-burgundy);
+      border-radius: 10px;
       display: flex;
       align-items: center;
-      gap: clamp(10px, 1.4vw, 14px);
+      gap: clamp(16px, 2vw, 28px);
       flex-wrap: wrap;
-      box-shadow: 0 8px 20px rgba(25,20,18, 0.05);
+      box-shadow: 0 12px 32px rgba(132, 14, 52, 0.07);
+      box-sizing: border-box;
     }
     .lb-cmp-recommend__img {
-      width: 38px;
-      height: 47px;
-      object-fit: contain;
+      width: 76px;
+      height: 98px;
+      object-fit: cover;
       background: var(--lb-paper);
+      border-radius: 6px;
+      border: 1px solid rgba(132, 14, 52, 0.15);
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
     .lb-cmp-recommend__body {
-      flex: 1 1 260px;
-      min-width: 220px;
+      flex: 1 1 320px;
+      min-width: 240px;
     }
     .lb-cmp-recommend__eyebrow {
-      font-size: 9px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(132, 14, 52, 0.08);
+      border-radius: 999px;
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--lb-burgundy);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 3px;
+      margin-bottom: 8px;
     }
     .lb-cmp-recommend__name {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(13px, 1.1vw, 14.5px);
+      font-size: clamp(18px, 1.6vw, 24px);
       font-weight: 800;
-      margin: 0 0 2px;
+      margin: 0 0 6px;
       color: var(--lb-charcoal);
-      line-height: 1.2;
+      line-height: 1.25;
     }
     .lb-cmp-recommend__reason {
-      font-size: 11px;
-      line-height: 1.4;
-      color: rgba(25,20,18, 0.68);
-      max-width: 560px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: rgba(25, 20, 18, 0.75);
+      max-width: 720px;
       margin: 0;
     }
     .lb-cmp-recommend__stats {
       display: flex;
-      gap: clamp(12px, 1.4vw, 18px);
+      gap: clamp(16px, 2.2vw, 32px);
       flex-shrink: 0;
+      align-items: center;
+      padding: 0 8px;
     }
     .lb-cmp-recommend__stat strong {
       display: block;
       font-family: 'Playfair Display', serif;
-      font-size: 13.5px;
+      font-size: clamp(18px, 1.8vw, 24px);
       font-weight: 800;
       color: var(--lb-burgundy);
       line-height: 1.15;
     }
     .lb-cmp-recommend__stat span {
-      font-size: 8.5px;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: rgba(25,20,18, 0.5);
+      letter-spacing: 0.06em;
+      color: rgba(25, 20, 18, 0.55);
+      margin-top: 2px;
     }
     .lb-cmp-recommend__cta {
       flex-shrink: 0;
-      padding: 6px 12px;
-      font-size: 9.5px;
+      padding: 12px 24px;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 6px;
+      box-shadow: 0 4px 14px rgba(132, 14, 52, 0.2);
     }
-    @media (max-width: 760px) {
-      .lb-cmp-recommend { flex-direction: column; align-items: flex-start; }
+    @media (max-width: 860px) {
+      .lb-cmp-recommend { flex-direction: column; align-items: flex-start; padding: 18px; }
+      .lb-cmp-recommend__stats { padding: 0; width: 100%; justify-content: flex-start; }
       .lb-cmp-recommend__cta { width: 100%; justify-content: center; }
     }
 
@@ -233,7 +248,7 @@
 
     /* Row Label Column (Left Spine) */
     .lb-cmp-label-col {
-      font-size: 9px;
+      font-size: 10.5px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -270,18 +285,65 @@
       border-right: none;
     }
     .lb-cmp-prod-cell--best {
-      box-shadow: inset 0 3px 0 var(--lb-burgundy);
       background: #FFFFFF;
+      padding-top: 34px;
+      box-shadow: inset 0 0 0 2px var(--lb-burgundy), 0 14px 34px rgba(132, 14, 52, 0.18);
+      z-index: 2;
+      animation: lb-cmp-best-pulse 2.6s ease-in-out infinite;
+    }
+    .lb-cmp-prod-cell--best::before {
+      content: "LibasAI Pick";
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--lb-burgundy);
+      color: #FFF;
+      font-family: 'Manrope', sans-serif;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      z-index: 3;
+    }
+    @keyframes lb-cmp-best-pulse {
+      0%, 100% { box-shadow: inset 0 0 0 2px var(--lb-burgundy), 0 14px 34px rgba(132, 14, 52, 0.16); }
+      50% { box-shadow: inset 0 0 0 2px var(--lb-burgundy), 0 14px 40px rgba(132, 14, 52, 0.32); }
+    }
+    /* Highlighted spec cells down the recommended column */
+    .lb-cmp-cell.is-best-col {
+      background: rgba(132, 14, 52, 0.05);
+      box-shadow: inset 2px 0 0 var(--lb-burgundy), inset -2px 0 0 var(--lb-burgundy);
+    }
+    .lb-cmp-row--alt .lb-cmp-cell.is-best-col {
+      background: rgba(132, 14, 52, 0.08);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .lb-cmp-prod-cell--best { animation: none; }
+    }
+
+    /* Product header cell → whole block links to the product */
+    .lb-cmp-prod-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .lb-cmp-prod-link:hover .lb-cmp-name {
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     /* Product Imagery */
     .lb-cmp-img-wrap {
       position: relative;
       width: 100%;
+      max-width: 190px;
       aspect-ratio: 4/5;
       overflow: hidden;
       background: var(--lb-paper);
-      margin-bottom: 8px;
+      margin: 0 auto 10px;
     }
     .lb-cmp-img-wrap img {
       width: 100%;
@@ -291,7 +353,7 @@
       transition: transform 260ms var(--lb-ease);
     }
     .lb-cmp-prod-cell:hover .lb-cmp-img-wrap img {
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
 
     /* Small Remove Control */
@@ -320,20 +382,20 @@
 
     /* Product Meta */
     .lb-cmp-brand {
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--lb-rose);
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
     .lb-cmp-name {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 12.5px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--lb-charcoal);
-      margin: 0 0 5px;
-      line-height: 1.25;
+      margin: 0 0 6px;
+      line-height: 1.28;
     }
     .lb-cmp-price-row {
       display: flex;
@@ -344,7 +406,7 @@
     }
     .lb-cmp-price {
       font-family: 'Playfair Display', serif;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--lb-burgundy);
     }
@@ -353,28 +415,51 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      padding: 6px 12px;
+      padding: 8px 12px;
       background: var(--lb-burgundy);
       color: #FFFFFF;
-      font-size: 9.5px;
+      font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       text-decoration: none;
       box-sizing: border-box;
-      transition: background 180ms ease;
+      border: 1.5px solid var(--lb-burgundy);
+      transition: background 180ms ease, color 180ms ease;
     }
     .lb-cmp-visit-btn:hover {
+      background: #FFFFFF;
+      color: var(--lb-burgundy);
+    }
+    .lb-cmp-look-btn {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: transparent;
+      color: var(--lb-burgundy);
+      border: 1.5px dotted var(--lb-burgundy);
+      font-family: inherit;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: background 180ms ease, color 180ms ease;
+    }
+    .lb-cmp-look-btn:hover {
       background: var(--lb-burgundy);
+      color: #FFFFFF;
     }
 
     /* 4. COMPARISON DATA ROWS */
     .lb-cmp-cell {
-      padding: 7px 10px;
+      padding: 8px 11px;
       border-right: 1px solid var(--lb-hairline);
       border-bottom: 1px solid var(--lb-hairline);
-      font-size: 11px;
-      line-height: 1.4;
+      font-size: 12.5px;
+      line-height: 1.42;
       color: var(--lb-charcoal);
       display: flex;
       align-items: center;
@@ -755,7 +840,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -957,23 +1042,23 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/ai/ask" class="lb-mega-card-tile">
-                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <img src="/assets/feature-ask-libasai.jpg" alt="">
                     <span>Ask LibasAI</span>
                   </a>
                   <a href="/ai/image-search" class="lb-mega-card-tile">
-                    <img src="assets/feature-image-search.jpg" alt="">
+                    <img src="/assets/feature-image-search.jpg" alt="">
                     <span>Image Search</span>
                   </a>
                   <a href="/ai/compare" class="lb-mega-card-tile">
-                    <img src="assets/feature-compare.jpg" alt="">
+                    <img src="/assets/feature-compare.jpg" alt="">
                     <span>Compare</span>
                   </a>
                   <a href="/ai/outfit-builder" class="lb-mega-card-tile">
-                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <img src="/assets/feature-outfit-builder.jpg" alt="">
                     <span>Outfit Builder</span>
                   </a>
                   <a href="/ai/morning-edit" class="lb-mega-card-tile">
-                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <img src="/assets/feature-subah-edit.jpg" alt="">
                     <span>Subah Edit</span>
                   </a>
                 </div>
@@ -990,19 +1075,19 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/tailors.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <img src="/assets/tailor-workshop.jpg" alt="">
                     <span>Find Master Tailors</span>
                   </a>
                   <a href="/get-stitched.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <img src="/assets/tailor-sewing.jpg" alt="">
                     <span>Get Stitched</span>
                   </a>
                   <a href="/my-requests.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-shears.jpg" alt="">
+                    <img src="/assets/tailor-shears.jpg" alt="">
                     <span>My Stitching Requests</span>
                   </a>
                   <a href="/tailor-portal.html" class="lb-mega-card-tile">
-                    <img src="assets/flagship-studio.jpg" alt="">
+                    <img src="/assets/flagship-studio.jpg" alt="">
                     <span>Tailor Partner Portal</span>
                   </a>
                 </div>
@@ -1065,7 +1150,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -1157,7 +1242,6 @@
 <header class="lb-cmp-head-section">
     <div class="lb-cmp-head-wrap">
       <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
-        <img src="assets/feature-compare.jpg" alt="This or That" style="width:58px;height:58px;object-fit:cover;border:2px solid var(--lb-burgundy);border-radius:4px;box-shadow:0 4px 14px rgba(25,20,18,0.12);flex-shrink:0;">
         <div>
           <div class="lb-cmp-eyebrow">Comparison Agent &middot; Side by Side Spec Matrix</div>
           <h1 class="lb-cmp-hero-title">Same look, side by side.</h1>
@@ -1178,26 +1262,26 @@
     </div>
   </header>
 
-  <!-- HIGHLY RECOMMENDED — computed from the active comparison set, shown before the matrix so it's visible at a glance -->
-  <section class="lb-cmp-recommend" id="lb-cmp-recommend" aria-label="LibasAI's recommended pick">
-    <img class="lb-cmp-recommend__img" id="rec-img" src="" alt="">
-    <div class="lb-cmp-recommend__body">
-      <div class="lb-cmp-recommend__eyebrow">
-        <svg style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8;"><use href="#lb-i-sparkles"></use></svg>
-        LibasAI Highly Recommends
-      </div>
-      <h2 class="lb-cmp-recommend__name" id="rec-name"></h2>
-      <p class="lb-cmp-recommend__reason" id="rec-reason"></p>
-    </div>
-    <div class="lb-cmp-recommend__stats">
-      <div class="lb-cmp-recommend__stat"><strong id="rec-score"></strong><span>AI Match</span></div>
-      <div class="lb-cmp-recommend__stat"><strong id="rec-price"></strong><span>Price</span></div>
-    </div>
-    <a href="#" id="rec-cta" target="_blank" rel="noopener" class="lb-cmp-action-btn lb-cmp-action-btn--primary lb-cmp-recommend__cta">Visit Brand &rarr;</a>
-  </section>
-
   <!-- 2, 3 & 4. UNIFIED COMPARISON MATRIX SECTION -->
   <main class="lb-cmp-matrix-section">
+
+    <!-- HIGHLY RECOMMENDED — computed from active comparison set, prominent decision hero card -->
+    <section class="lb-cmp-recommend" id="lb-cmp-recommend" aria-label="LibasAI's recommended pick">
+      <img class="lb-cmp-recommend__img" id="rec-img" src="" alt="">
+      <div class="lb-cmp-recommend__body">
+        <div class="lb-cmp-recommend__eyebrow">
+          LibasAI Highly Recommends
+        </div>
+        <h2 class="lb-cmp-recommend__name" id="rec-name"></h2>
+        <p class="lb-cmp-recommend__reason" id="rec-reason"></p>
+      </div>
+      <div class="lb-cmp-recommend__stats">
+        <div class="lb-cmp-recommend__stat"><strong id="rec-score"></strong><span>AI Match</span></div>
+        <div class="lb-cmp-recommend__stat"><strong id="rec-price"></strong><span>Price</span></div>
+      </div>
+      <a href="#" id="rec-cta" target="_blank" rel="noopener" class="lb-cmp-action-btn lb-cmp-action-btn--primary lb-cmp-recommend__cta">View Product</a>
+    </section>
+
     <div class="lb-cmp-matrix-scroll">
       <div class="lb-cmp-grid" id="lb-cmp-grid" style="--col-count: 3;">
 
@@ -1208,7 +1292,7 @@
 
         <!-- PRODUCT 1 -->
         <div class="lb-cmp-prod-cell" id="prod-col-p1" data-prod-id="p1">
-          <button type="button" class="lb-cmp-remove-btn" onclick="removeProduct('p1')">&times; Remove</button>
+          <button type="button" class="lb-cmp-remove-btn" onclick="removeProduct('p1')">Remove</button>
           <div>
             <div class="lb-cmp-img-wrap">
               <img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="Sana Safinaz Festive Kurta">
@@ -1220,12 +1304,12 @@
               <span style="font-size:12px; color:rgba(25,20,18,0.5);">Retail</span>
             </div>
           </div>
-          <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cmp-visit-btn">Visit Brand &rarr;</a>
+          <a href="https://sanasafinaz.com" target="_blank" rel="noopener" class="lb-cmp-visit-btn">View Product</a>
         </div>
 
         <!-- PRODUCT 2 -->
         <div class="lb-cmp-prod-cell" id="prod-col-p2" data-prod-id="p2">
-          <button type="button" class="lb-cmp-remove-btn" onclick="removeProduct('p2')">&times; Remove</button>
+          <button type="button" class="lb-cmp-remove-btn" onclick="removeProduct('p2')">Remove</button>
           <div>
             <div class="lb-cmp-img-wrap">
               <img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="Zellbury Embroidered Suit">
@@ -1237,12 +1321,12 @@
               <span class="lb-cmp-pill lb-cmp-pill--lowest">Lowest Price</span>
             </div>
           </div>
-          <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-cmp-visit-btn">Visit Brand &rarr;</a>
+          <a href="https://www.zellbury.com" target="_blank" rel="noopener" class="lb-cmp-visit-btn">View Product</a>
         </div>
 
         <!-- PRODUCT 3 -->
         <div class="lb-cmp-prod-cell" id="prod-col-p3" data-prod-id="p3">
-          <button type="button" class="lb-cmp-remove-btn" onclick="removeProduct('p3')">&times; Remove</button>
+          <button type="button" class="lb-cmp-remove-btn" onclick="removeProduct('p3')">Remove</button>
           <div>
             <div class="lb-cmp-img-wrap">
               <img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="Beechtree Raw Silk Suit">
@@ -1254,7 +1338,7 @@
               <span class="lb-cmp-pill lb-cmp-pill--best">Best Match</span>
             </div>
           </div>
-          <a href="https://beechtree.pk" target="_blank" rel="noopener" class="lb-cmp-visit-btn">Visit Brand &rarr;</a>
+          <a href="https://beechtree.pk" target="_blank" rel="noopener" class="lb-cmp-visit-btn">View Product</a>
         </div>
 
         <!-- ================= ROW: PRICE ================= -->
@@ -1344,36 +1428,6 @@
     <!-- 7. LIBASAI VERDICT — the headline/copy now lives only in the top
          "Highly Recommends" banner; this section stays as three distinct,
          compact picks (each with its own thumbnail) rather than repeating it. -->
-    <section class="lb-cmp-verdict-section" aria-label="LibasAI Synthesis Verdict">
-      <div class="lb-cmp-verdict-label">Three Ways To Decide</div>
-
-      <div class="lb-cmp-outcomes-grid">
-        <div class="lb-cmp-outcome-item">
-          <img class="lb-cmp-outcome-img" id="verdict-best-overall-img" src="" alt="">
-          <div>
-            <span class="lb-cmp-outcome-tag">Best Overall Match</span>
-            <h4 class="lb-cmp-outcome-name" id="verdict-best-overall">Beechtree Raw Silk</h4>
-            <p class="lb-cmp-outcome-desc" id="verdict-best-overall-desc">Pure raw silk luster with organza cutwork, ideal for modern formal indoor receptions.</p>
-          </div>
-        </div>
-        <div class="lb-cmp-outcome-item">
-          <img class="lb-cmp-outcome-img" id="verdict-best-value-img" src="" alt="">
-          <div>
-            <span class="lb-cmp-outcome-tag">Best Value Pick</span>
-            <h4 class="lb-cmp-outcome-name" id="verdict-best-value">Zellbury 3-Piece</h4>
-            <p class="lb-cmp-outcome-desc" id="verdict-best-value-desc">Complete 3-piece embroidered suit at Rs. 4,490 with breathable combed lawn weave.</p>
-          </div>
-        </div>
-        <div class="lb-cmp-outcome-item">
-          <img class="lb-cmp-outcome-img" id="verdict-most-balanced-img" src="" alt="">
-          <div>
-            <span class="lb-cmp-outcome-tag">Most Balanced Choice</span>
-            <h4 class="lb-cmp-outcome-name" id="verdict-most-balanced">Sana Safinaz Festive</h4>
-            <p class="lb-cmp-outcome-desc" id="verdict-most-balanced-desc">Designer house pedigree and fine zari embroidery with chiffon dupatta elegance.</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- 8. ASK LIBASAI INTERACTION AREA -->
     <section class="lb-cmp-ask-section" aria-label="Ask LibasAI Interactive Assistant">
@@ -1479,7 +1533,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -1533,7 +1587,7 @@
     </div>
   </footer>
 
-  <script src="./nav.js"></script>
+  <script src="/nav.js"></script>
   <script>
     /* ==========================================================================
        INTERACTIVE COMPARISON CLIENT LOGIC
@@ -1547,7 +1601,7 @@
         name: "Embroidered Lawn Festive 2PC",
         price: "Rs. 10,299",
         img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485",
-        link: "https://sanasafinaz.com",
+        link: "https://sanasafinaz.com/products/stitched-embroidered-lawn-shirt-shalwar-ss26ese427p2t",
         pill: "Retail",
         fabric: "100% Fine Lawn with Pure Chiffon Dupatta",
         emb: "Intricate Zari Neckline & Sleeve Borders",
@@ -1568,7 +1622,7 @@
         name: "Embroidered Shirt Shalwar Dupatta",
         price: "Rs. 4,490",
         img: "https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804",
-        link: "https://www.zellbury.com",
+        link: "https://zellbury.com/products/shirt-shalwar-dupatta-wus26e34112",
         pill: "Lowest Price",
         fabric: "Pure Combed Air-Jet Lawn with Voile Dupatta",
         emb: "Threadwork Gala Motif with Matching Shalwar Cuff",
@@ -1589,7 +1643,7 @@
         name: "Embroidered Raw Silk Stitched Suit",
         price: "Rs. 10,194",
         img: "https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441",
-        link: "https://beechtree.pk",
+        link: "https://beechtree.pk/products/bt1260001lp2510aa-sea-green",
         pill: "Best Match",
         fabric: "Structured 60g Raw Silk with Organza Inserts",
         emb: "Scalloped Hemline with Resham Cutwork",
@@ -1610,7 +1664,7 @@
         name: "3PC Lawn Printed Suit",
         price: "Rs. 4,893",
         img: "https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960",
-        link: "https://www.gulahmedshop.com",
+        link: "https://www.gulahmedshop.com/products/3pc-lawn-printed-suit-iustksd-2207",
         pill: "Unstitched Classic",
         fabric: "100% Combed Lawn (3.5 Meters Pure Cotton)",
         emb: "High-Definition Digital Floral Print",
@@ -1631,7 +1685,7 @@
         name: "Raw Silk Shirt Dupatta Suit",
         price: "Rs. 10,490",
         img: "https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802",
-        link: "https://www.zeenwoman.com",
+        link: "https://zeenwoman.com/products/printed-embroidered-raw-silk-stitched-shirt-dupatta-suit-wld26291-purple",
         pill: "Minimalist Silk",
         fabric: "Premium Raw Silk with Silk Dupatta",
         emb: "Delicate Threadwork & Sequin Highlights",
@@ -1652,7 +1706,7 @@
         name: "Naturally Me Festive Pret",
         price: "Rs. 10,950",
         img: "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379",
-        link: "https://mushq.com",
+        link: "https://mushq.com/products/naturally-me",
         pill: "Couture Pret",
         fabric: "Rich Velvet & Organza Accents",
         emb: "Heavy Hand-worked Tilla & Zari Embroidery",
@@ -1673,7 +1727,7 @@
         name: "Stitched Embroidered Lawn Kurta",
         price: "Rs. 2,480",
         img: "https://cdn.shopify.com/s/files/1/0740/1753/8280/files/ss25sge333_1.jpg?v=1756730702",
-        link: "https://sanasafinaz.com",
+        link: "https://sanasafinaz.com/products/stitched-embroidered-shalwar",
         pill: "Designer Entry",
         fabric: "Lightweight Breathable Lawn",
         emb: "Minimalist Neckline Tilla Accent",
@@ -1861,7 +1915,7 @@
         { key: "BRAND", label: "Brand", fn: function(p) { return p.brandType; } },
         { key: "AIMATCH", label: "AI Match", fn: function(p) {
           var isBest = p.id === bestId;
-          return '<div><strong' + (isBest ? ' style="color:var(--lb-burgundy);"' : '') + '>' + (isBest ? '🏆 ' : '') + p.matchScore + '</strong><div style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:2px;">' + p.matchSub + '</div></div>';
+          return '<div><strong' + (isBest ? ' style="color:var(--lb-burgundy);"' : '') + '>' + p.matchScore + '</strong>' + (isBest ? ' <span class="lb-cmp-pill lb-cmp-pill--best">Top Pick</span>' : '') + '<div style="font-size:12px; color:rgba(25,20,18,0.6); margin-top:2px;">' + p.matchSub + '</div></div>';
         }},
         { key: "BESTFOR", label: "Best For", fn: function(p) { return '<strong>' + p.bestFor + '</strong>'; } }
       ];
@@ -1874,19 +1928,23 @@
         var p = productDatabase[id];
         var pill = '';
         if (p.id === bestId) {
-          pill = '<span class="lb-cmp-pill lb-cmp-pill--best">🏆 Highly Recommended</span>';
+          pill = '<span class="lb-cmp-pill lb-cmp-pill--best">Highly Recommended</span>';
         } else if (p.id === valueId) {
           pill = '<span class="lb-cmp-pill lb-cmp-pill--lowest">Lowest Price</span>';
         }
         html += '<div class="lb-cmp-prod-cell' + (p.id === bestId ? ' lb-cmp-prod-cell--best' : '') + '" id="prod-col-' + p.id + '" data-prod-id="' + p.id + '">' +
-          '<button type="button" class="lb-cmp-remove-btn" onclick="removeProduct(\'' + p.id + '\')">&times; Remove</button>' +
-          '<div>' +
+          '<button type="button" class="lb-cmp-remove-btn" onclick="removeProduct(\'' + p.id + '\')">Remove</button>' +
+          '<a href="' + p.link + '" target="_blank" rel="noopener" class="lb-cmp-prod-link">' +
           '<div class="lb-cmp-img-wrap"><img src="' + p.img + '" alt="' + p.brand + '"></div>' +
           '<div class="lb-cmp-brand">' + p.brand + '</div>' +
           '<h3 class="lb-cmp-name">' + p.name + '</h3>' +
           '<div class="lb-cmp-price-row"><div class="lb-cmp-price">' + p.price + '</div>' + pill + '</div>' +
+          '</a>' +
+          '<div>' +
+          '<a href="' + p.link + '" target="_blank" rel="noopener" class="lb-cmp-visit-btn">View Product</a>' +
+          '<button type="button" class="lb-cmp-look-btn" onclick="completeTheLook(\'' + p.id + '\')">Complete the Look</button>' +
+          '<button type="button" class="lb-cmp-look-btn" onclick="getItStitched(\'' + p.id + '\')">Get it Stitched</button>' +
           '</div>' +
-          '<a href="' + p.link + '" target="_blank" rel="noopener" class="lb-cmp-visit-btn">Visit Brand &rarr;</a>' +
           '</div>';
       });
 
@@ -1896,7 +1954,7 @@
         html += '<div class="lb-cmp-label-col' + altClass + '">' + r.label + '</div>';
         activeProductIds.forEach(function(id) {
           var p = productDatabase[id];
-          html += '<div class="lb-cmp-cell cell-' + p.id + altClass + '">' + r.fn(p) + '</div>';
+          html += '<div class="lb-cmp-cell cell-' + p.id + altClass + (p.id === bestId ? ' is-best-col' : '') + '">' + r.fn(p) + '</div>';
         });
       });
 
@@ -1956,10 +2014,84 @@
       window.location.href = "/ai/ask?q=" + encodeURIComponent(promptText + " for Sana Safinaz vs Zellbury vs Beechtree comparison");
     }
 
+    // "Complete the Look" — carry the chosen product to the Outfit Builder,
+    // which then asks what to pair with it (dupatta, trousers, jewellery...).
+    function completeTheLook(id) {
+      var p = productDatabase[id];
+      if (!p) return;
+      try {
+        sessionStorage.setItem("lb_look_base", JSON.stringify({
+          brand: p.brand, name: p.name, price: p.price, img: p.img, link: p.link
+        }));
+      } catch (e) {}
+      window.location.href = "/outfit-builder";
+    }
+
+    // "Get it Stitched" — send the chosen piece to the bespoke stitching flow.
+    function getItStitched(id) {
+      var p = productDatabase[id];
+      if (!p) return;
+      var q = "/get-stitched?design=catalog"
+        + "&title=" + encodeURIComponent(p.name || "")
+        + "&img=" + encodeURIComponent(p.img || "")
+        + "&by=" + encodeURIComponent(p.brand || "");
+      window.location.href = q;
+    }
+
     // Initialize on load — render the matrix, verdict, and recommendation
     // banner from data so there's one source of truth (no hand-authored
     // markup to keep in sync with the computed pills).
+    // If the user arrived here via "Compare these" from the AI Assistant, the
+    // selected items are handed over in sessionStorage — build the matrix from
+    // them instead of the default three.
+    function hydrateFromHandoff() {
+      var raw;
+      try { raw = sessionStorage.getItem("lb_compare_items"); } catch (e) { return; }
+      if (!raw) return;
+      var items;
+      try { items = JSON.parse(raw); } catch (e) { return; }
+      if (!Array.isArray(items) || !items.length) return;
+      try { sessionStorage.removeItem("lb_compare_items"); } catch (e) {}
+
+      var FABRICS = ["Fine Lawn with Chiffon Dupatta", "Raw Silk with Organza Inserts", "Combed Cotton Lawn 3PC", "Premium Silk with Silk Dupatta"];
+      var OCCASIONS = ["Eid Evening & Formal Dinners", "Festive Wedding Reception", "Eid Day & Family Gatherings", "Evening Celebrations"];
+      var newIds = [];
+      var newDb = {};
+      items.slice(0, 4).forEach(function (it, i) {
+        var id = "h" + (i + 1);
+        var priceNum = parseInt(String(it.price || "").replace(/[^0-9]/g, ''), 10) || 0;
+        newIds.push(id);
+        newDb[id] = {
+          id: id,
+          brand: it.brand || "Brand",
+          name: it.title || it.name || "Stitched Suit",
+          price: it.price || "Rs. —",
+          img: it.img,
+          link: it.url || it.link || "#",
+          pill: "From your search",
+          fabric: FABRICS[i % FABRICS.length],
+          emb: "Threadwork neckline & sleeve borders",
+          style: "Contemporary festive pret",
+          occasion: OCCASIONS[i % OCCASIONS.length],
+          sizes: "XS, S, M, L (Regular Pakistani Fit)",
+          colors: it.color ? (it.color.charAt(0).toUpperCase() + it.color.slice(1)) : "As shown",
+          avail: "In Stock (Dispatches in 3–5 Business Days)",
+          brandType: it.brand || "Pakistani Label",
+          score: 96 - i * 4,
+          matchScore: (96 - i * 4) + "% Match",
+          matchSub: "Aligned with the look, occasion and budget from your search.",
+          bestFor: i === 0 ? "Closest Overall Match" : "Strong Alternative"
+        };
+      });
+      productDatabase = newDb;
+      activeProductIds = newIds;
+
+      var ctx = document.querySelector(".lb-cmp-context");
+      if (ctx) ctx.innerHTML = 'Comparing the <strong>' + newIds.length + ' picks</strong> you sent from LibasAI Assistant.';
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
+      hydrateFromHandoff();
       renderFullGrid();
       updateStickyBar();
       recalculateVerdict();

@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./theme.css">
-  <script src="./image-slot.js"></script>
+  <link rel="stylesheet" href="/theme.css">
+  <script src="/image-slot.js"></script>
   <style>
     .lb-wizard-wrap {
       max-width: 1040px;
@@ -179,6 +179,53 @@
       padding-top: 24px;
       border-top: 1px solid var(--lb-hairline);
     }
+
+    /* Refined dropdowns */
+    .lb-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13.5px;
+      font-weight: 650;
+      color: var(--lb-charcoal);
+      background-color: #FFF;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23840E34' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      border: 1.5px solid rgba(25,20,18,0.16);
+      border-radius: 8px;
+      padding: 11px 40px 11px 14px;
+      width: 100%;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+    .lb-select:hover { border-color: rgba(132,14,52,0.45); }
+    .lb-select:focus {
+      outline: none;
+      border-color: var(--lb-burgundy);
+      box-shadow: 0 0 0 3px rgba(132,14,52,0.12);
+    }
+    .lb-select option { color: var(--lb-charcoal); }
+    .lb-input {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13.5px;
+      font-weight: 650;
+      color: var(--lb-charcoal);
+      background: #FFF;
+      border: 1.5px solid rgba(25,20,18,0.16);
+      border-radius: 8px;
+      padding: 11px 14px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+    }
+    .lb-input:hover { border-color: rgba(132,14,52,0.45); }
+    .lb-input:focus {
+      outline: none;
+      border-color: var(--lb-burgundy);
+      box-shadow: 0 0 0 3px rgba(132,14,52,0.12);
+    }
   </style>
 </head>
 <body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
@@ -210,7 +257,7 @@
     <div class="lb-nav">
       <div class="lb-nav__bar">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
 
@@ -412,23 +459,23 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/ai/ask" class="lb-mega-card-tile">
-                    <img src="assets/feature-ask-libasai.jpg" alt="">
+                    <img src="/assets/feature-ask-libasai.jpg" alt="">
                     <span>Ask LibasAI</span>
                   </a>
                   <a href="/ai/image-search" class="lb-mega-card-tile">
-                    <img src="assets/feature-image-search.jpg" alt="">
+                    <img src="/assets/feature-image-search.jpg" alt="">
                     <span>Image Search</span>
                   </a>
                   <a href="/ai/compare" class="lb-mega-card-tile">
-                    <img src="assets/feature-compare.jpg" alt="">
+                    <img src="/assets/feature-compare.jpg" alt="">
                     <span>Compare</span>
                   </a>
                   <a href="/ai/outfit-builder" class="lb-mega-card-tile">
-                    <img src="assets/feature-outfit-builder.jpg" alt="">
+                    <img src="/assets/feature-outfit-builder.jpg" alt="">
                     <span>Outfit Builder</span>
                   </a>
                   <a href="/ai/morning-edit" class="lb-mega-card-tile">
-                    <img src="assets/feature-subah-edit.jpg" alt="">
+                    <img src="/assets/feature-subah-edit.jpg" alt="">
                     <span>Subah Edit</span>
                   </a>
                 </div>
@@ -445,19 +492,19 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/tailors.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-workshop.jpg" alt="">
+                    <img src="/assets/tailor-workshop.jpg" alt="">
                     <span>Find Master Tailors</span>
                   </a>
                   <a href="/get-stitched.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-sewing.jpg" alt="">
+                    <img src="/assets/tailor-sewing.jpg" alt="">
                     <span>Get Stitched</span>
                   </a>
                   <a href="/my-requests.html" class="lb-mega-card-tile">
-                    <img src="assets/tailor-shears.jpg" alt="">
+                    <img src="/assets/tailor-shears.jpg" alt="">
                     <span>My Stitching Requests</span>
                   </a>
                   <a href="/tailor-portal.html" class="lb-mega-card-tile">
-                    <img src="assets/flagship-studio.jpg" alt="">
+                    <img src="/assets/flagship-studio.jpg" alt="">
                     <span>Tailor Partner Portal</span>
                   </a>
                 </div>
@@ -520,7 +567,7 @@
     <div id="lb-mobile-nav" class="lb-mobile" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="lb-mobile__top">
         <a href="/" class="lb-logo">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <button type="button" id="lb-mobile-close" class="lb-burger" aria-label="Close menu">
@@ -686,7 +733,7 @@
 
       <!-- DESIGN DETAIL PREVIEW BOX -->
       <div id="design-preview-box" style="background:var(--lb-paper); border-radius:6px; padding:20px; display:flex; gap:20px; align-items:center;">
-        <img id="design-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:88px; height:88px; object-fit:cover; border-radius:4px; border:1px solid rgba(25,20,18,0.15);" alt="Design preview">
+        <img id="design-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:92px; height:120px; object-fit:cover; object-position:top center; border-radius:4px; border:1px solid rgba(25,20,18,0.15); flex-shrink:0;" alt="Design preview">
         <div style="flex:1;">
           <strong id="design-title" style="font-size:16px; color:var(--lb-charcoal); display:block; margin-bottom:4px;">
             Olive Raw Silk Traditional Kurta
@@ -708,7 +755,7 @@
 
       <div class="lb-wizard-nav">
         <span></span>
-        <button type="button" class="lb-cta" onclick="goToStep(2)">Continue to Choose Tailor →</button>
+        <button type="button" class="lb-cta" onclick="goToStep(2)">Continue to Choose Tailor</button>
       </div>
     </div>
 
@@ -724,7 +771,7 @@
         
         <label class="lb-tailor-pick-card is-selected" onclick="selectTailorRadio('rafiq', this)">
           <input type="radio" name="chosen_tailor" value="rafiq" checked>
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <img src="/assets/tailor-sewing.jpg" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
           <div style="flex:1;">
             <strong style="font-size:15px; color:var(--lb-charcoal);">Master Rafiq & Sons Bespoke Atelier</strong>
             <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">Gulberg III & Old Anarkali, Lahore · 24 Yrs Exp · Rating: 4.95</div>
@@ -735,7 +782,7 @@
 
         <label class="lb-tailor-pick-card" onclick="selectTailorRadio('noor', this)">
           <input type="radio" name="chosen_tailor" value="noor">
-          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <img src="/assets/tailor-sewing.jpg" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
           <div style="flex:1;">
             <strong style="font-size:15px; color:var(--lb-charcoal);">Noor Bridal & Couture Studio</strong>
             <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">Clifton & Tariq Road, Karachi · 16 Yrs Exp · Rating: 4.98</div>
@@ -746,7 +793,7 @@
 
         <label class="lb-tailor-pick-card" onclick="selectTailorRadio('aslam', this)">
           <input type="radio" name="chosen_tailor" value="aslam">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <img src="/assets/tailor-sewing.jpg" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
           <div style="flex:1;">
             <strong style="font-size:15px; color:var(--lb-charcoal);">Ustaad Aslam Master Cutter</strong>
             <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">F-10 Markaz & Blue Area, Islamabad · 28 Yrs Exp · Rating: 4.90</div>
@@ -757,7 +804,7 @@
 
         <label class="lb-tailor-pick-card" onclick="selectTailorRadio('gulberg', this)">
           <input type="radio" name="chosen_tailor" value="gulberg">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
+          <img src="/assets/tailor-sewing.jpg" style="width:52px; height:52px; border-radius:50%; object-fit:cover;" alt="">
           <div style="flex:1;">
             <strong style="font-size:15px; color:var(--lb-charcoal);">Gulberg Express Stitching</strong>
             <div style="font-size:12.5px; color:rgba(25,20,18,0.65);">MM Alam Road, Lahore · 14 Yrs Exp · Rating: 4.88</div>
@@ -768,8 +815,8 @@
       </div>
 
       <div class="lb-wizard-nav">
-        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(1)">← Back to Design</button>
-        <button type="button" class="lb-cta" onclick="goToStep(3)">Continue to Measurements →</button>
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(1)">Back to Design</button>
+        <button type="button" class="lb-cta" onclick="goToStep(3)">Continue to Measurements</button>
       </div>
     </div>
 
@@ -856,8 +903,8 @@
       </div>
 
       <div class="lb-wizard-nav">
-        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(2)">← Back to Tailors</button>
-        <button type="button" class="lb-cta" onclick="goToStep(4)">Continue to Stitching Details →</button>
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(2)">Back to Tailors</button>
+        <button type="button" class="lb-cta" onclick="goToStep(4)">Continue to Stitching Details</button>
       </div>
     </div>
 
@@ -938,8 +985,8 @@
       </div>
 
       <div class="lb-wizard-nav">
-        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(3)">← Back to Measurements</button>
-        <button type="button" class="lb-cta" onclick="goToStep(5)">Continue to Required Date →</button>
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(3)">Back to Measurements</button>
+        <button type="button" class="lb-cta" onclick="goToStep(5)">Continue to Required Date</button>
       </div>
     </div>
 
@@ -986,8 +1033,8 @@
       </div>
 
       <div class="lb-wizard-nav">
-        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(4)">← Back to Details</button>
-        <button type="button" class="lb-cta" onclick="prepareReviewAndGo()">Review Stitching Request →</button>
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(4)">Back to Details</button>
+        <button type="button" class="lb-cta" onclick="prepareReviewAndGo()">Review Stitching Request</button>
       </div>
     </div>
 
@@ -1005,7 +1052,7 @@
         <div style="background:#FAF6F0; border-radius:6px; padding:22px; border:1px solid var(--lb-hairline);">
           
           <div style="display:flex; gap:16px; align-items:center; padding-bottom:18px; border-bottom:1px solid rgba(25,20,18,0.08);">
-            <img id="rev-design-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:70px; height:70px; object-fit:cover; border-radius:4px;" alt="">
+            <img id="rev-design-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" style="width:74px; height:96px; object-fit:cover; object-position:top center; border-radius:4px; flex-shrink:0;" alt="">
             <div>
               <span class="lb-tag" style="background:#FFF;">Design / Look</span>
               <strong id="rev-design-title" style="font-size:15px; display:block; margin:4px 0 2px;">Olive Raw Silk Traditional Kurta</strong>
@@ -1084,7 +1131,7 @@
           <div style="margin-top:28px;">
             <button type="button" class="lb-cta lb-cta--wide" style="display:flex; text-align:center; justify-content:center; gap:8px;" onclick="submitStitchingRequest()">
               <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
-              Send Stitching Request →
+              Send Stitching Request
             </button>
             <div style="text-align:center; margin-top:10px; font-size:11.5px; color:rgba(25,20,18,0.6); display:flex; align-items:center; justify-content:center; gap:5px;">
               <svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-check"></use></svg>
@@ -1096,7 +1143,7 @@
       </div>
 
       <div class="lb-wizard-nav">
-        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(5)">← Back to Date</button>
+        <button type="button" class="lb-cta lb-cta--ghost" onclick="goToStep(5)">Back to Date</button>
       </div>
     </div>
 
@@ -1107,7 +1154,7 @@
     <div class="lb-footer__top">
       <div class="lb-footer__brand">
         <a href="/" class="lb-logo" style="text-decoration:none;">
-          <img src="assets/libasai-emblem.png" alt="LibasAI Logo">
+          <img src="/assets/libasai-mark.png" alt="LibasAI Logo">
           <span>LibasAI</span>
         </a>
         <p>An AI-powered shopping assistant for Pakistani fashion: discovery and direct brand redirect, zero inventory, and zero checkout markups.</p>
@@ -1132,7 +1179,7 @@
         <a href="/compare.html">Multi-Brand Compare</a>
         <a href="/outfit-builder.html">AI Outfit Builder</a>
         <a href="/morning-edit.html">Subah Edit</a>
-        <a href="/ai-features.html">All AI Features →</a>
+        <a href="/ai-features.html">All AI Features</a>
       </div>
       <div class="lb-footer__col">
         <h4>Tailor Network</h4>
@@ -1161,7 +1208,7 @@
     </div>
   </footer>
 
-  <script src="./nav.js"></script>
+  <script src="/nav.js"></script>
   <script>
     var currentStep = 1;
     var maxStep = 6;
@@ -1205,6 +1252,11 @@
       var imgParam = params.get('img');
       if (imgParam) {
         document.getElementById('design-img').src = imgParam;
+      }
+      var byParam = params.get('by');
+      if (byParam) {
+        var subEl = document.getElementById('design-subtitle');
+        if (subEl) subEl.innerText = 'From ' + byParam + ' · chosen in LibasAI Compare';
       }
 
       // Default date to today + 7 days
@@ -1415,9 +1467,12 @@
       var reqId = 'REQ-' + Math.floor(1000 + Math.random() * 9000);
       var tailor = tailorDataMap[selectedTailorKey] || tailorDataMap['rafiq'];
 
+      var _now = new Date();
       var requestObj = {
         id: reqId,
-        dateSubmitted: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        dateSubmitted: _now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        submittedAt: _now.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }).replace(',', ' ·'),
+        submittedAtISO: _now.toISOString(),
         status: 'Pending', // Pending, Accepted, In Progress, Ready, Completed
         tailorKey: selectedTailorKey,
         tailorName: tailor.name,
