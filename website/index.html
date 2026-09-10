@@ -537,7 +537,7 @@
     font-weight: 800;
     font-size: 13.5px;
     letter-spacing: 0.08em;
-    text-transform: lowercase;
+    text-transform: none;
     color: var(--lu-red);
     transform: rotate(3deg);
     white-space: nowrap;
@@ -788,7 +788,9 @@
   .lu-panel{ display:none; }
   .lu-panel.is-active{ display:block; animation:luFade .35s ease; }
   @keyframes luFade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
-  .lu-panel__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
+  .lu-panel__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; align-items:start; }
+  .lu-panel__grid .lu-arch{ aspect-ratio:auto; height:clamp(190px, 18vw, 230px); }
+  .lu-panel__grid .lu-arch img{ display:block; width:100%; height:100%; object-fit:cover; }
 
   .lu-vlead{ font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:clamp(13px,1.5vw,16px); line-height:1.5; color:var(--lu-ink); margin:14px 0 0; max-width:52ch; }
   .lu-vlead b{ font-style:normal; color:var(--lu-red); }
@@ -804,7 +806,7 @@
   .lu-vrank figure:nth-child(1){ transform:rotate(-2.5deg); }
   .lu-vrank figure:nth-child(2){ transform:rotate(2deg); margin-top:4px; }
   .lu-vrank figure:nth-child(3){ transform:rotate(-1.5deg); }
-  .lu-vrank img{ display:block; width:100%; aspect-ratio:2/3; height:clamp(270px, 25vw, 330px); object-fit:cover; object-position:top center; background:#FFFFFF; }
+  .lu-vrank img{ display:block; width:100%; aspect-ratio:2/3; height:clamp(215px, 20vw, 270px); object-fit:cover; object-position:top center; background:#FFFFFF; }
   .lu-vrank__n{ position:absolute; top:-12px; left:-10px; width:28px; height:28px; border-radius:50%; background:var(--lu-cream); border:2px dotted var(--lu-dot); color:var(--lu-red); font-family:'Pacifico',cursive; font-size:13px; line-height:24px; text-align:center; }
   .lu-vrank figure:nth-child(1) .lu-vrank__n{ border-style:solid; background:var(--lu-red); color:var(--lu-cream); }
   .lu-vrank figcaption{ margin-top:7px; font-family:'Manrope',sans-serif; }
@@ -816,7 +818,7 @@
   .lu-vcmp figure{ position:relative; margin:0; background:var(--lu-cream); padding:8px 8px 10px; box-shadow:0 12px 26px rgba(44,17,22,0.16); }
   .lu-vcmp figure:nth-child(1){ transform:rotate(-2deg); }
   .lu-vcmp figure:nth-child(2){ transform:rotate(2deg); }
-  .lu-vcmp img{ display:block; width:100%; aspect-ratio:2/3; height:clamp(270px, 25vw, 330px); object-fit:cover; object-position:top center; background:#FFFFFF; }
+  .lu-vcmp img{ display:block; width:100%; aspect-ratio:2/3; height:clamp(215px, 20vw, 270px); object-fit:cover; object-position:top center; background:#FFFFFF; }
   .lu-vcmp figcaption{ margin-top:7px; font-family:'Manrope',sans-serif; }
   .lu-vcmp figcaption b{ display:block; font-size:10px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lu-ink); opacity:0.75; }
   .lu-vcmp figcaption s{ display:block; text-decoration:none; font-size:10.5px; letter-spacing:0.03em; text-transform:uppercase; color:var(--lu-ink); opacity:0.65; margin:1px 0 2px; }
@@ -1165,12 +1167,19 @@
   .lu-feat{ display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(12px,2vw,22px); margin-top:clamp(20px,3vw,36px); }
   @media(max-width:900px){ .lu-feat{ grid-template-columns:repeat(3,1fr); } }
   @media(max-width:560px){ .lu-feat{ grid-template-columns:repeat(2,1fr); } }
-  .lu-feat__card{ position:relative; display:block; text-decoration:none; }
+  .lu-feat__card{ position:relative; display:block; text-decoration:none; transition:transform 260ms cubic-bezier(0.22,1,0.36,1); }
   .lu-feat__card:nth-child(odd){ transform:rotate(-1.5deg); }
   .lu-feat__card:nth-child(even){ transform:rotate(1.5deg); }
-  .lu-feat__ph{ position:relative; aspect-ratio:1/1; overflow:hidden; background:var(--lu-cream); border:2px solid var(--lu-red); }
-  .lu-feat__ph img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode:multiply; display:block; }
-  .lu-feat__ph::after{ content:''; position:absolute; inset:0; background:var(--lu-red); mix-blend-mode:screen; pointer-events:none; }
+  .lu-feat__card:nth-child(odd):hover,
+  .lu-feat__card:nth-child(even):hover{ transform:rotate(0deg) translateY(-8px) scale(1.035); z-index:4; }
+  .lu-feat__ph{ position:relative; aspect-ratio:1/1; overflow:hidden; background:var(--lu-cream); border:2px solid var(--lu-red); transition:box-shadow 260ms ease; }
+  .lu-feat__card:hover .lu-feat__ph{ box-shadow:0 18px 36px rgba(132,14,52,0.30); }
+  .lu-feat__ph img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode:multiply; display:block; transition:filter 260ms ease, transform 500ms cubic-bezier(0.22,1,0.36,1); }
+  .lu-feat__card:hover .lu-feat__ph img{ filter:grayscale(0.15) contrast(1.05) brightness(1.02); transform:scale(1.06); }
+  .lu-feat__ph::after{ content:''; position:absolute; inset:0; background:var(--lu-red); mix-blend-mode:screen; pointer-events:none; transition:opacity 260ms ease; }
+  .lu-feat__card:hover .lu-feat__ph::after{ opacity:0.45; }
+  .lu-feat__name{ transition:color 200ms ease; }
+  .lu-feat__card:hover .lu-feat__name{ text-decoration:underline; text-underline-offset:3px; }
   .lu-feat__n{ position:absolute; top:-10px; left:8px; z-index:2; font-family:'Pacifico',cursive; font-size:16px; color:var(--lu-red); background:var(--lu-cream); border:2px dotted var(--lu-dot); width:26px; height:26px; line-height:22px; text-align:center; border-radius:50%; }
   .lu-feat__name{ display:block; margin-top:8px; font-family:'Archivo',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--lu-red); }
   .lu-feat__sub{ display:block; font-family:'Manrope',sans-serif; font-size:9px; letter-spacing:0.05em; text-transform:uppercase; color:var(--lu-red); opacity:0.8; margin-top:2px; }
@@ -1671,7 +1680,7 @@
 
         <!-- 2. AI Stylist Pill Sticker -->
         <a href="/ai/ask" class="lu-sticker lu-sticker--pill lu-hero__pill" title="AI Stylist on Call">
-          ai stylist &middot; 24/7
+          AI Stylist &middot; 24/7
         </a>
 
         <!-- 3. Master Tailors & Bespoke Stitching Swatch Sticker -->
@@ -1819,9 +1828,9 @@
             </div>
             <div class="lu-vtags" style="margin-bottom:14px;"><span>Black</span><span>Embroidered</span><span>Kurta</span><span>&le; Rs. 8,000</span></div>
             <div class="lu-panel__grid">
-              <div class="lu-arch" style="aspect-ratio:3/4;height:240px;"><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>
-              <div class="lu-arch" style="aspect-ratio:3/4;height:240px;"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>
-              <div class="lu-arch" style="aspect-ratio:3/4;height:240px;"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>
+              <div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="" style="object-position:top center;"></div>
+              <div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="" style="object-position:top center;"></div>
+              <div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="" style="object-position:top center;"></div>
             </div>
             <p style="display:flex;align-items:center;gap:6px;font-family:'Manrope',sans-serif;font-weight:800;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lu-red);margin-top:12px;">
               <svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-search"></use></svg>
@@ -1873,7 +1882,7 @@
           </div>
         </div>
 
-        <div class="lu-brands__list" id="lu-agent-list" role="tablist" aria-label="LibasAI agents" style="margin-top:0;">
+        <div class="lu-brands__list" id="lu-agent-list" role="tablist" aria-label="LibasAI agents" style="margin-top:clamp(30px,4.5vw,58px);">
           <button type="button" class="lu-brand-row is-active" data-a="search" role="tab" aria-selected="true">
             <span class="lu-brand-row__n">01</span>
             <span><span class="lu-brand-row__name">Search</span><span class="lu-brand-row__sub">Finds it across 80+ labels</span></span>

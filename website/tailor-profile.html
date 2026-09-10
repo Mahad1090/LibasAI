@@ -875,16 +875,18 @@
     var tailorId = params.get('id') || 'rafiq';
     var t = tailorsData[tailorId] || tailorsData['rafiq'];
 
-    document.getElementById('tailor-name').innerText = t.name;
-    document.getElementById('tailor-avatar').src = t.avatar;
-    document.getElementById('tailor-loc').innerText = t.loc;
-    document.getElementById('tailor-exp').innerText = t.exp;
-    document.getElementById('tailor-rating').innerText = t.rating;
-    document.getElementById('tailor-bio').innerText = t.bio;
-    document.getElementById('card-start-price').innerText = t.startPrice;
-    document.getElementById('card-time').innerText = t.time;
-    document.getElementById('request-stitch-btn').href = '/get-stitched.html?tailor=' + tailorId;
-    document.getElementById('top-book-btn').href = '/get-stitched.html?tailor=' + tailorId;
+    var setText = function (id, val) { var el = document.getElementById(id); if (el) el.innerText = val; };
+    var setAttr = function (id, attr, val) { var el = document.getElementById(id); if (el) el[attr] = val; };
+    setText('tailor-name', t.name);
+    setAttr('tailor-avatar', 'src', t.avatar);
+    setText('tailor-loc', t.loc);
+    setText('tailor-exp', t.exp);
+    setText('tailor-rating', t.rating);
+    setText('tailor-bio', t.bio);
+    setText('card-start-price', t.startPrice);
+    setText('card-time', t.time);
+    setAttr('request-stitch-btn', 'href', '/get-stitched.html?tailor=' + tailorId);
+    setAttr('top-book-btn', 'href', '/get-stitched.html?tailor=' + tailorId);
   </script>
 </body>
 </html>
