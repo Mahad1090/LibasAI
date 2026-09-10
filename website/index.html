@@ -67,19 +67,21 @@
 
   /* nav */
   .lb-nav{ background:var(--paper) !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-bottom:1px solid var(--line) !important; }
-  .lb-nav.is-scrolled{ background:var(--paper) !important; border-bottom-color:var(--line) !important; }
-  .lb-logo img{ border-radius:0 !important; }
-  .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; letter-spacing:-0.02em !important; color:var(--ink) !important; }
+  .lb-logo{ display:flex; align-items:center; gap:8px; }
+  .lb-logo img{ width:30px !important; height:30px !important; object-fit:contain; border-radius:0 !important; mix-blend-mode:multiply; }
+  .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; font-size:18px !important; letter-spacing:0.14em !important; text-transform:uppercase; color:var(--lu-red) !important; }
   .lb-nav__trigger{ font-weight:700 !important; letter-spacing:0.04em !important; color:var(--ink) !important; }
   .lb-nav__trigger::after{ background:var(--accent) !important; }
   .lb-nav__trigger:hover,.lb-nav__trigger[aria-expanded="true"],.lb-nav__trigger.is-current{ color:var(--accent) !important; }
   .lb-icon-btn:hover{ color:var(--accent) !important; }
-  .lb-mega-host,.lb-search-overlay{ background:var(--paper) !important; }
-  .lb-mega-host.is-open,.lb-search-overlay.is-open{ box-shadow:0 24px 44px rgba(25,20,18,0.14) !important; border-bottom-color:var(--line) !important; }
-  .lb-mega-heading,.lb-search-label{ font-family:'Archivo',sans-serif !important; font-weight:900 !important; letter-spacing:-0.02em !important; }
-  .lb-mega-eyebrow,.lb-search-col h4{ color:var(--accent) !important; }
-  .lb-mega-card-tile{ border-radius:0 !important; box-shadow:none !important; border:1px solid var(--line); }
-  .lb-mega-card-tile span{ font-family:'Manrope',sans-serif; font-weight:700; }
+  .lb-mega-host,.lb-search-overlay{ background:var(--lu-cream) !important; }
+  .lb-mega-host.is-open,.lb-search-overlay.is-open{ box-shadow:0 24px 44px rgba(25,20,18,0.14) !important; border-bottom:2px dotted var(--lu-dot) !important; }
+  .lb-mega-heading,.lb-search-label{ font-family:'Archivo',sans-serif !important; font-weight:900 !important; letter-spacing:0.04em !important; text-transform:uppercase; color:var(--lu-red) !important; }
+  .lb-mega-eyebrow,.lb-search-col h4{ color:var(--lu-red) !important; }
+  .lb-mega-card-tile{ border-radius:0 !important; box-shadow:0 6px 18px rgba(44,17,22,0.08) !important; border:2px dotted var(--lu-dot) !important; }
+  .lb-mega-card-tile span{ font-family:'Manrope',sans-serif; font-weight:800; }
+  .lb-mega-cards-foot .lb-cta{ background:var(--lu-red) !important; color:var(--lu-cream) !important; border:2px solid var(--lu-red) !important; }
+  .lb-mega-cards-foot .lb-cta--ghost{ background:var(--lu-cream) !important; color:var(--lu-red) !important; border:2px dotted var(--lu-dot) !important; }
   .lb-search-field{ border-bottom-color:var(--ink) !important; }
   .lb-search-chip:hover,.lb-search-col a:hover,.lb-mega-links a:hover,.lb-mega-categories a:hover{ color:var(--accent) !important; border-color:var(--accent) !important; }
   .lb-mobile{ background:var(--paper) !important; }
@@ -350,7 +352,7 @@
   body{ background:var(--lu-cream) !important; color:var(--lu-ink); }
 
   .lu-wrap{ max-width:1360px; margin:0 auto; padding:0 clamp(20px,5vw,68px); }
-  .lu-sec{ padding:clamp(34px,4.5vw,64px) 0; position:relative; overflow:hidden; }
+  .lu-sec{ padding:clamp(24px,3.2vw,46px) 0; position:relative; overflow:hidden; }
   .lu-sec--cream{ background:var(--lu-cream); }
   .lu-sec--cream2{ background:var(--lu-cream-2); }
   .lu-sec--blush{ background:var(--lu-blush); }
@@ -366,7 +368,7 @@
   .lu-script{ font-family:'Pacifico',cursive; font-weight:400; color:var(--lu-red); line-height:1; }
 
   /* dotted oval speech bubble */
-  .lu-bubble{ display:flex; align-items:center; justify-content:center; text-align:center; min-width:180px; max-width:270px; aspect-ratio:1.95/1; padding:12px 28px; border:2px dotted var(--lu-dot); border-radius:50%; background:var(--lu-cream); font-family:'Pacifico',cursive; color:var(--lu-red); font-size:clamp(13px,1.5vw,18px); line-height:1.25; }
+  .lu-bubble{ display:flex; align-items:center; justify-content:center; text-align:center; min-width:160px; max-width:240px; aspect-ratio:1.95/1; padding:10px 22px; border:2px dotted var(--lu-dot); border-radius:50%; background:var(--lu-cream); font-family:'Pacifico',cursive; color:var(--lu-red); font-size:clamp(12px,1.4vw,16px); line-height:1.25; }
 
   /* dotted connector string with end dot */
   .lu-string{ position:relative; width:0; border-left:2px dotted var(--lu-dot); margin:6px auto; }
@@ -397,36 +399,37 @@
   .lu-colhead span{ text-align:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--lu-red); padding-bottom:9px; border-bottom:2px dotted var(--lu-dot); }
 
   /* FOR HER / FOR HIM — High-impact Typography, Compact Visual Sizing */
-  .lu-gender-wrap { max-width: 820px; margin: 0 auto; width: 100%; }
-  .lu-gender-head { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3.5vw, 44px); margin-bottom: clamp(16px, 2.4vw, 24px); }
-  .lu-gender-col { text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 12px; border-bottom: 2px dotted var(--lu-dot); transition: transform 180ms ease, border-color 180ms ease; }
+  .lu-gender-wrap { max-width: 800px; margin: 0 auto; width: 100%; }
+  .lu-gender-head { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 3vw, 36px); margin-bottom: clamp(14px, 2vw, 20px); }
+  .lu-gender-col { text-align: center; text-decoration: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 10px; border-bottom: 2px dotted var(--lu-dot); transition: transform 180ms ease, border-color 180ms ease; }
   .lu-gender-col:hover { transform: translateY(-2px); border-bottom-style: solid; border-color: var(--lu-red); }
-  .lu-gender-title { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(28px, 4.2vw, 48px); letter-spacing: 0.03em; text-transform: uppercase; color: var(--lu-red); line-height: 1.05; }
-  .lu-gender-sub { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(10.5px, 1.2vw, 13px); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(44, 17, 22, 0.7); margin-top: 6px; }
-  .lu-gender-cards { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3.5vw, 44px); }
+  .lu-gender-title { font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(26px, 3.8vw, 42px); letter-spacing: 0.03em; text-transform: uppercase; color: var(--lu-red); line-height: 1.05; }
+  .lu-gender-sub { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: clamp(10px, 1.1vw, 12px); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(44, 17, 22, 0.7); margin-top: 5px; }
+  .lu-gender-cards { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 3vw, 36px); }
   @media(max-width: 580px) {
-    .lu-gender-head, .lu-gender-cards { grid-template-columns: 1fr; gap: 20px; }
+    .lu-gender-head, .lu-gender-cards { grid-template-columns: 1fr; gap: 18px; }
   }
-  .lu-photocard--gender { max-width: 390px; margin: 0 auto; width: 100%; transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 240ms ease; }
+  .lu-photocard--gender { max-width: 370px; margin: 0 auto; width: 100%; transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 240ms ease; }
   .lu-photocard--gender:hover { transform: translateY(-4px); }
-  .lu-gender-arch { aspect-ratio: 4/3.8; height: clamp(230px, 28vw, 320px); width: 100%; overflow: hidden; border-radius: 46% 46% 8% 8% / 54% 54% 8% 8%; }
-  .lu-gender-tag { position: absolute; top: 12px; left: 12px; z-index: 3; background: var(--lu-cream); font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lu-red); border: 1.5px dotted var(--lu-dot); padding: 4px 10px; }
-  .lu-photocard__h--gender { position: absolute; left: clamp(14px, 2vw, 22px); bottom: clamp(14px, 2vw, 22px); right: clamp(14px, 2vw, 22px); z-index: 2; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(24px, 3.2vw, 38px); letter-spacing: 0.02em; text-transform: uppercase; color: var(--lu-cream); line-height: 1.05; text-shadow: 0 2px 14px rgba(44, 17, 22, 0.5); }
-  .lu-photocard__h--gender small { display: block; font-family: 'Manrope', sans-serif; font-size: clamp(10px, 1.1vw, 12px); letter-spacing: 0.12em; font-weight: 700; margin-top: 5px; opacity: 0.95; text-transform: uppercase; color: #FDFBF7; }
+  .lu-gender-arch { aspect-ratio: 4/4; height: clamp(220px, 26vw, 300px); width: 100%; overflow: hidden; border-radius: 46% 46% 8% 8% / 54% 54% 8% 8%; }
+  .lu-gender-arch img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .lu-gender-tag { position: absolute; top: 10px; left: 10px; z-index: 3; background: var(--lu-cream); font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 8.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lu-red); border: 1.5px dotted var(--lu-dot); padding: 3px 8px; }
+  .lu-photocard__h--gender { position: absolute; left: clamp(12px, 1.8vw, 18px); bottom: clamp(12px, 1.8vw, 18px); right: clamp(12px, 1.8vw, 18px); z-index: 2; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: clamp(22px, 2.8vw, 34px); letter-spacing: 0.02em; text-transform: uppercase; color: var(--lu-cream); line-height: 1.05; text-shadow: 0 2px 14px rgba(44, 17, 22, 0.5); }
+  .lu-photocard__h--gender small { display: block; font-family: 'Manrope', sans-serif; font-size: clamp(9.5px, 1vw, 11.5px); letter-spacing: 0.12em; font-weight: 700; margin-top: 4px; opacity: 0.95; text-transform: uppercase; color: #FDFBF7; }
 
   /* CTAs */
-  .lu-cta{ font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(20px,2.8vw,38px); letter-spacing:0.04em; text-transform:uppercase; color:var(--lu-red); text-decoration:none; display:inline-block; line-height:1.05; }
+  .lu-cta{ font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(18px,2.4vw,32px); letter-spacing:0.04em; text-transform:uppercase; color:var(--lu-red); text-decoration:none; display:inline-block; line-height:1.05; }
   .lu-cta:hover{ color:var(--lu-red-deep); }
-  .lu-link{ font-family:'Manrope',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--lu-red); text-decoration:none; border-bottom:2px dotted var(--lu-dot); padding-bottom:2px; }
+  .lu-link{ font-family:'Manrope',sans-serif; font-weight:800; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--lu-red); text-decoration:none; border-bottom:2px dotted var(--lu-dot); padding-bottom:2px; }
   .lu-link:hover{ border-bottom-style:solid; }
 
   /* ---------------- HERO ---------------- */
   .lu-hero{ position:relative; display:flex; flex-direction:column; align-items:center; }
   .lu-hero__stage{ position:relative; width:100%; display:flex; flex-direction:column; align-items:center; }
-  .lu-hero__ring{ position:absolute; left:50%; top:clamp(-6px,-0.5vw,0px); transform:translateX(-50%); width:clamp(320px,38vw,480px); aspect-ratio:1; z-index:0; }
-  .lu-hero__photo{ position:relative; z-index:1; width:clamp(230px,32vw,400px); aspect-ratio:3/4; }
-  .lu-hero__word{ position:relative; z-index:2; margin-top:clamp(-64px,-7vw,-38px); font-size:clamp(60px,13vw,190px); line-height:0.8; color:var(--lu-cream); -webkit-text-stroke:2px var(--lu-red); pointer-events:none; }
-  .lu-hero__pod{ position:absolute; right:0; top:2%; width:clamp(128px,14vw,178px); display:flex; flex-direction:column; align-items:center; z-index:3; }
+  .lu-hero__ring{ position:absolute; left:50%; top:clamp(-6px,-0.5vw,0px); transform:translateX(-50%); width:clamp(280px,34vw,420px); aspect-ratio:1; z-index:0; }
+  .lu-hero__photo{ position:relative; z-index:1; width:clamp(200px,28vw,350px); aspect-ratio:3/4; }
+  .lu-hero__word{ position:relative; z-index:2; margin-top:clamp(-56px,-6vw,-32px); font-size:clamp(54px,11.5vw,165px); line-height:0.8; color:var(--lu-cream); -webkit-text-stroke:2px var(--lu-red); pointer-events:none; }
+  .lu-hero__pod{ position:absolute; right:0; top:2%; width:clamp(116px,12.5vw,160px); display:flex; flex-direction:column; align-items:center; z-index:3; }
   .lu-hero__cut{ width:100%; aspect-ratio:3/4; }
   .lu-hero__bubble{ margin-top:12px; }
   .lu-hero__cut2{ position:absolute; left:0; top:clamp(110px,15vw,230px); width:clamp(104px,12vw,150px); aspect-ratio:3/4; transform:rotate(-6deg); z-index:2; }
@@ -440,7 +443,311 @@
   .lu-hero__chips{ position:relative; z-index:4; display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin-top:13px; }
   .lu-hero__chips a{ font-family:'Manrope',sans-serif; font-weight:800; font-size:9.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--lu-red); background:var(--lu-cream); text-decoration:none; border:2px dotted var(--lu-dot); padding:7px 12px; }
   .lu-hero__chips a:hover{ background:var(--lu-cream); }
-  @media(max-width:820px){ .lu-hero__cut2,.lu-hero__star1,.lu-hero__ring{ display:none; } }
+
+  /* ---------------- STICKER & SCRAP SYSTEM (EDITORIAL / ZINE) ---------------- */
+  /* Washi tape strip */
+  .lu-washi {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 13px;
+    background: rgba(234, 228, 215, 0.92);
+    border: 1px dashed rgba(44, 17, 22, 0.22);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    z-index: 5;
+    pointer-events: none;
+  }
+  .lu-washi--corner {
+    top: -5px;
+    left: -5px;
+    transform: rotate(-35deg);
+    width: 38px;
+    height: 12px;
+  }
+
+  /* Core Sticker Container */
+  .lu-sticker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease;
+    user-select: none;
+  }
+  .lu-sticker:hover {
+    transform: rotate(0deg) translateY(-3px) scale(1.04);
+    z-index: 10 !important;
+  }
+  .lu-sticker__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  /* 1. Sticker: 0% Markup Pill/Stamp */
+  .lu-sticker--stamp {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: var(--lu-cream);
+    border: 2px solid #FFFDF0;
+    outline: 2px dashed rgba(184, 80, 66, 0.35);
+    outline-offset: -4px;
+    box-shadow: 0 5px 16px rgba(44, 17, 22, 0.16);
+    transform: rotate(-5deg);
+    white-space: nowrap;
+  }
+  .lu-sticker--stamp .lu-sticker__t {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--lu-red);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .lu-sticker--stamp .lu-sticker__s {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    color: var(--lu-ink);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* 2. Sticker: Pill Badge */
+  .lu-sticker--pill {
+    padding: 9px 22px;
+    border-radius: 999px;
+    background: #FFFDF0;
+    border: 2px solid #FFFDF0;
+    box-shadow: 0 4px 14px rgba(44, 17, 22, 0.14);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 13.5px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--lu-red);
+    transform: rotate(3deg);
+    white-space: nowrap;
+  }
+  .lu-sticker--pill-red {
+    background: var(--lu-red);
+    color: var(--lu-cream);
+    border-color: #FFFDF0;
+  }
+
+  /* 3. Sticker: Fashion Photo Snap (Image Search) - Wide Oval Horizontal */
+  .lu-sticker--photo {
+    background: #FFFDF0;
+    padding: 9px 22px 9px 12px;
+    border-radius: 999px;
+    border: 2px solid #FFFDF0;
+    outline: 2px dashed rgba(184, 80, 66, 0.35);
+    outline-offset: -4px;
+    box-shadow: 0 8px 24px rgba(44, 17, 22, 0.16);
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    transform: rotate(-3deg);
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .lu-sticker--photo img {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+    border: 2px solid #FFFDF0;
+    box-shadow: 0 2px 8px rgba(44, 17, 22, 0.12);
+    flex-shrink: 0;
+  }
+  .lu-sticker--photo .lu-sticker__head {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    align-items: center;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--lu-red);
+    white-space: nowrap;
+  }
+  .lu-sticker--photo .lu-sticker__script {
+    font-family: 'Pacifico', cursive !important;
+    font-size: 18px;
+    line-height: 1.15;
+    color: var(--lu-ink);
+    margin-top: 1px;
+    display: block;
+    text-transform: lowercase !important;
+    white-space: nowrap !important;
+  }
+
+  /* 4. Sticker: Tailor Swatch - Wide Horizontal */
+  .lu-sticker--tailor {
+    background: var(--lu-cream-2);
+    padding: 9px 22px 9px 12px;
+    border-radius: 999px;
+    border: 2px solid #FFFDF0;
+    outline: 2px dashed rgba(184, 80, 66, 0.35);
+    outline-offset: -4px;
+    box-shadow: 0 6px 18px rgba(44, 17, 22, 0.14);
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    transform: rotate(3deg);
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .lu-sticker--tailor img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+    border: 2px solid #FFFDF0;
+    box-shadow: 0 2px 8px rgba(44, 17, 22, 0.12);
+    flex-shrink: 0;
+  }
+  .lu-sticker--tailor .lu-sticker__script {
+    font-family: 'Pacifico', cursive !important;
+    font-size: 18px;
+    color: var(--lu-red);
+    line-height: 1.15;
+    display: block;
+    text-transform: lowercase !important;
+    white-space: nowrap !important;
+  }
+  .lu-sticker--tailor .lu-sticker__tag {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--lu-ink);
+    opacity: 0.8;
+    margin-top: 1px;
+    display: block;
+    white-space: nowrap;
+  }
+
+  /* 5. Sticker: Apparel Barcode Hangtag - Wide Horizontal */
+  .lu-sticker--tag {
+    background: var(--lu-cream-2);
+    padding: 10px 22px 10px 14px;
+    border-radius: 999px;
+    border: 2px solid #FFFDF0;
+    outline: 2px dashed rgba(184, 80, 66, 0.35);
+    outline-offset: -4px;
+    box-shadow: 0 6px 18px rgba(44, 17, 22, 0.14);
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    transform: rotate(-3deg);
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .lu-sticker--tag .lu-hangtag__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .lu-sticker--tag .lu-hangtag__hole {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lu-blush);
+    border: 1.5px solid var(--lu-red);
+  }
+  .lu-sticker--tag .lu-hangtag__script {
+    font-family: 'Pacifico', cursive !important;
+    font-size: 18px;
+    line-height: 1.15;
+    color: var(--lu-ink);
+    display: block;
+    text-transform: lowercase !important;
+    white-space: nowrap !important;
+  }
+  .lu-sticker--tag .lu-barcode {
+    display: flex;
+    align-items: stretch;
+    height: 16px;
+    gap: 1.5px;
+    opacity: 0.85;
+  }
+  .lu-sticker--tag .lu-barcode span {
+    display: block;
+    background: var(--lu-ink);
+    width: 1.5px;
+  }
+  .lu-sticker--tag .lu-barcode span.w2 { width: 3px; }
+  .lu-sticker--tag .lu-barcode span.w3 { width: 4.5px; }
+  .lu-sticker--tag .lu-hangtag__foot {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--lu-red);
+    margin-top: 1px;
+    display: block;
+    white-space: nowrap;
+  }
+
+  /* Placement in Hero Stage (Spaced cleanly without overlapping hero elements) */
+  .lu-hero__snap {
+    position: absolute;
+    left: 1%;
+    top: 0%;
+    z-index: 4;
+  }
+  .lu-hero__pill {
+    position: absolute;
+    left: clamp(235px, 24.5vw, 310px);
+    top: 3%;
+    z-index: 4;
+  }
+  .lu-hero__tailor {
+    position: absolute;
+    left: 1%;
+    top: clamp(300px, 35vw, 430px);
+    z-index: 4;
+  }
+  .lu-hero__stamp {
+    position: absolute;
+    right: clamp(140px, 15vw, 190px);
+    top: 3%;
+    z-index: 4;
+  }
+  .lu-hero__hangtag {
+    position: absolute;
+    right: clamp(135px, 14.5vw, 195px);
+    top: clamp(280px, 32vw, 410px);
+    z-index: 4;
+  }
+
+  @media(max-width:860px){
+    .lu-hero__cut2, .lu-hero__star1, .lu-hero__ring, .lu-hero__snap, .lu-hero__tailor, .lu-hero__stamp, .lu-hero__hangtag, .lu-hero__pill {
+      display: none;
+    }
+  }
   @media(max-width:760px){
     .lu-hero__word{ font-size:clamp(48px,15vw,110px); margin-top:clamp(-40px,-9vw,-24px); }
     .lu-hero__pod{ position:static; flex-direction:row; width:auto; gap:12px; margin-top:16px; align-items:center; }
@@ -461,7 +768,7 @@
   /* ---------------- WHY ---------------- */
   /* ---- WHY / AGENTS : vertical clickable rail (left) + visual stage (right) ---- */
   .lu-why__intro{ font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:clamp(14px,1.6vw,18px); color:var(--lu-ink); max-width:46ch; margin:clamp(14px,2vw,22px) 0 clamp(20px,3vw,34px); }
-  .lu-why-lo{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,0.8fr); gap:clamp(28px,4.5vw,64px); align-items:start; }
+  .lu-why-lo{ display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,0.85fr); gap:clamp(24px,4vw,56px); align-items:start; }
   @media(max-width:860px){ .lu-why-lo{ grid-template-columns:1fr; gap:clamp(20px,4vw,32px); } .lu-why-lo .lu-stage{ order:-1; } }
 
   .lu-agents{ display:flex; flex-direction:column; border-top:2px dotted var(--lu-dot); }
@@ -477,60 +784,191 @@
   .lu-agent.is-active .lu-agent__tag{ background:var(--lu-red); color:var(--lu-cream); border-style:solid; }
   .lu-agent__more{ display:none; }
 
-  .lu-stage{ position:relative; min-height:clamp(280px,34vw,400px); }
+  .lu-stage{ position:relative; }
   .lu-panel{ display:none; }
   .lu-panel.is-active{ display:block; animation:luFade .35s ease; }
   @keyframes luFade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
-  .lu-panel__grid{ display:grid; grid-template-columns:1fr; gap:clamp(16px,3vw,24px); }
+  .lu-panel__grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
 
   .lu-vlead{ font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:clamp(13px,1.5vw,16px); line-height:1.5; color:var(--lu-ink); margin:14px 0 0; max-width:52ch; }
   .lu-vlead b{ font-style:normal; color:var(--lu-red); }
   .lu-vstat{ font-family:'Manrope',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.09em; text-transform:uppercase; color:var(--lu-red); margin-top:12px; }
   .lu-vtags{ display:flex; flex-wrap:wrap; gap:8px; }
-  .lu-vtags span{ font-family:'Manrope',sans-serif; font-weight:800; font-size:10px; letter-spacing:0.07em; text-transform:uppercase; color:var(--lu-red); background:var(--lu-cream); border:2px dotted var(--lu-dot); padding:6px 10px; }
-  .lu-vquery{ display:inline-block; font-family:'Pacifico',cursive; font-size:clamp(16px,1.9vw,23px); color:var(--lu-red); border:2px dotted var(--lu-dot); border-radius:44%; padding:14px 26px; background:var(--lu-cream); margin-bottom:14px; }
+  .lu-vtags span{ font-family:'Manrope',sans-serif; font-weight:800; font-size:9.5px; letter-spacing:0.07em; text-transform:uppercase; color:var(--lu-red); background:var(--lu-cream); border:2px dotted var(--lu-dot); padding:5px 9px; }
+  .lu-vquery{ display:inline-block; font-family:'Pacifico',cursive; font-size:clamp(15px,1.8vw,22px); color:var(--lu-red); border:2px dotted var(--lu-dot); border-radius:44%; padding:10px 22px; background:var(--lu-cream); }
   .lu-vthumbs{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
   .lu-vthumbs .lu-arch{ aspect-ratio:3/4; }
 
-  .lu-vrank{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2.6vw,30px); }
-  .lu-vrank figure{ position:relative; margin:0; background:var(--lu-cream); padding:6px 6px 8px; box-shadow:0 10px 24px rgba(44,17,22,0.14); }
-  .lu-vrank figure:nth-child(1){ transform:rotate(-3deg); }
-  .lu-vrank figure:nth-child(2){ transform:rotate(2deg); margin-top:10px; }
+  .lu-vrank{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,2vw,22px); margin-top:12px; }
+  .lu-vrank figure{ position:relative; margin:0; background:var(--lu-cream); padding:7px 7px 10px; box-shadow:0 10px 24px rgba(44,17,22,0.14); }
+  .lu-vrank figure:nth-child(1){ transform:rotate(-2.5deg); }
+  .lu-vrank figure:nth-child(2){ transform:rotate(2deg); margin-top:4px; }
   .lu-vrank figure:nth-child(3){ transform:rotate(-1.5deg); }
-  .lu-vrank img{ display:block; width:100%; aspect-ratio:3/4; object-fit:cover; }
-  .lu-vrank__n{ position:absolute; top:-12px; left:-10px; width:30px; height:30px; border-radius:50%; background:var(--lu-cream); border:2px dotted var(--lu-dot); color:var(--lu-red); font-family:'Pacifico',cursive; font-size:14px; line-height:26px; text-align:center; }
+  .lu-vrank img{ display:block; width:100%; aspect-ratio:3/4; height:185px; object-fit:cover; }
+  .lu-vrank__n{ position:absolute; top:-12px; left:-10px; width:28px; height:28px; border-radius:50%; background:var(--lu-cream); border:2px dotted var(--lu-dot); color:var(--lu-red); font-family:'Pacifico',cursive; font-size:13px; line-height:24px; text-align:center; }
   .lu-vrank figure:nth-child(1) .lu-vrank__n{ border-style:solid; background:var(--lu-red); color:var(--lu-cream); }
-  .lu-vrank figcaption{ margin-top:8px; font-family:'Manrope',sans-serif; }
-  .lu-vrank figcaption b{ display:block; font-size:9px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lu-ink); opacity:0.7; }
-  .lu-vrank figcaption em{ font-style:normal; font-family:'Archivo',sans-serif; font-weight:800; font-size:12px; color:var(--lu-red); }
-  .lu-vrank figcaption i{ display:block; font-family:Georgia,serif; font-style:italic; font-size:10.5px; line-height:1.4; color:var(--lu-ink); margin-top:3px; }
+  .lu-vrank figcaption{ margin-top:7px; font-family:'Manrope',sans-serif; }
+  .lu-vrank figcaption b{ display:block; font-size:9.5px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lu-ink); opacity:0.75; }
+  .lu-vrank figcaption em{ font-style:normal; font-family:'Archivo',sans-serif; font-weight:800; font-size:13px; color:var(--lu-red); }
+  .lu-vrank figcaption i{ display:block; font-family:Georgia,serif; font-style:italic; font-size:11px; line-height:1.35; color:var(--lu-ink); margin-top:2px; }
 
-  .lu-vcmp{ position:relative; display:grid; grid-template-columns:1fr 1fr; gap:clamp(22px,4vw,46px); max-width:560px; }
-  .lu-vcmp figure{ position:relative; margin:0; background:var(--lu-cream); padding:7px 7px 9px; box-shadow:0 12px 26px rgba(44,17,22,0.16); }
-  .lu-vcmp figure:nth-child(1){ transform:rotate(-2.5deg); }
+  .lu-vcmp{ position:relative; display:grid; grid-template-columns:1fr 1fr; gap:clamp(18px,3.5vw,36px); max-width:520px; margin-top:12px; }
+  .lu-vcmp figure{ position:relative; margin:0; background:var(--lu-cream); padding:8px 8px 10px; box-shadow:0 12px 26px rgba(44,17,22,0.16); }
+  .lu-vcmp figure:nth-child(1){ transform:rotate(-2deg); }
   .lu-vcmp figure:nth-child(2){ transform:rotate(2deg); }
-  .lu-vcmp img{ display:block; width:100%; aspect-ratio:4/5; object-fit:cover; }
+  .lu-vcmp img{ display:block; width:100%; aspect-ratio:3/4; height:190px; object-fit:cover; }
   .lu-vcmp figcaption{ margin-top:7px; font-family:'Manrope',sans-serif; }
-  .lu-vcmp figcaption b{ display:block; font-size:9px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lu-ink); opacity:0.7; }
-  .lu-vcmp figcaption s{ display:block; text-decoration:none; font-size:10px; letter-spacing:0.03em; text-transform:uppercase; color:var(--lu-ink); opacity:0.65; margin:1px 0 2px; }
+  .lu-vcmp figcaption b{ display:block; font-size:10px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--lu-ink); opacity:0.75; }
+  .lu-vcmp figcaption s{ display:block; text-decoration:none; font-size:10.5px; letter-spacing:0.03em; text-transform:uppercase; color:var(--lu-ink); opacity:0.65; margin:1px 0 2px; }
   .lu-vcmp figcaption em{ font-style:normal; font-family:'Archivo',sans-serif; font-weight:900; font-size:15px; color:var(--lu-red); }
-  .lu-vcmp__mark{ position:absolute; left:50%; top:36%; transform:translate(-50%,-50%) rotate(-8deg); z-index:4; width:44px; height:44px; line-height:40px; text-align:center; border:2px solid var(--lu-red); border-radius:50%; background:var(--lu-cream-2); font-family:'Pacifico',cursive; font-size:16px; color:var(--lu-red); }
-  .lu-vcmp__win{ position:absolute; top:-9px; right:-8px; z-index:3; font-family:'Manrope',sans-serif; font-weight:800; font-size:8px; letter-spacing:0.07em; text-transform:uppercase; color:var(--lu-red); background:var(--lu-cream); border:2px dotted var(--lu-dot); padding:3px 6px; transform:rotate(4deg); }
+  .lu-vcmp__mark{ position:absolute; left:50%; top:40%; transform:translate(-50%,-50%) rotate(-8deg); z-index:4; width:42px; height:42px; line-height:38px; text-align:center; border:2px solid var(--lu-red); border-radius:50%; background:var(--lu-cream-2); font-family:'Pacifico',cursive; font-size:15px; color:var(--lu-red); box-shadow:0 4px 12px rgba(44,17,22,0.15); }
+  .lu-vcmp__win{ position:absolute; top:-9px; right:-8px; z-index:3; font-family:'Manrope',sans-serif; font-weight:800; font-size:8px; letter-spacing:0.07em; text-transform:uppercase; color:var(--lu-red); background:var(--lu-cream); border:2px dotted var(--lu-dot); padding:3px 7px; transform:rotate(4deg); }
 
-  .lu-vmood{ position:relative; height:clamp(250px,30vw,330px); }
-  .lu-vmood__arrows{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:4; overflow:visible; }
-  .lu-vmb{ position:absolute; margin:0; background:var(--lu-cream); padding:5px 5px 18px; box-shadow:0 10px 24px rgba(44,17,22,0.16); }
-  .lu-vmb img{ display:block; width:100%; height:100%; object-fit:cover; }
-  .lu-vmb figcaption{ position:absolute; left:5px; right:5px; bottom:4px; font-family:'Manrope',sans-serif; font-weight:800; font-size:8px; letter-spacing:0.03em; text-transform:uppercase; color:var(--lu-ink); opacity:0.72; }
-  .lu-vmb--1{ top:3%; left:1%; width:31%; aspect-ratio:3/4; transform:rotate(-4deg); z-index:3; }
-  .lu-vmb--2{ top:0; left:33%; width:27%; aspect-ratio:3/4; transform:rotate(3deg); z-index:2; }
-  .lu-vmb--3{ bottom:3%; left:15%; width:22%; aspect-ratio:1; transform:rotate(-7deg); z-index:4; }
-  .lu-vmb--4{ top:15%; right:5%; width:26%; aspect-ratio:1; transform:rotate(6deg); z-index:1; }
-  .lu-vanno{ position:absolute; z-index:6; font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:13px; color:var(--lu-red); background:var(--lu-cream); border:1.5px dashed var(--lu-dot); padding:1px 9px; transform:rotate(var(--r,0deg)); pointer-events:none; white-space:nowrap; }
-  .lu-vmood__foot{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; margin-top:16px; padding-top:12px; border-top:2px dotted var(--lu-dot); }
-  .lu-vmood__foot span{ font-family:'Manrope',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--lu-ink); }
-  .lu-vmood__foot b{ font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(18px,2.2vw,26px); color:var(--lu-red); margin-left:6px; }
-  @media(max-width:560px){ .lu-vanno{ font-size:11px; } .lu-vmood{ height:290px; } }
+  /* ---------------- WHY LIBASAI SEARCH AGENT & MOODBOARD ---------------- */
+  .lu-agent-search-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: #FFF;
+    border: 2px dotted var(--lu-dot);
+    padding: 6px 6px 6px 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 14px rgba(44, 17, 22, 0.06);
+  }
+  .lu-agent-search-inp {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(14px, 1.4vw, 17px);
+    color: var(--lu-red);
+    outline: none;
+  }
+  .lu-agent-search-btn {
+    padding: 7px 16px !important;
+    font-size: 11px !important;
+    border-radius: 0;
+  }
+
+  .lb-panel-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    background: var(--lu-red, #840E34) !important;
+    color: var(--lu-cream, #FAF4EE) !important;
+    border: 2px solid var(--lu-red, #840E34) !important;
+    padding: 9px 20px !important;
+    font-family: 'Manrope', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 14px rgba(132, 14, 52, 0.22) !important;
+    transition: all 180ms ease !important;
+    cursor: pointer !important;
+    margin-top: 14px;
+    width: fit-content;
+  }
+  .lb-panel-btn:hover {
+    background: var(--lu-red-deep, #5E0A26) !important;
+    border-color: var(--lu-red-deep, #5E0A26) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(132, 14, 52, 0.32) !important;
+  }
+
+  .lu-vmood{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(10px, 1.6vw, 18px); margin-top:14px; }
+  .lu-vmood figure{
+    position:relative;
+    margin:0;
+    background:#FFFDF0;
+    padding:7px 7px 16px;
+    border: 1.5px solid rgba(184,80,66,0.22);
+    box-shadow:0 12px 28px rgba(44,17,22,0.15);
+    transition:transform .25s var(--lb-ease), box-shadow .25s var(--lb-ease);
+  }
+  .lu-vmood figure::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    width: 44px;
+    height: 14px;
+    background: rgba(243, 215, 215, 0.88);
+    border: 1px dashed rgba(184,80,66,0.45);
+    box-shadow: 0 2px 6px rgba(44,17,22,0.08);
+    z-index: 4;
+  }
+  .lu-vmood figure:nth-child(1){ transform:rotate(-3deg); }
+  .lu-vmood figure:nth-child(2){ transform:rotate(2.5deg); margin-top:5px; }
+  .lu-vmood figure:nth-child(3){ transform:rotate(-2deg); }
+  .lu-vmood figure:nth-child(4){ transform:rotate(3deg); margin-top:3px; }
+  .lu-vmood figure:hover {
+    transform:scale(1.05) rotate(0deg) !important;
+    z-index:10;
+    box-shadow:0 18px 36px rgba(44,17,22,0.22);
+  }
+  .lu-vmood img{ display:block; width:100%; aspect-ratio:3/4; height:152px; object-fit:cover; border: 1px solid rgba(25,20,18,0.08); }
+  .lu-vmood figcaption{
+    margin-top:8px;
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:9.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--lu-ink);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .lu-vmood figcaption em {
+    font-style: normal;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    color: var(--lu-red);
+    display: block;
+    margin-top: 1px;
+  }
+  .lu-vmood .lu-tag{
+    position:absolute;
+    top:-8px;
+    left:8px;
+    z-index:5;
+    font-size:7.5px;
+    padding:3px 6px;
+    background:var(--lu-red);
+    color:var(--lu-cream);
+    border:1px solid #FFFDF0;
+    box-shadow:0 2px 6px rgba(44,17,22,0.2);
+  }
+  .lu-vmood__foot{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px 18px;
+    margin-top:16px;
+    padding-top:12px;
+    border-top:2px dotted var(--lu-dot);
+  }
+  .lu-vmood__foot span{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--lu-ink);
+  }
+  .lu-vmood__foot b{
+    font-family:'Archivo',sans-serif;
+    font-weight:900;
+    font-size:clamp(17px,1.8vw,23px);
+    color:var(--lu-red);
+    margin-left:6px;
+  }
+  @media(max-width:560px){ .lu-vmood{ grid-template-columns:repeat(2,1fr); } }
   @media (prefers-reduced-motion:reduce){ .lu-panel.is-active{ animation:none !important; } }
 
   /* ---------------- OCCASION ---------------- */
@@ -564,9 +1002,9 @@
   .lb-nav-root{ background:var(--lu-blush); }
   .lb-nav{ background:transparent !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; border-bottom:2px dotted var(--lu-dot) !important; }
   .lb-nav.is-scrolled{ background:var(--lu-blush) !important; border-bottom-color:var(--lu-dot) !important; }
-  .lb-logo{ gap:12px !important; }
-  .lb-logo img{ display:block !important; width:clamp(46px,4.4vw,60px) !important; height:auto !important; border-radius:0 !important; mix-blend-mode:multiply; }
-  .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; font-size:clamp(20px,2.2vw,26px) !important; letter-spacing:0.16em !important; text-transform:uppercase; color:var(--lu-red) !important; }
+  .lb-logo{ gap:8px !important; }
+  .lb-logo img{ display:block !important; width:30px !important; height:30px !important; object-fit:contain !important; border-radius:0 !important; mix-blend-mode:multiply; }
+  .lb-logo span{ font-family:'Archivo',sans-serif !important; font-weight:800 !important; font-size:18px !important; letter-spacing:0.14em !important; text-transform:uppercase; color:var(--lu-red) !important; }
   .lb-nav__center{ gap:0 !important; }
   .lb-nav__trigger{ color:var(--lu-red) !important; font-weight:700 !important; letter-spacing:0.1em !important; font-size:11px !important; padding:12px clamp(12px,1.6vw,22px) !important; border-left:2px dotted var(--lu-dot); }
   .lb-nav__center > *:first-child{ border-left:0 !important; }
@@ -574,9 +1012,9 @@
   .lb-nav__trigger:hover,.lb-nav__trigger[aria-expanded="true"],.lb-nav__trigger.is-current{ color:var(--lu-red-deep) !important; }
   .lb-icon-btn{ color:var(--lu-red) !important; }
   .lb-icon-btn:hover{ color:var(--lu-red-deep) !important; }
-  .lb-cta{ background:transparent !important; color:var(--lu-red) !important; border:0 !important; border-radius:0 !important; letter-spacing:0.1em !important; font-weight:800 !important; padding:10px 12px !important; text-transform:uppercase; box-shadow:none !important; }
-  .lb-cta:hover{ background:transparent !important; color:var(--lu-red-deep) !important; transform:none !important; }
-  .lb-cta__icon{ display:none !important; }
+  .lb-nav .lb-cta{ background:transparent !important; color:var(--lu-red) !important; border:0 !important; border-radius:0 !important; letter-spacing:0.1em !important; font-weight:800 !important; padding:10px 12px !important; text-transform:uppercase; box-shadow:none !important; }
+  .lb-nav .lb-cta:hover{ background:transparent !important; color:var(--lu-red-deep) !important; transform:none !important; }
+  .lb-nav .lb-cta__icon{ display:none !important; }
   .lb-mega-host,.lb-search-overlay{ background:var(--lu-cream) !important; }
   .lb-mega-heading,.lb-search-label{ font-family:'Archivo',sans-serif !important; letter-spacing:0.04em !important; text-transform:uppercase; }
   .lb-mobile{ background:var(--lu-blush) !important; }
@@ -627,9 +1065,9 @@
   .lu-ring{ position:absolute; z-index:0; border:2px dotted var(--lu-dot); border-radius:50%; pointer-events:none; opacity:0.7; }
   .lu-star{ position:absolute; z-index:1; color:var(--lu-red); font-family:'Archivo',sans-serif; font-weight:900; pointer-events:none; opacity:0.55; }
   .lu-tape{ position:absolute; z-index:3; font-family:'Pacifico',cursive; color:var(--lu-red); background:var(--lu-cream); border:1.5px dashed var(--lu-dot); padding:3px 12px; font-size:13px; transform:rotate(var(--r,-4deg)); }
-  .lu-sticker{ position:absolute; z-index:4; width:clamp(58px,7vw,76px); aspect-ratio:1; border-radius:50%; background:var(--lu-cream); border:2px dotted var(--lu-dot); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; transform:rotate(var(--r,-8deg)); }
-  .lu-sticker b{ font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(11px,1.3vw,14px); color:var(--lu-red); line-height:1; }
-  .lu-sticker span{ font-family:'Manrope',sans-serif; font-size:7px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-ink); margin-top:2px; }
+  .lu-dot-sticker{ position:absolute; z-index:4; width:clamp(58px,7vw,76px); aspect-ratio:1; border-radius:50%; background:var(--lu-cream); border:2px dotted var(--lu-dot); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; transform:rotate(var(--r,-8deg)); }
+  .lu-dot-sticker b{ font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(11px,1.3vw,14px); color:var(--lu-red); line-height:1; }
+  .lu-dot-sticker span{ font-family:'Manrope',sans-serif; font-size:7px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-ink); margin-top:2px; }
   .lu-cut{ position:absolute; z-index:2; background:var(--lu-cream); padding:5px 5px 5px; box-shadow:0 12px 26px rgba(44,17,22,0.16); }
   .lu-cut .lu-duo{ width:100%; height:100%; }
   .lu-cut figcaption{ position:absolute; left:6px; bottom:6px; right:6px; font-family:'Manrope',sans-serif; font-weight:800; font-size:8px; letter-spacing:0.05em; text-transform:uppercase; color:var(--lu-cream); z-index:3; }
@@ -680,13 +1118,13 @@
   .lu-pfy__meta em{ font-style:normal; font-family:'Archivo',sans-serif; font-weight:900; font-size:14px; color:var(--lu-red); }
 
   /* ---------------- DISCOVER LOCAL BRANDS ---------------- */
-  .lu-brands{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,5vw,72px); align-items:center; }
+  .lu-brands{ display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:clamp(28px,5vw,64px); align-items:center; }
   @media(max-width:860px){ .lu-brands{ grid-template-columns:1fr; } }
-  .lu-brands__visual{ position:relative; }
-  .lu-brands__visual .lu-arch{ aspect-ratio:4/5; }
-  .lu-brands__cut{ position:absolute; right:-16px; bottom:-24px; width:38%; aspect-ratio:3/4; background:var(--lu-cream); padding:6px; box-shadow:0 14px 30px rgba(44,17,22,0.2); z-index:2; }
+  .lu-brands__visual{ position:relative; max-width:260px; width:100%; margin:0 auto; }
+  .lu-brands__visual .lu-arch{ aspect-ratio:4/5; max-height:300px; }
+  .lu-brands__cut{ position:absolute; right:-10px; bottom:-12px; width:36%; max-width:95px; aspect-ratio:3/4; background:var(--lu-cream); padding:4px; box-shadow:0 10px 20px rgba(44,17,22,0.16); z-index:2; }
   .lu-brands__cut .lu-duo{ width:100%; height:100%; }
-  .lu-brands__bubble{ position:absolute; left:-14px; top:8%; z-index:3; }
+  .lu-brands__bubble{ position:absolute; left:-14px; top:4%; z-index:3; font-size:12px !important; padding:8px 14px !important; }
   .lu-brands__list{ display:flex; flex-direction:column; border-top:2px dotted var(--lu-dot); margin:clamp(16px,2.5vw,26px) 0 clamp(20px,3vw,32px); }
   .lu-brand-row{ display:grid; grid-template-columns:auto 1fr auto; align-items:baseline; column-gap:14px; padding:15px 4px; border-bottom:2px dotted var(--lu-dot); text-decoration:none; color:var(--lu-ink); transition:padding-left .18s ease; }
   .lu-brand-row:hover{ padding-left:12px; }
@@ -725,19 +1163,20 @@
   .lu-feat__card:nth-child(odd){ transform:rotate(-1.5deg); }
   .lu-feat__card:nth-child(even){ transform:rotate(1.5deg); }
   .lu-feat__ph{ position:relative; aspect-ratio:1/1; overflow:hidden; background:var(--lu-cream); border:2px solid var(--lu-red); }
-  .lu-feat__ph img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode:multiply; }
-  .lu-feat__ph::after{ content:''; position:absolute; inset:0; background:var(--lu-red); mix-blend-mode:screen; }
+  .lu-feat__ph img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.15) brightness(1.04); mix-blend-mode:multiply; display:block; }
+  .lu-feat__ph::after{ content:''; position:absolute; inset:0; background:var(--lu-red); mix-blend-mode:screen; pointer-events:none; }
   .lu-feat__n{ position:absolute; top:-10px; left:8px; z-index:2; font-family:'Pacifico',cursive; font-size:16px; color:var(--lu-red); background:var(--lu-cream); border:2px dotted var(--lu-dot); width:26px; height:26px; line-height:22px; text-align:center; border-radius:50%; }
   .lu-feat__name{ display:block; margin-top:8px; font-family:'Archivo',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--lu-red); }
-  .lu-feat__sub{ display:block; font-family:'Manrope',sans-serif; font-size:9px; letter-spacing:0.05em; text-transform:uppercase; color:var(--lu-ink); opacity:0.62; margin-top:2px; }
+  .lu-feat__sub{ display:block; font-family:'Manrope',sans-serif; font-size:9px; letter-spacing:0.05em; text-transform:uppercase; color:var(--lu-red); opacity:0.8; margin-top:2px; }
 
   /* ---------------- HOW IT WORKS ---------------- */
   .lu-how{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,3vw,40px); margin-top:clamp(20px,3vw,36px); }
   @media(max-width:720px){ .lu-how{ grid-template-columns:1fr; } }
   .lu-how__step{ position:relative; padding-top:16px; border-top:2px dotted var(--lu-dot); }
+  .lu-how__img{ width:100%; aspect-ratio:16/10; object-fit:cover; display:block; margin-bottom:14px; border:1px solid rgba(44,17,22,0.14); box-shadow:0 6px 18px rgba(44,17,22,0.08); }
   .lu-how__n{ font-family:'Pacifico',cursive; font-size:clamp(26px,3.4vw,44px); color:var(--lu-red); line-height:1; }
   .lu-how__t{ display:block; font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(15px,1.8vw,20px); letter-spacing:0.03em; text-transform:uppercase; color:var(--lu-red); margin:6px 0 4px; }
-  .lu-how__d{ font-family:'Manrope',sans-serif; font-size:10.5px; line-height:1.55; letter-spacing:0.045em; text-transform:uppercase; color:var(--lu-ink); opacity:0.75; }
+  .lu-how__d{ font-family:'Manrope',sans-serif; font-size:10.5px; line-height:1.55; letter-spacing:0.045em; text-transform:uppercase; color:var(--lu-red); opacity:0.85; }
 
   /* ---------------- TESTIMONIAL ---------------- */
   .lu-quote{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:clamp(20px,4vw,48px); align-items:center; }
@@ -745,7 +1184,7 @@
   .lu-quote__cut{ width:clamp(120px,16vw,200px); aspect-ratio:3/4; background:var(--lu-cream); padding:6px; box-shadow:0 14px 30px rgba(44,17,22,0.18); transform:rotate(-4deg); }
   .lu-quote__cut .lu-duo{ width:100%; height:100%; }
   .lu-quote__body q{ display:block; font-family:'Pacifico',cursive; font-size:clamp(20px,3vw,38px); line-height:1.3; color:var(--lu-red); quotes:none; }
-  .lu-quote__by{ display:block; margin-top:14px; font-family:'Manrope',sans-serif; font-weight:800; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--lu-ink); }
+  .lu-quote__by{ display:block; margin-top:14px; font-family:'Manrope',sans-serif; font-weight:800; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--lu-red); }
 
   /* ---------------- JOIN THE LIST ---------------- */
   .lu-join{ text-align:center; }
@@ -767,11 +1206,14 @@
   .lu-occ .lu-tag{ position:absolute; top:10px; right:10px; z-index:3; background:var(--lu-cream); }
   /* five-tools filler */
   .lu-feat-side{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:clamp(16px,2.4vw,26px); }
-  .lu-mini{ display:grid; grid-template-columns:56px 1fr; gap:12px; align-items:center; text-decoration:none; }
-  .lu-mini__ph{ width:56px; height:56px; overflow:hidden; border:2px solid var(--lu-red); background:var(--lu-cream); }
-  .lu-mini__ph img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.1); }
-  .lu-mini b{ font-family:'Archivo',sans-serif; font-weight:800; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--lu-red); display:block; }
-  .lu-mini span{ font-family:'Manrope',sans-serif; font-size:9px; letter-spacing:0.05em; text-transform:uppercase; color:var(--lu-ink); opacity:0.62; }
+  .lu-mini{ display:grid; grid-template-columns:46px 1fr; gap:12px; align-items:center; text-decoration:none; padding:8px 10px; background:rgba(234,228,215,0.45); border:1.5px dotted rgba(25,20,18,0.3); transition:transform 180ms ease, background 180ms ease; }
+  .lu-mini:hover{ transform:translateY(-2px); background:rgba(234,228,215,0.85); }
+  .lu-mini__ph{ width:46px; height:46px; display:flex; align-items:center; justify-content:center; border:1.5px solid #191412; background:var(--lu-cream); color:#191412; transition:transform 180ms ease, background 180ms ease, color 180ms ease; flex-shrink:0; }
+  .lu-mini:hover .lu-mini__ph{ background:#191412; color:var(--lu-cream); }
+  .lu-mini__ph svg{ width:22px; height:22px; stroke:#191412; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .lu-mini:hover .lu-mini__ph svg{ stroke:var(--lu-cream); }
+  .lu-mini b{ font-family:'Archivo',sans-serif; font-weight:900; font-size:11.5px; letter-spacing:0.05em; text-transform:uppercase; color:#191412; display:block; }
+  .lu-mini span{ font-family:'Manrope',sans-serif; font-size:9.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#191412; opacity:0.78; }
   /* testimonial : two quotes */
   .lu-quotes{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); }
   @media(max-width:760px){ .lu-quotes{ grid-template-columns:1fr; } }
@@ -1020,12 +1462,12 @@
                 </div>
                 <div class="lb-mega-card-grid">
                   <a href="/ai/ask" class="lb-mega-card-tile">
-                    <img src="assets/feature-ask-libasai.jpg" alt="">
-                    <span>Search</span>
+                    <img src="assets/feature-ask-libasai.jpg" alt="Ask LibasAI">
+                    <span>Ask LibasAI</span>
                   </a>
-                  <a href="/for-you" class="lb-mega-card-tile">
-                    <img src="assets/feature-image-search.jpg" alt="">
-                    <span>Recommend</span>
+                  <a href="/ai/image-search" class="lb-mega-card-tile">
+                    <img src="assets/feature-image-search.jpg" alt="Image Search">
+                    <span>Image Search</span>
                   </a>
                   <a href="/ai/compare" class="lb-mega-card-tile">
                     <img src="assets/feature-compare.jpg" alt="">
@@ -1203,11 +1645,60 @@
   </div>
 
   <!-- ============================= HERO ============================= -->
-  <section class="lu-sec lu-sec--blush" style="padding-top:clamp(20px,2.6vw,36px);padding-bottom:clamp(40px,5vw,72px);">
+  <section class="lu-sec lu-sec--blush" style="padding-top:clamp(16px,2vw,28px);padding-bottom:clamp(28px,3.8vw,52px);">
     <div class="lu-wrap lu-hero">
       <div class="lu-hero__stage">
         <div class="lu-ring lu-hero__ring" aria-hidden="true"></div>
         <span class="lu-star lu-hero__star1" aria-hidden="true">&#10038;</span>
+
+        <!-- 1. AI Image Search Photo Snap Sticker -->
+        <a href="/ai/image-search" class="lu-sticker lu-sticker--photo lu-hero__snap" title="Visual AI Search">
+          <div class="lu-washi"></div>
+          <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt="Visual Search Outfit">
+          <div class="lu-sticker__body">
+            <div class="lu-sticker__head">
+              <span>image search</span>
+              <span>01</span>
+            </div>
+            <span class="lu-sticker__script">find from photo</span>
+          </div>
+        </a>
+
+        <!-- 2. AI Stylist Pill Sticker -->
+        <a href="/ai/ask" class="lu-sticker lu-sticker--pill lu-hero__pill" title="AI Stylist on Call">
+          ai stylist &middot; 24/7
+        </a>
+
+        <!-- 3. Master Tailors & Bespoke Stitching Swatch Sticker -->
+        <a href="/get-stitched.html" class="lu-sticker lu-sticker--tailor lu-hero__tailor" title="Bespoke Stitching Network">
+          <div class="lu-washi lu-washi--corner"></div>
+          <img src="assets/tailor-shears.jpg" alt="Master Tailor">
+          <div class="lu-sticker__body">
+            <span class="lu-sticker__script">get it stitched</span>
+            <span class="lu-sticker__tag">master tailors</span>
+          </div>
+        </a>
+
+        <!-- 4. Zero Markup Round Seal Stamp Sticker -->
+        <a href="/brands.html" class="lu-sticker lu-sticker--stamp lu-hero__stamp" title="0% Markup Direct from Brands">
+          <span class="lu-sticker__t">0%</span>
+          <span class="lu-sticker__s">checkout markup</span>
+        </a>
+
+        <!-- 5. Price Compare Barcode Tag Sticker -->
+        <a href="/ai/compare" class="lu-sticker lu-sticker--tag lu-hero__hangtag" title="Side by Side Price Compare">
+          <div class="lu-hangtag__left">
+            <div class="lu-hangtag__hole"></div>
+            <div class="lu-barcode">
+              <span class="w2"></span><span></span><span class="w3"></span><span></span><span class="w2"></span>
+            </div>
+          </div>
+          <div class="lu-sticker__body">
+            <span class="lu-hangtag__script">compare kurtas</span>
+            <span class="lu-hangtag__foot">80+ labels</span>
+          </div>
+        </a>
+
         <figure class="lu-cut lu-hero__cut2" aria-hidden="true">
           <div class="lu-duo lu-duo--blush"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""></div>
           <figcaption>khussa</figcaption>
@@ -1215,7 +1706,7 @@
         <div class="lu-arch lu-hero__photo">
           <img src="https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770" alt="LibasAI editorial">
         </div>
-        <h1 class="lu-script lu-hero__word">libasai</h1>
+        <h1 class="lu-script lu-hero__word">LibasAI</h1>
         <aside class="lu-hero__pod" aria-hidden="true">
           <div class="lu-string" style="height:clamp(46px,7vw,110px);"></div>
           <div class="lu-duo lu-duo--blush lu-hero__cut">
@@ -1226,31 +1717,216 @@
       </div>
       <p class="lu-hero__eyebrow">The AI shopping assistant for Pakistani fashion</p>
       <h2 class="lu-hero__headline">Search 80+ labels, style the whole look, get it stitched.</h2>
-      <form class="lu-hero__search" action="/ai/ask" method="GET" onsubmit="event.preventDefault(); window.location.href='/ai/ask?q=' + encodeURIComponent(this.querySelector('input').value);">
+      <form class="lu-hero__search" action="/shop.html" method="GET" onsubmit="event.preventDefault(); var val = this.querySelector('input').value.trim() || 'Black embroidered kurta under Rs. 8,000'; window.location.href='/shop.html?q=' + encodeURIComponent(val);">
         <input type="text" placeholder="Black embroidered kurta under Rs. 8,000" aria-label="Ask LibasAI">
         <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </form>
       <div class="lu-hero__chips">
-        <a href="/ai/ask?q=eid+under+12k">Eid under Rs. 12k</a>
-        <a href="/ai/compare">Compare kurtas</a>
-        <a href="/ai/image-search">Find from a photo</a>
+        <a href="/shop.html?q=eid+under+12k">Eid under Rs. 12k</a>
+        <a href="/compare.html">Compare kurtas</a>
+        <a href="/image-search.html">Find from a photo</a>
         <a href="/get-stitched.html">Get it stitched</a>
         <a href="/men.html">For men</a>
-        <a href="/for-you">Your feed</a>
+        <a href="/shop.html">Your feed</a>
       </div>
     </div>
   </section>
 
-  <!-- ============================= TRUST STRIP ============================= -->
-  <section class="lu-sec lu-sec--cream" style="padding:0;">
+
+  <!-- ============================= AI FEATURES ============================= -->
+  <section class="lu-sec lu-sec--cream2">
+    <span class="lu-star" aria-hidden="true" style="left:3%;top:12%;font-size:30px;">&#43;</span>
     <div class="lu-wrap">
-      <div class="lu-trust">
-        <span>0% checkout markup</span>
-        <span>Direct to the brand</span>
-        <span>80+ Pakistani labels</span>
-        <span>12,000+ pieces</span>
-        <span>Visual image search</span>
-        <span>Vetted master tailors</span>
+      <div class="lu-pfy-head">
+        <h2 class="lu-kicker">One assistant,<br>five tools</h2>
+        <div class="lu-bubble" style="min-width:0;">skip the<br>40 tabs</div>
+      </div>
+      <div class="lu-feat">
+        <a class="lu-feat__card" href="/ai/ask">
+          <span class="lu-feat__n">1</span>
+          <div class="lu-feat__ph"><img src="assets/feature-ask-libasai.jpg" alt="Ask LibasAI"></div>
+          <span class="lu-feat__name">Ask LibasAI</span><span class="lu-feat__sub">Chat &amp; search</span>
+        </a>
+        <a class="lu-feat__card" href="/ai/image-search">
+          <span class="lu-feat__n">2</span>
+          <div class="lu-feat__ph"><img src="assets/feature-image-search.jpg" alt="Image Search"></div>
+          <span class="lu-feat__name">Image Search</span><span class="lu-feat__sub">Find from a photo</span>
+        </a>
+        <a class="lu-feat__card" href="/ai/compare">
+          <span class="lu-feat__n">3</span>
+          <div class="lu-feat__ph"><img src="assets/feature-compare.jpg" alt="Compare"></div>
+          <span class="lu-feat__name">Compare</span><span class="lu-feat__sub">Side by side</span>
+        </a>
+        <a class="lu-feat__card" href="/outfit-builder.html">
+          <span class="lu-feat__n">4</span>
+          <div class="lu-feat__ph"><img src="assets/feature-outfit-builder.jpg" alt="Outfit Builder"></div>
+          <span class="lu-feat__name">Outfit Builder</span><span class="lu-feat__sub">Style the look</span>
+        </a>
+        <a class="lu-feat__card" href="/morning-edit.html">
+          <span class="lu-feat__n">5</span>
+          <div class="lu-feat__ph"><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt="Subah Edit"></div>
+          <span class="lu-feat__name">Subah Edit</span><span class="lu-feat__sub">A daily pick</span>
+        </a>
+      </div>
+      <div class="lu-feat" style="margin-top:14px;grid-template-columns:repeat(4,1fr);">
+        <a class="lu-mini" href="/wardrobe.html">
+          <span class="lu-mini__ph" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 4a3 3 0 0 0-3 3c0 1.3.8 2.4 2 2.8L3 17a2 2 0 0 0 1 3h16a2 2 0 0 0 1-3l-8-7.2A3 3 0 0 0 12 4z"/></svg>
+          </span>
+          <span><b>My Wardrobe</b><span>Saved &amp; owned</span></span>
+        </a>
+        <a class="lu-mini" href="/wishlist.html">
+          <span class="lu-mini__ph" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </span>
+          <span><b>Wishlist</b><span>Everything saved</span></span>
+        </a>
+        <a class="lu-mini" href="/account.html">
+          <span class="lu-mini__ph" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <span><b>Style Profile</b><span>Your taste, tuned</span></span>
+        </a>
+        <a class="lu-mini" href="/get-stitched.html">
+          <span class="lu-mini__ph" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+          </span>
+          <span><b>Get Stitched</b><span>Tailor network</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= WHY LIBASAI ============================= -->
+  <section class="lu-sec lu-sec--cream" id="libasai-intelligence">
+    <div class="lu-wrap">
+      <h2 class="lu-kicker">Why LibasAI?</h2>
+      <p class="lu-why__intro">Find, rank, decide, complete the look. Tap a step to see it work.</p>
+
+      <div class="lu-why-lo">
+        <div class="lu-stage">
+          <!-- 01 SEARCH -->
+          <div class="lu-panel is-active" data-a="search" role="tabpanel">
+            <div class="lu-agent-search-bar">
+              <svg class="lb-icon" style="width:18px;height:18px;fill:none;stroke:var(--lu-red);stroke-width:2;flex-shrink:0;"><use href="#lb-i-search"></use></svg>
+              <input type="text" class="lu-agent-search-inp" value="black embroidered kurta under Rs. 8,000" readonly>
+              <a href="/shop.html?q=black+embroidered+kurta+under+8000" class="lb-cta lu-agent-search-btn">Search</a>
+            </div>
+            <div class="lu-vtags" style="margin-bottom:14px;"><span>Black</span><span>Embroidered</span><span>Kurta</span><span>&le; Rs. 8,000</span></div>
+            <div class="lu-panel__grid">
+              <div class="lu-arch" style="aspect-ratio:3/4;height:190px;"><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+              <div class="lu-arch" style="aspect-ratio:3/4;height:190px;"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+              <div class="lu-arch" style="aspect-ratio:3/4;height:190px;"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+            </div>
+            <p style="display:flex;align-items:center;gap:6px;font-family:'Manrope',sans-serif;font-weight:800;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lu-red);margin-top:12px;">
+              <svg style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-search"></use></svg>
+              142 matches &middot; 18 brands &middot; ~280ms
+            </p>
+            <a href="/shop.html?q=black+embroidered+kurta+under+8000" class="lb-panel-btn">Search Across 80+ Labels</a>
+          </div>
+
+          <!-- 02 RECOMMEND -->
+          <div class="lu-panel" data-a="recommend" role="tabpanel">
+            <div class="lu-vtags" style="margin-bottom:12px;"><span>Your wardrobe</span><span>Formal</span><span>Maroon</span><span>Rs. 10k&ndash;15k</span></div>
+            <div class="lu-vrank">
+              <figure><span class="lu-vrank__n">1</span><img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt=""><figcaption><b>Zeen</b><em>Rs. 10,490</em><i>Echoes three saved pieces.</i></figcaption></figure>
+              <figure><span class="lu-vrank__n">2</span><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt=""><figcaption><b>Mushq</b><em>Rs. 10,950</em><i>Right formality, bolder palette.</i></figcaption></figure>
+              <figure><span class="lu-vrank__n">3</span><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""><figcaption><b>Beechtree</b><em>Rs. 10,194</em><i>Emerging label, fair boost.</i></figcaption></figure>
+            </div>
+            <a href="/for-you" class="lb-panel-btn">Explore Your Recommendations</a>
+          </div>
+
+          <!-- 03 COMPARE -->
+          <div class="lu-panel" data-a="compare" role="tabpanel">
+            <div class="lu-vcmp">
+              <figure><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""><figcaption><b>Sana Safinaz</b><s>Lawn 2PC &middot; 2 pc</s><em>Rs. 10,299</em></figcaption></figure>
+              <figure><span class="lu-vcmp__win">LibasAI pick</span><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt=""><figcaption><b>Zellbury</b><s>3PC Suite &middot; 3 pc</s><em>Rs. 4,490</em></figcaption></figure>
+              <span class="lu-vcmp__mark">vs</span>
+            </div>
+            <p style="font-family:Georgia,serif;font-style:italic;font-size:13.5px;line-height:1.45;color:var(--lu-ink);margin:12px 0 0;">Same lawn weave, same embroidery. Zellbury is <b style="font-style:normal;color:var(--lu-red);">56% cheaper</b> with an extra piece.</p>
+            <a href="/compare.html" class="lb-panel-btn">Compare Your Outfits</a>
+          </div>
+
+          <!-- 04 STYLE -->
+          <div class="lu-panel" data-a="style" role="tabpanel">
+            <div class="lu-vmood">
+              <figure><span class="lu-tag">Capsule</span><img src="assets/building-blocks.jpg" alt="Building Blocks Capsule"><figcaption>Building Blocks <em>Rs. 5,490</em></figcaption></figure>
+              <figure><span class="lu-tag">Balanced</span><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt=""><figcaption>Silk Dupatta <em>Rs. 3,890</em></figcaption></figure>
+              <figure><span class="lu-tag">Footwear</span><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>Handmade Khussa <em>Rs. 3,200</em></figcaption></figure>
+              <figure><span class="lu-tag">Jewelry</span><img src="assets/jewellery.jpg" alt=""><figcaption>Kundan Jhumka <em>Rs. 1,800</em></figcaption></figure>
+            </div>
+            <div class="lu-vmood__foot">
+              <span>Coordinated Look: <b>Rs. 14,380</b></span>
+              <a href="/outfit-builder.html" class="lb-panel-btn" style="margin-top:0;">Open in Outfit Builder</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="lu-brands__list" id="lu-agent-list" role="tablist" aria-label="LibasAI agents" style="margin-top:0;">
+          <button type="button" class="lu-brand-row is-active" data-a="search" role="tab" aria-selected="true">
+            <span class="lu-brand-row__n">01</span>
+            <span><span class="lu-brand-row__name">Search</span><span class="lu-brand-row__sub">Finds it across 80+ labels</span></span>
+            <span class="lu-brand-row__tag">Find</span>
+          </button>
+          <button type="button" class="lu-brand-row" data-a="recommend" role="tab" aria-selected="false">
+            <span class="lu-brand-row__n">02</span>
+            <span><span class="lu-brand-row__name">Recommend</span><span class="lu-brand-row__sub">Ranks by taste, occasion, fairness</span></span>
+            <span class="lu-brand-row__tag">Rank</span>
+          </button>
+          <button type="button" class="lu-brand-row" data-a="compare" role="tab" aria-selected="false">
+            <span class="lu-brand-row__n">03</span>
+            <span><span class="lu-brand-row__name">Compare</span><span class="lu-brand-row__sub">Weighs the best side by side</span></span>
+            <span class="lu-brand-row__tag">Decide</span>
+          </button>
+          <button type="button" class="lu-brand-row" data-a="style" role="tab" aria-selected="false">
+            <span class="lu-brand-row__n">04</span>
+            <span><span class="lu-brand-row__name">Style</span><span class="lu-brand-row__sub">Builds the whole outfit</span></span>
+            <span class="lu-brand-row__tag">Complete</span>
+          </button>
+        </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var list = document.getElementById('lu-agent-list');
+      if (!list) return;
+      var rows = [].slice.call(list.querySelectorAll('.lu-brand-row'));
+      var panels = [].slice.call(document.querySelectorAll('#libasai-intelligence .lu-panel'));
+      list.addEventListener('click', function (e) {
+        var row = e.target.closest('.lu-brand-row');
+        if (!row) return;
+        var key = row.getAttribute('data-a');
+        rows.forEach(function (r) { r.classList.toggle('is-active', r === row); r.setAttribute('aria-selected', r === row ? 'true' : 'false'); });
+        panels.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-a') === key); });
+      });
+    })();
+  </script>
+
+  <!-- ============================= HOW IT WORKS ============================= -->
+  <section class="lu-sec lu-sec--cream2">
+    <span class="lu-ring" aria-hidden="true" style="right:4%;top:8%;width:150px;height:150px;"></span><span class="lu-star" aria-hidden="true" style="right:14%;bottom:12%;font-size:26px;">&#10038;</span>
+    <div class="lu-wrap">
+      <h2 class="lu-kicker">How it works</h2>
+      <div class="lu-how">
+        <div class="lu-how__step">
+          <img class="lu-how__img" src="assets/how-it-works-step1.jpg" alt="Say it - Type a look or drop a photo">
+          <span class="lu-how__n">01</span>
+          <span class="lu-how__t">Say it</span>
+          <span class="lu-how__d">Type a look, drop a photo or set a budget.</span>
+        </div>
+        <div class="lu-how__step">
+          <img class="lu-how__img" src="assets/how-it-works-step2.jpg" alt="Skim it - Compare Pakistani designer labels">
+          <span class="lu-how__n">02</span>
+          <span class="lu-how__t">Skim it</span>
+          <span class="lu-how__d">LibasAI ranks and compares across 80+ labels.</span>
+        </div>
+        <div class="lu-how__step">
+          <img class="lu-how__img" src="assets/tailor-sewing.jpg" alt="Get it - Buy direct or send to tailor">
+          <span class="lu-how__n">03</span>
+          <span class="lu-how__t">Get it</span>
+          <span class="lu-how__d">Buy direct from the brand, or send it to a tailor.</span>
+        </div>
       </div>
     </div>
   </section>
@@ -1282,7 +1958,7 @@
   </section>
 
   <!-- ============================= FOR HER / FOR HIM ============================= -->
-  <section class="lu-sec lu-sec--cream2" style="padding: clamp(28px, 4vw, 48px) 0;">
+  <section class="lu-sec lu-sec--cream2" style="padding: clamp(18px, 2.6vw, 34px) 0;">
     <div class="lu-wrap">
       <div class="lu-gender-wrap">
         <!-- Big Prominent Headers -->
@@ -1325,214 +2001,27 @@
     </div>
   </section>
 
-  <!-- ============================= IMAGE BAND ============================= -->
-  <div class="lu-band" aria-hidden="true">
-    <figure><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt=""><figcaption>bridal</figcaption></figure>
-    <figure><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""><figcaption>lawn</figcaption></figure>
-    <figure><img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackKameezShalwar.jpg?v=1784021153" alt=""><figcaption>menswear</figcaption></figure>
-    <figure><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt=""><figcaption>formal</figcaption></figure>
-    <figure><img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt=""><figcaption>festive</figcaption></figure>
-    <figure><img src="assets/tailor-shears.jpg" alt=""><figcaption>bespoke</figcaption></figure>
-    <span class="lu-band__word">one search,<br>every label</span>
-  </div>
-
-  <!-- ============================= AI FEATURES ============================= -->
-  <section class="lu-sec lu-sec--cream2">
-    <span class="lu-star" aria-hidden="true" style="left:3%;top:12%;font-size:30px;">&#43;</span>
+  <!-- ============================= BESPOKE ============================= -->
+  <section class="lu-sec lu-sec--cream" id="lb-bespoke-editorial">
+    <span class="lu-star" aria-hidden="true" style="top:14%;right:8%;font-size:34px;">&#10038;</span>
     <div class="lu-wrap">
-      <div class="lu-pfy-head">
-        <h2 class="lu-kicker">One assistant,<br>five tools</h2>
-        <div class="lu-bubble" style="min-width:0;">skip the<br>40 tabs</div>
-      </div>
-      <div class="lu-feat">
-        <a class="lu-feat__card" href="/ai/ask">
-          <span class="lu-feat__n">1</span>
-          <div class="lu-feat__ph"><img src="https://cdn.shopify.com/s/files/1/1146/5868/files/06Mahveen.jpg?v=1752762770" alt=""></div>
-          <span class="lu-feat__name">Ask LibasAI</span><span class="lu-feat__sub">Chat &amp; search</span>
+      <div class="lu-bespoke">
+        <a href="/tailor-profile.html?id=rafiq" class="lu-oval lu-bespoke__photo" style="display:block;">
+          <img src="assets/tailor-shears.jpg" alt="Master tailor, Lahore">
         </a>
-        <a class="lu-feat__card" href="/ai/image-search">
-          <span class="lu-feat__n">2</span>
-          <div class="lu-feat__ph"><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt=""></div>
-          <span class="lu-feat__name">Image Search</span><span class="lu-feat__sub">Find from a photo</span>
-        </a>
-        <a class="lu-feat__card" href="/ai/compare">
-          <span class="lu-feat__n">3</span>
-          <div class="lu-feat__ph"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""></div>
-          <span class="lu-feat__name">Compare</span><span class="lu-feat__sub">Side by side</span>
-        </a>
-        <a class="lu-feat__card" href="/outfit-builder.html">
-          <span class="lu-feat__n">4</span>
-          <div class="lu-feat__ph"><img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt=""></div>
-          <span class="lu-feat__name">Outfit Builder</span><span class="lu-feat__sub">Style the look</span>
-        </a>
-        <a class="lu-feat__card" href="/morning-edit.html">
-          <span class="lu-feat__n">5</span>
-          <div class="lu-feat__ph"><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt=""></div>
-          <span class="lu-feat__name">Subah Edit</span><span class="lu-feat__sub">A daily pick</span>
-        </a>
-      </div>
-      <div class="lu-feat" style="margin-top:14px;grid-template-columns:repeat(4,1fr);">
-        <a class="lu-mini" href="/wardrobe.html"><span class="lu-mini__ph"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""></span><span><b>My Wardrobe</b><span>Saved &amp; owned</span></span></a>
-        <a class="lu-mini" href="/wishlist.html"><span class="lu-mini__ph"><img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt=""></span><span><b>Wishlist</b><span>Everything saved</span></span></a>
-        <a class="lu-mini" href="/account.html"><span class="lu-mini__ph"><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt=""></span><span><b>Style Profile</b><span>Your taste, tuned</span></span></a>
-        <a class="lu-mini" href="/get-stitched.html"><span class="lu-mini__ph"><img src="assets/tailor-shears.jpg" alt=""></span><span><b>Get Stitched</b><span>Tailor network</span></span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================= WHY LIBASAI ============================= -->
-  <section class="lu-sec lu-sec--cream" id="libasai-intelligence">
-    <div class="lu-wrap">
-      <h2 class="lu-kicker">Why LibasAI?</h2>
-      <p class="lu-why__intro">Find, rank, decide, complete the look. Tap a step to see it work.</p>
-
-      <div class="lu-why-lo">
-        <div class="lu-stage">
-          <!-- 01 SEARCH -->
-          <div class="lu-panel is-active" data-a="search" role="tabpanel">
-            <span class="lu-vquery">black embroidered kurta under Rs. 8,000</span>
-            <div class="lu-vtags"><span>Black</span><span>Embroidered</span><span>Kurta</span><span>&le; Rs. 8,000</span></div>
-            <div class="lu-panel__grid" style="grid-template-columns:repeat(3,1fr);margin-top:14px;">
-              <div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt=""></div>
-              <div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""></div>
-              <div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/3PCLawnPrintedSuitIUSTKSD-2207_front.jpg?v=1768905960" alt=""></div>
-            </div>
-            <p style="font-family:'Manrope',sans-serif;font-weight:800;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lu-red);margin-top:12px;">142 matches &middot; 18 brands &middot; ~280ms</p>
-          </div>
-
-          <!-- 02 RECOMMEND -->
-          <div class="lu-panel" data-a="recommend" role="tabpanel">
-            <div class="lu-vtags" style="margin-bottom:16px;"><span>Your wardrobe</span><span>Formal</span><span>Maroon</span><span>Rs. 10k&ndash;15k</span></div>
-            <div class="lu-vrank">
-              <figure><span class="lu-vrank__n">1</span><img src="https://cdn.shopify.com/s/files/1/0320/4405/6716/files/WLM36291_5.jpg?v=1778224802" alt=""><figcaption><b>Zeen</b><em>Rs. 10,490</em><i>Echoes three saved pieces.</i></figcaption></figure>
-              <figure><span class="lu-vrank__n">2</span><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/1_69883506-9f99-49cd-8880-afdcb2e74d2f.jpg?v=1788365379" alt=""><figcaption><b>Mushq</b><em>Rs. 10,950</em><i>Right formality, bolder palette.</i></figcaption></figure>
-              <figure><span class="lu-vrank__n">3</span><img src="https://cdn.shopify.com/s/files/1/0488/9201/8848/files/BT1260001LP2510_b4a470fc-60fe-462c-8a91-c93c5a3708eb.jpg?v=1787957441" alt=""><figcaption><b>Beechtree</b><em>Rs. 10,194</em><i>Emerging label, fair boost.</i></figcaption></figure>
-            </div>
-          </div>
-
-          <!-- 03 COMPARE -->
-          <div class="lu-panel" data-a="compare" role="tabpanel">
-            <div class="lu-vcmp">
-              <figure><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""><figcaption><b>Sana Safinaz</b><s>Lawn 2PC &middot; 2 pc</s><em>Rs. 10,299</em></figcaption></figure>
-              <figure><span class="lu-vcmp__win">LibasAI pick</span><img src="https://cdn.shopify.com/s/files/1/0595/3260/7535/files/WUS26E34112_10.png?v=1786956804" alt=""><figcaption><b>Zellbury</b><s>3PC Suite &middot; 3 pc</s><em>Rs. 4,490</em></figcaption></figure>
-              <span class="lu-vcmp__mark">vs</span>
-            </div>
-            <p style="font-family:Georgia,serif;font-style:italic;font-size:14px;line-height:1.5;color:var(--lu-ink);margin:16px 0 0;">Same lawn weave, same embroidery. Zellbury is <b style="font-style:normal;color:var(--lu-red);">56% cheaper</b> with an extra piece.</p>
-          </div>
-
-          <!-- 04 STYLE -->
-          <div class="lu-panel" data-a="style" role="tabpanel">
-            <div class="lu-vmood">
-              <figure class="lu-vmb lu-vmb--1"><img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt=""><figcaption>Kurta &middot; Rs. 5,490</figcaption></figure>
-              <figure class="lu-vmb lu-vmb--2"><img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt=""><figcaption>Dupatta &middot; Rs. 3,890</figcaption></figure>
-              <figure class="lu-vmb lu-vmb--3"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>Khussa &middot; Rs. 3,200</figcaption></figure>
-              <figure class="lu-vmb lu-vmb--4"><img src="assets/jewellery.jpg" alt=""><figcaption>Jhumka &middot; Rs. 1,800</figcaption></figure>
-              <span class="lu-vanno" style="top:2%;left:0;--r:-4deg">wedding</span>
-              <span class="lu-vanno" style="top:2%;right:2%;--r:5deg">balanced</span>
-              <span class="lu-vanno" style="bottom:6%;left:6%;--r:-3deg">formal</span>
-              <span class="lu-vanno" style="bottom:1%;right:22%;--r:3deg">under budget</span>
-            </div>
-            <div class="lu-vmood__foot">
-              <span>Complete look <b>Rs. 14,380</b></span>
-              <a href="/outfit-builder.html" class="lu-link">Open in Outfit Builder</a>
-            </div>
-          </div>
+        <div class="lu-bespoke__body">
+          <h2 class="lu-h">From first idea<br>to final stitch</h2>
+          <ol class="lu-steps">
+            <li><span class="lu-step-tag">Choose</span><b>01</b> A LibasAI look, a photo, or your own sketch.</li>
+            <li><span class="lu-step-tag">Match</span><b>02</b> A vetted master tailor by city, specialty and budget.</li>
+            <li><span class="lu-step-tag">Stitch</span><b>03</b> Send measurements, track it to your door.</li>
+          </ol>
+          <a href="/get-stitched.html" class="lu-link">Get a suit stitched</a>
         </div>
-
-        <div class="lu-brands__list" id="lu-agent-list" role="tablist" aria-label="LibasAI agents" style="margin-top:0;">
-          <button type="button" class="lu-brand-row is-active" data-a="search" role="tab" aria-selected="true">
-            <span class="lu-brand-row__n">01</span>
-            <span><span class="lu-brand-row__name">Search</span><span class="lu-brand-row__sub">Finds it across 80+ labels</span></span>
-            <span class="lu-brand-row__tag">Find</span>
-          </button>
-          <button type="button" class="lu-brand-row" data-a="recommend" role="tab" aria-selected="false">
-            <span class="lu-brand-row__n">02</span>
-            <span><span class="lu-brand-row__name">Recommend</span><span class="lu-brand-row__sub">Ranks by taste, occasion, fairness</span></span>
-            <span class="lu-brand-row__tag">Rank</span>
-          </button>
-          <button type="button" class="lu-brand-row" data-a="compare" role="tab" aria-selected="false">
-            <span class="lu-brand-row__n">03</span>
-            <span><span class="lu-brand-row__name">Compare</span><span class="lu-brand-row__sub">Weighs the best side by side</span></span>
-            <span class="lu-brand-row__tag">Decide</span>
-          </button>
-          <button type="button" class="lu-brand-row" data-a="style" role="tab" aria-selected="false">
-            <span class="lu-brand-row__n">04</span>
-            <span><span class="lu-brand-row__name">Style</span><span class="lu-brand-row__sub">Builds the whole outfit</span></span>
-            <span class="lu-brand-row__tag">Complete</span>
-          </button>
-          <div class="lu-why-fill">
-            <div class="lu-duo"><img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/ClassicFitEmbShirtCollarSuit.jpg?v=1786944952" alt=""></div>
-            <div class="lu-bubble" style="min-width:0;">your stylist,<br>on call</div>
-          </div>
+        <div class="lu-bespoke__pod">
+          <div class="lu-duo"><img src="assets/tailor-sewing.jpg" alt=""></div>
+          <div class="lu-bubble">stitched in<br>Pakistan</div>
         </div>
-      </div>
-
-      <a href="/ai/ask" class="lu-cta" style="margin-top:clamp(22px,3vw,36px);">Ask LibasAI</a>
-    </div>
-  </section>
-
-  <script>
-    (function () {
-      var list = document.getElementById('lu-agent-list');
-      if (!list) return;
-      var rows = [].slice.call(list.querySelectorAll('.lu-brand-row'));
-      var panels = [].slice.call(document.querySelectorAll('#libasai-intelligence .lu-panel'));
-      list.addEventListener('click', function (e) {
-        var row = e.target.closest('.lu-brand-row');
-        if (!row) return;
-        var key = row.getAttribute('data-a');
-        rows.forEach(function (r) { r.classList.toggle('is-active', r === row); r.setAttribute('aria-selected', r === row ? 'true' : 'false'); });
-        panels.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-a') === key); });
-      });
-    })();
-  </script>
-
-  <!-- ============================= HOW IT WORKS ============================= -->
-  <section class="lu-sec lu-sec--cream2">
-    <span class="lu-ring" aria-hidden="true" style="right:4%;top:8%;width:150px;height:150px;"></span><span class="lu-star" aria-hidden="true" style="right:14%;bottom:12%;font-size:26px;">&#10038;</span>
-    <div class="lu-wrap">
-      <h2 class="lu-kicker">How it works</h2>
-      <div class="lu-how">
-        <div class="lu-how__step">
-          <img class="lu-how__img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="">
-          <span class="lu-how__n">01</span>
-          <span class="lu-how__t">Say it</span>
-          <span class="lu-how__d">Type a look, drop a photo or set a budget.</span>
-        </div>
-        <div class="lu-how__step">
-          <img class="lu-how__img" src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt="">
-          <span class="lu-how__n">02</span>
-          <span class="lu-how__t">Skim it</span>
-          <span class="lu-how__d">LibasAI ranks and compares across 80+ labels.</span>
-        </div>
-        <div class="lu-how__step">
-          <img class="lu-how__img" src="assets/tailor-sewing.jpg" alt="">
-          <span class="lu-how__n">03</span>
-          <span class="lu-how__t">Get it</span>
-          <span class="lu-how__d">Buy direct from the brand, or send it to a tailor.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================= DRESSED FOR THE MOMENT ============================= -->
-  <section class="lu-sec lu-sec--cream">
-    <figure class="lu-mp" aria-hidden="true" style="left:-26px;bottom:10%;width:120px;aspect-ratio:1;transform:rotate(-7deg);"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>khussa</figcaption></figure><figure class="lu-mp" aria-hidden="true" style="right:-24px;top:14%;width:110px;aspect-ratio:1;transform:rotate(5deg);"><img src="assets/jewellery.jpg" alt=""><figcaption>jhumka</figcaption></figure>
-    <div class="lu-wrap">
-      <h2 class="lu-kicker">Dressed for<br>the moment</h2>
-      <div class="lu-occ">
-        <a href="/discover/wedding" class="lu-photocard"><span class="lu-tag">120 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt=""></div>
-          <span class="lu-photocard__h">Wedding</span>
-        </a>
-        <a href="/discover/eid" class="lu-photocard"><span class="lu-tag">90 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt=""></div>
-          <span class="lu-photocard__h">Eid</span>
-        </a>
-        <a href="/discover/formal" class="lu-photocard"><span class="lu-tag">200 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt=""></div>
-          <span class="lu-photocard__h">Formal</span>
-        </a>
-        <a href="/discover/casual" class="lu-photocard"><span class="lu-tag">150 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""></div>
-          <span class="lu-photocard__h">Casual</span>
-        </a>
       </div>
     </div>
   </section>
@@ -1572,30 +2061,38 @@
     </div>
   </section>
 
-  <!-- ============================= BESPOKE ============================= -->
-  <section class="lu-sec lu-sec--cream" id="lb-bespoke-editorial">
-    <span class="lu-star" aria-hidden="true" style="top:14%;right:8%;font-size:34px;">&#10038;</span>
+  <!-- ============================= DRESSED FOR THE MOMENT ============================= -->
+  <section class="lu-sec lu-sec--cream">
+    <figure class="lu-mp" aria-hidden="true" style="left:-26px;bottom:10%;width:120px;aspect-ratio:1;transform:rotate(-7deg);"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SC26SH-FS-036_2_dce56880-9e59-41dd-91f5-573e8417ee29.jpg?v=1769069958" alt=""><figcaption>khussa</figcaption></figure><figure class="lu-mp" aria-hidden="true" style="right:-24px;top:14%;width:110px;aspect-ratio:1;transform:rotate(5deg);"><img src="assets/jewellery.jpg" alt=""><figcaption>jhumka</figcaption></figure>
     <div class="lu-wrap">
-      <div class="lu-bespoke">
-        <a href="/tailor-profile.html?id=rafiq" class="lu-oval lu-bespoke__photo" style="display:block;">
-          <img src="assets/tailor-shears.jpg" alt="Master tailor, Lahore">
+      <h2 class="lu-kicker">Dressed for<br>the moment</h2>
+      <div class="lu-occ">
+        <a href="/discover/wedding" class="lu-photocard"><span class="lu-tag">120 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt=""></div>
+          <span class="lu-photocard__h">Wedding</span>
         </a>
-        <div class="lu-bespoke__body">
-          <h2 class="lu-h">From first idea<br>to final stitch</h2>
-          <ol class="lu-steps">
-            <li><span class="lu-step-tag">Choose</span><b>01</b> A LibasAI look, a photo, or your own sketch.</li>
-            <li><span class="lu-step-tag">Match</span><b>02</b> A vetted master tailor by city, specialty and budget.</li>
-            <li><span class="lu-step-tag">Stitch</span><b>03</b> Send measurements, track it to your door.</li>
-          </ol>
-          <a href="/get-stitched.html" class="lu-link">Get a suit stitched</a>
-        </div>
-        <div class="lu-bespoke__pod">
-          <div class="lu-duo"><img src="assets/tailor-sewing.jpg" alt=""></div>
-          <div class="lu-bubble">stitched in<br>Pakistan</div>
-        </div>
+        <a href="/discover/eid" class="lu-photocard"><span class="lu-tag">90 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7018_MintGreen_Cover.jpg?v=1778255730" alt=""></div>
+          <span class="lu-photocard__h">Eid</span>
+        </a>
+        <a href="/discover/formal" class="lu-photocard"><span class="lu-tag">200 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt=""></div>
+          <span class="lu-photocard__h">Formal</span>
+        </a>
+        <a href="/discover/casual" class="lu-photocard"><span class="lu-tag">150 looks</span><div class="lu-arch"><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""></div>
+          <span class="lu-photocard__h">Casual</span>
+        </a>
       </div>
     </div>
   </section>
+
+  <!-- ============================= IMAGE BAND ============================= -->
+  <div class="lu-band" aria-hidden="true">
+    <figure><img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt=""><figcaption>bridal</figcaption></figure>
+    <figure><img src="https://cdn.shopify.com/s/files/1/0740/1753/8280/files/SS26ESE427P2T_1.jpg?v=1788411485" alt=""><figcaption>lawn</figcaption></figure>
+    <figure><img src="https://cdn.shopify.com/s/files/1/0552/1339/1936/files/BlackKameezShalwar.jpg?v=1784021153" alt=""><figcaption>menswear</figcaption></figure>
+    <figure><img src="https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907" alt=""><figcaption>formal</figcaption></figure>
+    <figure><img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt=""><figcaption>festive</figcaption></figure>
+    <figure><img src="assets/tailor-shears.jpg" alt=""><figcaption>bespoke</figcaption></figure>
+    <span class="lu-band__word">one search,<br>every label</span>
+  </div>
 
   <!-- ============================= TESTIMONIAL ============================= -->
   <section class="lu-sec lu-sec--cream2">
@@ -1644,7 +2141,7 @@
         <a href="/ai-features.html" class="lu-link">See all features</a>
       </div>
     </div>
-    <div class="lu-final__word lu-script" aria-hidden="true">libasai</div>
+    <div class="lu-final__word lu-script" aria-hidden="true">LibasAI</div>
   </section>
 
   <!-- FOOTER -->

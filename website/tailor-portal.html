@@ -13,90 +13,128 @@
   <style>
     .lb-portal-layout {
       display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: calc(100vh - 80px);
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - 72px);
+      background: var(--lu-cream-2, #F7EDDF);
     }
     @media (max-width: 900px) {
       .lb-portal-layout { grid-template-columns: 1fr; }
     }
     .lb-portal-sidebar {
-      background: #5E0A26;
-      color: var(--lb-cream);
-      padding: 32px 20px;
+      background: var(--lu-cream, #FAF4EE);
+      border-right: 2px dotted var(--lu-dot, #C98F82);
+      color: var(--lu-ink, #191412);
+      padding: 32px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
     .lb-portal-main {
-      padding: clamp(24px, 4vw, 48px);
-      background: #F7EDDF;
+      padding: clamp(24px, 4vw, 44px);
+      background: var(--lu-cream-2, #F7EDDF);
       overflow-y: auto;
     }
     .lb-portal-stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
       margin-bottom: 32px;
     }
     .lb-stat-box {
-      background: #FFF;
-      border: 1px solid var(--lb-hairline);
-      border-radius: 6px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(25,20,18,0.03);
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      border-radius: 0;
+      padding: 20px 22px;
+      box-shadow: 0 4px 14px rgba(44,17,22,0.04);
     }
     .lb-stat-box strong {
       display: block;
-      font-size: 28px;
-      font-family: 'Playfair Display', serif;
-      color: var(--lb-burgundy);
+      font-size: 32px;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      color: var(--lu-red, #840E34);
       margin-top: 6px;
+      letter-spacing: -0.02em;
     }
     .lb-stat-box span {
-      font-size: 11.5px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: rgba(25,20,18,0.55);
+      letter-spacing: 0.1em;
+      color: var(--lu-red, #840E34);
     }
     .lb-workbench-card {
-      background: #FFF;
-      border: 1px solid var(--lb-hairline);
-      border-radius: 6px;
-      padding: 22px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 16px rgba(25,20,18,0.03);
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      border-radius: 0;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 18px rgba(44,17,22,0.06);
+      position: relative;
     }
     .lb-workbench-card.is-pending {
-      border-left: 5px solid #F59E0B;
+      border-left: 6px solid var(--lu-red, #840E34);
     }
     .lb-workbench-card.is-inprogress {
-      border-left: 5px solid var(--lb-burgundy);
+      border-left: 6px solid #D97706;
     }
     .lb-workbench-card.is-ready {
-      border-left: 5px solid #10B981;
+      border-left: 6px solid #10B981;
     }
     .lb-side-nav-link {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 12px 14px;
-      border-radius: 4px;
-      color: rgba(247,237,223,0.7);
+      border: 2px dotted transparent;
+      color: var(--lu-ink, #191412);
       text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      transition: all 160ms ease;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 180ms ease;
       cursor: pointer;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
-    .lb-side-nav-link:hover, .lb-side-nav-link.is-active {
-      background: rgba(247,237,223,0.12);
-      color: #FFF;
+    .lb-side-nav-link:hover {
+      border-color: var(--lu-dot, #C98F82);
+      color: var(--lu-red, #840E34);
+      background: rgba(255,255,255,0.6);
+    }
+    .lb-side-nav-link.is-active {
+      background: var(--lu-red, #840E34);
+      color: var(--lu-cream, #FAF4EE);
+      border-color: var(--lu-red, #840E34);
+    }
+    .lb-portal-topbar {
+      background: var(--lu-blush, #F3D7D7);
+      border-bottom: 2px dotted var(--lu-dot, #C98F82);
+      padding: 14px clamp(20px,4vw,40px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--lu-red, #840E34);
+    }
+    .lb-portal-select {
+      background: var(--lu-cream, #FAF4EE);
+      color: var(--lu-red, #840E34);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      padding: 7px 12px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+    .lb-portal-select:focus {
+      border-style: solid;
+      border-color: var(--lu-red, #840E34);
     }
   </style>
 </head>
-<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+<body style="font-family:'Manrope',sans-serif; color:var(--lu-ink, #191412); background:var(--lu-cream-2, #F7EDDF); width:100%; overflow-x:hidden; margin:0;">
 
   <!-- SVG SPRITE -->
   <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
@@ -111,26 +149,26 @@
   </svg>
 
   <!-- PORTAL TOPBAR -->
-  <header style="background:var(--lb-charcoal); border-bottom:1px solid rgba(247,237,223,0.1); padding:14px clamp(20px,4vw,40px); display:flex; justify-content:space-between; align-items:center; color:var(--lb-cream);">
+  <header class="lb-portal-topbar">
     <div style="display:flex; align-items:center; gap:16px;">
-      <a href="/" class="lb-logo" style="color:var(--lb-cream);">
+      <a href="/" class="lb-logo" style="text-decoration:none;">
         <img src="assets/libasai-emblem.png" alt="LibasAI">
-        <span style="color:var(--lb-cream);">LibasAI Tailor Studio</span>
+        <span>Tailor Studio</span>
       </a>
-      <span class="lb-tag" style="border-color:var(--lb-rose); color:var(--lb-rose);">Artisan Partner Workbench</span>
+      <span class="lu-tag">Artisan Partner Workbench</span>
     </div>
     <div style="display:flex; align-items:center; gap:16px;">
       <!-- SWITCH TAILOR IDENTITY -->
-      <div style="display:flex; align-items:center; gap:8px; font-size:12.5px;">
-        <span style="color:rgba(247,237,223,0.6);">Switch Studio:</span>
-        <select id="portal-tailor-switch" onchange="switchPortalTailor()" style="background:#2A2320; color:var(--lb-cream); border:1px solid rgba(247,237,223,0.2); padding:6px 10px; border-radius:4px; font-family:'Manrope',sans-serif; font-size:12.5px;">
-          <option value="rafiq">Master Rafiq & Sons (Lahore)</option>
+      <div style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">
+        <span>Switch Studio:</span>
+        <select id="portal-tailor-switch" class="lb-portal-select" onchange="switchPortalTailor()">
+          <option value="rafiq">Master Rafiq &amp; Sons (Lahore)</option>
           <option value="noor">Noor Bridal Studio (Karachi)</option>
           <option value="aslam">Ustaad Aslam Cutter (Islamabad)</option>
           <option value="gulberg">Gulberg Express (Lahore)</option>
         </select>
       </div>
-      <a href="/my-requests.html" style="font-size:12px; color:var(--lb-rose); text-decoration:none;">View Customer View →</a>
+      <a href="/my-requests.html" class="lb-cta lb-cta--ghost" style="padding:7px 14px !important; font-size:10px !important;">View Customer View →</a>
     </div>
   </header>
 
@@ -140,11 +178,11 @@
     <!-- SIDEBAR -->
     <aside class="lb-portal-sidebar">
       <div>
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:28px; padding-bottom:18px; border-bottom:1px solid rgba(247,237,223,0.1);">
-          <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" style="width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid var(--lb-rose);" alt="">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:28px; padding-bottom:18px; border-bottom:2px dotted var(--lu-dot);">
+          <img id="sidebar-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" style="width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid var(--lu-red);" alt="">
           <div>
-            <strong id="sidebar-name" style="font-size:14px; display:block; color:var(--lb-cream);">Master Rafiq</strong>
-            <span style="font-size:11px; color:#10B981; font-weight:700;">● Online & Accepting</span>
+            <strong id="sidebar-name" style="font-family:'Archivo',sans-serif; font-size:15px; font-weight:800; text-transform:uppercase; display:block; color:var(--lu-red);">Master Rafiq</strong>
+            <span style="font-size:11px; color:#10B981; font-weight:800; text-transform:uppercase; letter-spacing:0.04em;">Online &amp; Accepting</span>
           </div>
         </div>
 
@@ -155,17 +193,17 @@
           </div>
           <div class="lb-side-nav-link" onclick="switchTab('services', this)">
             <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
-            Rate Card & Services
+            Rate Card &amp; Services
           </div>
           <div class="lb-side-nav-link" onclick="switchTab('capacity', this)">
             <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><use href="#lb-i-settings"></use></svg>
-            Capacity & Turnaround
+            Capacity &amp; Turnaround
           </div>
         </nav>
       </div>
 
-      <div style="background:rgba(247,237,223,0.06); border-radius:6px; padding:16px; font-size:12px; color:rgba(247,237,223,0.7);">
-        <strong style="color:var(--lb-cream); display:block; margin-bottom:4px;">Need Tailor Support?</strong>
+      <div style="background:var(--lu-cream-2); border:2px dotted var(--lu-dot); padding:16px; font-size:11.5px; color:var(--lu-ink);">
+        <strong style="font-family:'Archivo',sans-serif; text-transform:uppercase; color:var(--lu-red); display:block; margin-bottom:4px; font-size:12px;">Need Tailor Support?</strong>
         <span>LibasAI Master Cutter helpline: 0800-LIBAS (Mon-Sat, 9am-8pm)</span>
       </div>
     </aside>
@@ -177,11 +215,11 @@
       <div class="lb-portal-stat-grid">
         <div class="lb-stat-box">
           <span>Pending Customer Requests</span>
-          <strong id="stat-pending" style="color:#D97706;">1</strong>
+          <strong id="stat-pending" style="color:var(--lu-red);">1</strong>
         </div>
         <div class="lb-stat-box">
           <span>Active on Cutting Table</span>
-          <strong id="stat-active" style="color:var(--lb-burgundy);">2</strong>
+          <strong id="stat-active" style="color:#D97706;">2</strong>
         </div>
         <div class="lb-stat-box">
           <span>Ready for Delivery</span>
@@ -189,18 +227,18 @@
         </div>
         <div class="lb-stat-box">
           <span>This Month Earnings</span>
-          <strong id="stat-earnings" style="color:var(--lb-charcoal);">PKR 48,200</strong>
+          <strong id="stat-earnings" style="color:var(--lu-red);">PKR 48,200</strong>
         </div>
       </div>
 
       <!-- TAB CONTENT: WORKBENCH -->
       <div id="tab-orders">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
           <div>
-            <h2 class="lb-h2" style="font-size:24px;">Incoming Stitching Requests</h2>
-            <p class="lb-body" style="font-size:13.5px; margin-top:2px;">Accept new commissions, review customer measurements, and move suits along production stages.</p>
+            <h2 style="font-family:'Archivo',sans-serif; font-size:24px; font-weight:800; text-transform:uppercase; letter-spacing:0.02em; color:var(--lu-red); margin:0 0 4px;">Incoming Stitching Requests</h2>
+            <p style="font-size:13.5px; color:rgba(25,20,18,0.7); margin:0;">Accept new commissions, review customer measurements, and move suits along production stages.</p>
           </div>
-          <button class="lb-cta lb-cta--ghost" onclick="refreshPortalOrders()">↻ Refresh Requests</button>
+          <button class="lb-cta lb-cta--ghost" style="padding:9px 18px !important; font-size:11px !important;" onclick="refreshPortalOrders()">Refresh Requests</button>
         </div>
 
         <div id="workbench-list">
@@ -209,26 +247,26 @@
       </div>
 
       <!-- TAB CONTENT: SERVICES & RATE CARD -->
-      <div id="tab-services" style="display:none; background:#FFF; border-radius:6px; padding:28px; border:1px solid var(--lb-hairline);">
-        <h2 class="lb-h2" style="font-size:22px; margin-bottom:8px;">Manage Stitching Services & Base Rates</h2>
-        <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">Update your base charges displayed to customers browsing the tailor directory.</p>
+      <div id="tab-services" style="display:none; background:var(--lu-cream); border:2px dotted var(--lu-dot); padding:28px;">
+        <h2 style="font-family:'Archivo',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:0 0 6px;">Manage Stitching Services &amp; Base Rates</h2>
+        <p style="font-size:14px; color:rgba(25,20,18,0.7); margin-top:0; margin-bottom:24px;">Update your base charges displayed to customers browsing the tailor directory.</p>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:700px;">
           <div>
-            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Men's Plain Shalwar Kameez (PKR)</label>
-            <input type="number" id="srv-rate-1" class="lb-input" value="2400">
+            <label style="display:block; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-red); margin-bottom:6px;">Men's Plain Shalwar Kameez (PKR)</label>
+            <input type="number" id="srv-rate-1" class="lb-input" style="border:2px dotted var(--lu-dot); border-radius:0; background:#FFF;" value="2400">
           </div>
           <div>
-            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Women's 3-Piece Lawn / Silk (PKR)</label>
-            <input type="number" id="srv-rate-2" class="lb-input" value="2800">
+            <label style="display:block; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-red); margin-bottom:6px;">Women's 3-Piece Lawn / Silk (PKR)</label>
+            <input type="number" id="srv-rate-2" class="lb-input" style="border:2px dotted var(--lu-dot); border-radius:0; background:#FFF;" value="2800">
           </div>
           <div>
-            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Waistcoat / Prince Coat (PKR)</label>
-            <input type="number" id="srv-rate-3" class="lb-input" value="3600">
+            <label style="display:block; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-red); margin-bottom:6px;">Waistcoat / Prince Coat (PKR)</label>
+            <input type="number" id="srv-rate-3" class="lb-input" style="border:2px dotted var(--lu-dot); border-radius:0; background:#FFF;" value="3600">
           </div>
           <div>
-            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">⚡ 48h Express Rush Surcharge (PKR)</label>
-            <input type="number" id="srv-rate-4" class="lb-input" value="800">
+            <label style="display:block; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-red); margin-bottom:6px;">48h Express Rush Surcharge (PKR)</label>
+            <input type="number" id="srv-rate-4" class="lb-input" style="border:2px dotted var(--lu-dot); border-radius:0; background:#FFF;" value="800">
           </div>
         </div>
 
@@ -236,22 +274,22 @@
       </div>
 
       <!-- TAB CONTENT: CAPACITY -->
-      <div id="tab-capacity" style="display:none; background:#FFF; border-radius:6px; padding:28px; border:1px solid var(--lb-hairline);">
-        <h2 class="lb-h2" style="font-size:22px; margin-bottom:8px;">Studio Capacity & Availability Toggle</h2>
-        <p class="lb-body" style="font-size:14px; margin-top:0; margin-bottom:24px;">Control whether your atelier appears as available or busy during peak Eid/wedding seasons.</p>
+      <div id="tab-capacity" style="display:none; background:var(--lu-cream); border:2px dotted var(--lu-dot); padding:28px;">
+        <h2 style="font-family:'Archivo',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:0 0 6px;">Studio Capacity &amp; Availability Toggle</h2>
+        <p style="font-size:14px; color:rgba(25,20,18,0.7); margin-top:0; margin-bottom:24px;">Control whether your atelier appears as available or busy during peak Eid/wedding seasons.</p>
 
         <div style="max-width:560px; display:flex; flex-direction:column; gap:16px;">
           <label style="display:flex; align-items:center; gap:12px; cursor:pointer;">
-            <input type="checkbox" id="avail-toggle" checked style="accent-color:var(--lb-burgundy); width:20px; height:20px;">
+            <input type="checkbox" id="avail-toggle" checked style="accent-color:var(--lu-red); width:20px; height:20px;">
             <div>
-              <strong style="font-size:14px; display:block;">Accept New Stitching Orders Online</strong>
+              <strong style="font-family:'Archivo',sans-serif; font-size:14px; font-weight:700; text-transform:uppercase; display:block;">Accept New Stitching Orders Online</strong>
               <span style="font-size:12.5px; color:rgba(25,20,18,0.6);">When unchecked, customers will see "At Capacity — Booking Reopens Soon"</span>
             </div>
           </label>
 
           <div>
-            <label style="display:block; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-bottom:6px;">Weekly Order Quota Limit</label>
-            <input type="number" class="lb-input" value="15" style="max-width:180px;">
+            <label style="display:block; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--lu-red); margin-bottom:6px;">Weekly Order Quota Limit</label>
+            <input type="number" class="lb-input" value="15" style="border:2px dotted var(--lu-dot); border-radius:0; background:#FFF; max-width:180px;">
           </div>
 
           <button class="lb-cta" style="width:fit-content; margin-top:10px;" onclick="alert('Capacity preferences saved.')">Update Capacity</button>
@@ -352,55 +390,55 @@
 
         var m = item.measurements || {};
         var measChips = Object.keys(m).map(function(k) {
-          return '<span class="lb-tag" style="background:#FAF6F0; font-size:11px; text-transform:none;">' + k + ': <strong>' + m[k] + '"</strong></span>';
+          return '<span class="lu-tag" style="background:#FFF; font-size:11px; text-transform:none; border:1.5px dotted var(--lu-dot);">' + k + ': <strong style="color:var(--lu-red);">' + m[k] + '"</strong></span>';
         }).join('');
 
         return '<div class="lb-workbench-card ' + cardCls + '">' +
           '<div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px;">' +
             '<div style="display:flex; gap:16px; align-items:center;">' +
-              '<img src="' + (item.designImg || '') + '" style="width:64px; height:64px; object-fit:cover; border-radius:4px;" alt="">' +
+              '<img src="' + (item.designImg || '') + '" style="width:68px; height:68px; object-fit:cover; border:2px dotted var(--lu-dot);" alt="">' +
               '<div>' +
-                '<span class="lb-tag" style="background:var(--lb-paper);">' + item.id + '</span>' +
-                '<h3 class="lb-h2" style="font-size:18px; margin:2px 0;">' + item.designTitle + '</h3>' +
-                '<div style="font-size:12.5px; color:rgba(25,20,18,0.65);">' + item.garment + ' · ' + item.fit + ' · Target: <strong>' + item.requiredDate + '</strong></div>' +
+                '<span class="lu-tag" style="font-size:10px; margin-bottom:4px;">' + item.id + '</span>' +
+                '<h3 style="font-family:\'Archivo\',sans-serif; font-size:18px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:2px 0;">' + item.designTitle + '</h3>' +
+                '<div style="font-size:12px; color:rgba(25,20,18,0.7); font-weight:600;">' + item.garment + ' · ' + item.fit + ' · Target: <strong>' + item.requiredDate + '</strong></div>' +
               '</div>' +
             '</div>' +
             '<div style="text-align:right;">' +
-              '<span class="lb-tag" style="background:#FAF6F0; font-weight:800; font-size:12px; border-color:var(--lb-burgundy); color:var(--lb-burgundy);">' + item.status + '</span>' +
-              '<div style="font-size:14px; font-weight:700; color:var(--lb-charcoal); margin-top:6px;">' + item.estimatedPrice + '</div>' +
+              '<span class="lu-tag" style="font-size:11px; color:var(--lu-red);">' + item.status + '</span>' +
+              '<div style="font-family:\'Archivo\',sans-serif; font-size:16px; font-weight:800; color:var(--lu-red); margin-top:6px;">' + item.estimatedPrice + '</div>' +
             '</div>' +
           '</div>' +
 
-          '<div style="background:#FAF6F0; padding:12px 16px; border-radius:4px; margin-bottom:14px; font-size:13px;">' +
-            '<div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:8px;">' +
-              '<span>Collar: <strong>' + (item.collar || 'Standard') + '</strong></span>' +
-              '<span>Sleeve: <strong>' + (item.sleeve || 'Straight') + '</strong></span>' +
-              '<span>Buttons: <strong>' + (item.buttons || 'Concealed') + '</strong></span>' +
-              '<span>Daman: <strong>' + (item.daman || 'Round') + '</strong></span>' +
+          '<div style="background:var(--lu-cream-2); border:1.5px dotted var(--lu-dot); padding:12px 16px; margin-bottom:14px; font-size:13px;">' +
+            '<div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:6px; font-size:12.5px;">' +
+              '<span>Collar: <strong style="color:var(--lu-red);">' + (item.collar || 'Standard') + '</strong></span>' +
+              '<span>Sleeve: <strong style="color:var(--lu-red);">' + (item.sleeve || 'Straight') + '</strong></span>' +
+              '<span>Buttons: <strong style="color:var(--lu-red);">' + (item.buttons || 'Concealed') + '</strong></span>' +
+              '<span>Daman: <strong style="color:var(--lu-red);">' + (item.daman || 'Round') + '</strong></span>' +
             '</div>' +
-            '<div style="color:rgba(25,20,18,0.7); font-style:italic;">Notes: "' + (item.notes || 'None') + '"</div>' +
+            '<div style="color:rgba(25,20,18,0.7); font-style:italic; font-size:12px;">Notes: "' + (item.notes || 'None') + '"</div>' +
           '</div>' +
 
           '<div style="margin-bottom:16px;">' +
-            '<span style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); display:block; margin-bottom:6px;">Customer Measurements (Inches)</span>' +
+            '<span style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--lu-red); display:block; margin-bottom:6px;">Customer Measurements (Inches)</span>' +
             '<div style="display:flex; flex-wrap:wrap; gap:6px;">' + measChips + '</div>' +
           '</div>' +
 
-          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:14px; border-top:1px solid rgba(25,20,18,0.06);">' +
-            '<div style="font-size:12.5px; color:rgba(25,20,18,0.6);">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:14px; border-top:2px dotted var(--lu-dot);">' +
+            '<div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:rgba(25,20,18,0.6);">' +
               'Action: Advance Production Stage' +
             '</div>' +
             '<div style="display:flex; gap:8px;">' +
               (item.status === 'Pending' ? 
-                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:#10B981;" onclick="updateOrderStatus(' + idx + ', \'Accepted\')">✓ Accept Order</button>' +
-                '<button class="lb-cta lb-cta--ghost" style="padding:7px 14px; font-size:12px; color:#DC2626;" onclick="updateOrderStatus(' + idx + ', \'Declined\')">Decline</button>' :
+                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important;" onclick="updateOrderStatus(' + idx + ', \'Accepted\')">Accept Order</button>' +
+                '<button class="lb-cta lb-cta--ghost" style="padding:7px 16px !important; font-size:11px !important;" onclick="updateOrderStatus(' + idx + ', \'Declined\')">Decline</button>' :
                item.status === 'Accepted' ?
-                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:var(--lb-burgundy);" onclick="updateOrderStatus(' + idx + ', \'In Progress\')">✂️ Start Cutting & Stitching</button>' :
+                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important;" onclick="updateOrderStatus(' + idx + ', \'In Progress\')">Start Cutting &amp; Stitching</button>' :
                item.status === 'In Progress' ?
-                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:#047857;" onclick="updateOrderStatus(' + idx + ', \'Ready\')">📦 Mark Ready for Pickup</button>' :
+                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important; background:#047857 !important; border-color:#047857 !important;" onclick="updateOrderStatus(' + idx + ', \'Ready\')">Mark Ready for Pickup</button>' :
                item.status === 'Ready' ?
-                '<button class="lb-cta" style="padding:7px 16px; font-size:12px; background:#166534;" onclick="updateOrderStatus(' + idx + ', \'Completed\')">🎉 Mark Delivered & Completed</button>' :
-                '<span style="color:#166534; font-weight:700; font-size:12px;">✓ Completed</span>'
+                '<button class="lb-cta" style="padding:7px 18px !important; font-size:11px !important; background:#166534 !important; border-color:#166534 !important;" onclick="updateOrderStatus(' + idx + ', \'Completed\')">Mark Delivered &amp; Completed</button>' :
+                '<span style="color:#166534; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:0.06em;">Completed</span>'
               ) +
             '</div>' +
           '</div>' +

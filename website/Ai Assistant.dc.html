@@ -826,6 +826,7 @@
           <button type="button" class="lb-chat__prompt" data-prompt="Compare luxury lawn suits">✨ Compare luxury lawn suits</button>
           <button type="button" class="lb-chat__prompt" data-prompt="Formal shalwar kameez for men">✨ Formal shalwar kameez for men</button>
           <button type="button" class="lb-chat__prompt" data-prompt="Find me a rust-colored formal kurta under Rs. 6,000">✨ Rust wedding kurta under 6k</button>
+          <button type="button" id="lb-browse-pics-btn" class="lb-chat__prompt" style="border-style:dashed;">📷 Browse a picture &mdash; visual search</button>
         </div>
       </div>
 
@@ -840,7 +841,8 @@
           <svg style="width:17px;height:17px;flex-shrink:0;fill:none;stroke:#840E34;stroke-width:1.8;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
           <input type="text" id="lb-chat-input" placeholder="Ask LibasAI anything about sizes, colors, or fabrics..." aria-label="Message LibasAI" autocomplete="off">
           <button type="button" id="lb-voice-btn" title="Voice Search (Live Demo)" aria-label="Search by voice" style="width:32px;height:32px;border:none;background:none;border-radius:50%;color:rgba(25,20,18,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-mic"></use></svg></button>
-          <button type="button" id="lb-image-btn" title="Visual Search (Live Demo)" aria-label="Search by image" style="width:32px;height:32px;border:none;background:none;border-radius:50%;color:rgba(25,20,18,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg></button>
+          <input type="file" id="lb-image-file" accept="image/*" style="display:none;" aria-hidden="true">
+          <button type="button" id="lb-image-btn" title="Visual search — browse a picture" aria-label="Visual search: browse a picture" style="width:32px;height:32px;border:none;background:none;border-radius:50%;color:rgba(25,20,18,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-camera"></use></svg></button>
           <button type="submit" id="lb-chat-send" aria-label="Send" style="width:32px;height:32px;border-radius:50%;background:#840E34;color:#FFF;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;"><svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;"><use href="#lb-i-arrow-right"></use></svg></button>
         </form>
       </div>
@@ -1470,17 +1472,93 @@ class Component extends DCLogic {
       });
     }
 
-    // Image Search Demo
-    if (imageBtn) {
-      imageBtn.addEventListener('click', () => {
-        showToast('📷 Image Analysis: Scanning dress pattern, color palette, and embroidery weave...');
-        setTimeout(() => {
-          const sampleQuery = 'Find matching festive embroidered lawn suit from photo';
-          if (inputEl) inputEl.value = sampleQuery;
-          executeSearch(sampleQuery);
-        }, 1100);
+    // Visual Search — browse a picture from device, then match
+    const fileInput = document.getElementById('lb-image-file');
+    const browseBtn = document.getElementById('lb-browse-pics-btn');
+    const openPicker = () => { if (fileInput) fileInput.click(); };
+    if (imageBtn) imageBtn.addEventListener('click', openPicker);
+    if (browseBtn) browseBtn.addEventListener('click', openPicker);
+    if (fileInput) {
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => executeVisualSearch(ev.target.result, file.name);
+        reader.readAsDataURL(file);
+        fileInput.value = '';
       });
     }
+
+    const executeVisualSearch = (dataUrl, fileName) => {
+      if (welcomeEl) welcomeEl.style.display = 'none';
+      showToast('📷 Reading colour, silhouette and embroidery from your photo...');
+
+      threadEl.insertAdjacentHTML('beforeend', `
+        <div class="lb-chat-msg-row lb-chat-msg-row--user">
+          <div class="lb-chat-bubble-user" style="padding:6px;">
+            <img src="${dataUrl}" alt="${fileName || 'Uploaded photo'}" style="display:block;max-width:220px;width:100%;border-radius:12px;">
+            <span style="display:block;margin-top:6px;font-size:12px;opacity:0.9;">Find pieces like this</span>
+          </div>
+        </div>
+      `);
+
+      const loadingId = 'lb-vs-loading-' + Date.now();
+      threadEl.insertAdjacentHTML('beforeend', `
+        <div class="lb-chat-msg-row lb-chat-msg-row--ai" id="${loadingId}">
+          <div class="lb-chat-avatar-badge" title="LibasAI">
+            <svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+          </div>
+          <div class="lb-chat-bubble-ai">
+            <div class="lb-chat-ai-header"><strong>LibasAI Assistant</strong><span>Visual Search</span></div>
+            <div class="lb-chat-typing-dots">
+              <span></span><span></span><span></span>
+              <em style="font-style:normal;font-size:12px;color:rgba(25,20,18,0.6);margin-left:6px;">Analysing your photo &amp; matching Pakistani catalogs...</em>
+            </div>
+          </div>
+        </div>
+      `);
+      if (mainEl) mainEl.scrollTop = mainEl.scrollHeight;
+
+      setTimeout(() => {
+        const l = document.getElementById(loadingId);
+        if (l) l.remove();
+
+        const res = performCatalogSearch('festive embroidered lawn suit');
+        const steps = ['Analysing your photo', 'Matching colour &amp; embroidery', 'Searching 80+ Pakistani brands', 'Closest matches ranked'];
+
+        threadEl.insertAdjacentHTML('beforeend', `
+          <div class="lb-chat-msg-row lb-chat-msg-row--ai">
+            <div class="lb-chat-avatar-badge" title="LibasAI">
+              <svg style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;"><use href="#lb-i-mark"></use></svg>
+            </div>
+            <div class="lb-chat-bubble-ai">
+              <div class="lb-chat-ai-header"><strong>LibasAI Assistant</strong><span>Visual Search</span></div>
+              <div class="lb-chat__progress" role="status" style="margin-bottom:12px;">
+                ${steps.map((s, i, a) => `<span class="lb-chat__step ${i < a.length - 1 ? 'is-done' : 'is-active'}"><span class="lb-chat__step-dot"></span>${s}</span>`).join('')}
+              </div>
+              <p style="margin:0 0 10px; font-size:13px; line-height:1.5; color:#191412;">
+                From your photo I matched a festive embroidered silhouette in a warm palette. Here are the closest pieces across Pakistani labels:
+              </p>
+              <div class="lb-ask-results">
+                ${res.products.map(p => `
+                  <a href="${p.url}" target="_blank" rel="noopener" class="lb-ask-result-card">
+                    <img src="${p.img}" alt="${p.brand}" class="lb-ask-result-card__img">
+                    <div class="lb-ask-result-card__body">
+                      <span class="lb-ask-result-card__brand">${p.brand}</span>
+                      <span class="lb-ask-result-card__title">${p.title}</span>
+                      <span class="lb-ask-result-card__price">${p.price}</span>
+                      <span class="lb-ask-result-card__cta">View item &rarr;</span>
+                    </div>
+                  </a>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `);
+        renderContextCards(res.products);
+        if (mainEl) mainEl.scrollTop = mainEl.scrollHeight;
+      }, 1400);
+    };
 
     // Dynamic Search Execution
     const executeSearch = (rawQuery) => {

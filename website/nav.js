@@ -162,6 +162,18 @@
       });
     }
 
+    if (searchOverlay) {
+      var overlayForm = searchOverlay.querySelector('form');
+      if (overlayForm) {
+        overlayForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var inp = document.getElementById('lb-search-input');
+          var q = (inp && inp.value ? inp.value.trim() : '') || 'black embroidered kurta under Rs. 8,000';
+          window.location.href = '/shop.html?q=' + encodeURIComponent(q);
+        });
+      }
+    }
+
     // Mobile nav
     if (btnBurger && mobileNav) {
       btnBurger.addEventListener('click', function () {

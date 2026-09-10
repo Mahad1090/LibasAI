@@ -12,18 +12,112 @@
   <script src="./image-slot.js"></script>
   <style>
     .lb-tailor-hero {
-      background: radial-gradient(120% 120% at 85% 15%, rgba(201,143,130,0.22) 0%, rgba(247,237,223,0) 60%),
-                  linear-gradient(180deg, #FBF6EE 0%, #F7EDDF 100%);
-      padding: clamp(48px, 6vw, 84px) clamp(20px, 5vw, 72px) 40px;
-      border-bottom: 1px solid var(--lb-hairline);
+      background: var(--lu-blush, #F3D7D7);
+      padding: clamp(40px, 5vw, 68px) clamp(20px, 5vw, 72px) 36px;
+      border-bottom: 2px dotted var(--lu-dot, #C98F82);
     }
+    .lb-tailor-hero .lb-h1 {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--lu-red, #840E34);
+      margin: 12px 0 10px;
+    }
+
+    /* ---------------- INTERACTIVE AI UNSTITCHED VISUALIZER ---------------- */
+    .lu-visualizer-sec {
+      background: var(--lu-cream, #FAF4EE);
+      border-bottom: 2px dotted var(--lu-dot, #C98F82);
+      padding: clamp(36px, 4.5vw, 64px) clamp(20px, 5vw, 72px);
+    }
+    .lu-viz-card {
+      background: var(--lu-cream-2, #F7EDDF);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      padding: clamp(24px, 3.5vw, 40px);
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(24px, 4vw, 48px);
+      align-items: center;
+    }
+    @media (max-width: 960px) {
+      .lu-viz-card { grid-template-columns: 1fr; }
+    }
+    .lu-viz-step-title {
+      font-family: 'Archivo', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lu-red, #840E34);
+      margin: 0 0 8px;
+    }
+    .lu-viz-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+    .lu-viz-btn {
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      padding: 7px 13px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--lu-ink, #191412);
+      cursor: pointer;
+      text-align: left;
+      transition: all 180ms ease;
+    }
+    .lu-viz-btn:hover {
+      border-color: var(--lu-red, #840E34);
+      color: var(--lu-red, #840E34);
+      transform: translateY(-1px);
+    }
+    .lu-viz-btn.is-active {
+      background: var(--lu-red, #840E34);
+      color: var(--lu-cream, #FAF4EE);
+      border-style: solid;
+      border-color: var(--lu-red, #840E34);
+    }
+    .lu-viz-preview-box {
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(44,17,22,0.06);
+      position: relative;
+    }
+    .lu-viz-preview-imgwrap {
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border: 2px dotted var(--lu-dot, #C98F82);
+      margin-bottom: 16px;
+      background: #FFF;
+      position: relative;
+    }
+    .lu-viz-preview-imgwrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 400ms ease;
+    }
+
+    /* ---------------- FILTER BAR & DIRECTORY ---------------- */
     .lb-filter-bar {
-      background: var(--lb-cream-soft);
-      border: 1px solid var(--lb-hairline);
-      border-radius: 6px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(25,20,18,0.04);
-      margin-top: 32px;
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      border-radius: 0;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(44,17,22,0.04);
+      margin-top: 28px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
@@ -32,27 +126,28 @@
     .lb-filter-group label {
       display: block;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--lb-mauve);
+      color: var(--lu-red, #840E34);
       margin-bottom: 8px;
     }
     .lb-select, .lb-input {
       width: 100%;
       padding: 10px 14px;
-      border: 1px solid rgba(25,20,18,0.18);
-      border-radius: 4px;
+      border: 2px dotted var(--lu-dot, #C98F82);
+      border-radius: 0;
       background: #FFF;
       font-family: 'Manrope', sans-serif;
-      font-size: 13.5px;
-      color: var(--lb-charcoal);
+      font-size: 13px;
+      color: var(--lu-ink, #191412);
       outline: none;
       box-sizing: border-box;
       transition: border-color 200ms ease;
     }
     .lb-select:focus, .lb-input:focus {
-      border-color: var(--lb-burgundy);
+      border-style: solid;
+      border-color: var(--lu-red, #840E34);
     }
     .lb-pill-row {
       display: flex;
@@ -62,49 +157,55 @@
       align-items: center;
     }
     .lb-filter-pill {
-      background: rgba(25,20,18,0.04);
-      border: 1px solid rgba(25,20,18,0.09);
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
       padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--lb-charcoal);
+      border-radius: 0;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--lu-red, #840E34);
       cursor: pointer;
       transition: all 180ms ease;
     }
     .lb-filter-pill:hover, .lb-filter-pill.is-active {
-      background: var(--lb-burgundy);
-      color: var(--lb-cream);
-      border-color: var(--lb-burgundy);
+      background: var(--lu-red, #840E34);
+      color: var(--lu-cream, #FAF4EE);
+      border-style: solid;
+      border-color: var(--lu-red, #840E34);
     }
     .lb-tailor-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 28px;
       margin-top: 36px;
     }
     .lb-tailor-card {
-      background: #FFF;
-      border: 1px solid rgba(25,20,18, 0.09);
-      border-radius: 8px;
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      border-radius: 0;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 18px rgba(25,20,18, 0.04);
-      transition: transform 240ms var(--lb-ease), box-shadow 240ms var(--lb-ease), border-color 240ms var(--lb-ease);
+      box-shadow: 0 6px 20px rgba(44,17,22, 0.05);
+      transition: transform 240ms var(--lb-ease), box-shadow 240ms var(--lb-ease), border-color 200ms ease;
       position: relative;
     }
     .lb-tailor-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(25,20,18, 0.1);
-      border-color: rgba(132, 14, 52, 0.25);
+      box-shadow: 0 16px 36px rgba(44,17,22, 0.12);
+      border-style: solid;
+      border-color: var(--lu-red, #840E34);
     }
     .lb-tailor-cover {
       position: relative;
       width: 100%;
       height: 185px;
-      background: #FAF5ED;
+      background: var(--lu-cream-2, #F7EDDF);
       overflow: hidden;
+      border-bottom: 2px dotted var(--lu-dot, #C98F82);
     }
     .lb-cover-img {
       width: 100%;
@@ -115,12 +216,12 @@
       transition: transform 320ms ease, opacity 240ms ease;
     }
     .lb-tailor-card:hover .lb-cover-img {
-      transform: scale(1.03);
+      transform: scale(1.04);
     }
     .lb-cover-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(20,15,14,0.6) 0%, rgba(20,15,14,0.05) 50%, rgba(20,15,14,0.7) 100%);
+      background: linear-gradient(180deg, rgba(25,20,18,0.5) 0%, rgba(25,20,18,0.05) 50%, rgba(25,20,18,0.75) 100%);
       pointer-events: none;
     }
     .lb-cover-top {
@@ -137,39 +238,41 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(8px);
-      color: #191412;
+      background: var(--lu-cream, #FAF4EE);
+      color: var(--lu-red, #840E34);
       font-size: 11px;
-      font-weight: 700;
-      padding: 3.5px 9px;
-      border-radius: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1.5px dotted var(--lu-dot, #C98F82);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     }
     .lb-pill-avail {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(8px);
-      color: #2E7D32;
+      background: var(--lu-cream, #FAF4EE);
+      color: #166534;
       font-size: 11px;
-      font-weight: 700;
-      padding: 3.5px 9px;
-      border-radius: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1.5px dotted var(--lu-dot, #C98F82);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     }
     .lb-pill-avail.busy {
-      color: #D84315;
+      color: #991B1B;
     }
     .lb-dot-avail {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #2E7D32;
+      background: #166534;
     }
     .lb-pill-avail.busy .lb-dot-avail {
-      background: #D84315;
+      background: #991B1B;
     }
     .lb-cover-bottom {
       position: absolute;
@@ -185,15 +288,15 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(0, 0, 0, 0.48);
+      background: rgba(25,20,18,0.7);
       backdrop-filter: blur(6px);
-      padding: 3px 6px;
-      border-radius: 20px;
+      padding: 4px 7px;
+      border: 1px solid rgba(255,255,255,0.3);
     }
     .lb-thumb-btn {
       width: 24px;
       height: 24px;
-      border-radius: 50%;
+      border-radius: 0;
       border: 1.5px solid rgba(255,255,255,0.6);
       background: none;
       padding: 0;
@@ -202,9 +305,9 @@
       transition: transform 180ms ease, border-color 180ms ease;
     }
     .lb-thumb-btn.is-active, .lb-thumb-btn:hover {
-      border-color: #FFF;
+      border-color: var(--lu-red-deep, #5E0A26);
+      border-width: 2px;
       transform: scale(1.15);
-      box-shadow: 0 0 6px rgba(255,255,255,0.8);
     }
     .lb-thumb-btn img {
       width: 100%;
@@ -213,25 +316,25 @@
       display: block;
     }
     .lb-pill-rating {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      color: #E65100;
-      font-size: 11.5px;
+      background: var(--lu-cream, #FAF4EE);
+      color: var(--lu-red, #840E34);
+      font-size: 11px;
       font-weight: 800;
-      padding: 3.5px 9px;
-      border-radius: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1.5px dotted var(--lu-dot, #C98F82);
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
     }
     .lb-reviews-count {
-      color: rgba(25,20,18,0.55);
-      font-weight: 500;
-      font-size: 10.5px;
+      color: rgba(25,20,18,0.6);
+      font-weight: 700;
+      font-size: 10px;
     }
     .lb-tailor-body {
-      padding: 16px 18px 16px;
+      padding: 20px 20px 18px;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -240,16 +343,16 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .lb-tailor-avatar {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--lb-rose);
+      border: 2px solid var(--lu-red, #840E34);
       flex-shrink: 0;
-      background: var(--lb-paper);
+      background: var(--lu-cream-2, #F7EDDF);
     }
     .lb-header-text {
       flex: 1;
@@ -262,48 +365,52 @@
       gap: 8px;
     }
     .lb-tailor-name {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Archivo', sans-serif;
       font-size: 17.5px;
-      font-weight: 700;
-      color: var(--lb-charcoal);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--lu-red, #840E34);
       margin: 0;
-      line-height: 1.25;
-      letter-spacing: -0.01em;
+      line-height: 1.2;
     }
     .lb-tailor-loc {
-      font-size: 11.5px;
-      color: rgba(25,20,18,0.6);
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(25,20,18,0.65);
       margin-top: 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .lb-verified-badge {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      background: rgba(132, 14, 52,0.08);
-      color: var(--lb-burgundy);
+      background: var(--lu-cream, #FAF4EE);
+      color: var(--lu-red, #840E34);
       font-size: 9.5px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 3px;
+      font-weight: 800;
+      padding: 3px 6px;
+      border: 1.5px dotted var(--lu-dot, #C98F82);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       flex-shrink: 0;
     }
     .lb-tailor-specialty {
       font-size: 12.5px;
-      font-weight: 600;
-      color: #191412;
+      font-weight: 700;
+      color: var(--lu-ink, #191412);
       margin-bottom: 8px;
       line-height: 1.4;
     }
     .lb-tailor-desc {
       font-size: 12px;
-      line-height: 1.5;
-      color: rgba(25,20,18,0.68);
-      margin: 0 0 12px;
+      line-height: 1.55;
+      color: rgba(25,20,18,0.72);
+      margin: 0 0 14px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -313,91 +420,106 @@
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .lb-spec-tag {
-      font-size: 10.5px;
-      font-weight: 600;
-      background: #F5EFE6;
-      color: #2D2725;
-      padding: 2.5px 8px;
-      border-radius: 3px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--lu-cream-2, #F7EDDF);
+      color: var(--lu-red, #840E34);
+      padding: 3px 8px;
+      border: 1.5px dotted var(--lu-dot, #C98F82);
     }
     .lb-tailor-foot {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 12px;
+      padding-top: 14px;
       margin-top: auto;
-      border-top: 1px solid rgba(25,20,18,0.07);
+      border-top: 2px dotted var(--lu-dot, #C98F82);
       gap: 8px;
     }
     .lb-price-highlight {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--lb-burgundy);
+      font-family: 'Archivo', sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--lu-red, #840E34);
       line-height: 1.2;
     }
     .lb-price-caption {
-      font-size: 10px;
-      font-weight: 500;
-      color: rgba(25,20,18,0.5);
+      font-family: 'Manrope', sans-serif;
+      font-size: 9.5px;
+      font-weight: 800;
+      color: rgba(25,20,18,0.55);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
     }
     .lb-turnaround-meta {
       font-size: 11px;
-      color: rgba(25,20,18,0.6);
+      font-weight: 700;
+      color: rgba(25,20,18,0.65);
       display: flex;
       align-items: center;
       gap: 4px;
       margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .lb-action-btns {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       flex-shrink: 0;
     }
     .lb-btn-profile {
-      padding: 8px 12px;
-      border: 1px solid var(--lb-hairline);
-      border-radius: 3px;
+      padding: 8px 14px;
+      background: var(--lu-cream, #FAF4EE);
+      border: 2px dotted var(--lu-dot, #C98F82);
+      border-radius: 0;
+      font-family: 'Manrope', sans-serif;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--lb-charcoal);
+      letter-spacing: 0.08em;
+      color: var(--lu-red, #840E34);
       text-decoration: none;
       transition: all 180ms ease;
     }
     .lb-btn-profile:hover {
-      background: var(--lb-paper);
-      border-color: rgba(25,20,18,0.3);
+      background: var(--lu-red, #840E34);
+      color: var(--lu-cream, #FAF4EE);
+      border-style: solid;
+      border-color: var(--lu-red, #840E34);
     }
     .lb-btn-stitch {
-      padding: 8px 14px;
-      background: var(--lb-burgundy);
-      color: var(--lb-cream);
-      border-radius: 3px;
+      padding: 8px 16px;
+      background: var(--lu-red, #840E34);
+      color: var(--lu-cream, #FAF4EE);
+      border: 2px solid var(--lu-red, #840E34);
+      border-radius: 0;
+      font-family: 'Manrope', sans-serif;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       text-decoration: none;
       transition: all 180ms ease;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
     .lb-btn-stitch:hover {
-      background: var(--lb-burgundy-deep);
-      color: var(--lb-cream);
-      transform: translateY(-1px);
+      background: var(--lu-red-deep, #5E0A26);
+      border-color: var(--lu-red-deep, #5E0A26);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(132,14,52,0.2);
     }
   </style>
 </head>
-<body style="font-family:'Manrope',sans-serif; color:#171515; background:#F7EDDF; width:100%; overflow-x:hidden; margin:0;">
+<body style="font-family:'Manrope',sans-serif; color:var(--lu-ink, #191412); background:var(--lu-cream-2, #F7EDDF); width:100%; overflow-x:hidden; margin:0;">
 
     <!-- SVG SPRITE -->
   <svg aria-hidden="true" style="position:absolute; width:0; height:0; overflow:hidden;">
@@ -829,19 +951,17 @@
 <section class="lb-tailor-hero">
     <div class="lb-wrap">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
-        <div style="max-width:680px;">
-          <div class="lb-eyebrow" style="display:flex; align-items:center; gap:8px;">
-            <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-scissors"></use></svg>
+        <div style="max-width:720px;">
+          <div class="lu-tag" style="margin-bottom:8px;">
             Bespoke Tailoring Network · LibasAI Verified
           </div>
-          <h1 class="lb-h1" style="font-size:clamp(32px, 4.5vw, 56px);">Find Master Pakistani Tailors For Your Favorite Looks</h1>
-          <p class="lb-body" style="font-size:17px; margin-top:14px;">
-            Found an unstitched lawn, silk suit, or AI outfit look? Connect with verified ustaad tailors, submit your measurements online, and get precision bespoke stitching delivered to your door.
+          <h1 class="lb-h1" style="font-size:clamp(32px, 4.4vw, 54px);">Find Master Pakistani Tailors For Your Favorite Looks</h1>
+          <p style="font-size:16px; line-height:1.55; color:rgba(25,20,18,0.78); margin:12px 0 0;">
+            Got unstitched fabric from Sana Safinaz, Khaadi, Sapphire, or Maria.B? Connect with verified ustaad tailors across Lahore, Karachi, and Islamabad, or let our AI Tailoring Agent visualize your silhouette first.
           </p>
         </div>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="/get-stitched.html" class="lb-cta">
-            <svg class="lb-cta__icon" style="fill:none;stroke:currentColor;stroke-width:1.8;"><use href="#lb-i-scissors"></use></svg>
             Start Stitching Request →
           </a>
           <a href="/my-requests.html" class="lb-cta lb-cta--ghost">
@@ -849,7 +969,96 @@
           </a>
         </div>
       </div>
+    </div>
+  </section>
 
+  <!-- ============================= INTERACTIVE AI UNSTITCHED OUTFIT VISUALIZER ============================= -->
+  <section class="lu-visualizer-sec">
+    <div class="lb-wrap">
+      <div style="text-align:center; max-width:720px; margin:0 auto 28px;">
+        <span class="lu-tag" style="margin-bottom:8px;">Interactive AI Styling Agent</span>
+        <h2 style="font-family:'Archivo',sans-serif; font-size:clamp(22px, 3.2vw, 36px); font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; color:var(--lu-red); margin:6px 0 8px;">
+          Visualize Your Unstitched Suit Before Cutting
+        </h2>
+        <p style="font-size:14.5px; color:rgba(25,20,18,0.72); line-height:1.5; margin:0;">
+          Tell the LibasAI Agent what fabric you have. We will simulate the exact neckline, sleeves, and silhouette, generate cutting blueprints, and match the best master tailor.
+        </p>
+      </div>
+
+      <div class="lu-viz-card">
+        <!-- Interactive Controls -->
+        <div>
+          <!-- Step 1: Fabric -->
+          <div class="lu-viz-step-title">1. Select Your Fabric Type</div>
+          <div class="lu-viz-options" id="viz-fabrics">
+            <button type="button" class="lu-viz-btn is-active" data-fabric="lawn" onclick="selectVizOption('fabric', 'lawn', this)">3-Piece Lawn (Khaadi / Sapphire)</button>
+            <button type="button" class="lu-viz-btn" data-fabric="chiffon" onclick="selectVizOption('fabric', 'chiffon', this)">Embroidered Chiffon / Festive</button>
+            <button type="button" class="lu-viz-btn" data-fabric="silk" onclick="selectVizOption('fabric', 'silk', this)">Raw Silk Formal (Baroque)</button>
+            <button type="button" class="lu-viz-btn" data-fabric="boski" onclick="selectVizOption('fabric', 'boski', this)">Pure Chinese Boski / Karandi</button>
+          </div>
+
+          <!-- Step 2: Neckline -->
+          <div class="lu-viz-step-title">2. Choose Collar &amp; Neckline Treatment</div>
+          <div class="lu-viz-options" id="viz-necks">
+            <button type="button" class="lu-viz-btn is-active" data-neck="band" onclick="selectVizOption('neck', 'band', this)">Sherwani Ban Collar (Stiff/Ban)</button>
+            <button type="button" class="lu-viz-btn" data-neck="angrakha" onclick="selectVizOption('neck', 'angrakha', this)">Angrakha Overlap + Hand Dori</button>
+            <button type="button" class="lu-viz-btn" data-neck="scallop" onclick="selectVizOption('neck', 'scallop', this)">Scalloped V-Neck + Organza Lace</button>
+            <button type="button" class="lu-viz-btn" data-neck="boat" onclick="selectVizOption('neck', 'boat', this)">Boat Neck + Pearl Buttons</button>
+          </div>
+
+          <!-- Step 3: Sleeves & Daman -->
+          <div class="lu-viz-step-title">3. Sleeves &amp; Daman Silhouette</div>
+          <div class="lu-viz-options" id="viz-sleeves">
+            <button type="button" class="lu-viz-btn is-active" data-sleeve="bell" onclick="selectVizOption('sleeve', 'bell', this)">Flared Bell Sleeves + Cutwork</button>
+            <button type="button" class="lu-viz-btn" data-sleeve="straight" onclick="selectVizOption('sleeve', 'straight', this)">Straight Hem + Pin Tucks</button>
+            <button type="button" class="lu-viz-btn" data-sleeve="kurta" onclick="selectVizOption('sleeve', 'kurta', this)">Flared A-Line + High Side Slits</button>
+          </div>
+
+          <!-- Step 4: Bottoms -->
+          <div class="lu-viz-step-title">4. Bottoms / Trouser Style</div>
+          <div class="lu-viz-options" id="viz-bottoms">
+            <button type="button" class="lu-viz-btn is-active" data-bottom="pant" onclick="selectVizOption('bottom', 'pant', this)">Straight Cigarette Trouser</button>
+            <button type="button" class="lu-viz-btn" data-bottom="shalwar" onclick="selectVizOption('bottom', 'shalwar', this)">Classic Pleated Shalwar (18" Ghera)</button>
+            <button type="button" class="lu-viz-btn" data-bottom="gharara" onclick="selectVizOption('bottom', 'gharara', this)">Wide Flared Culottes / Gharara</button>
+          </div>
+        </div>
+
+        <!-- Live Blueprint Output -->
+        <div class="lu-viz-preview-box">
+          <div class="lu-viz-preview-imgwrap">
+            <img id="viz-output-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="AI Silhouette Preview">
+            <span class="lu-tag" style="position:absolute; top:8px; left:8px; z-index:2; background:var(--lu-cream);">AI Simulation Ready</span>
+          </div>
+          <h3 id="viz-output-title" style="font-family:'Archivo',sans-serif; font-size:17px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:0 0 6px;">
+            Lawn 3-Piece with Sherwani Ban Collar
+          </h3>
+          <p id="viz-output-spec" style="font-size:12px; color:rgba(25,20,18,0.72); line-height:1.45; margin:0 0 14px;">
+            Estimated Cut: 4.2m allocation · Flared Bell Sleeves with organza cutwork · Straight cigarette trouser with 7" bottom opening.
+          </p>
+
+          <div style="background:var(--lu-cream-2); border:1.5px dotted var(--lu-dot); width:100%; padding:10px 14px; margin-bottom:14px; box-sizing:border-box; text-align:left;">
+            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; text-transform:uppercase; color:var(--lu-red);">
+              <span>Matched Master Tailor:</span>
+              <span id="viz-output-tailor">Master Rafiq (Lahore)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:11.5px; color:var(--lu-ink); margin-top:3px;">
+              <span>Est. Stitching Cost:</span>
+              <strong id="viz-output-price" style="color:var(--lu-red); font-family:'Archivo',sans-serif;">PKR 2,400</strong>
+            </div>
+          </div>
+
+          <a id="viz-output-cta" href="/get-stitched.html?tailor=rafiq&fabric=lawn" class="lb-cta" style="width:100%; box-sizing:border-box; font-size:11px !important;">
+            Send Blueprint to Master Tailor →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= MAIN TAILOR DIRECTORY ============================= -->
+  <section class="lb-section" style="padding-top:40px;">
+    <div class="lb-wrap">
+      
       <!-- FILTER BAR -->
       <div class="lb-filter-bar">
         <div class="lb-filter-group">
@@ -865,9 +1074,9 @@
         </div>
 
         <div class="lb-filter-group">
-          <label>Gender & Category</label>
+          <label>Gender &amp; Category</label>
           <select id="filter-gender" class="lb-select" onchange="filterTailors()">
-            <option value="all">Men's & Women's</option>
+            <option value="all">Men's &amp; Women's</option>
             <option value="women">Women's Stitching Only</option>
             <option value="men">Men's Stitching Only</option>
           </select>
@@ -881,7 +1090,7 @@
             <option value="shalwar-kameez">Shalwar Kameez</option>
             <option value="waistcoat">Waistcoat / Prince Coat</option>
             <option value="suit">3-Piece Formal Suit</option>
-            <option value="bridal">Bridal & Heavy Formal</option>
+            <option value="bridal">Bridal &amp; Heavy Formal</option>
           </select>
         </div>
 
@@ -912,27 +1121,22 @@
 
       <!-- QUICK PILL TAGS -->
       <div class="lb-pill-row">
-        <span style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--lb-mauve); margin-right:4px;">Quick Filters:</span>
+        <span style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--lu-red); margin-right:4px;">Quick Filters:</span>
         <button class="lb-filter-pill is-active" onclick="quickFilter('all', this)">All Master Cutters</button>
-        <button class="lb-filter-pill" onclick="quickFilter('express', this)">⚡ 48-Hour Rush Stitching</button>
-        <button class="lb-filter-pill" onclick="quickFilter('bridal', this)">👑 Bridal & Heavily Embellished</button>
-        <button class="lb-filter-pill" onclick="quickFilter('men-kameez', this)">👔 Men's Bespoke Kameez</button>
-        <button class="lb-filter-pill" onclick="quickFilter('women-lawn', this)">👗 Women's Lawn & Pret Cutting</button>
-        <button class="lb-filter-pill" onclick="quickFilter('budget', this)">💰 Budget Friendly (< PKR 2.5k)</button>
+        <button class="lb-filter-pill" onclick="quickFilter('express', this)">48-Hour Rush Stitching</button>
+        <button class="lb-filter-pill" onclick="quickFilter('bridal', this)">Bridal &amp; Heavily Embellished</button>
+        <button class="lb-filter-pill" onclick="quickFilter('men-kameez', this)">Men's Bespoke Kameez</button>
+        <button class="lb-filter-pill" onclick="quickFilter('women-lawn', this)">Women's Lawn &amp; Pret Cutting</button>
+        <button class="lb-filter-pill" onclick="quickFilter('budget', this)">Budget Friendly (under PKR 2.5k)</button>
       </div>
-    </div>
-  </section>
 
-  <!-- MAIN LISTINGS SECTION -->
-  <section class="lb-section" style="padding-top:40px;">
-    <div class="lb-wrap">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <span style="font-size:14px; font-weight:700; color:rgba(25,20,18,0.7);">
-          Showing <strong id="results-count" style="color:var(--lb-charcoal);">6</strong> Verified Master Tailors
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:32px; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+        <span style="font-size:13.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--lu-red);">
+          Showing <strong id="results-count">6</strong> Verified Master Tailors
         </span>
         <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:12px; color:rgba(25,20,18,0.6);">Sort by:</span>
-          <select id="sort-select" class="lb-select" style="width:auto; padding:6px 12px;" onchange="filterTailors()">
+          <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; color:rgba(25,20,18,0.6);">Sort by:</span>
+          <select id="sort-select" class="lb-select" style="width:auto; padding:6px 12px; font-size:12px;" onchange="filterTailors()">
             <option value="rating">Highest Rated</option>
             <option value="orders">Most Orders Completed</option>
             <option value="price-low">Price: Low to High</option>
@@ -949,10 +1153,7 @@
             <img class="lb-cover-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Master Rafiq Signature Work">
             <div class="lb-cover-overlay"></div>
             <div class="lb-cover-top">
-              <span class="lb-pill-loc">
-                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
-                Lahore · 24 Yrs Exp
-              </span>
+              <span class="lb-pill-loc">Lahore · 24 Yrs Exp</span>
               <span class="lb-pill-avail"><span class="lb-dot-avail"></span> Available Now</span>
             </div>
             <div class="lb-cover-bottom">
@@ -967,7 +1168,7 @@
                   <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Look 3">
                 </button>
               </div>
-              <div class="lb-pill-rating">★ 4.95 <span class="lb-reviews-count">(342)</span></div>
+              <div class="lb-pill-rating">Rating: 4.95 <span class="lb-reviews-count">(342)</span></div>
             </div>
           </div>
 
@@ -992,7 +1193,7 @@
               <span class="lb-spec-tag">Men &amp; Women</span>
               <span class="lb-spec-tag">Shalwar Kameez</span>
               <span class="lb-spec-tag">Waistcoats</span>
-              <span class="lb-spec-tag">⚡ Express 48h</span>
+              <span class="lb-spec-tag">Express 48h</span>
             </div>
 
             <div class="lb-tailor-foot">
@@ -1017,10 +1218,7 @@
             <img class="lb-cover-img" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="Noor Bridal Signature Work">
             <div class="lb-cover-overlay"></div>
             <div class="lb-cover-top">
-              <span class="lb-pill-loc">
-                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
-                Karachi · 16 Yrs Exp
-              </span>
+              <span class="lb-pill-loc">Karachi · 16 Yrs Exp</span>
               <span class="lb-pill-avail busy"><span class="lb-dot-avail"></span> 3 Slots Left</span>
             </div>
             <div class="lb-cover-bottom">
@@ -1035,7 +1233,7 @@
                   <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Look 3">
                 </button>
               </div>
-              <div class="lb-pill-rating">★ 4.98 <span class="lb-reviews-count">(520)</span></div>
+              <div class="lb-pill-rating">Rating: 4.98 <span class="lb-reviews-count">(520)</span></div>
             </div>
           </div>
 
@@ -1085,10 +1283,7 @@
             <img class="lb-cover-img" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Ustaad Aslam Signature Work">
             <div class="lb-cover-overlay"></div>
             <div class="lb-cover-top">
-              <span class="lb-pill-loc">
-                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
-                Islamabad · 28 Yrs Exp
-              </span>
+              <span class="lb-pill-loc">Islamabad · 28 Yrs Exp</span>
               <span class="lb-pill-avail"><span class="lb-dot-avail"></span> Available Now</span>
             </div>
             <div class="lb-cover-bottom">
@@ -1103,7 +1298,7 @@
                   <img src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219" alt="Look 3">
                 </button>
               </div>
-              <div class="lb-pill-rating">★ 4.90 <span class="lb-reviews-count">(410)</span></div>
+              <div class="lb-pill-rating">Rating: 4.90 <span class="lb-reviews-count">(410)</span></div>
             </div>
           </div>
 
@@ -1128,7 +1323,7 @@
               <span class="lb-spec-tag">Men's Specialist</span>
               <span class="lb-spec-tag">Prince Coat</span>
               <span class="lb-spec-tag">Italian Wool</span>
-              <span class="lb-spec-tag">⚡ Express</span>
+              <span class="lb-spec-tag">Express</span>
             </div>
 
             <div class="lb-tailor-foot">
@@ -1153,11 +1348,8 @@
             <img class="lb-cover-img" src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Gulberg Express Work">
             <div class="lb-cover-overlay"></div>
             <div class="lb-cover-top">
-              <span class="lb-pill-loc">
-                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
-                Lahore · 14 Yrs Exp
-              </span>
-              <span class="lb-pill-avail"><span class="lb-dot-avail"></span> ⚡ Express Ready</span>
+              <span class="lb-pill-loc">Lahore · 14 Yrs Exp</span>
+              <span class="lb-pill-avail"><span class="lb-dot-avail"></span> Express Ready</span>
             </div>
             <div class="lb-cover-bottom">
               <div class="lb-thumb-gallery">
@@ -1171,7 +1363,7 @@
                   <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Look 3">
                 </button>
               </div>
-              <div class="lb-pill-rating">★ 4.88 <span class="lb-reviews-count">(670)</span></div>
+              <div class="lb-pill-rating">Rating: 4.88 <span class="lb-reviews-count">(670)</span></div>
             </div>
           </div>
 
@@ -1196,7 +1388,7 @@
               <span class="lb-spec-tag">Fast Turnaround</span>
               <span class="lb-spec-tag">Lawn &amp; Cotton</span>
               <span class="lb-spec-tag">Lace Fixing</span>
-              <span class="lb-spec-tag">⚡ 48h Delivery</span>
+              <span class="lb-spec-tag">48h Delivery</span>
             </div>
 
             <div class="lb-tailor-foot">
@@ -1221,10 +1413,7 @@
             <img class="lb-cover-img" src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Saddar Guild Work">
             <div class="lb-cover-overlay"></div>
             <div class="lb-cover-top">
-              <span class="lb-pill-loc">
-                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
-                Rawalpindi · 35 Yrs Exp
-              </span>
+              <span class="lb-pill-loc">Rawalpindi · 35 Yrs Exp</span>
               <span class="lb-pill-avail"><span class="lb-dot-avail"></span> Available Now</span>
             </div>
             <div class="lb-cover-bottom">
@@ -1239,7 +1428,7 @@
                   <img src="https://cdn.shopify.com/s/files/1/0706/3253/8159/files/PRE5FF_1.jpg?v=1788513440" alt="Look 3">
                 </button>
               </div>
-              <div class="lb-pill-rating">★ 4.82 <span class="lb-reviews-count">(295)</span></div>
+              <div class="lb-pill-rating">Rating: 4.82 <span class="lb-reviews-count">(295)</span></div>
             </div>
           </div>
 
@@ -1289,10 +1478,7 @@
             <img class="lb-cover-img" src="https://cdn.shopify.com/s/files/1/0539/7318/8776/files/Niruvelle_2.jpg?v=1786703765" alt="Al-Zahra Signature Work">
             <div class="lb-cover-overlay"></div>
             <div class="lb-cover-top">
-              <span class="lb-pill-loc">
-                <svg style="width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;"><use href="#lb-i-map"></use></svg>
-                Faisalabad · 11 Yrs Exp
-              </span>
+              <span class="lb-pill-loc">Faisalabad · 11 Yrs Exp</span>
               <span class="lb-pill-avail"><span class="lb-dot-avail"></span> Available Now</span>
             </div>
             <div class="lb-cover-bottom">
@@ -1307,7 +1493,7 @@
                   <img src="https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102" alt="Look 3">
                 </button>
               </div>
-              <div class="lb-pill-rating">★ 4.79 <span class="lb-reviews-count">(210)</span></div>
+              <div class="lb-pill-rating">Rating: 4.79 <span class="lb-reviews-count">(210)</span></div>
             </div>
           </div>
 
@@ -1353,24 +1539,24 @@
       </div>
 
       <!-- EMPTY STATE -->
-      <div id="no-tailor-state" style="display:none; text-align:center; padding:60px 20px; background:#FFF; border-radius:6px; margin-top:30px; border:1px solid var(--lb-hairline);">
-        <div style="font-size:36px; margin-bottom:12px;">✂️</div>
-        <h3 class="lb-h2" style="font-size:22px;">No tailors match these criteria</h3>
-        <p class="lb-body" style="font-size:14px; margin-top:8px;">Try clearing some filters or searching for another city to see master tailors.</p>
+      <div id="no-tailor-state" style="display:none; text-align:center; padding:60px 20px; background:var(--lu-cream); border-radius:0; margin-top:30px; border:2px dotted var(--lu-dot);">
+        <svg style="width:42px;height:42px;color:var(--lu-red);margin-bottom:12px;stroke:currentColor;fill:none;stroke-width:1.6;"><use href="#lb-i-scissors"></use></svg>
+        <h3 style="font-family:'Archivo',sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; color:var(--lu-red); margin:0 0 6px;">No tailors match these criteria</h3>
+        <p style="font-size:14px; color:rgba(25,20,18,0.7); margin-top:8px;">Try clearing some filters or searching for another city to see master tailors.</p>
         <button class="lb-cta" style="margin-top:16px;" onclick="resetFilters()">Reset All Filters</button>
       </div>
 
-      <!-- JOIN AS A TAILOR PROMO BANNER -->
-      <div style="background:var(--lb-charcoal); color:var(--lb-cream); border-radius:6px; padding: clamp(28px, 4vw, 48px); margin-top:60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
-        <div style="max-width:600px;">
-          <span class="lb-tag" style="border-color:var(--lb-rose); color:var(--lb-rose);">For Stitching Ateliers & Tailors</span>
-          <h2 class="lb-h2" style="color:var(--lb-cream); font-size:clamp(24px, 3vw, 36px); margin-top:10px;">Are You a Master Tailor in Pakistan?</h2>
-          <p style="font-size:14px; color:rgba(247,237,223,0.7); margin-top:8px; line-height:1.6;">
-            Join the LibasAI network. Receive stitching requests directly from online shoppers, manage customer measurement profiles, set your own rates, and grow your bespoke atelier.
+      <!-- JOIN AS A TAILOR PROMO BANNER (Theme Red) -->
+      <div style="background:var(--lu-red) !important; color:var(--lu-cream); border-radius:0; border:2px dotted var(--lu-dot); padding:clamp(28px, 4vw, 48px); margin-top:60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
+        <div style="max-width:620px;">
+          <span class="lu-tag" style="background:var(--lu-cream); color:var(--lu-red); margin-bottom:8px;">For Stitching Ateliers &amp; Tailors</span>
+          <h2 style="font-family:'Archivo',sans-serif; font-size:clamp(24px, 3vw, 36px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:var(--lu-cream); margin:8px 0 10px;">Are You a Master Tailor in Pakistan?</h2>
+          <p style="font-size:14.5px; color:var(--lu-cream); opacity:0.92; margin:0; line-height:1.6;">
+            Join the LibasAI artisan network. Receive stitching requests directly from online shoppers, manage customer measurement profiles, set your own rates, and grow your bespoke studio.
           </p>
         </div>
         <div style="display:flex; gap:12px;">
-          <a href="/tailor-portal.html" class="lb-cta" style="background:var(--lb-cream); color:var(--lb-burgundy);">
+          <a href="/tailor-portal.html" class="lb-cta" style="background:var(--lu-cream) !important; color:var(--lu-red) !important; border-color:var(--lu-cream) !important;">
             Open Tailor Portal →
           </a>
         </div>
@@ -1525,6 +1711,58 @@
       document.getElementById('filter-time').value = 'all';
       document.getElementById('filter-search').value = '';
       quickFilter('all', document.querySelector('.lb-filter-pill'));
+    }
+
+    // Interactive Visualizer Logic
+    var vizState = { fabric: 'lawn', neck: 'band', sleeve: 'bell', bottom: 'pant' };
+
+    var vizFabrics = {
+      lawn: { name: "Lawn 3-Piece", img: "https://cdn.shopify.com/s/files/1/0019/7217/4947/files/1_ce2559fd-268e-46ab-82d6-11962549e21c.jpg?v=1764582102", tailor: "Master Rafiq (Lahore)", price: "PKR 2,400", tailorSlug: "rafiq" },
+      chiffon: { name: "Embroidered Chiffon Suit", img: "https://cdn.shopify.com/s/files/1/0650/8249/1105/files/S26F7160_Fuchsia_Pink_Cover.jpg?v=1788175907", tailor: "Noor Bridal Atelier (Karachi)", price: "PKR 6,800", tailorSlug: "noor" },
+      silk: { name: "Raw Silk Luxury Formal", img: "https://cdn.shopify.com/s/files/1/0539/7318/8776/files/MBRIN240104C-1_1000x_e9a45433-ac1a-4329-a960-74448fa0fb09.webp?v=1764676219", tailor: "Kareem & Sons (Islamabad)", price: "PKR 4,500", tailorSlug: "kareem" },
+      boski: { name: "Chinese Boski & Karandi", img: "https://cdn.shopify.com/s/files/1/0552/1339/1936/files/0002_DSC00024.png?v=1750335693", tailor: "Ustaad Aslam Bespoke (Faisalabad)", price: "PKR 2,200", tailorSlug: "aslam" }
+    };
+
+    var vizNecks = {
+      band: "Sherwani Ban Collar",
+      angrakha: "Angrakha Overlap + Hand Dori",
+      scallop: "Scalloped V-Neck + Organza Lace",
+      boat: "Boat Neck + Pearl Buttons"
+    };
+
+    var vizSleeves = {
+      bell: "Flared Bell Sleeves with organza cutwork",
+      straight: "Straight Hem with tailored pin tucks",
+      kurta: "Flared A-Line with high side slits"
+    };
+
+    var vizBottoms = {
+      pant: "Straight cigarette trouser (7\" bottom opening)",
+      shalwar: "Classic pleated shalwar (18\" ghera)",
+      gharara: "Wide flared culottes / gharara"
+    };
+
+    function selectVizOption(type, val, btn) {
+      vizState[type] = val;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll('.lu-viz-btn').forEach(function(b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      }
+
+      var fab = vizFabrics[vizState.fabric] || vizFabrics.lawn;
+      var titleEl = document.getElementById('viz-output-title');
+      var specEl = document.getElementById('viz-output-spec');
+      var imgEl = document.getElementById('viz-output-img');
+      var tailorEl = document.getElementById('viz-output-tailor');
+      var priceEl = document.getElementById('viz-output-price');
+      var ctaEl = document.getElementById('viz-output-cta');
+
+      if (titleEl) titleEl.innerText = fab.name + " with " + (vizNecks[vizState.neck] || "Custom Treatment");
+      if (specEl) specEl.innerText = "AI Cut Plan: 4.2m allocation · " + (vizSleeves[vizState.sleeve] || "") + " · " + (vizBottoms[vizState.bottom] || "") + ". Tailor precision stitching guaranteed.";
+      if (imgEl) imgEl.src = fab.img;
+      if (tailorEl) tailorEl.innerText = fab.tailor;
+      if (priceEl) priceEl.innerText = fab.price;
+      if (ctaEl) ctaEl.href = "/get-stitched.html?tailor=" + fab.tailorSlug + "&fabric=" + vizState.fabric + "&neck=" + vizState.neck + "&sleeve=" + vizState.sleeve + "&bottom=" + vizState.bottom;
     }
 
     // Load active request count from localStorage
