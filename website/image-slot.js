@@ -720,7 +720,7 @@
       // width%/height% in _applyView encode the frame aspect at call time —
       // a host resize (responsive grid, pane divider) would stretch the
       // image until the next _render. Re-render on size change: _render()
-      // re-seeds _view from stored before clamp/apply, so a shrink→grow
+      // re-seeds _view from stored before clamp/apply, so a shrink/grow
       // cycle round-trips instead of ratcheting x/y toward the narrower
       // frame's clamp range.
       this._ro = new ResizeObserver(() => this._render());
