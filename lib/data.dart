@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 
 class Product {
@@ -307,6 +309,48 @@ final kProducts = <Product>[
 
 Product productById(String id) => kProducts.firstWhere((p) => p.id == id, orElse: () => kProducts.first);
 Brand brandById(String id) => kBrands.firstWhere((b) => b.id == id, orElse: () => kBrands.first);
+
+/// A shuffled selection that spreads across as many different brands as
+/// possible (round-robin: one product per brand before a second from any).
+/// `seed` keeps a given rail stable within a session while letting separate
+/// rails look different. Temporary until real ranking lands.
+List<Product> productsAcrossBrands({required int seed, int limit = 12}) {
+  final rng = Random(seed);
+  final byBrand = <String, List<Product>>{};
+  for (final p in kProducts) {
+    if (p.imageUrl.isEmpty) continue;
+    byBrand.putIfAbsent(p.brandId, () => <Product>[]).add(p);
+  }
+  final queues = byBrand.values
+      .map((list) => list.toList()..shuffle(rng))
+      .toList()
+    ..shuffle(rng);
+  final out = <Product>[];
+  var progressed = true;
+  while (progressed && out.length < limit) {
+    progressed = false;
+    for (final q in queues) {
+      if (q.isEmpty) continue;
+      out.add(q.removeLast());
+      progressed = true;
+      if (out.length >= limit) break;
+    }
+  }
+  return out;
+}
+
+/// Pre-computed brand-diverse rails for the home / For You screens (lazy, built
+/// once per session).
+final List<Product> kForYouRail = productsAcrossBrands(seed: 1174, limit: 10);
+final List<Product> kTrendingRail = productsAcrossBrands(seed: 5521, limit: 12);
+final List<Product> kBudgetRail = productsAcrossBrands(seed: 8830, limit: 60)
+    .where((p) => p.priceNumeric > 0 && p.priceNumeric < 6000)
+    .take(10)
+    .toList();
+final List<Product> kEmergingRail = productsAcrossBrands(seed: 4402, limit: 120)
+    .where((p) => p.emerging)
+    .take(14)
+    .toList();
 
 const kCategoryOptions = ['Women', 'Men', 'Unstitched', 'Pret', 'Formal', 'Casual', 'Eastern Wear', 'Accessories'];
 const kStyleOptions = ['Minimal', 'Traditional', 'Modern', 'Festive', 'Luxury', 'Casual', 'Formal', 'Street-inspired', 'Modest'];

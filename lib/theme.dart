@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// LibasAI design tokens — mirrors the design handoff spec.
 class AppColors {
@@ -47,8 +46,14 @@ class AppShadows {
   ];
 }
 
+/// Bundled locally (see pubspec `fonts:`) — no runtime network fetch, so text
+/// never re-lays-out mid-navigation and there is no font-swap flash.
+const String kHeadingFont = 'PlayfairDisplay';
+const String kBodyFont = 'Manrope';
+
 TextStyle heading(double size, {FontWeight weight = FontWeight.w700, Color? color}) =>
-    GoogleFonts.playfairDisplay(
+    TextStyle(
+      fontFamily: kHeadingFont,
       fontSize: size,
       fontWeight: weight,
       height: 1.22,
@@ -57,7 +62,8 @@ TextStyle heading(double size, {FontWeight weight = FontWeight.w700, Color? colo
 
 TextStyle body(double size,
         {FontWeight weight = FontWeight.w500, Color? color, double? spacing, double height = 1.5}) =>
-    GoogleFonts.manrope(
+    TextStyle(
+      fontFamily: kBodyFont,
       fontSize: size,
       fontWeight: weight,
       height: height,
@@ -65,7 +71,8 @@ TextStyle body(double size,
       color: color ?? AppColors.ink,
     );
 
-TextStyle overline(double size, {Color? color}) => GoogleFonts.manrope(
+TextStyle overline(double size, {Color? color}) => TextStyle(
+      fontFamily: kBodyFont,
       fontSize: size,
       fontWeight: FontWeight.w700,
       letterSpacing: 0.06 * size,
@@ -82,7 +89,7 @@ ThemeData buildTheme() {
       surface: AppColors.surface,
       brightness: Brightness.light,
     ),
-    textTheme: GoogleFonts.manropeTextTheme(),
+    fontFamily: kBodyFont,
     splashColor: AppColors.accent.withValues(alpha: 0.08),
   );
   return base;

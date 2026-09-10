@@ -136,10 +136,10 @@ class ProductDetailScreen extends StatelessWidget {
                       const SizedBox(height: 18),
                       Text('Color', style: body(12.5, weight: FontWeight.w700)),
                       const SizedBox(height: 9),
-                      Row(children: [
+                      Wrap(spacing: 9, runSpacing: 9, children: [
                         for (final c in p.colors)
                           Padding(
-                            padding: const EdgeInsets.only(right: 9),
+                            padding: EdgeInsets.zero,
                             child: Container(
                               width: 30,
                               height: 30,
@@ -250,9 +250,12 @@ class ProductDetailScreen extends StatelessWidget {
                           children: [
                             const Icon(Icons.content_cut_outlined, size: 15, color: AppColors.accent),
                             const SizedBox(width: 8),
-                            Text(
-                              'Get Stitched by Master Tailor (Darzi) ✂',
-                              style: body(12.5, weight: FontWeight.w700, color: AppColors.accent),
+                            Flexible(
+                              child: Text(
+                                'Get Stitched by Master Tailor (Darzi) ✂',
+                                textAlign: TextAlign.center,
+                                style: body(12.5, weight: FontWeight.w700, color: AppColors.accent),
+                              ),
                             ),
                           ],
                         ),

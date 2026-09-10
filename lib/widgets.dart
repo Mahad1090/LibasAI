@@ -142,6 +142,15 @@ class StripePlaceholder extends StatelessWidget {
       this.imageUrl,
       this.decodeWidth = 300});
 
+  /// Shopify (and most modern CDNs) resize on the fly via a `width` query
+  /// param. Asking for a card-sized image instead of the full 2000px original
+  /// cuts transfer ~10x and removes the biggest source of scroll hitching.
+  String _sized(String url) {
+    if (!url.contains('cdn.shopify.com')) return url;
+    final target = (decodeWidth * 2).clamp(200, 1600);
+    return url.contains('?') ? '$url&width=$target' : '$url?width=$target';
+  }
+
   @override
   Widget build(BuildContext context) {
     if (imageUrl != null && imageUrl!.isNotEmpty) {
@@ -149,7 +158,7 @@ class StripePlaceholder extends StatelessWidget {
         child: ClipRRect(
           borderRadius: radius ?? BorderRadius.zero,
           child: Image.network(
-            imageUrl!,
+            _sized(imageUrl!),
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -557,18 +566,16 @@ class HScroller extends StatelessWidget {
   const HScroller(this.children, {super.key, this.padding = const EdgeInsets.symmetric(horizontal: 20)});
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    // Lazy: offscreen cards (images, CustomPaint, Stacks) are never built or
+    // painted until they scroll into view.
+    return ListView.separated(
       scrollDirection: Axis.horizontal,
       padding: padding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (int i = 0; i < children.length; i++) ...[
-            if (i > 0) const SizedBox(width: 14),
-            children[i],
-          ],
-        ],
-      ),
+      physics: const ClampingScrollPhysics(),
+      itemCount: children.length,
+      cacheExtent: 400,
+      separatorBuilder: (_, _) => const SizedBox(width: 14),
+      itemBuilder: (context, i) => children[i],
     );
   }
 }

@@ -146,10 +146,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  _row(context, 'For You', () => go(context, '/recommendations'),
-                      [1, 3, 6, 9].map((i) => kProducts[i]).toList()),
+                  _row(context, 'For You', () => go(context, '/recommendations'), kForYouRail),
                   const SizedBox(height: 28),
-                  _row(context, 'Trending Now', () => go(context, '/search'), kProducts.take(6).toList()),
+                  _row(context, 'Trending Now', () => go(context, '/search'), kTrendingRail),
                   const SizedBox(height: 28),
                   Container(
                     padding: const EdgeInsets.only(top: 20, bottom: 8),
@@ -171,8 +170,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: 288,
                           child: HScroller([
-                            for (final p in kProducts.where((p) => p.emerging).take(12))
-                              ProductCard(p, compact: true),
+                            for (final p in kEmergingRail) ProductCard(p, compact: true),
                           ]),
                         ),
                       ],

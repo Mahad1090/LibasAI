@@ -156,7 +156,11 @@ class BrandProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(children: [
-                            Text(b.name, style: heading(22)),
+                            Flexible(
+                                child: Text(b.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: heading(22))),
                             if (b.emerging) ...[const SizedBox(width: 8), _EmergingPill()],
                           ]),
                           const SizedBox(height: 6),

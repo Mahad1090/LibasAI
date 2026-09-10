@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
         alignment: Alignment.center,
         child: FractionallySizedBox(
           widthFactor: 0.82,
-          child: Image.asset('assets/libasai-logo.png'),
+          child: Image.asset('assets/libasai-logo.png', cacheWidth: 800),
         ),
       ),
     );

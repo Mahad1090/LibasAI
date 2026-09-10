@@ -45,14 +45,13 @@ class RecommendationsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 children: [
                   section('Based on your style', 'Because you liked embroidered kurtas',
-                      [1, 3, 6, 9].map((i) => kProducts[i]).toList()),
+                      kForYouRail),
                   if (state.wishedProducts.isNotEmpty)
                     section('Based on your wishlist', null, state.wishedProducts),
                   if (state.recentProducts.isNotEmpty)
                     section('Inspired by recent views', null, state.recentProducts),
-                  section('Within your budget', null, kProducts.sublist(6, 10)),
-                  section('Discover something new', null,
-                      kProducts.where((p) => p.emerging).take(12).toList()),
+                  section('Within your budget', null, kBudgetRail),
+                  section('Discover something new', null, kEmergingRail),
                 ],
               ),
             ),

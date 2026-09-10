@@ -102,7 +102,12 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: Row(children: [
                           Icon(glyph('clock'), size: 14, color: AppColors.inkFaint),
                           const SizedBox(width: 10),
-                          Text(h, style: body(13)),
+                          Expanded(
+                            child: Text(h,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: body(13)),
+                          ),
                         ]),
                       ),
                     ),

@@ -25,7 +25,8 @@ class WelcomeScreen extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(22),
-                child: Image.asset('assets/libasai-logo.png', width: 100, height: 100, fit: BoxFit.cover),
+                child: Image.asset('assets/libasai-logo.png',
+                    width: 100, height: 100, fit: BoxFit.cover, cacheWidth: 300),
               ),
             ),
             const SizedBox(height: 22),

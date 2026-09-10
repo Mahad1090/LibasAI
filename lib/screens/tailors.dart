@@ -364,15 +364,21 @@ class _TailorCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Starting from', style: overline(9, color: AppColors.inkFaint)),
-                    Text('Rs. ${tailor.startingPrice}',
-                        style: heading(15).copyWith(color: AppColors.accent)),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Starting from', style: overline(9, color: AppColors.inkFaint)),
+                      Text('Rs. ${tailor.startingPrice}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: heading(15).copyWith(color: AppColors.accent)),
+                    ],
+                  ),
                 ),
+                const SizedBox(width: 8),
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     GestureDetector(
                       onTap: onTap,
@@ -522,15 +528,15 @@ class TailorProfileScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            _metric('${t.rating} ★', '${t.reviewCount} Reviews'),
+                            Expanded(child: _metric('${t.rating} ★', '${t.reviewCount} Reviews')),
                             _divider(),
-                            _metric('${t.experienceYears} Yrs', 'Experience'),
+                            Expanded(child: _metric('${t.experienceYears} Yrs', 'Experience')),
                             _divider(),
-                            _metric('Rs. ${t.startingPrice}', 'Starting Rate'),
+                            Expanded(child: _metric('Rs. ${t.startingPrice}', 'Starting Rate')),
                             _divider(),
-                            _metric('${t.turnaroundDays} Days', 'Avg Turnaround'),
+                            Expanded(child: _metric('${t.turnaroundDays} Days', 'Avg Turnaround')),
                           ],
                         ),
                       ),
@@ -668,9 +674,17 @@ class TailorProfileScreen extends StatelessWidget {
 
   Widget _metric(String val, String label) => Column(
         children: [
-          Text(val, style: heading(14).copyWith(color: AppColors.ink)),
+          Text(val,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: heading(14).copyWith(color: AppColors.ink)),
           const SizedBox(height: 2),
-          Text(label, style: overline(8.5, color: AppColors.inkSecondary)),
+          Text(label,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: overline(8.5, color: AppColors.inkSecondary)),
         ],
       );
 

@@ -138,18 +138,18 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                                   border: Border.all(color: AppColors.accent.withValues(alpha: 0.25)),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.wb_sunny_outlined, size: 14, color: AppColors.accent),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          'Ask Subah Edit what to wear today',
-                                          style: body(11.5, weight: FontWeight.w700, color: AppColors.accent),
-                                        ),
-                                      ],
+                                    const Icon(Icons.wb_sunny_outlined, size: 14, color: AppColors.accent),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        'Ask Subah Edit what to wear today',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: body(11.5, weight: FontWeight.w700, color: AppColors.accent),
+                                      ),
                                     ),
+                                    const SizedBox(width: 8),
                                     const Icon(Icons.arrow_forward_ios, size: 10, color: AppColors.accent),
                                   ],
                                 ),
@@ -193,9 +193,9 @@ class _WardrobeScreenState extends State<WardrobeScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisSpacing: 14,
+                            mainAxisSpacing: 16,
                             crossAxisSpacing: 12,
-                            childAspectRatio: 0.46,
+                            childAspectRatio: 0.60,
                           ),
                           itemCount: displayedItems.length,
                           itemBuilder: (context, index) {
@@ -355,68 +355,78 @@ class _WardrobeCard extends StatelessWidget {
     required this.onDelete,
   });
 
+  static const _green = Color(0xFF1A7A38);
+  static const _amber = Color(0xFF8A6A1E);
+
   Color get _badgeColor {
-    if (item.isStitched) return const Color(0xFF1A7A38);
-    if (item.isUnstitched) return const Color(0xFFA11F37);
-    return const Color(0xFF8A6A1E);
+    if (item.isStitched) return _green;
+    if (item.isUnstitched) return AppColors.accent;
+    return _amber;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.hairline),
         boxShadow: AppShadows.soft,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image with status badge and delete icon
+          // Image with status badge and delete control
           Stack(
             children: [
               AspectRatio(
-                aspectRatio: 0.92,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
-                  child: StripePlaceholder(
-                    label: item.name,
-                    imageUrl: item.imageUrl,
-                    radius: BorderRadius.zero,
-                    decodeWidth: 320,
-                  ),
+                aspectRatio: 1.12,
+                child: StripePlaceholder(
+                  label: item.name,
+                  imageUrl: item.imageUrl,
+                  radius: BorderRadius.zero,
+                  decodeWidth: 320,
                 ),
               ),
               Positioned(
-                top: 8,
-                left: 8,
+                top: 10,
+                left: 10,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: _badgeColor,
                     borderRadius: BorderRadius.circular(999),
                   ),
-                  child: Text(
-                    item.statusBadge,
-                    style: const TextStyle(
-                      fontSize: 9.5,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                      letterSpacing: 0.4,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.circle, size: 5, color: Colors.white),
+                      const SizedBox(width: 5),
+                      Text(
+                        item.statusBadge.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 8.5,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
               Positioned(
-                top: 6,
-                right: 6,
+                top: 8,
+                right: 8,
                 child: GestureDetector(
                   onTap: onDelete,
                   child: Container(
-                    padding: const EdgeInsets.all(5),
+                    width: 24,
+                    height: 24,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppColors.surface.withValues(alpha: 0.9),
+                      color: AppColors.surface.withValues(alpha: 0.92),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(glyph('close'), size: 12, color: AppColors.inkFaint),
@@ -429,7 +439,7 @@ class _WardrobeCard extends StatelessWidget {
           // Body
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(11, 10, 11, 11),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -437,97 +447,34 @@ class _WardrobeCard extends StatelessWidget {
                     item.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: body(12, weight: FontWeight.w700, height: 1.25),
+                    style: body(12.5, weight: FontWeight.w700, height: 1.2),
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    item.category,
-                    style: body(10.5, color: AppColors.inkSecondary),
+                    item.isWithTailor && item.tailorName != null
+                        ? 'At ${item.tailorName}'
+                        : item.category,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: body(10.5,
+                        weight: item.isWithTailor ? FontWeight.w600 : FontWeight.w500,
+                        color: item.isWithTailor ? _amber : AppColors.inkSecondary),
                   ),
-                  if (item.tags.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      item.tags.take(2).join(' · '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: body(9.5, color: AppColors.inkFaint),
-                    ),
-                  ],
-                  if (item.isWithTailor && item.tailorName != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      'Tailor: ${item.tailorName}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: body(9.5, weight: FontWeight.w600, color: const Color(0xFF8A6A1E)),
-                    ),
-                  ],
                   const Spacer(),
-
-                  // Dynamic contextual action buttons
-                  if (item.isUnstitched)
-                    GestureDetector(
-                      onTap: onSendToTailor,
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        decoration: BoxDecoration(
-                          color: AppColors.accent,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Send to Tailor ✂',
-                            style: body(10, weight: FontWeight.w700, color: AppColors.surface),
-                          ),
-                        ),
-                      ),
-                    )
-                  else if (item.isWithTailor)
-                    GestureDetector(
-                      onTap: onCheckStatus,
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 7),
-                        decoration: BoxDecoration(
-                          color: AppColors.sand,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: AppColors.accent.withValues(alpha: 0.3)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Check Status',
-                            style: body(10, weight: FontWeight.w700, color: AppColors.accent),
-                          ),
-                        ),
-                      ),
-                    )
-                  else
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1A7A38).withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Ready to Wear ✓',
-                          style: body(9.5, weight: FontWeight.w700, color: const Color(0xFF1A7A38)),
-                        ),
-                      ),
-                    ),
-
-                  // Option to mark ready if non-stitched
+                  _actionPill(),
                   if (!item.isStitched) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 7),
                     GestureDetector(
                       onTap: onMarkReady,
-                      child: Center(
-                        child: Text(
-                          'Mark Ready',
-                          style: body(9.5, weight: FontWeight.w700, color: AppColors.accent),
-                        ),
+                      behavior: HitTestBehavior.opaque,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.check_rounded, size: 12, color: AppColors.inkFaint),
+                          const SizedBox(width: 4),
+                          Text('Mark as ready',
+                              style: body(9.5, weight: FontWeight.w600, color: AppColors.inkFaint)),
+                        ],
                       ),
                     ),
                   ],
@@ -536,6 +483,61 @@ class _WardrobeCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _actionPill() {
+    late final Color fg;
+    late final Color bg;
+    late final String label;
+    late final VoidCallback onTap;
+    late final IconData icon;
+
+    if (item.isUnstitched) {
+      fg = AppColors.surface;
+      bg = AppColors.accent;
+      label = 'Send to Tailor';
+      icon = Icons.content_cut_rounded;
+      onTap = onSendToTailor;
+    } else if (item.isWithTailor) {
+      fg = _amber;
+      bg = _amber.withValues(alpha: 0.12);
+      label = 'Track Order';
+      icon = Icons.local_shipping_outlined;
+      onTap = onCheckStatus;
+    } else {
+      fg = _green;
+      bg = _green.withValues(alpha: 0.12);
+      label = 'Ready to Wear';
+      icon = Icons.check_circle_rounded;
+      onTap = onMarkReady;
+    }
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        width: double.infinity,
+        height: 31,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 12, color: fg),
+            const SizedBox(width: 5),
+            Flexible(
+              child: Text(label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: body(10, weight: FontWeight.w700, color: fg)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -655,7 +657,7 @@ class _AddWardrobePieceSheetState extends State<_AddWardrobePieceSheet> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Add a Piece to Wardrobe', style: heading(18)),
+                  Expanded(child: Text('Add a Piece to Wardrobe', style: heading(18))),
                   IconButton(
                     icon: Icon(glyph('close'), size: 18),
                     onPressed: () => Navigator.of(context).pop(),
