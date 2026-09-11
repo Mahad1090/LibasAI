@@ -175,7 +175,7 @@ def build_catalog_items(per_brand: int = 28) -> list[dict]:
             r["_clean_img"] = img_url
             by_brand[b_name].append(r)
 
-    final_catalog = []
+    by_brand_selected = defaultdict(list)
     for b_name, items in sorted(by_brand.items()):
         selected = []
         cats_seen = Counter()
@@ -238,7 +238,16 @@ def build_catalog_items(per_brand: int = 28) -> list[dict]:
             if len(selected) >= per_brand:
                 break
         
-        final_catalog.extend(selected)
+        by_brand_selected[b_name] = selected
+
+    # Interleave products across brands round-robin for fair discovery and balanced variety
+    final_catalog = []
+    brand_lists = [items for b_name, items in sorted(by_brand_selected.items())]
+    max_len = max((len(l) for l in brand_lists), default=0)
+    for i in range(max_len):
+        for blist in brand_lists:
+            if i < len(blist):
+                final_catalog.append(blist[i])
 
     return final_catalog
 

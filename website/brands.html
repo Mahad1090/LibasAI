@@ -1477,6 +1477,27 @@
             }
           });
 
+          // Ensure all active catalog brand cards have a 'View Products' button linking to shop.html
+          Array.from(getCards()).forEach(function(card) {
+            var cName = (card.getAttribute('data-name') || '').toLowerCase().trim();
+            var cnClean = cName.replace(/[^a-z0-9]/g, '');
+            var match = brands.find(function(b) {
+              var bnClean = b.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+              var idClean = (b.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+              return bnClean === cnClean || idClean === cnClean;
+            });
+            if (match) {
+              var actionA = card.querySelector('.lb-brand-card__action');
+              if (actionA && !actionA.getAttribute('href').startsWith('/shop.html')) {
+                actionA.setAttribute('href', '/shop.html?brand=' + encodeURIComponent(match.name));
+                actionA.removeAttribute('target');
+                actionA.removeAttribute('rel');
+                var span = actionA.querySelector('span');
+                if (span) span.textContent = 'View Products';
+              }
+            }
+          });
+
           var existingNames = Array.from(getCards()).map(function(c) {
             return (c.getAttribute('data-name') || '').toLowerCase().trim();
           });

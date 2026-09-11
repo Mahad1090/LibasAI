@@ -1280,6 +1280,7 @@
       var initialCat = urlParams.get('cat') || 'all';
       var initialGender = urlParams.get('gender') || 'all';
       var initialQuery = urlParams.get('q') || urlParams.get('search') || '';
+      var initialBrand = urlParams.get('brand') || '';
 
       if (initialQuery && catalogSearchInput) {
         catalogSearchInput.value = initialQuery;
@@ -1296,6 +1297,16 @@
           if (descEl) descEl.textContent = 'Showing live matching designs across Pakistan\'s top fashion labels.';
           if (bcActiveEl) bcActiveEl.textContent = 'Search: ' + qVal;
           document.title = 'Search: ' + qVal + ' — LibasAI';
+          return;
+        }
+
+        if (initialBrand) {
+          var displayBrand = initialBrand.replace(/-/g, ' ');
+          if (titleEl) titleEl.textContent = displayBrand + " Collection";
+          if (eyebrowEl) eyebrowEl.textContent = "Verified Partner Brand";
+          if (descEl) descEl.textContent = "Browse verified designs and direct brand redirects from " + displayBrand + ".";
+          if (bcActiveEl) bcActiveEl.textContent = displayBrand;
+          document.title = displayBrand + " — LibasAI Catalog";
           return;
         }
 
@@ -1392,6 +1403,12 @@
           filtered = filtered.filter(function(p) {
             return checkedBrands.indexOf(p.brand) !== -1;
           });
+        } else if (initialBrand) {
+          var cleanInitial = initialBrand.toLowerCase().replace(/[^a-z0-9]/g, '');
+          filtered = filtered.filter(function(p) {
+            var cleanPBrand = (p.brand || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            return cleanPBrand === cleanInitial || cleanPBrand.indexOf(cleanInitial) !== -1 || cleanInitial.indexOf(cleanPBrand) !== -1;
+          });
         }
 
         // Sorting
@@ -1411,9 +1428,11 @@
         grid.innerHTML = "";
 
         if (filtered.length === 0) {
+          var emptyTitle = initialBrand ? "No products found for " + initialBrand.replace(/-/g, ' ') : "No products found";
           grid.innerHTML = "<div style='grid-column:1/-1; text-align:center; padding:60px 20px;'>" +
-            "<h3 style='font-family:Playfair Display,serif; font-size:22px; color:#191412;'>No products found</h3>" +
-            "<p style='color:rgba(25,20,18,0.6);'>Try relaxing your filter selections or searching for another term.</p>" +
+            "<h3 style='font-family:Playfair Display,serif; font-size:22px; color:#191412;'>" + emptyTitle + "</h3>" +
+            "<p style='color:rgba(25,20,18,0.6); margin-top:8px;'>This brand may be temporarily at capacity or indexing new catalog arrivals.</p>" +
+            "<div style='margin-top:20px;'><a href='/shop.html' class='lb-quick-pill is-active' style='text-decoration:none; display:inline-block;'>Browse All Collections</a></div>" +
             "</div>";
           if (loadMoreContainer) loadMoreContainer.style.display = 'none';
           return;
@@ -1558,6 +1577,10 @@
         clearBtn.addEventListener('click', function() {
           activeCat = 'all';
           activeGender = 'all';
+          initialBrand = '';
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname);
+          }
           if (catalogSearchInput) catalogSearchInput.value = '';
           quickPills.forEach(function(p) {
             p.classList.toggle('is-active', p.getAttribute('data-cat') === 'all');
@@ -1661,16 +1684,19 @@
               var initialBrandParam = urlParams.get('brand');
 
               brandContainer.innerHTML = '';
+              var cleanInitial = initialBrandParam ? initialBrandParam.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
               sortedBrands.forEach(function(bName) {
-                var isChecked = initialBrandParam && (
-                  initialBrandParam.toLowerCase() === bName.toLowerCase() ||
-                  bName.toLowerCase().indexOf(initialBrandParam.toLowerCase()) !== -1 ||
-                  initialBrandParam.toLowerCase().indexOf(bName.toLowerCase()) !== -1
+                var cleanBName = bName.toLowerCase().replace(/[^a-z0-9]/g, '');
+                var isChecked = cleanInitial && (
+                  cleanInitial === cleanBName ||
+                  cleanBName.indexOf(cleanInitial) !== -1 ||
+                  cleanInitial.indexOf(cleanBName) !== -1
                 );
                 var lbl = document.createElement('label');
                 lbl.className = 'lb-filter-item';
                 lbl.innerHTML = '<input type="checkbox" name="filter-brand" value="' + bName + '"' + (isChecked ? ' checked' : '') + '> ' + bName + ' <span style="font-size:11px; opacity:0.65;">(' + brandCounts[bName] + ')</span>';
                 lbl.querySelector('input').addEventListener('change', function() {
+                  initialBrand = '';
                   currentDisplayLimit = 24;
                   renderProducts();
                 });
